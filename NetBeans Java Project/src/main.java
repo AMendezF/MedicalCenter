@@ -16,38 +16,6 @@ import java.util.Scanner;
  * @author Berta
  */
 public class main {
-    
-    public static void mostrarCitas(Paciente paciente, Conexion con) throws SQLException {
-        PreparedStatement preparedStmt;
-        Connection reg = con.getCon();
-        String sql;
-        
-        sql = "SELECT medico.nombre,citas.medico, medico.n_colegiado, especialidad.nombre, citas.cod_cita, citas.hora, citas.dia"
-                + "  FROM citas, medico, especialidad "
-                + "WHERE paciente=? AND medico.n_colegiado=citas.medico "
-                + "AND medico.especialidad= especialidad.cod_especialidad";
-        preparedStmt = reg.prepareStatement(sql);
-        preparedStmt.setString(1, paciente.getDNI());
-        ResultSet rs = preparedStmt.executeQuery();
-        List<String> medicos = new ArrayList();
-        List<String> codMeds = new ArrayList();
-        List<String> codigosCita = new ArrayList();
-        List<String> horas = new ArrayList();
-        List<String> fechas = new ArrayList();
-        List<String> especialidades = new ArrayList();
-        while (rs.next()) {
-            medicos.add(rs.getString("medico.nombre"));
-            codigosCita.add(rs.getString("citas.cod_cita"));
-            horas.add(rs.getTime("citas.hora").toString());
-            fechas.add(rs.getDate("citas.dia").toString());
-            especialidades.add(rs.getString("especialidad.nombre"));
-            codMeds.add(String.valueOf(rs.getInt("citas.medico")));
-        }
-        for (int i = 0; i < medicos.size(); i++) {
-            System.out.println((i + 1) + ". " + fechas.get(i) + " " + horas.get(i) + " con " + medicos.get(i)
-                    + ", " + especialidades.get(i));
-        }      
-    }
 
     public static void pedirCita(Paciente paciente, Conexion con) throws SQLException {
         int codEspecialidad;
@@ -108,16 +76,15 @@ public class main {
         }
         sc.nextLine();
         System.out.println("¿Desea elegir el médico? (S/N) ");
-        String opcionS = sc.nextLine().toLowerCase();
-        if (opcionS.equals("s")) {
-             System.out.println("Elija el médico: ");
-             for (int i = 0; i < listaMedicos.size(); i++) {
-            System.out.println((i + 1) + ". " + listaMedicos.get(i));
-             op = sc.nextInt();            
-        }
-        }
-        else if (opcionS.equals("n")){
-            op=1;
+        String opcionS = sc.nextLine();
+        if (opcionS.equals("S")) {
+            System.out.println("Elija el médico: ");
+            for (int i = 0; i < listaMedicos.size(); i++) {
+                System.out.println((i + 1) + ". " + listaMedicos.get(i));
+                op = sc.nextInt();
+            }
+        } else if (opcionS.equals("N")) {
+            op = 1;
         }
         codMedico = mapa.get(op);
 
@@ -154,7 +121,7 @@ public class main {
         pedirConsulta(medico, fechaDia, paciente);
 
     }
-    
+
     public static void pedirConsulta(Medico med, String dia, Paciente paciente) throws SQLException {
         boolean[] consultas;
         consultas = new boolean[24];
@@ -197,16 +164,15 @@ public class main {
         med.addCita(mapa.get(cadena), dia, paciente.getDNI(), paciente.getContCitas());
         paciente.addCita();
     }
-    
+
     public static void eliminarCita(Paciente paciente, Conexion con) throws SQLException {
         int op = 0;
+
+        System.out.println("Elija la cita que desea cancelar: ");
         Scanner sc = new Scanner(System.in);
-        
         PreparedStatement preparedStmt;
         Connection reg = con.getCon();
-        String sql;
-        
-        sql = "SELECT medico.nombre,citas.medico, medico.n_colegiado, especialidad.nombre, citas.cod_cita, citas.hora, citas.dia"
+        String sql = "SELECT medico.nombre,citas.medico, medico.n_colegiado, especialidad.nombre, citas.cod_cita, citas.hora, citas.dia"
                 + "  FROM citas, medico, especialidad "
                 + "WHERE paciente=? AND medico.n_colegiado=citas.medico "
                 + "AND medico.especialidad= especialidad.cod_especialidad";
@@ -231,35 +197,35 @@ public class main {
             System.out.println((i + 1) + ". " + fechas.get(i) + " " + horas.get(i) + " con " + medicos.get(i)
                     + ", " + especialidades.get(i));
         }
-        
-        System.out.println("Elija la cita que desea cancelar: ");
-        op = sc.nextInt()-1;
-        
+
+        op = sc.nextInt() - 1;
         sql = "DELETE FROM citas WHERE cod_cita=?";
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.setString(1, codigosCita.get(op));
         preparedStmt.execute();
-        int codMedico=Integer.parseInt(codMeds.get(op));
-        Medico med=new Medico(codMedico,con);
-        String[]fechasdiv=fechas.get(op).split("-");
-        if(Integer.parseInt(fechasdiv[1])<10)  fechasdiv[1]=fechasdiv[1].substring(1);
-        String fechaCorrecta=fechasdiv[0]+"-"+ fechasdiv[1]+"-"+fechasdiv[2];
+        int codMedico = Integer.parseInt(codMeds.get(op));
+        Medico med = new Medico(codMedico, con);
+        String[] fechasdiv = fechas.get(op).split("-");
+        if (Integer.parseInt(fechasdiv[1]) < 10) {
+            fechasdiv[1] = fechasdiv[1].substring(1);
+        }
+        String fechaCorrecta = fechasdiv[0] + "-" + fechasdiv[1] + "-" + fechasdiv[2];
         System.out.println("Se ha eliminado la cita: " + fechaCorrecta + " " + horas.get(op) + " con " + medicos.get(op)
-                    + ", " + especialidades.get(op));
-        med.eliminarCita(fechaCorrecta, horas.get(op));        
+                + ", " + especialidades.get(op));
+        med.eliminarCita(fechaCorrecta, horas.get(op));
     }
 
     public static void main(String[] args) {
-        Conexion connection = null;
+        Conexion con = null;
         Paciente paciente;
 
         try {
-            connection = new Conexion();
+            con = new Conexion();
             int op = 0;
             String DNI;
             Scanner sc = new Scanner(System.in);
             boolean result = false;
-            
+
             do {
                 boolean correcto = false;
                 do {
@@ -271,8 +237,8 @@ public class main {
                         System.out.println("ERROR: DNI no válido.");
                     }
                 } while (!correcto);
-                
-                paciente = new Paciente(DNI, connection);
+
+                paciente = new Paciente(DNI, con);
 
                 result = paciente.estaBD();
                 if (!result) {
@@ -299,25 +265,27 @@ public class main {
 
                 switch (op) {
                     case 1:
-                        pedirCita(paciente, connection);
+                        pedirCita(paciente, con);
                         break;
                     case 2:
-                        if(paciente.tieneCitas()) {
-                            eliminarCita(paciente, connection);
+                        if (paciente.tieneCitas()) {
+                            eliminarCita(paciente, con);
                         } else {
                             System.out.println("No tiene citas.\n");
                         }
                         break;
+
                     case 3:
-                        if(paciente.tieneCitas()) {
-                            mostrarCitas(paciente, connection);
+                        if (paciente.tieneCitas()) {
+                            paciente.mostrarCitas();
                             System.out.println("");
                         } else {
                             System.out.println("No tiene citas.\n");
                         }
+                        break;
                 }
             }
-            connection.desconectar();
+            con.desconectar();
         } catch (SQLException ex) {
             System.out.println(ex.fillInStackTrace());
         }
