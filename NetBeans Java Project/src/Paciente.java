@@ -62,9 +62,9 @@ class Paciente {
     
      public void addPacienteBD() throws SQLException{
          Scanner sc = new Scanner(System.in);
-        String nombre = " ";
-        String apellidos = " ";
-        String nomSeguro = " ";
+        String nombre = "";
+        String apellidos = "";
+        String nomSeguro = null;
         String sql;
         PreparedStatement preparedStmt;
         Connection reg = con.getCon();
@@ -75,26 +75,23 @@ class Paciente {
         System.out.println("¿Tiene seguro medico? (S/N)");
         String opcionS = sc.nextLine();
         if (opcionS.equals("S") || opcionS.equals("s")) {
-            System.out.println("Introduzca nmbre del seguro del paciente: ");
+            System.out.println("Introduzca nombre del seguro del paciente: ");
             nomSeguro = sc.nextLine();
-            sql = "INSERT INTO paciente ( DNI, nombre, apellidos, CompSegur)"
-                    + "VALUES (?,?,?,?)";
-            preparedStmt = reg.prepareStatement(sql);
-            preparedStmt.setString(1, DNI);
-            preparedStmt.setString(2, nombre);
-            preparedStmt.setString(3, apellidos);
-            preparedStmt.setString(4, nomSeguro);
-            preparedStmt.execute();
         }
-        else if (opcionS.equals("N") || opcionS.equals("n")){
-            sql = "INSERT INTO paciente ( DNI, nombre, apellidos, CompSegur)"
-                    + "VALUES (?,?,?,NULL)";
-            preparedStmt = reg.prepareStatement(sql);
-            preparedStmt.setString(1, DNI);
-            preparedStmt.setString(2, nombre);
-            preparedStmt.setString(3, apellidos);
-            preparedStmt.execute();
-        }
-
+        sql = "INSERT INTO paciente ( DNI, nombre, apellidos, CompSegur)"
+                + "VALUES (?,?,?,?)";
+        preparedStmt = reg.prepareStatement(sql);
+        preparedStmt.setString(1, DNI);
+        preparedStmt.setString(2, nombre);
+        preparedStmt.setString(3, apellidos);
+        preparedStmt.setString(4, nomSeguro);
+        preparedStmt.execute();
+    }
+     public boolean tieneCitas() {
+         boolean tieneCitas = false;
+         if (this.getContCitas() > 0){
+             tieneCitas = true;
+         }
+         return tieneCitas;
      }
 }

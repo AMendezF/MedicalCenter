@@ -16,6 +16,38 @@ import java.util.Scanner;
  * @author Berta
  */
 public class main {
+    
+    public static void mostrarCitas(Paciente paciente, Conexion con) throws SQLException {
+        PreparedStatement preparedStmt;
+        Connection reg = con.getCon();
+        String sql;
+        
+        sql = "SELECT medico.nombre,citas.medico, medico.n_colegiado, especialidad.nombre, citas.cod_cita, citas.hora, citas.dia"
+                + "  FROM citas, medico, especialidad "
+                + "WHERE paciente=? AND medico.n_colegiado=citas.medico "
+                + "AND medico.especialidad= especialidad.cod_especialidad";
+        preparedStmt = reg.prepareStatement(sql);
+        preparedStmt.setString(1, paciente.getDNI());
+        ResultSet rs = preparedStmt.executeQuery();
+        List<String> medicos = new ArrayList();
+        List<String> codMeds = new ArrayList();
+        List<String> codigosCita = new ArrayList();
+        List<String> horas = new ArrayList();
+        List<String> fechas = new ArrayList();
+        List<String> especialidades = new ArrayList();
+        while (rs.next()) {
+            medicos.add(rs.getString("medico.nombre"));
+            codigosCita.add(rs.getString("citas.cod_cita"));
+            horas.add(rs.getTime("citas.hora").toString());
+            fechas.add(rs.getDate("citas.dia").toString());
+            especialidades.add(rs.getString("especialidad.nombre"));
+            codMeds.add(String.valueOf(rs.getInt("citas.medico")));
+        }
+        for (int i = 0; i < medicos.size(); i++) {
+            System.out.println((i + 1) + ". " + fechas.get(i) + " " + horas.get(i) + " con " + medicos.get(i)
+                    + ", " + especialidades.get(i));
+        }      
+    }
 
     public static void pedirCita(Paciente paciente, Conexion con) throws SQLException {
         int codEspecialidad;
@@ -76,15 +108,15 @@ public class main {
         }
         sc.nextLine();
         System.out.println("¿Desea elegir el médico? (S/N) ");
-        String opcionS = sc.nextLine();
-        if (opcionS.equals("S")) {
+        String opcionS = sc.nextLine().toLowerCase();
+        if (opcionS.equals("s")) {
              System.out.println("Elija el médico: ");
              for (int i = 0; i < listaMedicos.size(); i++) {
             System.out.println((i + 1) + ". " + listaMedicos.get(i));
              op = sc.nextInt();            
         }
         }
-        else if (opcionS.equals("N")){
+        else if (opcionS.equals("n")){
             op=1;
         }
         codMedico = mapa.get(op);
@@ -168,12 +200,13 @@ public class main {
     
     public static void eliminarCita(Paciente paciente, Conexion con) throws SQLException {
         int op = 0;
-
-        System.out.println("Elija la cita que desea cancelar: ");
         Scanner sc = new Scanner(System.in);
+        
         PreparedStatement preparedStmt;
         Connection reg = con.getCon();
-        String sql = "SELECT medico.nombre,citas.medico, medico.n_colegiado, especialidad.nombre, citas.cod_cita, citas.hora, citas.dia"
+        String sql;
+        
+        sql = "SELECT medico.nombre,citas.medico, medico.n_colegiado, especialidad.nombre, citas.cod_cita, citas.hora, citas.dia"
                 + "  FROM citas, medico, especialidad "
                 + "WHERE paciente=? AND medico.n_colegiado=citas.medico "
                 + "AND medico.especialidad= especialidad.cod_especialidad";
@@ -199,7 +232,9 @@ public class main {
                     + ", " + especialidades.get(i));
         }
         
+        System.out.println("Elija la cita que desea cancelar: ");
         op = sc.nextInt()-1;
+        
         sql = "DELETE FROM citas WHERE cod_cita=?";
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.setString(1, codigosCita.get(op));
@@ -215,11 +250,11 @@ public class main {
     }
 
     public static void main(String[] args) {
-        Conexion con = null;
+        Conexion connection = null;
         Paciente paciente;
 
         try {
-            con = new Conexion();
+            connection = new Conexion();
             int op = 0;
             String DNI;
             Scanner sc = new Scanner(System.in);
@@ -237,7 +272,7 @@ public class main {
                     }
                 } while (!correcto);
                 
-                paciente = new Paciente(DNI, con);
+                paciente = new Paciente(DNI, connection);
 
                 result = paciente.estaBD();
                 if (!result) {
@@ -254,23 +289,35 @@ public class main {
                 }
             } while (!result);
 
-            while (op != 3) {
+            while (op != 4) {
                 System.out.println("Selecciona la opción que desea realizar: ");
                 System.out.println("1. Pedir cita ");
                 System.out.println("2. Cancelar una cita ");
-                System.out.println("3. Salir");
+                System.out.println("3. Mostrar Citas");
+                System.out.println("4. Salir");
                 op = sc.nextInt();
 
                 switch (op) {
                     case 1:
-                        pedirCita(paciente, con);
+                        pedirCita(paciente, connection);
                         break;
                     case 2:
-                        eliminarCita(paciente, con);
+                        if(paciente.tieneCitas()) {
+                            eliminarCita(paciente, connection);
+                        } else {
+                            System.out.println("No tiene citas.\n");
+                        }
                         break;
+                    case 3:
+                        if(paciente.tieneCitas()) {
+                            mostrarCitas(paciente, connection);
+                            System.out.println("");
+                        } else {
+                            System.out.println("No tiene citas.\n");
+                        }
                 }
             }
-            con.desconectar();
+            connection.desconectar();
         } catch (SQLException ex) {
             System.out.println(ex.fillInStackTrace());
         }
