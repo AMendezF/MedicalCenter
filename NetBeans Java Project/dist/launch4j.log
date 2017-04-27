@@ -1,0 +1,36 @@
+
+
+Version:	3.9
+CmdLine:	C:\Users\Berta Lopez\Dropbox\FIS\Sprint1\centromedico.exe --l4j-debug
+WOW64:		yes
+Working dir:	C:\Users\Berta Lopez\Dropbox\FIS\Sprint1\.
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.7
+Ignore:		1.7
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.7.0_80
+Check launcher:	C:\Program Files\Java\jre7\bin\javaw.exe (OK)
+Match:		1.7.0_080
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Check launcher:	C:\Program Files\Java\jre1.8.0_66\bin\javaw.exe (OK)
+Match:		1.8
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_66
+Check launcher:	C:\Program Files\Java\jre1.8.0_66\bin\javaw.exe (OK)
+Match:		1.8.0_066
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.7
+Ignore:		1.7
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.7.0_45
+Ignore:		1.7.0_045
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.7.0_72
+Ignore:		1.7.0_072
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.7.0_80
+Ignore:		1.7.0_080
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8
+Ignore:		1.8
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8.0_25
+Ignore:		1.8.0_025
+Runtime used:	1.8.0_066 (64-bit)
+Launcher:	C:\Program Files\Java\jre1.8.0_66\bin\javaw.exe
+Launcher args:	-jar "C:\Users\Berta Lopez\Dropbox\FIS\Sprint1\centromedico.exe"
+Args length:	64/32768 chars
+Exit code:	0
