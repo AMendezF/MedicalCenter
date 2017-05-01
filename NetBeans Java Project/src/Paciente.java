@@ -13,20 +13,41 @@ import java.util.Scanner;
  */
 class Paciente {
 
-	String DNI;
-	int contCitas;
-	Conexion con;
+	private String DNI;
+        private String Nombre;
+        private String Apellidos;
+        private String Seguro;
+	private int contCitas;
+	private Conexion con;
 	PreparedStatement preparedStmt = null;
 
-	public Paciente(String DNI, Conexion con) throws SQLException {
+        public Paciente(Conexion con) throws SQLException{
+            this.DNI = "";
+            this.con = con;
+        }
+	/*
+        Este guapísimo constructor inicializa el contador de citas y 
+        comprueba que el paciente esté en la BD. En tal caso igualaría sus 
+        atributos a los marcados en la BD. Sino no se inicializarán.
+        */
+        public Paciente(String DNI, Conexion con) throws SQLException {
 		this.DNI = DNI;
 		this.con = con;
 		Connection reg = con.getCon();
 		contCitas = getContCitas();
-	}
+                if(this.estaBD()){
+                    String sql = "SELECT nombre, apellidos, compsegur FROM centromedico.paciente WHERE dni =?;";
 
-	public String getDNI() {
-		return DNI;
+                    PreparedStatement preparedStmt = reg.prepareStatement(sql);
+                    preparedStmt.setString(1, DNI);
+                    ResultSet rs = preparedStmt.executeQuery();
+                    
+                    while (rs.next()) {
+			this.Nombre = rs.getString("paciente.nombre");
+			this.Apellidos = rs.getString("paciente.apellidos");
+			this.Seguro = rs.getString("paciente.compsegur");
+                    }
+                }
 	}
 
 	public int getContCitas() throws SQLException {
@@ -54,7 +75,7 @@ class Paciente {
 		String dniBD = null;
 		String sql = "SELECT dni FROM centromedico.paciente WHERE dni=? ;";
 		preparedStmt = reg.prepareStatement(sql);
-		preparedStmt.setString(1, DNI);
+		preparedStmt.setString(1, this.DNI);
 		ResultSet rs = preparedStmt.executeQuery();
 		while (rs.next()) {
 			dniBD = rs.getString("dni");
@@ -67,9 +88,6 @@ class Paciente {
 
 	public void addPacienteBD() throws SQLException {
 		Scanner sc = new Scanner(System.in);
-		String nombre = " ";
-		String apellidos = " ";
-		String nomSeguro = " ";
 		String sql;
 		PreparedStatement preparedStmt;
 		Connection reg = con.getCon();
@@ -86,21 +104,21 @@ class Paciente {
 		}
 
 		System.out.println("Introduzca nombre del paciente: ");
-		nombre = sc.nextLine();
+		Nombre = sc.nextLine();
 		System.out.println("Introduzca apellido del paciente: ");
-		apellidos = sc.nextLine();
+		Apellidos = sc.nextLine();
 		System.out.println("¿Tiene seguro medico? (S/N)");
 		String opcionS = sc.nextLine();
 		if (opcionS.equals("S") || opcionS.equals("s")) {
 			System.out.println("Introduzca el nombre del seguro del paciente: ");
-			nomSeguro = sc.nextLine();
+			Seguro = sc.nextLine();
 		} else if (opcionS.equals("N") || opcionS.equals("n")) {
-			nomSeguro = null;
+			Seguro = null;
 		}
 		int opE = 0;
 		while (opE != 4) {
 			System.out.println("Los datos del paciente con DNI " + DNI + " son: ");
-			System.out.println("-Nombre: " + nombre + "\n" + "-Apellidos: " + apellidos + "\n" + "-Seguro medico: " + nomSeguro + "\n");
+			System.out.println("-Nombre: " + Nombre + "\n" + "-Apellidos: " + Apellidos + "\n" + "-Seguro medico: " + Seguro + "\n");
 			System.out.println("¿Datos correctos? (elija una opcion) ");
 			System.out.println("1. Nombre erroneo ");
 			System.out.println("2. Apellidos erroneos ");
@@ -112,17 +130,17 @@ class Paciente {
 				case 1:
 					sc.nextLine();
 					System.out.println("Introduzca de nuevo el nombre: ");
-					nombre = sc.nextLine();
+					Nombre = sc.nextLine();
 					break;
 				case 2:
 					sc.nextLine();
 					System.out.println("Introduzca de nuevo el apellido: ");
-					apellidos = sc.nextLine();
+					Apellidos = sc.nextLine();
 					break;
 				case 3:
 					sc.nextLine();
 					System.out.println("Introduzca de nuevo el nombre del seguro: ");
-					nomSeguro = sc.nextLine();
+					Seguro = sc.nextLine();
 					break;
 			}
 		}
@@ -130,9 +148,9 @@ class Paciente {
 				+ "VALUES (?,?,?,?)";
 		preparedStmt = reg.prepareStatement(sql);
 		preparedStmt.setString(1, DNI);
-		preparedStmt.setString(2, nombre);
-		preparedStmt.setString(3, apellidos);
-		preparedStmt.setString(4, nomSeguro);
+		preparedStmt.setString(2, Nombre);
+		preparedStmt.setString(3, Apellidos);
+		preparedStmt.setString(4, Seguro);
 		preparedStmt.execute();
 	}
 
@@ -186,51 +204,12 @@ class Paciente {
 		return resul;
 	}
 
-	public String getNombre() throws SQLException {
-		String resul = "";
-		Connection reg = con.getCon();
-		String sql = "SELECT nombre FROM centromedico.paciente WHERE  DNI=?";
-		preparedStmt = reg.prepareStatement(sql);
-		preparedStmt.setString(1, DNI);
-		ResultSet rs = preparedStmt.executeQuery();
-		if (rs.next()) {
-			resul = rs.getString("nombre");
-		}
-		return resul;
-	}
-
-	public String getApellidos() throws SQLException {
-		String resul = "";
-		Connection reg = con.getCon();
-		String sql = "SELECT apellido FROM centromedico.paciente WHERE  DNI=?";
-		preparedStmt = reg.prepareStatement(sql);
-		preparedStmt.setString(1, DNI);
-		ResultSet rs = preparedStmt.executeQuery();
-		if (rs.next()) {
-			resul = rs.getString("apellidos");
-		}
-		return resul;
-	}
-
-	public String getSeguro() throws SQLException {
-		String resul = "";
-		Connection reg = con.getCon();
-		String sql = "SELECT CompSegur FROM centromedico.paciente WHERE  DNI=?";
-		preparedStmt = reg.prepareStatement(sql);
-		preparedStmt.setString(1, DNI);
-		ResultSet rs = preparedStmt.executeQuery();
-		if (rs.next()) {
-			resul = rs.getString("CompSegur");
-		}
-		return resul;
-	}
-
 	public void modificar() throws SQLException {
 		Scanner sc = new Scanner(System.in);
 		int op = 0;
 		String dato;
 		PreparedStatement preparedStmt;
-		String valorActual = this.getNombre();
+		String DNI = this.getDNI();
 
 		System.out.println("Modificar este paciente:");
 
@@ -252,12 +231,20 @@ class Paciente {
 		sc.nextLine();
 		System.out.println("Introduce el nuevo dato correspondiente a " + dato + " del paciente");
 		String valorNuevo = sc.nextLine();
+                
+                if (op == 1) {
+			this.Nombre = valorNuevo;
+		} else if (op == 2) {
+			this.Apellidos = valorNuevo;
+		} else {
+			this.Seguro = valorNuevo;
+		}
 
 		Connection reg = con.getCon();
-		String sql = "UPDATE centromedico.paciente SET " + dato + "=? WHERE nombre=?";
+		String sql = "UPDATE centromedico.paciente SET " + dato + "=? WHERE DNI=?";
 		preparedStmt = reg.prepareStatement(sql);
 		preparedStmt.setString(1, valorNuevo);
-		preparedStmt.setString(2, valorActual);
+		preparedStmt.setString(2, DNI);
 		preparedStmt.execute();
 	}
 
@@ -312,8 +299,11 @@ class Paciente {
 		boolean resul = false;
 		if (DNI.matches("[A-Z0-9][0-9]{7}[A-Z]")) {
 			String letrasDNI = "TRWAGMYFPDXBNJZSQVHLCKE";
-			String miNumero = DNI.substring(0, 8);
-
+                        String miNumero;
+                        if(DNI.substring(0,2).matches("[0-9][0-9]"))
+                            miNumero = DNI.substring(0, 8);
+                        else
+                            miNumero = DNI.substring(1,8);
 			int num = Integer.parseInt(miNumero);
 			int mod = num % (letrasDNI.length());
 
@@ -325,5 +315,32 @@ class Paciente {
 			}
 		}
 		return resul;
+	}
+        
+        private String tieneSeguro(){
+            if (this.Seguro == "NULL" || this.Seguro == "null")
+                return "No tiene seguro";
+            else
+                return this.Seguro;
+        }
+        
+        public String toString(){
+            return this.DNI + " - " + this.Nombre + " - " + this.Apellidos + "; " + tieneSeguro() + ".";
+        }
+        
+        public String getDNI() {
+		return DNI;
+	}
+        
+        public String getNombre() {
+		return this.Nombre;
+	}
+
+	public String getApellidos(){
+		return this.Apellidos;
+	}
+
+	public String getSeguro(){
+		return this.Seguro;
 	}
 }

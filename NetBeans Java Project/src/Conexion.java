@@ -73,7 +73,7 @@ public class Conexion {
         PreparedStatement preparedStmt;
         Connection reg = connection;
         System.out.println("Cargando los datos ");
-        String sql = "CREATE DATABASE IF NOT EXISTS CentroMedico;";
+        String sql = "CREATE DATABASE IF NOT EXISTS centromedico;";
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.execute(); //CREAR LA BD
         System.out.print(".");

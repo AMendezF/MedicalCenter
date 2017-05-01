@@ -18,9 +18,9 @@ public class Menu {
 
 	public void menuRoot(Conexion con) throws SQLException {
 		Scanner sc = new Scanner(System.in);
-		String dni = "";
+		String dni;
 		String op = "0";
-		paciente = new Paciente(dni, con);
+		paciente = new Paciente(con);
 
 		do {
 			System.out.println("\n\nEntrando en menu de gestor: ");
