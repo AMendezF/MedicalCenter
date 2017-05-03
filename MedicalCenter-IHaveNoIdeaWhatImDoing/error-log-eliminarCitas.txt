@@ -1,0 +1,52 @@
+Menu del paciente: 
+72366652G - John Wick; ContinentalInsurance.
+
+  Selecciona la opción que desee realizar: 
+	1. Coger nuevo paciente
+	2. Mostrar citas del paciente
+	3. Pedir cita
+	4. Cancelar cita
+	5. Modificar paciente
+	0. Salir
+2
+1. 2017-05-04 17:40:00 con Alfonso, Traumatología
+2. 2017-05-04 18:00:00 con Juana, M. Familia
+
+
+Menu del paciente: 
+72366652G - John Wick; ContinentalInsurance.
+
+  Selecciona la opción que desee realizar: 
+	1. Coger nuevo paciente
+	2. Mostrar citas del paciente
+	3. Pedir cita
+	4. Cancelar cita
+	5. Modificar paciente
+	0. Salir
+
+
+
+Menu del paciente: 
+72366652G - John Wick; ContinentalInsurance.
+
+  Selecciona la opción que desee realizar: 
+	1. Coger nuevo paciente
+	2. Mostrar citas del paciente
+	3. Pedir cita
+	4. Cancelar cita
+	5. Modificar paciente
+	0. Salir
+4
+Elija la cita que desea cancelar: 
+1. 2017-05-04 17:40:00 con Alfonso, Traumatología
+2. 2017-05-04 18:00:00 con Juana, M. Familia
+1
+Se ha eliminado la cita: 2017-5-04 17:40:00 con Alfonso, Traumatología
+Exception in thread "main" java.lang.NullPointerException
+	at Medico.eliminarCita(Medico.java:238)
+	at main.eliminarCita(main.java:98)
+	at Menu.gestionarPacientes(Menu.java:112)
+	at Menu.menuRoot(Menu.java:48)
+	at main.main(main.java:530)
+/home/niels/.cache/netbeans/8.2/executor-snippets/run.xml:53: Java returned: 1
+BUILD FAILED (total time: 2 minutes 17 seconds) 
