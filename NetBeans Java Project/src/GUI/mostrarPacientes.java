@@ -3,15 +3,18 @@ package GUI;
 
 import clases.Conexion;
 import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.ResultSetMetaData;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
@@ -20,7 +23,6 @@ import javax.swing.table.TableRowSorter;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author bm0275
@@ -33,12 +35,11 @@ public class mostrarPacientes extends javax.swing.JPanel {
 	private Conexion con;
 	private Connection reg;
 	private TableRowSorter trsFiltro;
-	
-	
+
 	public mostrarPacientes(Conexion con) {
 		initComponents();
 		this.con = con;
-		this.reg = con.getCon();				
+		this.reg = con.getCon();
 	}
 
 	/**
@@ -59,14 +60,14 @@ public class mostrarPacientes extends javax.swing.JPanel {
 
         tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "DNI", "Nombre", "Apellidos", "Seguro"
+
             }
         ));
         tablaInfo.setColumnSelectionAllowed(true);
@@ -110,11 +111,11 @@ public class mostrarPacientes extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(175, 175, 175)
                         .addComponent(mostrar)))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,82 +127,85 @@ public class mostrarPacientes extends javax.swing.JPanel {
                     .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
                 .addComponent(mostrar)
                 .addContainerGap(45, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBuscarKeyTyped
-        // TODO add your handling code here:
-        textFieldBuscar.addKeyListener(new KeyAdapter() {
-            public void keyReleased(final KeyEvent e) {
-                String cadena = (textFieldBuscar.getText());
-                textFieldBuscar.setText(cadena);
-                repaint();
-                filtro();
-            }
-        });
-        trsFiltro = new TableRowSorter(tablaInfo.getModel());
-        tablaInfo.setRowSorter(trsFiltro);
+		// TODO add your handling code here:
+		textFieldBuscar.addKeyListener(new KeyAdapter() {
+			public void keyReleased(final KeyEvent e) {
+				String cadena = (textFieldBuscar.getText());
+				textFieldBuscar.setText(cadena);
+				repaint();
+				filtro();
+			}
+		});
+		trsFiltro = new TableRowSorter(tablaInfo.getModel());
+		tablaInfo.setRowSorter(trsFiltro);
     }//GEN-LAST:event_textFieldBuscarKeyTyped
 
-	
 	public void filtro() {
-        int columnaABuscar = 0;
-        if (desplegableColumnas.getSelectedItem() == "DNI") {
-            columnaABuscar = 0;
-        }
-        if (desplegableColumnas.getSelectedItem().toString() == "Nombre") {
-            columnaABuscar = 1;
-        }
-        if (desplegableColumnas.getSelectedItem() == "Apellidos") {
-            columnaABuscar = 2;
-        }
+		int columnaABuscar = 0;
+		if (desplegableColumnas.getSelectedItem() == "DNI") {
+			columnaABuscar = 0;
+		}
+		if (desplegableColumnas.getSelectedItem().toString() == "Nombre") {
+			columnaABuscar = 1;
+		}
+		if (desplegableColumnas.getSelectedItem() == "Apellidos") {
+			columnaABuscar = 2;
+		}
 		if (desplegableColumnas.getSelectedItem() == "Seguro") {
-            columnaABuscar = 2;
-        }
-        trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), columnaABuscar));
-}
-	
+			columnaABuscar = 2;
+		}
+		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), columnaABuscar));
+	}
+
     private void desplegableColumnasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableColumnasActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_desplegableColumnasActionPerformed
+
+	public DefaultTableModel buildTableModel(ResultSet rs)throws SQLException {
+
+		java.sql.ResultSetMetaData metaData = rs.getMetaData();
+
+		// names of columns
+		Vector<String> columnNames = new Vector<String>();
+		int columnCount = metaData.getColumnCount();
+		for (int column = 1; column <= columnCount; column++) {
+			columnNames.add(metaData.getColumnName(column));
+		}
+
+		// data of the table
+		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+		while (rs.next()) {
+			Vector<Object> vector = new Vector<Object>();
+			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+				vector.add(rs.getObject(columnIndex));
+			}
+			data.add(vector);
+		}
+
+		return new DefaultTableModel(data, columnNames);
+
+	}
 
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
 		try {
-			Object[] objeto = new Object [3];
-			//tablaInfo.addRowSelectionInterval(WIDTH, WIDTH);
-			TableColumn column = new TableColumn();
-			
 			String sql;
 			sql = "SELECT DNI, nombre, apellidos, compsegur FROM centromedico.paciente;";
-			
 			java.sql.PreparedStatement preparedStmt = reg.prepareStatement(sql);
 			ResultSet rs = preparedStmt.executeQuery();
-			//column = rs.;
-			tablaInfo.addColumn(column);
-			//System.out.println(column.get);
-			Object datos[] = new Object[4];
-			
-			//tablaInfo.addColumn();
-			//tablaInfo.addRowSelectionInterval(1, 3);
-			while (rs.next()) {
-						//tablaInfo.addColumnSelectionInterval();
-						for (int i = 0; i < 4; i++){
-							datos[i] = rs.getObject(i+1);
-							tablaInfo.add((Component) datos[i]);
-							System.out.println(datos);
-							//tablaInfo.addColumn((TableColumn) rs.getObject(i+1));
 
-						}
-						//tablaInfo.setModel(datos);
-						//tablaInfo.add(datos);
-			}
+			tablaInfo.setModel(buildTableModel(rs));
 		} catch (SQLException ex) {
 			Logger.getLogger(mostrarPacientes.class.getName()).log(Level.SEVERE, null, ex);
 		}
+
     }//GEN-LAST:event_mostrarActionPerformed
 
 
