@@ -1,2 +1,0 @@
-# MedicalCenter
-A university exercise.
