@@ -1,6 +1,5 @@
 package clases;
 
-
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -15,7 +14,7 @@ public class Menu {
 	private Medico medico;
 
 	public Menu() {
-		
+
 	}
 
 	public void menuRoot(Conexion con) throws SQLException {
@@ -36,7 +35,7 @@ public class Menu {
 			op = sc.nextLine();
 
 			switch (op) {
-				
+
 				case "1":
 					main.mostrarListaPacientes(con);
 					break;
