@@ -1,9 +1,5 @@
 package clases;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/Next-Sprint
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,28 +11,17 @@ import java.util.Scanner;
 
 public class Conexion {
 
-<<<<<<< HEAD
-	private static Connection con;
-=======
 	private static Connection connection;
->>>>>>> refs/remotes/origin/Next-Sprint
 	private static final String driver = "com.mysql.jdbc.Driver";
 	private static String user = "root";
 	private static String password = "";
 	private static final String url = "jdbc:mysql://localhost:3306/";
 
 	public Conexion() {
-<<<<<<< HEAD
-		con = null;
-		Scanner sc = new Scanner(System.in);
-
-		// Tienen que estar creados los distintos tipos de usuario en la BD
-=======
 		connection = null;
 		Scanner sc = new Scanner(System.in);
 
         // Tienen que estar creados los distintos tipos de usuario en la BD
->>>>>>> refs/remotes/origin/Next-Sprint
 		// con los permisos correctos para que estas lineas tengan sentido
 		// solo root funciona seguro
 		System.out.print("\nUsuario (root/medico(codColegiado)): \n");
@@ -47,13 +32,8 @@ public class Conexion {
 
 		try {
 			Class.forName(driver);
-<<<<<<< HEAD
-			con = DriverManager.getConnection(url, user, password);
-			if (con != null) {
-=======
 			connection = DriverManager.getConnection(url, user, password);
 			if (connection != null) {
->>>>>>> refs/remotes/origin/Next-Sprint
 				System.out.println("Conexion establecida");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
@@ -61,18 +41,13 @@ public class Conexion {
 		}
 	}
 
-<<<<<<< HEAD
-	public Connection getCon() {
-		return con;
-=======
 	/**
-	 *
-	 * @param connection
-	 * @param sql Sentencia SQL para la consulta.
+         * Realiza una consulta SQL, que reciba por parámetro, a la BD.
+         * @param sql Sentencia SQL para la consulta.
 	 * @return Retorna un objeto ResulSet con el resultado de la consulta.
 	 * @throws SQLException Arroja un error si la consulta no se produjo
-	 * correctamente.
-	 */
+	 * correctamente. 
+         */
 	public ResultSet makeQuery(String sql) throws SQLException {
 		PreparedStatement preparedStmt = connection.prepareStatement(sql);
 		ResultSet resulSet = preparedStmt.executeQuery();
@@ -81,7 +56,6 @@ public class Conexion {
 
 	public Connection getCon() {
 		return connection;
->>>>>>> refs/remotes/origin/Next-Sprint
 	}
 
 	public String getUser() {
@@ -89,34 +63,21 @@ public class Conexion {
 	}
 
 	public void desconectar() {
-<<<<<<< HEAD
-		con = null;
-		if (con == null) {
-=======
 		connection = null;
 		if (connection == null) {
->>>>>>> refs/remotes/origin/Next-Sprint
 			System.out.println("Conexion terminada");
 		}
 	}
 
 	public void crearBD() throws SQLException {
 		PreparedStatement preparedStmt;
-<<<<<<< HEAD
-		Connection reg = con;
-=======
 		Connection reg = connection;
->>>>>>> refs/remotes/origin/Next-Sprint
 		System.out.println("Cargando los datos ");
 		String sql = "CREATE DATABASE IF NOT EXISTS CentroMedico;";
 		preparedStmt = reg.prepareStatement(sql);
 		preparedStmt.execute(); //CREAR LA BD
 		System.out.print(".");
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> refs/remotes/origin/Next-Sprint
 		String crearCitas = "CREATE TABLE IF NOT EXISTS centromedico.`citas` (\n"
 				+ "  `Cod_cita` varchar(20) NOT NULL,\n"
 				+ "  `Dia` date NOT NULL,\n"
@@ -193,16 +154,6 @@ public class Conexion {
 		preparedStmt.execute();
 		System.out.print(".");
 
-<<<<<<< HEAD
-//1= mañana, 2= tarde, 3= mañana y tarde
-		String iEspecialidades = "REPLACE INTO centromedico.`especialidad` (`Cod_especialidad`, `Nombre`, `Horario`) VALUES\n"
-				+ "(1, 'Cardiología',   '1,2,3,1,2,3,3'),\n"
-				+ "(2, 'Neurología',    '1,2,3,3,3,1,2'),\n"
-				+ "(3, 'Traumatología', '2,3,1,3,1,3,2'),\n"
-				+ "(4, 'Ginecología',   '2,3,3,1,3,1,3'),\n"
-				+ "(5, 'Urología',      '3,3,1,2,1,3,3'),"
-				+ "(6, 'Oftalmología',  '3,1,2,3,2,2,1'),"
-=======
 //1= maÃ±ana, 2= tarde, 3= maÃ±ana y tarde
 		String iEspecialidades = "REPLACE INTO centromedico.`especialidad` (`Cod_especialidad`, `Nombre`, `Horario`) VALUES\n"
 				+ "(1, 'CardiologÃ­a',   '1,2,3,1,2,3,3'),\n"
@@ -211,7 +162,6 @@ public class Conexion {
 				+ "(4, 'GinecologÃ­a',   '2,3,3,1,3,1,3'),\n"
 				+ "(5, 'UrologÃ­a',      '3,3,1,2,1,3,3'),"
 				+ "(6, 'OftalmologÃ­a',  '3,1,2,3,2,2,1'),"
->>>>>>> refs/remotes/origin/Next-Sprint
 				+ "(7, 'M. Familia',    '3,1,2,2,3,2,1')";
 		preparedStmt = reg.prepareStatement(iEspecialidades);
 		preparedStmt.execute();
@@ -219,21 +169,6 @@ public class Conexion {
 
 		String iMedicos = "REPLACE INTO centromedico.`medico` (`N_colegiado`, `Nombre`, `Apellidos`, `Horario`, `Tiempo_min`, `Especialidad`) VALUES\n"
 				+ "(103456, 'Juana', 'Hermoso', 'Tarde', 10, 7),\n"
-<<<<<<< HEAD
-				+ "(120056, 'Laura', 'Rodriguez', 'Mañana', 10, 3),\n"
-				+ "(120356, 'Victor', 'Toro', 'Mañana', 10, 7),\n"
-				+ "(123456, 'Alfonso', 'Garcia', 'Mañana', 15, 1),\n"
-				+ "(123458, 'Maria', 'Garcia', 'Mañana', 10, 4),\n"
-				+ "(123656, 'Alfonsa', 'Lopez', 'Tarde', 20, 2),\n"
-				+ "(123786, 'Roberto', 'Ramirez', 'Tarde', 15, 1),\n"
-				+ "(126156, 'Carla', 'Izquierdo', 'Tarde', 10, 4),\n"
-				+ "(129656, 'Julian', 'Garcia', 'Mañana', 20, 2),\n"
-				+ "(256975, 'Alfonso', 'Sanchez', 'Tarde', 10, 3),\n"
-				+ "(129777, 'Pablo', 'Hernanz', 'Mañana', 15, 5),\n"
-				+ "(129999, 'Julian', 'Perez', 'Tarde', 15, 5),\n"
-				+ "(129435, 'Rosa', 'Sánchez', 'Mañana', 15, 6),\n"
-				+ "(129589, 'Román', 'Perez', 'Tarde', 15, 6)";
-=======
 				+ "(120056, 'Laura', 'Rodriguez', 'MaÃ±ana', 10, 3),\n"
 				+ "(120356, 'Victor', 'Toro', 'MaÃ±ana', 10, 7),\n"
 				+ "(123456, 'Alfonso', 'Garcia', 'MaÃ±ana', 15, 1),\n"
@@ -247,7 +182,6 @@ public class Conexion {
 				+ "(129999, 'Julian', 'Perez', 'Tarde', 15, 5),\n"
 				+ "(129435, 'Rosa', 'SÃ¡nchez', 'MaÃ±ana', 15, 6),\n"
 				+ "(129589, 'RomÃ¡n', 'Perez', 'Tarde', 15, 6)";
->>>>>>> refs/remotes/origin/Next-Sprint
 		preparedStmt = reg.prepareStatement(iMedicos);
 		preparedStmt.execute();
 		System.out.print(".");
@@ -290,11 +224,7 @@ public class Conexion {
 	}
 
 	private boolean existeUser(String nColegiado) throws SQLException {
-<<<<<<< HEAD
-		Connection reg = con;
-=======
 		Connection reg = connection;
->>>>>>> refs/remotes/origin/Next-Sprint
 		PreparedStatement preparedStmt;
 		boolean resul = false;
 
