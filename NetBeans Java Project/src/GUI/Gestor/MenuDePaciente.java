@@ -2,11 +2,9 @@ package GUI.Gestor;
 
 
 import GUI.InterfazGrafica;
-import GUI.mostrarCitas;
 import clases.Conexion;
 import java.awt.BorderLayout;
 import java.sql.Connection;
-import javax.swing.JPanel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

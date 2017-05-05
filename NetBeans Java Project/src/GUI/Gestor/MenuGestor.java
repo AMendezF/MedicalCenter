@@ -2,6 +2,7 @@ package GUI.Gestor;
 
 
 import clases.Conexion;
+import clases.Gestor;
 import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class MenuGestor extends javax.swing.JPanel {
 	 * Creates new form MenuGestor
 	 */
 	private TableRowSorter trsFiltro;
-	private Conexion con;
+	private Conexion conexion;
         private Gestor gestor;
 	private Connection reg;
 	private AñadirPaciente añadirPaciente;
@@ -37,8 +38,9 @@ public class MenuGestor extends javax.swing.JPanel {
 	
 	public MenuGestor(Conexion conexion) {
 		initComponents();
-		this.con = conexion;
-		this.reg = con.getCon();
+		this.conexion = conexion;
+		this.reg = conexion.getCon();
+                this.gestor = new Gestor(conexion);
 	}
 
 	/**
@@ -227,7 +229,7 @@ public class MenuGestor extends javax.swing.JPanel {
     }//GEN-LAST:event_formAncestorAdded
 
     private void buttonBorrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarPacienteActionPerformed
-        borrarPaciente = new BorrarPaciente(con);
+        borrarPaciente = new BorrarPaciente(conexion);
         borrarPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         borrarPaciente.setLocation(0, 0);
 
@@ -238,7 +240,7 @@ public class MenuGestor extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonBorrarPacienteActionPerformed
 
     private void buttonAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirPacienteActionPerformed
-	añadirPaciente = new AñadirPaciente(con);
+	añadirPaciente = new AñadirPaciente(conexion);
         añadirPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         añadirPaciente.setLocation(0, 0);
 
@@ -249,7 +251,7 @@ public class MenuGestor extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
 
     private void buttonMostrarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarPacientesActionPerformed
-        mostrarPacientes = new mostrarPacientes(con);
+        mostrarPacientes = new mostrarPacientes(conexion);
         mostrarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         mostrarPacientes.setLocation(0, 0);
 
@@ -268,7 +270,7 @@ public class MenuGestor extends javax.swing.JPanel {
 
     private void buttonGestionarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGestionarPacientesActionPerformed
         mostrarDatos.setSize(mostrarDatos.getWidth() + menuOpciones.getWidth(), mostrarDatos.getHeight());
-		menuDePaciente = new  MenuDePaciente(con);
+		menuDePaciente = new  MenuDePaciente(conexion);
         menuDePaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         menuDePaciente.setLocation(0, 0);
 
@@ -280,7 +282,7 @@ public class MenuGestor extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonGestionarPacientesActionPerformed
 
     private void buttonMostrarSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarSalasActionPerformed
-      	mostrarSalas = new mostrarSalas(con);
+      	mostrarSalas = new mostrarSalas(conexion);
 		mostrarSalas.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         mostrarSalas.setLocation(0, 0);
 		
@@ -292,7 +294,7 @@ public class MenuGestor extends javax.swing.JPanel {
 
     private void buttonGestionarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGestionarMedicoActionPerformed
         mostrarDatos.setSize(mostrarDatos.getWidth() + menuOpciones.getWidth(), mostrarDatos.getHeight());
-		menuDeMedico = new  MenuDeMedico(con);
+		menuDeMedico = new  MenuDeMedico(conexion);
         menuDeMedico.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         menuDeMedico.setLocation(0, 0);
 

@@ -1,7 +1,6 @@
 package GUI.Medico;
 
 
-import GUI.mostrarPacientesMedico;
 import clases.Conexion;
 import java.awt.BorderLayout;
 
