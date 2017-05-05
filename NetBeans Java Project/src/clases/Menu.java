@@ -35,7 +35,6 @@ public class Menu {
 			op = sc.nextLine();
 
 			switch (op) {
-
 				case "1":
 					main.mostrarListaPacientes(con);
 					break;

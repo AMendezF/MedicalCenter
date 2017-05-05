@@ -690,7 +690,7 @@ public class main {
 		Menu menu = new Menu();
 
 		try {
-			con = new Conexion();
+			//con = new Conexion();
 			
 			// No muestra las opciones si no hay conexion
 			if (con.getCon() != null) {

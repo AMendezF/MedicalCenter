@@ -7,74 +7,111 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class Conexion {
 
-	private static Connection connection;
+	private static Connection con;
 	private static final String driver = "com.mysql.jdbc.Driver";
-	private static String user = "root";
+	private static String user = "";
 	private static String password = "";
 	private static final String url = "jdbc:mysql://localhost:3306/";
+	private static final String dbName = "centromedico";
 
-	public Conexion() {
-		connection = null;
-		Scanner sc = new Scanner(System.in);
-
-        // Tienen que estar creados los distintos tipos de usuario en la BD
-		// con los permisos correctos para que estas lineas tengan sentido
-		// solo root funciona seguro
-		System.out.print("\nUsuario (root/medico(codColegiado)): \n");
-		user = sc.nextLine();
-
-		System.out.print("\nPassword (vacia por defecto): \n");
-		password = sc.nextLine();
+	public Conexion(String usuario, char[] cPassword) {
+		this.con = null;
+		this.user = usuario;
+		setPassword(cPassword);
 
 		try {
 			Class.forName(driver);
-			connection = DriverManager.getConnection(url, user, password);
-			if (connection != null) {
+			this.con = DriverManager.getConnection(url, user, password);
+
+			if (getCon() != null) {
 				System.out.println("Conexion establecida");
+
+				if (getUser().equals("root") && !existeBD()) {
+					crearBD();
+				}
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println("Error al conectar " + e);
 		}
 	}
 
-	/**
-	 *
-	 * @param connection
-	 * @param sql Sentencia SQL para la consulta.
-	 * @return Retorna un objeto ResulSet con el resultado de la consulta.
-	 * @throws SQLException Arroja un error si la consulta no se produjo
-	 * correctamente.
-	 */
-	public ResultSet makeQuery(String sql) throws SQLException {
-		PreparedStatement preparedStmt = connection.prepareStatement(sql);
-		ResultSet resulSet = preparedStmt.executeQuery();
-		return resulSet;
-	}
-
 	public Connection getCon() {
-		return connection;
+		return this.con;
 	}
 
 	public String getUser() {
-		return user;
+		return this.user;
 	}
 
-	public void desconectar() {
-		connection = null;
-		if (connection == null) {
+	/**
+	 * Devuelve true si la conexion sigue siendo valida
+	 *
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean esValida() throws SQLException {
+		return this.con.isValid(10);
+	}
+
+	/**
+	 * Cierra la conexion que se haya creado
+	 *
+	 * @throws SQLException
+	 */
+	public void desconectar() throws SQLException {
+		this.con.close();
+		if (con == null) {
 			System.out.println("Conexion terminada");
 		}
 	}
 
+	/**
+	 * Comprueba que existe la database "centromedico"
+	 *
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean existeBD() throws SQLException {
+		boolean resul = false;
+		String nombre = "";
+		ResultSet rs;
+		rs = con.getMetaData().getCatalogs();
+
+		while (rs.next()) {
+			nombre = rs.getString(1);
+			if (dbName.equals(nombre)) {
+				resul = true;
+			}
+		}
+		return resul;
+	}
+
+	/**
+	 * Convierte la contraseña a un String lo guarda en el atributo password
+	 *
+	 * @param cPassword
+	 */
+	private void setPassword(char[] cPassword) {
+		this.password = "";
+		for (int i = 0; i < cPassword.length; i++) {
+			this.password += cPassword[i];
+		}
+	}
+
+	/**
+	 * Crea la base de datos
+	 *
+	 * @throws SQLException
+	 */
 	public void crearBD() throws SQLException {
 		PreparedStatement preparedStmt;
-		Connection reg = connection;
+		Connection reg = con;
 		System.out.println("Cargando los datos ");
-		String sql = "CREATE DATABASE IF NOT EXISTS CentroMedico;";
+		String sql = "CREATE DATABASE IF NOT EXISTS centromedico;";
 		preparedStmt = reg.prepareStatement(sql);
 		preparedStmt.execute(); //CREAR LA BD
 		System.out.print(".");
@@ -155,14 +192,15 @@ public class Conexion {
 		preparedStmt.execute();
 		System.out.print(".");
 
-//1= maÃ±ana, 2= tarde, 3= maÃ±ana y tarde
+		//1= mañana, 2= tarde, 3= mañana y tarde
 		String iEspecialidades = "REPLACE INTO centromedico.`especialidad` (`Cod_especialidad`, `Nombre`, `Horario`) VALUES\n"
-				+ "(1, 'CardiologÃ­a',   '1,2,3,1,2,3,3'),\n"
-				+ "(2, 'NeurologÃ­a',    '1,2,3,3,3,1,2'),\n"
-				+ "(3, 'TraumatologÃ­a', '2,3,1,3,1,3,2'),\n"
-				+ "(4, 'GinecologÃ­a',   '2,3,3,1,3,1,3'),\n"
-				+ "(5, 'UrologÃ­a',      '3,3,1,2,1,3,3'),"
-				+ "(6, 'OftalmologÃ­a',  '3,1,2,3,2,2,1'),"
+				+ "(1, 'Cardiología',   '1,2,3,1,2,3,3'),\n"
+				+ "(2, 'Neurología',    '1,2,3,3,3,1,2'),\n"
+				+ "(3, 'Traumatología', '2,3,1,3,1,3,2'),\n"
+				+ "(4, 'Ginecología',   '2,3,3,1,3,1,3'),\n"
+				+ "(5, 'Urología',      '3,3,1,2,1,3,3'),"
+				+ "(6, 'Oftalmología',  '3,1,2,3,2,2,1'),"
+
 				+ "(7, 'M. Familia',    '3,1,2,2,3,2,1')";
 		preparedStmt = reg.prepareStatement(iEspecialidades);
 		preparedStmt.execute();
@@ -170,19 +208,21 @@ public class Conexion {
 
 		String iMedicos = "REPLACE INTO centromedico.`medico` (`N_colegiado`, `Nombre`, `Apellidos`, `Horario`, `Tiempo_min`, `Especialidad`) VALUES\n"
 				+ "(103456, 'Juana', 'Hermoso', 'Tarde', 10, 7),\n"
-				+ "(120056, 'Laura', 'Rodriguez', 'MaÃ±ana', 10, 3),\n"
-				+ "(120356, 'Victor', 'Toro', 'MaÃ±ana', 10, 7),\n"
-				+ "(123456, 'Alfonso', 'Garcia', 'MaÃ±ana', 15, 1),\n"
-				+ "(123458, 'Maria', 'Garcia', 'MaÃ±ana', 10, 4),\n"
+
+				+ "(120056, 'Laura', 'Rodriguez', 'Mañana', 10, 3),\n"
+				+ "(120356, 'Victor', 'Toro', 'Mañana', 10, 7),\n"
+				+ "(123456, 'Alfonso', 'Garcia', 'Mañana', 15, 1),\n"
+				+ "(123458, 'Maria', 'Garcia', 'Mañana', 10, 4),\n"
 				+ "(123656, 'Alfonsa', 'Lopez', 'Tarde', 20, 2),\n"
 				+ "(123786, 'Roberto', 'Ramirez', 'Tarde', 15, 1),\n"
 				+ "(126156, 'Carla', 'Izquierdo', 'Tarde', 10, 4),\n"
-				+ "(129656, 'Julian', 'Garcia', 'MaÃ±ana', 20, 2),\n"
+				+ "(129656, 'Julian', 'Garcia', 'Mañana', 20, 2),\n"
 				+ "(256975, 'Alfonso', 'Sanchez', 'Tarde', 10, 3),\n"
-				+ "(129777, 'Pablo', 'Hernanz', 'MaÃ±ana', 15, 5),\n"
+				+ "(129777, 'Pablo', 'Hernanz', 'Mañana', 15, 5),\n"
 				+ "(129999, 'Julian', 'Perez', 'Tarde', 15, 5),\n"
-				+ "(129435, 'Rosa', 'SÃ¡nchez', 'MaÃ±ana', 15, 6),\n"
-				+ "(129589, 'RomÃ¡n', 'Perez', 'Tarde', 15, 6)";
+				+ "(129435, 'Rosa', 'Sánchez', 'Mañana', 15, 6),\n"
+				+ "(129589, 'Román', 'Perez', 'Tarde', 15, 6)";
+
 		preparedStmt = reg.prepareStatement(iMedicos);
 		preparedStmt.execute();
 		System.out.print(".");
@@ -224,13 +264,44 @@ public class Conexion {
 		}
 	}
 
-	private boolean existeUser(String nColegiado) throws SQLException {
-		Connection reg = connection;
+
+	/**
+	 * Devuelve true si existe el medico determinado por el String "nColegiado".
+	 * Sirve para crear los usuarios en la BD
+	 *
+	 * @param nColegiado
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean existeUser(String nColegiado) throws SQLException {
+
 		PreparedStatement preparedStmt;
 		boolean resul = false;
 
 		String sql = "SELECT user from mysql.user where user = ?;";
-		preparedStmt = reg.prepareStatement(sql);
+		preparedStmt = con.prepareStatement(sql);
+		preparedStmt.setString(1, nColegiado);
+		ResultSet rs = preparedStmt.executeQuery();
+		while (rs.next()) {
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Busca en medico si existe el medico con nColegiado. Sirve para conectarse
+	 * como medico a la BD.
+	 *
+	 * @param nColegiado
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean existeMedico(String nColegiado) throws SQLException {
+		PreparedStatement preparedStmt;
+		boolean resul = false;
+
+		String sql = "SELECT n_colegiado from centromedico.medico where n_colegiado = ?;";
+		preparedStmt = con.prepareStatement(sql);
 		preparedStmt.setString(1, nColegiado);
 		ResultSet rs = preparedStmt.executeQuery();
 		while (rs.next()) {
