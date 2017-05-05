@@ -1,27 +1,12 @@
 package GUI.Gestor;
 
 
-import GUI.Gestor.mostrarPacientes;
-import GUI.Gestor.AñadirPaciente;
-import GUI.Gestor.MenuDeMedico;
-import GUI.Gestor.BorrarPaciente;
-import GUI.Gestor.mostrarSalas;
-import GUI.Gestor.MenuDePaciente;
 import clases.Conexion;
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.PopupMenu;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTable;
-import javax.swing.RowFilter;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
 /*
@@ -41,6 +26,7 @@ public class MenuGestor extends javax.swing.JPanel {
 	 */
 	private TableRowSorter trsFiltro;
 	private Conexion con;
+        private Gestor gestor;
 	private Connection reg;
 	private AñadirPaciente añadirPaciente;
 	private BorrarPaciente borrarPaciente;
@@ -252,7 +238,7 @@ public class MenuGestor extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonBorrarPacienteActionPerformed
 
     private void buttonAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirPacienteActionPerformed
-		añadirPaciente = new AñadirPaciente(con);
+	añadirPaciente = new AñadirPaciente(con);
         añadirPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         añadirPaciente.setLocation(0, 0);
 

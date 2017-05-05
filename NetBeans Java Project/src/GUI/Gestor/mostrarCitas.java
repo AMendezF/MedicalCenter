@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Gestor;
 
 
 import clases.Conexion;

@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Medico;
 
 
 import clases.Conexion;
