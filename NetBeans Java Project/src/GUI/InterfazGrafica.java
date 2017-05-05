@@ -1,6 +1,8 @@
 package GUI;
 
 
+import GUI.Medico.MenuMedico;
+import GUI.Gestor.MenuGestor;
 import clases.Conexion;
 import java.awt.BorderLayout;
 import java.sql.SQLException;

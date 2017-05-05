@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Conexion {
 
-	private static Connection con;
+	private static Connection connection;
 	private static final String driver = "com.mysql.jdbc.Driver";
 	private static String user = "";
 	private static String password = "";
@@ -19,13 +19,13 @@ public class Conexion {
 	private static final String dbName = "centromedico";
 
 	public Conexion(String usuario, char[] cPassword) {
-		this.con = null;
+		this.connection = null;
 		this.user = usuario;
 		setPassword(cPassword);
 
 		try {
 			Class.forName(driver);
-			this.con = DriverManager.getConnection(url, user, password);
+			this.connection = DriverManager.getConnection(url, user, password);
 
 			if (getCon() != null) {
 				System.out.println("Conexion establecida");
@@ -40,7 +40,7 @@ public class Conexion {
 	}
 
 	public Connection getCon() {
-		return this.con;
+		return this.connection;
 	}
 
 	public String getUser() {
@@ -54,7 +54,7 @@ public class Conexion {
 	 * @throws SQLException
 	 */
 	public boolean esValida() throws SQLException {
-		return this.con.isValid(10);
+		return this.connection.isValid(10);
 	}
 
 	/**
@@ -63,8 +63,8 @@ public class Conexion {
 	 * @throws SQLException
 	 */
 	public void desconectar() throws SQLException {
-		this.con.close();
-		if (con == null) {
+		this.connection.close();
+		if (connection == null) {
 			System.out.println("Conexion terminada");
 		}
 	}
@@ -79,7 +79,7 @@ public class Conexion {
 		boolean resul = false;
 		String nombre = "";
 		ResultSet rs;
-		rs = con.getMetaData().getCatalogs();
+		rs = connection.getMetaData().getCatalogs();
 
 		while (rs.next()) {
 			nombre = rs.getString(1);
@@ -109,7 +109,7 @@ public class Conexion {
 	 */
 	public void crearBD() throws SQLException {
 		PreparedStatement preparedStmt;
-		Connection reg = con;
+		Connection reg = connection;
 		System.out.println("Cargando los datos ");
 		String sql = "CREATE DATABASE IF NOT EXISTS centromedico;";
 		preparedStmt = reg.prepareStatement(sql);
@@ -279,7 +279,7 @@ public class Conexion {
 		boolean resul = false;
 
 		String sql = "SELECT user from mysql.user where user = ?;";
-		preparedStmt = con.prepareStatement(sql);
+		preparedStmt = connection.prepareStatement(sql);
 		preparedStmt.setString(1, nColegiado);
 		ResultSet rs = preparedStmt.executeQuery();
 		while (rs.next()) {
@@ -301,7 +301,7 @@ public class Conexion {
 		boolean resul = false;
 
 		String sql = "SELECT n_colegiado from centromedico.medico where n_colegiado = ?;";
-		preparedStmt = con.prepareStatement(sql);
+		preparedStmt = connection.prepareStatement(sql);
 		preparedStmt.setString(1, nColegiado);
 		ResultSet rs = preparedStmt.executeQuery();
 		while (rs.next()) {
