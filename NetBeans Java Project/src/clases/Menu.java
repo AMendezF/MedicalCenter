@@ -50,7 +50,7 @@ public class Menu {
 					gestionarPacientes(paciente, con);
 					break;
 				case "4":
-					main.mostrarListaMedicos(con);
+					//main.mostrarListaMedicos(con); //A la espera de interfaz
 					//medico = main.cogerMedico();
 					gestionarMedicos(medico, con);
 					break;
@@ -148,7 +148,7 @@ public class Menu {
 
 			switch (op) {
 				case "1":
-					main.mostrarListaMedicos(con);
+					//main.mostrarListaMedicos(con); //en interfaz
 					break;
 				case "2":
 					main.addMedico(con);

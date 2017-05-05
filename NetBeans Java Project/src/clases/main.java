@@ -778,28 +778,16 @@ public class main {
         return resul;
     }
 
-    public static void mostrarListaMedicos(Conexion con) throws SQLException {
+    public static ResultSet mostrarListaMedicos(Conexion con) throws SQLException {
         //ESTO DEBERIA IR A GESTOR!!!!
         
         Connection reg = con.getCon();
-        List<Medico> medicos = new ArrayList();
         String sql;
-        sql = "SELECT medico.n_colegiado FROM centromedico.medico;";
-
+        sql = "SELECT * FROM centromedico.medico;";
         PreparedStatement preparedStmt = reg.prepareStatement(sql);
         ResultSet rs = preparedStmt.executeQuery();
 
-        while (rs.next()) {
-            int nColegiado = rs.getInt("medico.n_colegiado");
-            Medico medico = new Medico(nColegiado, con);
-            medicos.add(medico);
-        }
-
-        System.out.println("Lista de medicos:");
-        for (int i = 0; i < medicos.size(); i++) {
-            System.out.print("" + (i + 1) + ": ");
-            System.out.println(medicos.get(i).mostrarMedico());
-        }
+        return rs;
     }
 
 
