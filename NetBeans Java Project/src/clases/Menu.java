@@ -190,5 +190,4 @@ public class Menu {
 		System.out.println("Saliendo de menu medico\n");
 		con.desconectar();
 	}
-
 }

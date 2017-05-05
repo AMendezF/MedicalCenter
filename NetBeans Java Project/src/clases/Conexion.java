@@ -55,7 +55,21 @@ public class Conexion {
 	 */
 	public boolean esValida() throws SQLException {
 		return this.connection.isValid(10);
+        }
+        
+        /**
+         * Realiza una consulta SQL, que reciba por parámetro, a la BD.
+         * @param sql Sentencia SQL para la consulta.
+	 * @return Retorna un objeto ResulSet con el resultado de la consulta.
+	 * @throws SQLException Arroja un error si la consulta no se produjo
+	 * correctamente. 
+         */
+	public ResultSet makeQuery(String sql) throws SQLException {
+		PreparedStatement preparedStmt = connection.prepareStatement(sql);
+		ResultSet resulSet = preparedStmt.executeQuery();
+		return resulSet;
 	}
+
 
 	/**
 	 * Cierra la conexion que se haya creado

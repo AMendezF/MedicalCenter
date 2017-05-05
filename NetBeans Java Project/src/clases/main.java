@@ -527,30 +527,6 @@ public class main {
 		preparedStmt.execute();
 	}
 
-	public static int elegirEspecialidad(Conexion con) throws SQLException {
-		Connection reg = con.getCon();
-		PreparedStatement preparedStmt;
-		Scanner sc = new Scanner(System.in);
-		int codEspecialidad;
-
-		String sql = "SELECT * FROM centromedico.especialidad ORDER BY cod_especialidad;";
-		preparedStmt = reg.prepareStatement(sql);
-		ResultSet rs = preparedStmt.executeQuery();
-		List<String> listaNombres;
-		listaNombres = new ArrayList();
-		List<String> listaCodigos;
-		listaCodigos = new ArrayList();
-		while (rs.next()) {
-			listaNombres.add(rs.getString("nombre"));
-			listaCodigos.add(Integer.toString(rs.getInt("cod_especialidad")));
-		}
-		for (int i = 0; i < listaNombres.size(); i++) {
-			System.out.println(listaCodigos.get(i) + ". " + listaNombres.get(i));
-		}
-		codEspecialidad = sc.nextInt();
-		return codEspecialidad;
-	}
-
 	public static void eliminarMedico(Conexion con) throws SQLException {
 		int numColegiadoViejo;
 		Medico medico;
@@ -575,7 +551,7 @@ public class main {
 		}
 	}
 
-	private static void eliminarMedicoVacio(Medico medico, Conexion con) throws SQLException {
+	/*private static void eliminarMedicoVacio(Medico medico, Conexion con) throws SQLException {
 		Connection reg = con.getCon();
 		PreparedStatement preparedStmt;
 		String sql = "DELETE FROM centromedico.medico WHERE N_colegiado =? ";
@@ -583,7 +559,7 @@ public class main {
 		preparedStmt.setInt(1, medico.n_colegiado);
 		preparedStmt.execute();
 
-	}
+	}*/
 
 	private static void addMedicoSustituto(int codEspecialidad, int codColegiado, String horario, Conexion con) throws SQLException {
 		Scanner sc = new Scanner(System.in);
@@ -675,7 +651,7 @@ public class main {
 		}
 	}
 
-	private static void trasladarCitas(Conexion con, int codMedicoViejo, int codMedicoSustituto) throws SQLException {
+	/*private static void trasladarCitas(Conexion con, int codMedicoViejo, int codMedicoSustituto) throws SQLException {
 		Connection reg = con.getCon();
 		PreparedStatement preparedStmt;
 		String sql = "UPDATE centromedico.citas SET medico=? WHERE medico=?";
@@ -683,7 +659,7 @@ public class main {
 		preparedStmt.setInt(1, codMedicoSustituto);
 		preparedStmt.setInt(2, codMedicoViejo);
 		preparedStmt.execute();
-	}
+	}*/
 
 	public static void main(String[] args) {
 		Conexion con = null;
@@ -718,7 +694,7 @@ public class main {
 		//EN construnccion
 	}
 	
-	public static void mostrarListaPacientes(Conexion con) throws SQLException {
+	/*public static void mostrarListaPacientes(Conexion con) throws SQLException {
 		// Mismo funcionamiento que mostrarMedico
 		// Selecciona todos los DNI de los pacientes y los muestra individualmente
 		// mediante la funcion mostrarPaciente
@@ -739,7 +715,7 @@ public class main {
 			System.out.print("" + (i + 1) + ": ");
 			mostrarPaciente(dni.get(i), con);
 		}
-	}
+	}*/
 
 	public static void mostrarPaciente(String DNI, Conexion con) throws SQLException {
 		// Selecciona y muestra por pantalla los datos del paciente con el parametro DNI
@@ -774,7 +750,7 @@ public class main {
 		return resul;
 	}
 
-	public static void mostrarListaMedicos(Conexion con) throws SQLException {
+	/*public static void mostrarListaMedicos(Conexion con) throws SQLException {
 		// Mismo funcionamiento que mostrar pacientes
 		// Selecciona todos los n_colegiado de los medicos y los muestra individualmente
 		// mediante la funcion mostrarMedico
@@ -795,7 +771,7 @@ public class main {
 			System.out.print("" + (i + 1) + ": ");
 			mostrarMedico(nColegiado.get(i), con);
 		}
-	}
+	}*/
 
 	public static void mostrarMedico(String nColegiado, Conexion con) throws SQLException {
 		// Selecciona y muestra por pantalla los datos del medico con el parametro n_colegiado
