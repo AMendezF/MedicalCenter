@@ -1,6 +1,5 @@
 package clases;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Conexion {
 
@@ -200,6 +200,7 @@ public class Conexion {
 				+ "(4, 'Ginecología',   '2,3,3,1,3,1,3'),\n"
 				+ "(5, 'Urología',      '3,3,1,2,1,3,3'),"
 				+ "(6, 'Oftalmología',  '3,1,2,3,2,2,1'),"
+
 				+ "(7, 'M. Familia',    '3,1,2,2,3,2,1')";
 		preparedStmt = reg.prepareStatement(iEspecialidades);
 		preparedStmt.execute();
@@ -207,6 +208,7 @@ public class Conexion {
 
 		String iMedicos = "REPLACE INTO centromedico.`medico` (`N_colegiado`, `Nombre`, `Apellidos`, `Horario`, `Tiempo_min`, `Especialidad`) VALUES\n"
 				+ "(103456, 'Juana', 'Hermoso', 'Tarde', 10, 7),\n"
+
 				+ "(120056, 'Laura', 'Rodriguez', 'Mañana', 10, 3),\n"
 				+ "(120356, 'Victor', 'Toro', 'Mañana', 10, 7),\n"
 				+ "(123456, 'Alfonso', 'Garcia', 'Mañana', 15, 1),\n"
@@ -220,6 +222,7 @@ public class Conexion {
 				+ "(129999, 'Julian', 'Perez', 'Tarde', 15, 5),\n"
 				+ "(129435, 'Rosa', 'Sánchez', 'Mañana', 15, 6),\n"
 				+ "(129589, 'Román', 'Perez', 'Tarde', 15, 6)";
+
 		preparedStmt = reg.prepareStatement(iMedicos);
 		preparedStmt.execute();
 		System.out.print(".");
@@ -261,6 +264,7 @@ public class Conexion {
 		}
 	}
 
+
 	/**
 	 * Devuelve true si existe el medico determinado por el String "nColegiado".
 	 * Sirve para crear los usuarios en la BD
@@ -270,6 +274,7 @@ public class Conexion {
 	 * @throws SQLException
 	 */
 	public boolean existeUser(String nColegiado) throws SQLException {
+
 		PreparedStatement preparedStmt;
 		boolean resul = false;
 
