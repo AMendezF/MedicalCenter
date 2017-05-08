@@ -2,6 +2,7 @@ package GUI.Gestor;
 
 
 import clases.Conexion;
+import clases.Gestor;
 import java.sql.Connection;
 
 /*
@@ -19,13 +20,11 @@ public class mostrarCitas extends javax.swing.JPanel {
 	/**
 	 * Creates new form mostrarCitas
 	 */
-	private Conexion con;
-	private Connection reg;
-	
-	public mostrarCitas(Conexion con) {
+	private Gestor gestor;
+
+	public mostrarCitas(Gestor gestor) {
 		initComponents();
-		this.con = con;
-		this.reg = con.getCon();
+		this.gestor = gestor;
 	}
 
 	/**

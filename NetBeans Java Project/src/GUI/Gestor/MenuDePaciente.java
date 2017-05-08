@@ -3,6 +3,7 @@ package GUI.Gestor;
 
 import GUI.InterfazGrafica;
 import clases.Conexion;
+import clases.Gestor;
 import java.awt.BorderLayout;
 import java.sql.Connection;
 
@@ -21,19 +22,14 @@ public class MenuDePaciente extends javax.swing.JPanel {
 	/**
 	 * Creates new form MenuDePaciente
 	 */
-	private Conexion con;
-	private Connection reg;
-	private MenuGestor menuGestor;
-	private InterfazGrafica principal;
+
 	private mostrarCitas mostrarCitas;
+	private Gestor gestor;
 
-	public MenuDePaciente(Conexion con) {
+	public MenuDePaciente(Gestor gestor) {
 		initComponents();
-		this.con = con;
-		this.reg = con.getCon();
-		principal = new InterfazGrafica();
+		this.gestor = gestor;
 	}
-
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -150,7 +146,7 @@ public class MenuDePaciente extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMostrarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarCitasActionPerformed
-		mostrarCitas = new mostrarCitas(con);
+		mostrarCitas = new mostrarCitas(gestor);
 		mostrarCitas.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		mostrarCitas.setLocation(0, 0);
 		

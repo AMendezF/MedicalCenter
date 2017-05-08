@@ -27,7 +27,7 @@ public class MenuGestor extends javax.swing.JPanel {
 	 */
 	private TableRowSorter trsFiltro;
 	private Conexion conexion;
-        private Gestor gestor;
+    private Gestor gestor;
 	private Connection reg;
 	private AñadirPaciente añadirPaciente;
 	private BorrarPaciente borrarPaciente;
@@ -40,7 +40,7 @@ public class MenuGestor extends javax.swing.JPanel {
 		initComponents();
 		this.conexion = conexion;
 		this.reg = conexion.getCon();
-                this.gestor = new Gestor(conexion);
+        this.gestor = new Gestor(conexion);
 	}
 
 	/**
@@ -229,7 +229,7 @@ public class MenuGestor extends javax.swing.JPanel {
     }//GEN-LAST:event_formAncestorAdded
 
     private void buttonBorrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarPacienteActionPerformed
-        borrarPaciente = new BorrarPaciente(conexion);
+        borrarPaciente = new BorrarPaciente(gestor);
         borrarPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         borrarPaciente.setLocation(0, 0);
 
@@ -240,7 +240,7 @@ public class MenuGestor extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonBorrarPacienteActionPerformed
 
     private void buttonAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirPacienteActionPerformed
-	añadirPaciente = new AñadirPaciente(conexion);
+	añadirPaciente = new AñadirPaciente(gestor);
         añadirPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         añadirPaciente.setLocation(0, 0);
 
@@ -251,7 +251,7 @@ public class MenuGestor extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
 
     private void buttonMostrarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarPacientesActionPerformed
-        mostrarPacientes = new mostrarPacientes(conexion);
+        mostrarPacientes = new mostrarPacientes(gestor);
         mostrarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         mostrarPacientes.setLocation(0, 0);
 
@@ -270,7 +270,7 @@ public class MenuGestor extends javax.swing.JPanel {
 
     private void buttonGestionarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGestionarPacientesActionPerformed
         mostrarDatos.setSize(mostrarDatos.getWidth() + menuOpciones.getWidth(), mostrarDatos.getHeight());
-		menuDePaciente = new  MenuDePaciente(conexion);
+		menuDePaciente = new  MenuDePaciente(gestor);
         menuDePaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         menuDePaciente.setLocation(0, 0);
 
@@ -282,7 +282,7 @@ public class MenuGestor extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonGestionarPacientesActionPerformed
 
     private void buttonMostrarSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarSalasActionPerformed
-      	mostrarSalas = new mostrarSalas(conexion);
+      	mostrarSalas = new mostrarSalas(gestor);
 		mostrarSalas.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         mostrarSalas.setLocation(0, 0);
 		
@@ -294,7 +294,7 @@ public class MenuGestor extends javax.swing.JPanel {
 
     private void buttonGestionarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGestionarMedicoActionPerformed
         mostrarDatos.setSize(mostrarDatos.getWidth() + menuOpciones.getWidth(), mostrarDatos.getHeight());
-		menuDeMedico = new  MenuDeMedico(conexion);
+		menuDeMedico = new  MenuDeMedico(gestor);
         menuDeMedico.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         menuDeMedico.setLocation(0, 0);
 
@@ -304,25 +304,6 @@ public class MenuGestor extends javax.swing.JPanel {
         mostrarDatos.revalidate();
         mostrarDatos.repaint();
     }//GEN-LAST:event_buttonGestionarMedicoActionPerformed
-
-	/*
-	public void filtro() {
-        int columnaABuscar = 0;
-        if (desplegableColumnas.getSelectedItem() == "DNI") {
-            columnaABuscar = 0;
-        }
-        if (desplegableColumnas.getSelectedItem().toString() == "Nombre") {
-            columnaABuscar = 1;
-        }
-        if (desplegableColumnas.getSelectedItem() == "Apellidos") {
-            columnaABuscar = 2;
-        }
-		if (desplegableColumnas.getSelectedItem() == "Seguro") {
-            columnaABuscar = 2;
-        }
-        trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), columnaABuscar));
-}
-	*/
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAñadirPaciente;

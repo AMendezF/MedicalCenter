@@ -32,14 +32,14 @@ public class Gestor {
      * Muestra las citas de un día organizadas por horario y salas de
      * especialidad.
      */
-    private void mostrarItinerario() {
+    public void mostrarItinerario() {
         //TODO
     }
 
     /**
      * Genera el menú de gestionar pacientes en pantalla.
      */
-    private void gestionPacientesMenu() {
+    public void gestionPacientesMenu() {
         //TODO
     }
 
@@ -50,7 +50,7 @@ public class Gestor {
      * @throws SQLException Devuelve error si no see pudo realizar la consulta
      * SQL.
      */
-    private ResultSet mostrarPacientes() throws SQLException {
+    public ResultSet mostrarPacientes() throws SQLException {
         ResultSet listaPacientes = null;
         String sql;
 
@@ -67,7 +67,7 @@ public class Gestor {
      *
      * @return true = añadido a la BD, false = fallo al añadir
      */
-    private boolean addPaciente() {
+    public boolean addPaciente() {
         boolean added = false;
         //TODO
         return added;
@@ -78,14 +78,14 @@ public class Gestor {
      *
      * @param paciente Paciente que deseas gestionar.
      */
-    private void gestionarPaciente(Paciente paciente) {
+    public void gestionarPaciente(Paciente paciente) {
         //TODO paciente.menu();
     }
 
     /**
      * Genera el menú de gestionar medicos en pantalla.
      */
-    private void gestionMedicosMenu() {
+    public void gestionMedicosMenu() {
         //TODO
     }
 
@@ -95,7 +95,7 @@ public class Gestor {
      * @return Retorna el valor de la consulta SQL.
      * @throws SQLException
      */
-    private ResultSet mostrarMedicos() throws SQLException {
+    public ResultSet mostrarMedicos() throws SQLException {
         ResultSet listaMedicos = null;
         String sql;
 
@@ -111,7 +111,7 @@ public class Gestor {
      *
      * @return true = añadido a la BD, false = fallo al añadir
      */
-    private boolean addMedico() {
+    public boolean addMedico() {
         boolean added = false;
 
         /*try {
@@ -137,7 +137,7 @@ public class Gestor {
      * @param sustituto Médico que reemplaza al anterior.
      * @return true = añadido a la BD, false = fallo al añadir
      */
-    private void sustituirMedico(Medico medico, Medico sustituto) throws SQLException {
+    public void sustituirMedico(Medico medico, Medico sustituto) throws SQLException {
         //TODO
     }
 
@@ -148,7 +148,7 @@ public class Gestor {
      * @throws SQLException Devuelve error si no see pudo realizar la consulta
      * SQL.
      */
-    private void eliminarMedico(int codMedico) throws SQLException {
+    public void eliminarMedico(int codMedico) throws SQLException {
         boolean eliminado = false;
         String sql;
 
@@ -166,7 +166,7 @@ public class Gestor {
      * @throws SQLException SQLException Devuelve error si no see pudo realizar
      * la consulta SQL.
      */
-    private void trasladarCitas(int codMedico, int codMedicoSustituto) throws SQLException {
+    public void trasladarCitas(int codMedico, int codMedicoSustituto) throws SQLException {
         String sql;
 
         //sql = "UPDATE centromedico.citas SET medico=? WHERE medico=?;"; // tested
@@ -193,7 +193,7 @@ public class Gestor {
      * @throws SQLException Devuelve error si no see pudo realizar la consulta
      * SQL.
      */
-    /*private ArrayList<String> mostrarEspecialidades() throws SQLException {
+    /*public ArrayList<String> mostrarEspecialidades() throws SQLException {
         ArrayList<String> listaEspecialidades = null;
         String sql;
         ResultSet resultSet;

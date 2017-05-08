@@ -23,9 +23,12 @@ public class InterfazGrafica extends javax.swing.JFrame {
 	private Conexion con;
 	private MenuMedico menuMedico;
 	private MenuGestor menuGestor;
+	//private Login login;
 	
 	public InterfazGrafica() {
 		initComponents();
+		//this.login = new Login();
+		
 	}
 
 	/**
@@ -49,6 +52,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         labelLogin = new javax.swing.JLabel();
         textFieldUser = new javax.swing.JTextField();
         menuPrimero = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,11 +73,11 @@ public class InterfazGrafica extends javax.swing.JFrame {
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 245, Short.MAX_VALUE)
         );
 
         labelUsuario.setText("Sin usuario");
@@ -155,6 +159,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("jButton1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -164,7 +170,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(122, 122, 122)
                         .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(bottonDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -173,7 +179,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(menuPrimero, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(menuPrimero, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addComponent(iniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -191,7 +199,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(iniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(menuPrimero, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(menuPrimero, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -382,6 +392,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new InterfazGrafica().setVisible(true);
+				//new Login().setVisible(true);
 			}
 		});
 	}
@@ -390,6 +401,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private javax.swing.JButton bottonConectar;
     private javax.swing.JButton bottonDesconectar;
     private javax.swing.JPanel iniciarSesion;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel labelLogin;
     private javax.swing.JLabel labelPassword;
     private javax.swing.JLabel labelTitulo;

@@ -2,6 +2,7 @@ package GUI.Gestor;
 
 
 import clases.Conexion;
+import clases.Gestor;
 import java.sql.Connection;
 
 /*
@@ -18,13 +19,11 @@ public class mostrarSalas extends javax.swing.JPanel {
 	/**
 	 * Creates new form mostrarSalas
 	 */
-	private Conexion con;
-	private Connection reg;
+	private Gestor gestor;
 
-	public mostrarSalas(Conexion con) {
+	public mostrarSalas(Gestor gestor) {
 		initComponents();
-		this.con = con;
-		this.reg = con.getCon();
+		this.gestor = gestor;
 	}
 
 	/**

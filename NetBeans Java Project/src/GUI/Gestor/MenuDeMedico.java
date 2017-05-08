@@ -2,6 +2,7 @@ package GUI.Gestor;
 
 
 import clases.Conexion;
+import clases.Gestor;
 import java.sql.Connection;
 
 /*
@@ -16,13 +17,11 @@ import java.sql.Connection;
  */
 public class MenuDeMedico extends javax.swing.JPanel {
 	
-	private Conexion con;
-	private Connection reg;
-	
-	public MenuDeMedico(Conexion con) {
+	private Gestor gestor;
+
+	public MenuDeMedico(Gestor gestor) {
 		initComponents();
-		this.con = con;
-		reg = con.getCon();
+		this.gestor = gestor;
 	}
 
 	/**

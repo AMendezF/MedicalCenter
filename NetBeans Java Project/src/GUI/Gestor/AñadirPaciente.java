@@ -2,6 +2,7 @@ package GUI.Gestor;
 
 
 import clases.Conexion;
+import clases.Gestor;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 
@@ -19,13 +20,11 @@ public class AñadirPaciente extends javax.swing.JPanel {
 	/**
 	 * Creates new form AñadirPaciente
 	 */
-	private Conexion con;
-	private Connection reg;
+	private Gestor gestor;
 
-	public AñadirPaciente(Conexion con) {
+	public AñadirPaciente(Gestor gestor) {
 		initComponents();
-		this.con = con;
-		this.reg = con.getCon();
+		this.gestor = gestor;
 	}
 
 	/**
@@ -135,8 +134,6 @@ public class AñadirPaciente extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 		Object[] options = {"Si", "No"};
 		int confirmar;
-		
-		// Funcionalidad a falta de añadir los metodos
 		/*
 		if (comprobarDNI(dni.getText())  {
 			if (nombre.getText() = "" || apellidos.getText() = "") {
@@ -157,8 +154,8 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		} else {
 			JOptionPane.showMessageDialog(this, "El dni no es correcto", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		*/
 		System.out.println(dni.getText() + "" + nombre.getText() + "" + apellidos.getText() + "" + compSeguro.getText());
+				*/
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed

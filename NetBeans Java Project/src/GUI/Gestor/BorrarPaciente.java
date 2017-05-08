@@ -2,6 +2,7 @@ package GUI.Gestor;
 
 
 import clases.Conexion;
+import clases.Gestor;
 import java.sql.Connection;
 
 /*
@@ -19,13 +20,11 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	/**
 	 * Creates new form BorrarPaciente
 	 */
-	private Conexion con;
-	private Connection reg;
+	private Gestor gestor;
 	
-	public BorrarPaciente(Conexion con) {
+	public BorrarPaciente(Gestor gestor) {
 		initComponents();
-		this.con = con;
-		this.reg = con.getCon();
+		this.gestor = gestor;
 	}
 
 	/**
@@ -79,6 +78,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 		/*
+		gesto
 		if (paciente.estaBd(jTextField1.getText())   {
 			borrarPaciente(jTextField1.getText());
 		}

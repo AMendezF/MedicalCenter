@@ -1,5 +1,7 @@
 package GUI.Gestor;
 
+import clases.Gestor;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,11 +14,11 @@ package GUI.Gestor;
  */
 public class PedirCita extends javax.swing.JPanel {
 
-	/**
-	 * Creates new form PedirCita
-	 */
-	public PedirCita() {
+	private Gestor gestor;
+
+	public PedirCita(Gestor gestor) {
 		initComponents();
+		this.gestor = gestor;
 	}
 
 	/**

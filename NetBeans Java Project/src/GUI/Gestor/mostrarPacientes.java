@@ -2,6 +2,7 @@ package GUI.Gestor;
 
 
 import clases.Conexion;
+import clases.Gestor;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.ResultSetMetaData;
 import java.awt.Component;
@@ -32,14 +33,12 @@ public class mostrarPacientes extends javax.swing.JPanel {
 	/**
 	 * Creates new form mostrarPacientes
 	 */
-	private Conexion con;
-	private Connection reg;
 	private TableRowSorter trsFiltro;
+	private Gestor gestor;
 
-	public mostrarPacientes(Conexion con) {
+	public mostrarPacientes (Gestor gestor) {
 		initComponents();
-		this.con = con;
-		this.reg = con.getCon();
+		this.gestor = gestor;
 	}
 
 	/**
@@ -159,8 +158,8 @@ public class mostrarPacientes extends javax.swing.JPanel {
 		if (desplegableColumnas.getSelectedItem() == "Apellidos") {
 			columnaABuscar = 2;
 		}
-		if (desplegableColumnas.getSelectedItem() == "Seguro") {
-			columnaABuscar = 2;
+		if (desplegableColumnas.getSelectedItem() == "CompSeguro") {
+			columnaABuscar = 3;
 		}
 		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), columnaABuscar));
 	}
@@ -195,6 +194,7 @@ public class mostrarPacientes extends javax.swing.JPanel {
 	}
 
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
+		/*
 		try {
 			String sql;
 			sql = "SELECT DNI, nombre, apellidos, compsegur FROM centromedico.paciente;";
@@ -205,7 +205,7 @@ public class mostrarPacientes extends javax.swing.JPanel {
 		} catch (SQLException ex) {
 			Logger.getLogger(mostrarPacientes.class.getName()).log(Level.SEVERE, null, ex);
 		}
-
+			*/
     }//GEN-LAST:event_mostrarActionPerformed
 
 
