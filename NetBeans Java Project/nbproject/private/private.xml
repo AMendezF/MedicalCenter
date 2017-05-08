@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Estudios/GitHub/MedicalCenter/NetBeans%20Java%20Project/src/GUI/Gestor/MenuDePaciente.java</file>
-            <file>file:/E:/Estudios/GitHub/MedicalCenter/NetBeans%20Java%20Project/src/GUI/Gestor/MenuGestor.java</file>
-            <file>file:/E:/Estudios/GitHub/MedicalCenter/NetBeans%20Java%20Project/src/GUI/Gestor/MenuDeMedico.java</file>
-            <file>file:/E:/Estudios/GitHub/MedicalCenter/NetBeans%20Java%20Project/src/GUI/Medico/MenuMedico.java</file>
+            <file>file:/C:/Users/bm0058/Documents/GitHub/MedicalCenter/NetBeans%20Java%20Project/src/clases/main.java</file>
+            <file>file:/C:/Users/bm0058/Documents/GitHub/MedicalCenter/NetBeans%20Java%20Project/src/clases/Cita.java</file>
+            <file>file:/C:/Users/bm0058/Documents/GitHub/MedicalCenter/NetBeans%20Java%20Project/src/clases/Paciente.java</file>
+            <file>file:/C:/Users/bm0058/Documents/GitHub/MedicalCenter/NetBeans%20Java%20Project/src/clases/Conexion.java</file>
+            <file>file:/C:/Users/bm0058/Documents/GitHub/MedicalCenter/NetBeans%20Java%20Project/src/clases/Menu.java</file>
+            <file>file:/C:/Users/bm0058/Documents/GitHub/MedicalCenter/NetBeans%20Java%20Project/src/clases/Gestor.java</file>
         </group>
     </open-files>
 </project-private>

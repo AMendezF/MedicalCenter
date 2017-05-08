@@ -49,6 +49,7 @@ class Paciente {
 		contCitas++;
 	}
 
+	/*
 	public boolean estaBD() throws SQLException {
 		boolean result = true;
 		PreparedStatement preparedStmt;
@@ -65,7 +66,7 @@ class Paciente {
 			result = false;
 		}
 		return result;
-	}
+	}*/
 
 	public void addPacienteBD() throws SQLException {
 		Scanner sc = new Scanner(System.in);
