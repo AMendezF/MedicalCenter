@@ -31,7 +31,7 @@ public class MenuGestor extends javax.swing.JPanel {
 	private Connection reg;
 	private AñadirPaciente añadirPaciente;
 	private BorrarPaciente borrarPaciente;
-	private MenuDePaciente menuDePaciente;
+	private GestionarPacientes gestionarPacientes;
 	private MenuDeMedico menuDeMedico;
 	private mostrarSalas mostrarSalas;
 	private mostrarPacientes mostrarPacientes;
@@ -54,12 +54,10 @@ public class MenuGestor extends javax.swing.JPanel {
 
         mostrarDatos = new javax.swing.JPanel();
         menuOpciones = new javax.swing.JPanel();
-        buttonMostrarPacientes = new javax.swing.JButton();
         buttonAñadirPaciente = new javax.swing.JButton();
         buttonGestionarPacientes = new javax.swing.JButton();
         buttonGestionarMedico = new javax.swing.JButton();
         buttonMostrarSalas = new javax.swing.JButton();
-        labelMenuGestor = new javax.swing.JLabel();
         buttonBorrarPaciente = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -80,21 +78,14 @@ public class MenuGestor extends javax.swing.JPanel {
         mostrarDatos.setLayout(mostrarDatosLayout);
         mostrarDatosLayout.setHorizontalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 547, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGap(0, 401, Short.MAX_VALUE)
         );
 
         menuOpciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-
-        buttonMostrarPacientes.setText("Mostrar pacientes");
-        buttonMostrarPacientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonMostrarPacientesActionPerformed(evt);
-            }
-        });
 
         buttonAñadirPaciente.setText("Añadir nuevo paciente");
         buttonAñadirPaciente.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +108,7 @@ public class MenuGestor extends javax.swing.JPanel {
             }
         });
 
-        buttonMostrarSalas.setText("Mostrar Salas");
+        buttonMostrarSalas.setText("Mostrar agenda");
         buttonMostrarSalas.setMaximumSize(new java.awt.Dimension(100, 25));
         buttonMostrarSalas.setMinimumSize(new java.awt.Dimension(100, 25));
         buttonMostrarSalas.setPreferredSize(new java.awt.Dimension(100, 25));
@@ -127,10 +118,7 @@ public class MenuGestor extends javax.swing.JPanel {
             }
         });
 
-        labelMenuGestor.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        labelMenuGestor.setText("Menu Gestor");
-
-        buttonBorrarPaciente.setText("Borrar paciente");
+        buttonBorrarPaciente.setText("Borrar / Reinsertar paciente");
         buttonBorrarPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonBorrarPacienteActionPerformed(evt);
@@ -142,39 +130,43 @@ public class MenuGestor extends javax.swing.JPanel {
         menuOpcionesLayout.setHorizontalGroup(
             menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuOpcionesLayout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
-                .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelMenuGestor, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonMostrarPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonBorrarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonGestionarPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonGestionarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonMostrarSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonBorrarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 414, Short.MAX_VALUE)
+                .addComponent(buttonMostrarSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonGestionarPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonGestionarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         menuOpcionesLayout.setVerticalGroup(
             menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuOpcionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelMenuGestor, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonMostrarPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonBorrarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonGestionarPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonGestionarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buttonMostrarSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonGestionarPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonGestionarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonMostrarSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonBorrarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(mostrarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(menuOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -183,47 +175,7 @@ public class MenuGestor extends javax.swing.JPanel {
                 .addComponent(mostrarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(menuOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mostrarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
     }// </editor-fold>//GEN-END:initComponents
-
-
-	private void mostrarPacientes() throws SQLException{
-		/*
-		TableColumn dni = new TableColum();
-		String sql;
-		sql = "SELECT DNI, nombre, apellidos, compsegur FROM centromedico.paciente;";
-		
-		PreparedStatement preparedStmt = reg.prepareStatement(sql);
-		ResultSet rs = preparedStmt.executeQuery();
-		Object datos[] = new Object[4];
-		
-		tablaInfo.addColumn();
-		tablaInfo.addRowSelectionInterval(1, 3);
-		while (rs.next()) {
-			tablaInfo.
-			//tablaInfo.addColumnSelectionInterval(0, 1);
-			for (int i = 0; i < 3; i++){
-
-				datos[i] = rs.getObject(i+1);
-				//tablaInfo.add((Component) datos[i]);
-				//tablaInfo.addColumn((TableColumn) rs.getObject(i+1));
-
-			}
-			//tablaInfo.setModel(datos);
-			//tablaInfo.add(datos);
-		}
-		*/
-	}
-
-	
     private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_formAncestorAdded
@@ -240,7 +192,7 @@ public class MenuGestor extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonBorrarPacienteActionPerformed
 
     private void buttonAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirPacienteActionPerformed
-	añadirPaciente = new AñadirPaciente(gestor);
+		añadirPaciente = new AñadirPaciente(gestor);
         añadirPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         añadirPaciente.setLocation(0, 0);
 
@@ -250,33 +202,13 @@ public class MenuGestor extends javax.swing.JPanel {
         mostrarDatos.repaint();
     }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
 
-    private void buttonMostrarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarPacientesActionPerformed
-        mostrarPacientes = new mostrarPacientes(gestor);
-        mostrarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
-        mostrarPacientes.setLocation(0, 0);
-
-        mostrarDatos.removeAll();
-        mostrarDatos.add(mostrarPacientes, BorderLayout.CENTER);
-        mostrarDatos.revalidate();
-        mostrarDatos.repaint();
-		
-		try {
-            mostrarPacientes();
-            //tablaInfo.add((Component) main.mostrarListaPacientes(con));
-        } catch (SQLException ex) {
-            Logger.getLogger(MenuGestor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_buttonMostrarPacientesActionPerformed
-
     private void buttonGestionarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGestionarPacientesActionPerformed
-        mostrarDatos.setSize(mostrarDatos.getWidth() + menuOpciones.getWidth(), mostrarDatos.getHeight());
-		menuDePaciente = new  MenuDePaciente(gestor);
-        menuDePaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
-        menuDePaciente.setLocation(0, 0);
+		gestionarPacientes = new  GestionarPacientes(gestor);
+        gestionarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+        gestionarPacientes.setLocation(0, 0);
 
 		mostrarDatos.removeAll();
-		menuOpciones.setVisible(false);
-        mostrarDatos.add(menuDePaciente, BorderLayout.WEST);
+        mostrarDatos.add(gestionarPacientes, BorderLayout.WEST);
         mostrarDatos.revalidate();
         mostrarDatos.repaint();
     }//GEN-LAST:event_buttonGestionarPacientesActionPerformed
@@ -293,13 +225,11 @@ public class MenuGestor extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonMostrarSalasActionPerformed
 
     private void buttonGestionarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGestionarMedicoActionPerformed
-        mostrarDatos.setSize(mostrarDatos.getWidth() + menuOpciones.getWidth(), mostrarDatos.getHeight());
 		menuDeMedico = new  MenuDeMedico(gestor);
         menuDeMedico.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
         menuDeMedico.setLocation(0, 0);
 
 		mostrarDatos.removeAll();
-		menuOpciones.setVisible(false);
         mostrarDatos.add(menuDeMedico, BorderLayout.WEST);
         mostrarDatos.revalidate();
         mostrarDatos.repaint();
@@ -310,9 +240,7 @@ public class MenuGestor extends javax.swing.JPanel {
     private javax.swing.JButton buttonBorrarPaciente;
     private javax.swing.JButton buttonGestionarMedico;
     private javax.swing.JButton buttonGestionarPacientes;
-    private javax.swing.JButton buttonMostrarPacientes;
     private javax.swing.JButton buttonMostrarSalas;
-    private javax.swing.JLabel labelMenuGestor;
     private javax.swing.JPanel menuOpciones;
     private javax.swing.JPanel mostrarDatos;
     // End of variables declaration//GEN-END:variables

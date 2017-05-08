@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package GUI;
+
+import clases.Conexion;
 
 /**
  *
@@ -134,50 +135,51 @@ public class Login extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textFieldUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldUserActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_textFieldUserActionPerformed
-
+/*   
     private void bottonConectarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bottonConectarKeyPressed
-        //if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            // Conecta con la base de datos y muestra el menu
-            // segun el usuario que haya entrado
-            try {
-                con = new Conexion(textFieldUser.getText(), passwordFieldPassword.getPassword());
+     
+				 //if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+				 // Conecta con la base de datos y muestra el menu
+				 // segun el usuario que haya entrado
+				 try {
+				 con = new Conexion(textFieldUser.getText(), passwordFieldPassword.getPassword());
 
-                if (con.esValida() && con.getUser().equals("root")) {
-                    panelPrincipal.setSize(panelPrincipal.getWidth() + iniciarSesion.getWidth(), panelPrincipal.getHeight());
-                    MenuGestor menuGestor = new MenuGestor(con);
-                    menuGestor.setSize(panelPrincipal.getWidth(), panelPrincipal.getHeight());
-                    menuGestor.setLocation(0, 0);
+				 if (con.esValida() && con.getUser().equals("root")) {
+				 panelPrincipal.setSize(panelPrincipal.getWidth() + iniciarSesion.getWidth(), panelPrincipal.getHeight());
+				 MenuGestor menuGestor = new MenuGestor(con);
+				 menuGestor.setSize(panelPrincipal.getWidth(), panelPrincipal.getHeight());
+				 menuGestor.setLocation(0, 0);
 
-                    panelPrincipal.removeAll();
-                    iniciarSesion.setVisible(false);
-                    panelPrincipal.add(menuGestor, BorderLayout.WEST);
-                    panelPrincipal.revalidate();
-                    panelPrincipal.repaint();
-                    labelUsuario.setText(con.getUser());
-                    bottonDesconectar.setEnabled(true);
-                }
+				 panelPrincipal.removeAll();
+				 iniciarSesion.setVisible(false);
+				 panelPrincipal.add(menuGestor, BorderLayout.WEST);
+				 panelPrincipal.revalidate();
+				 panelPrincipal.repaint();
+				 labelUsuario.setText(con.getUser());
+				 bottonDesconectar.setEnabled(true);
+				 }
 
-                if (con.esValida() && !(con.getUser().equals("root"))) {
-                    panelPrincipal.setSize(panelPrincipal.getWidth() + iniciarSesion.getWidth(), panelPrincipal.getHeight());
-                    MenuMedico menuMedico = new MenuMedico(con);
-                    menuMedico.setSize(panelPrincipal.getWidth(), panelPrincipal.getHeight());
-                    menuMedico.setLocation(0, 0);
+				 if (con.esValida() && !(con.getUser().equals("root"))) {
+				 panelPrincipal.setSize(panelPrincipal.getWidth() + iniciarSesion.getWidth(), panelPrincipal.getHeight());
+				 MenuMedico menuMedico = new MenuMedico(con);
+				 menuMedico.setSize(panelPrincipal.getWidth(), panelPrincipal.getHeight());
+				 menuMedico.setLocation(0, 0);
 
-                    panelPrincipal.removeAll();
-                    iniciarSesion.setVisible(false);
-                    panelPrincipal.add(menuMedico, BorderLayout.WEST);
-                    panelPrincipal.revalidate();
-                    panelPrincipal.repaint();
-                    labelUsuario.setText(con.getUser());
-                    bottonDesconectar.setEnabled(true);
-                }
+				 panelPrincipal.removeAll();
+				 iniciarSesion.setVisible(false);
+				 panelPrincipal.add(menuMedico, BorderLayout.WEST);
+				 panelPrincipal.revalidate();
+				 panelPrincipal.repaint();
+				 labelUsuario.setText(con.getUser());
+				 bottonDesconectar.setEnabled(true);
+				 }
 
-            } catch (SQLException ex) {
-                Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            //}
+				 } catch (SQLException ex) {
+				 Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
+				 }
+				 //}
     }//GEN-LAST:event_bottonConectarKeyPressed
 
     private void bottonConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottonConectarActionPerformed
@@ -206,4 +208,5 @@ public class Login extends javax.swing.JPanel {
     private javax.swing.JPasswordField passwordFieldPassword;
     private javax.swing.JTextField textFieldUser;
     // End of variables declaration//GEN-END:variables
-}
+/*
+	}
