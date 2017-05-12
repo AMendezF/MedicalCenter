@@ -11,14 +11,10 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-/**
- *
- * @author Berta
- */
 public class Medico {
 
-	int n_colegiado;
-	Conexion con;
+	private final int n_colegiado;
+	private final Conexion con;
 	boolean[] dia1;
 	boolean[] dia2;
 	boolean[] dia3;
@@ -302,5 +298,55 @@ public class Medico {
 		}
 		return result;
 	}
+        
+//        public String mostrarMedico() throws SQLException {
+//        // Selecciona y muestra por pantalla los datos del medico con el parametro n_colegiado
+//        Connection reg = con.getCon();
+//        String sql;
+//        int nColegiado = 0;
+//        String nombre = "";
+//        String apellidos = "";
+//        String horario = "";
+//        String tiempo = "";
+//        String especialidades = "";
+//        sql = "SELECT medico.n_colegiado, medico.nombre, medico.apellidos, medico.horario, medico.tiempo_min, medico.especialidad, especialidad.nombre "
+//                + "FROM centromedico.medico, centromedico.especialidad "
+//                + "WHERE medico.especialidad = especialidad.cod_especialidad "
+//                + "and medico.n_colegiado = ?;";
+//
+//        preparedStmt = reg.prepareStatement(sql);
+//        preparedStmt.setInt(1, this.getN_colegiado());
+//        ResultSet rs = preparedStmt.executeQuery();
+//
+//       if (rs.next()) {
+//            nColegiado = rs.getInt("medico.n_colegiado");
+//            nombre = rs.getString("medico.nombre");
+//            apellidos = rs.getString("medico.apellidos");
+//            horario = rs.getString("medico.horario");
+//            tiempo = rs.getString("medico.tiempo_min");
+//            especialidades = rs.getString("especialidad.nombre");
+//        }
+//        return (nColegiado + " - " + nombre + " " + apellidos + "; " + tiempo + ", " + especialidades);
+//    }
 
+        /**
+         * Este método retorna un ResultSet de SQL de los pacientes asociados a ese médico 
+         * @return ResultSet
+         * @throws SQLException 
+         */
+    public ResultSet mostrarPacientesAsociados() throws SQLException {
+        Connection reg = con.getCon();
+        String sql;
+        List<Paciente> pacientes = new ArrayList();
+        sql = "SELECT citas.paciente FROM centromedico.citas WHERE citas.medico = ? GROUP BY citas.paciente";
+        
+        preparedStmt = reg.prepareStatement(sql);
+        preparedStmt.setInt(1, this.getN_colegiado());
+        ResultSet rs = preparedStmt.executeQuery();
+        return rs;
+    }
+
+    public int getN_colegiado() {
+        return n_colegiado;
+    }
 }

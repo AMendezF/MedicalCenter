@@ -188,7 +188,7 @@ public class mostrarPacientes extends javax.swing.JPanel {
 		// TODO add your handling code here:
     }//GEN-LAST:event_desplegableColumnasActionPerformed
 
-	public DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
+	private DefaultTableModel ResultSetToTableModel(ResultSet rs) throws SQLException {
 		java.sql.ResultSetMetaData metaData = rs.getMetaData();
 
 		// names of columns
@@ -213,7 +213,7 @@ public class mostrarPacientes extends javax.swing.JPanel {
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
 		try {
 			ResultSet rs = gestor.mostrarPacientes();
-			tablaInfo.setModel(buildTableModel(rs));
+			tablaInfo.setModel(ResultSetToTableModel(rs));
 		} catch (SQLException ex) {
 			Logger.getLogger(mostrarPacientes.class.getName()).log(Level.SEVERE, null, ex);
 		}
