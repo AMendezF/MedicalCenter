@@ -17,7 +17,7 @@ import java.util.Scanner;
  *
  * @author Berta
  */
-class Paciente {
+public class Paciente {
 
     private String DNI;
     private String Nombre;

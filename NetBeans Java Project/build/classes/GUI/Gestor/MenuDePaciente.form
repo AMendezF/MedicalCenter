@@ -65,7 +65,6 @@
                       <Component id="buttonPedirCita" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                       <Component id="buttonCancelarCita" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                       <Component id="buttonModificarPaciente" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                      <Component id="buttonCambiarPaciente" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="34" max="32767" attributes="0"/>
               </Group>
@@ -80,8 +79,6 @@
                       <Component id="labelPacienteActual" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="buttonCambiarPaciente" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="buttonMostrarCitas" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="buttonPedirCita" min="-2" pref="40" max="-2" attributes="0"/>
@@ -89,7 +86,7 @@
                   <Component id="buttonCancelarCita" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="buttonModificarPaciente" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace pref="126" max="32767" attributes="0"/>
+                  <EmptySpace pref="184" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -119,11 +116,6 @@
         <Component class="javax.swing.JButton" name="buttonCancelarCita">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar cita"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="buttonCambiarPaciente">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Cambiar de paciente"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="buttonModificarPaciente">
