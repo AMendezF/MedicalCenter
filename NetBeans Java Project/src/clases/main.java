@@ -20,7 +20,7 @@ import java.util.Scanner;
  */
 public class main {
 
-	public static int[] especialidadesMa(Conexion con, int dia) throws SQLException {
+	/*public static int[] especialidadesMa(Conexion con, int dia) throws SQLException {
 		int[] res = {0, 0, 0, 0, 0};
 		int j = 0;
 		Especialidad especialidad;
@@ -33,9 +33,9 @@ public class main {
 			}
 		}
 		return res;
-	}
+	}*/
 
-	public static int[] especialidadesTa(Conexion con, int dia) throws SQLException {
+	/*public static int[] especialidadesTa(Conexion con, int dia) throws SQLException {
 		int[] res = {0, 0, 0, 0, 0};
 		int j = 0;
 		Especialidad especialidad;
@@ -48,7 +48,7 @@ public class main {
 			}
 		}
 		return res;
-	}
+	}*/
 
 	public static void pedirCita(Paciente paciente, Conexion con) throws SQLException {
 		int codEspecialidad;
@@ -275,7 +275,7 @@ public class main {
 		med.eliminarCita(fechaCorrecta, horas.get(op));
 	}
 
-	public static void mostrarSalas(Conexion con) throws SQLException {
+	/*public static void mostrarSalas(Conexion con) throws SQLException {
 		int dia = 0;
 		String fecha1;
 		String fecha2;
@@ -391,7 +391,7 @@ public class main {
 			}
 		}
 		System.out.print("\n");
-	}
+	}*/
 
 	public static void addMedico(Conexion con) throws SQLException {
 		Scanner sc = new Scanner(System.in);
