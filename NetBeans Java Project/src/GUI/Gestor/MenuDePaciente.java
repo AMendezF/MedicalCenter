@@ -4,6 +4,7 @@ package GUI.Gestor;
 import GUI.InterfazGrafica;
 import clases.Conexion;
 import clases.Gestor;
+import clases.Paciente;
 import java.awt.BorderLayout;
 import java.sql.Connection;
 
@@ -24,6 +25,7 @@ public class MenuDePaciente extends javax.swing.JPanel {
 	 */
 
 	private mostrarCitas mostrarCitas;
+	private Paciente paciente;
 	private Gestor gestor;
 
 	public MenuDePaciente(Gestor gestor) {
@@ -44,7 +46,6 @@ public class MenuDePaciente extends javax.swing.JPanel {
         labelMenuDelPaciente = new javax.swing.JLabel();
         buttonPedirCita = new javax.swing.JButton();
         buttonCancelarCita = new javax.swing.JButton();
-        buttonCambiarPaciente = new javax.swing.JButton();
         buttonModificarPaciente = new javax.swing.JButton();
         labelPacienteActual = new javax.swing.JLabel();
         mostrarDatos = new javax.swing.JPanel();
@@ -65,8 +66,6 @@ public class MenuDePaciente extends javax.swing.JPanel {
 
         buttonCancelarCita.setText("Cancelar cita");
 
-        buttonCambiarPaciente.setText("Cambiar de paciente");
-
         buttonModificarPaciente.setText("Modificar paciente");
 
         labelPacienteActual.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -86,8 +85,7 @@ public class MenuDePaciente extends javax.swing.JPanel {
                     .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonCambiarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         menuOpcionesLayout.setVerticalGroup(
@@ -98,8 +96,6 @@ public class MenuDePaciente extends javax.swing.JPanel {
                     .addComponent(labelMenuDelPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelPacienteActual, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(buttonCambiarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -107,7 +103,7 @@ public class MenuDePaciente extends javax.swing.JPanel {
                 .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         mostrarDatos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
@@ -159,7 +155,6 @@ public class MenuDePaciente extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonCambiarPaciente;
     private javax.swing.JButton buttonCancelarCita;
     private javax.swing.JButton buttonModificarPaciente;
     private javax.swing.JButton buttonMostrarCitas;

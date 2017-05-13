@@ -1,5 +1,6 @@
-package GUI.Gestor;
+package GUI.Medico;
 
+import GUI.Gestor.*;
 import clases.Conexion;
 import clases.Gestor;
 import com.mysql.jdbc.PreparedStatement;
