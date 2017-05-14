@@ -330,16 +330,18 @@ public class Medico {
 //    }
 
         /**
-         * Este método retorna un ResultSet de SQL de los pacientes asociados a ese médico 
+         * Este método retorna un ResultSet de SQL de los pacientes asociados a ese médico
+         * Si no hay pacientes asociados, no retorna nada.
          * @return ResultSet
          * @throws SQLException 
          */
     public ResultSet mostrarPacientesAsociados() throws SQLException {
         Connection reg = con.getCon();
         String sql;
-        List<Paciente> pacientes = new ArrayList();
-        sql = "SELECT citas.paciente FROM centromedico.citas WHERE citas.medico = ? GROUP BY citas.paciente";
-        
+        sql = "SELECT paciente.* FROM centromedico.paciente, centromedico.citas "+
+              "WHERE citas.medico = ?  AND citas.paciente = paciente.DNI "+
+              "GROUP BY citas.paciente";
+
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.setInt(1, this.getN_colegiado());
         ResultSet rs = preparedStmt.executeQuery();

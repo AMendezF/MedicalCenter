@@ -1,16 +1,9 @@
 package GUI.Medico;
 
-import clases.Conexion;
 import clases.Medico;
-import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -55,7 +48,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaInfo = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        BotonMostrar = new javax.swing.JButton();
 
         desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DNI", "Nombre", "Apellidos", "Seguro" }));
         desplegableColumnas.addActionListener(new java.awt.event.ActionListener() {
@@ -85,10 +78,11 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Mostrar pacientes");
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BotonMostrar.setText("Mostrar");
+        BotonMostrar.setActionCommand("MostrarPacientesMedico");
+        BotonMostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BotonMostrarActionPerformed(evt);
             }
         });
 
@@ -109,7 +103,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(160, 160, 160)
-                        .addComponent(jButton1)))
+                        .addComponent(BotonMostrar)))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -124,7 +118,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(BotonMostrar)
                 .addContainerGap(36, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -133,15 +127,19 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
 
     }//GEN-LAST:event_desplegableColumnasActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
 
         try {
+            System.out.println("estamos fuera dentro del jBotton");
+            System.out.println(medico.getN_colegiado());
             ResultSet rs = medico.mostrarPacientesAsociados();
+            System.out.println("estamos dentro del jBotton");
+            System.err.println(rs);
             tablaInfo.setModel(ResultSetToTableModel(rs));
         } catch (SQLException ex) {
-            Logger.getLogger(mostrarPacientes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(mostrarPacientesMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BotonMostrarActionPerformed
 
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
@@ -182,24 +180,24 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
 
     public void filtro() {
         int columnaABuscar = 0;
-        if (desplegableColumnas.getSelectedItem() == "DNI") {
+        if (desplegableColumnas.getSelectedItem().equals("DNI")) {
             columnaABuscar = 0;
         }
-        if (desplegableColumnas.getSelectedItem() == "Nombre") {
+        if (desplegableColumnas.getSelectedItem().equals("Nombre")) {
             columnaABuscar = 1;
         }
-        if (desplegableColumnas.getSelectedItem() == "Apellidos") {
+        if (desplegableColumnas.getSelectedItem().equals("Apellidos")) {
             columnaABuscar = 2;
         }
-        if (desplegableColumnas.getSelectedItem() == "Seguro") {
+        if (desplegableColumnas.getSelectedItem().equals("CompSegur")) {
             columnaABuscar = 3;
         }
         trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), columnaABuscar));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonMostrar;
     private javax.swing.JComboBox desplegableColumnas;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaInfo;

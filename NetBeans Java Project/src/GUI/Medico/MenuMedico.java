@@ -18,13 +18,12 @@ public class MenuMedico extends javax.swing.JPanel {
     /**
      * Creates new form MenuMedico
      */
-    private Conexion con;
     private mostrarPacientesMedico mostrarPacientes;
     private Medico medico;
 
-    public MenuMedico(Conexion con) {
+    public MenuMedico(Medico medico) {
         initComponents();
-        this.con = con;
+        this.medico = medico;
     }
 
     /**
