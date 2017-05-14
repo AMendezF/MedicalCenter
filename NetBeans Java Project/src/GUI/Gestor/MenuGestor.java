@@ -27,7 +27,7 @@ public class MenuGestor extends javax.swing.JPanel {
 	 */
 	private TableRowSorter trsFiltro;
 	private Conexion conexion;
-    private Gestor gestor;
+        private Gestor gestor;
 	private Connection reg;
 	private AñadirPaciente añadirPaciente;
 	private BorrarPaciente borrarPaciente;
