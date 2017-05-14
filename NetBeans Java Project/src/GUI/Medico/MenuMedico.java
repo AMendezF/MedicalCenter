@@ -19,6 +19,7 @@ public class MenuMedico extends javax.swing.JPanel {
      * Creates new form MenuMedico
      */
     private mostrarPacientesMedico mostrarPacientes;
+    private mostrarCitasMedico mostrarCitas;
     private Medico medico;
 
     public MenuMedico(Medico medico) {
@@ -55,6 +56,11 @@ public class MenuMedico extends javax.swing.JPanel {
         });
 
         buttonCogerCita.setText("Coger cita");
+        buttonCogerCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCogerCitaActionPerformed(evt);
+            }
+        });
 
         buttonMostrarCitas.setText("Mostrar citas");
         buttonMostrarCitas.addActionListener(new java.awt.event.ActionListener() {
@@ -67,6 +73,11 @@ public class MenuMedico extends javax.swing.JPanel {
         labelMenuMedico.setText("Menu medico");
 
         buttonEscribirFicha.setText("Escribir ficha");
+        buttonEscribirFicha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEscribirFichaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout menuOpcionesLayout = new javax.swing.GroupLayout(menuOpciones);
         menuOpciones.setLayout(menuOpcionesLayout);
@@ -100,6 +111,14 @@ public class MenuMedico extends javax.swing.JPanel {
         );
 
         mostrarDatos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
+        mostrarDatos.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                mostrarDatosComponentAdded(evt);
+            }
+            public void componentRemoved(java.awt.event.ContainerEvent evt) {
+                mostrarDatosComponentRemoved(evt);
+            }
+        });
 
         javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);
         mostrarDatos.setLayout(mostrarDatosLayout);
@@ -143,12 +162,34 @@ public class MenuMedico extends javax.swing.JPanel {
         mostrarDatos.add(mostrarPacientes, BorderLayout.CENTER);
         mostrarDatos.revalidate();
         mostrarDatos.repaint();
-
     }//GEN-LAST:event_buttonMostrarPacientesActionPerformed
 
     private void buttonMostrarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarCitasActionPerformed
+        mostrarCitas = new mostrarCitasMedico(medico);
+        mostrarCitas.setSize(800, 800);
+        mostrarCitas.setLocation(2, 5);
 
+        mostrarCitas.removeAll();
+        mostrarCitas.add(mostrarCitas, BorderLayout.CENTER);
+        mostrarCitas.revalidate();
+        mostrarCitas.repaint();
     }//GEN-LAST:event_buttonMostrarCitasActionPerformed
+
+    private void buttonCogerCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCogerCitaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonCogerCitaActionPerformed
+
+    private void buttonEscribirFichaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEscribirFichaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonEscribirFichaActionPerformed
+
+    private void mostrarDatosComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_mostrarDatosComponentAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mostrarDatosComponentAdded
+
+    private void mostrarDatosComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_mostrarDatosComponentRemoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mostrarDatosComponentRemoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

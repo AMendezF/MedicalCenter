@@ -21,7 +21,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Juan
  */
-public class mostrarPacientesMedico extends javax.swing.JPanel {
+public class mostrarCitasMedico extends javax.swing.JPanel {
 
     /**
      * Creates new form mostrarPacientesMedico
@@ -29,7 +29,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     private final Medico medico;
     private TableRowSorter trsFiltro;
 
-    public mostrarPacientesMedico(Medico medico) {
+    public mostrarCitasMedico(Medico medico) {
         initComponents();
         this.medico = medico;
     }
@@ -49,6 +49,12 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         tablaInfo = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         BotonMostrar = new javax.swing.JButton();
+
+        addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                formComponentAdded(evt);
+            }
+        });
 
         desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DNI", "Nombre", "Apellidos", "Seguro" }));
         desplegableColumnas.addActionListener(new java.awt.event.ActionListener() {
@@ -76,7 +82,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         jScrollPane2.setViewportView(tablaInfo);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Mostrar pacientes");
+        jLabel1.setText("Citas Pendientes");
 
         BotonMostrar.setText("Mostrar");
         BotonMostrar.setActionCommand("MostrarPacientesMedico");
@@ -133,9 +139,13 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
             ResultSet rs = medico.mostrarPacientesAsociados();
             tablaInfo.setModel(ResultSetToTableModel(rs));
         } catch (SQLException ex) {
-            Logger.getLogger(mostrarPacientesMedico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_BotonMostrarActionPerformed
+
+    private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formComponentAdded
 
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:

@@ -108,6 +108,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Coger cita"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCogerCitaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="buttonMostrarCitas">
           <Properties>
@@ -129,6 +132,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Escribir ficha"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEscribirFichaActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -142,6 +148,10 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="componentAdded" listener="java.awt.event.ContainerListener" parameters="java.awt.event.ContainerEvent" handler="mostrarDatosComponentAdded"/>
+        <EventHandler event="componentRemoved" listener="java.awt.event.ContainerListener" parameters="java.awt.event.ContainerEvent" handler="mostrarDatosComponentRemoved"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
