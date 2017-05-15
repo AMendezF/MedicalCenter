@@ -3,6 +3,7 @@ package GUI.Gestor;
 import clases.Conexion;
 import clases.Gestor;
 import clases.Paciente;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -50,15 +51,18 @@ public class AñadirPaciente extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         tituloPaciente = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        dni = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        labelDNI = new javax.swing.JLabel();
+        DNI = new javax.swing.JTextField();
+        labelNombre = new javax.swing.JLabel();
         nombre = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        labelApellidos = new javax.swing.JLabel();
         apellidos = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        labelSeguro = new javax.swing.JLabel();
         compSeguro = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        buttonAñadirPaciente = new javax.swing.JButton();
+        DNIOK = new javax.swing.JLabel();
+        nombreOK = new javax.swing.JLabel();
+        apellidoOK = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaInfo = new javax.swing.JTable();
@@ -67,35 +71,45 @@ public class AñadirPaciente extends javax.swing.JPanel {
         labelPacientesExistentes = new javax.swing.JLabel();
         mostrar = new javax.swing.JButton();
 
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 102)));
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         tituloPaciente.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         tituloPaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tituloPaciente.setText("Añadir nuevo paciente");
+        tituloPaciente.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("DNI");
+        labelDNI.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        labelDNI.setText("DNI");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Nombre");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setText("Apellidos");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("Compañia de seguro");
-
-        jButton1.setText("Añadir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        DNI.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                DNIKeyReleased(evt);
             }
         });
-        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jButton1KeyPressed(evt);
+
+        labelNombre.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        labelNombre.setText("Nombre");
+
+        nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                nombreKeyReleased(evt);
+            }
+        });
+
+        labelApellidos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        labelApellidos.setText("Apellidos");
+
+        apellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                apellidosKeyReleased(evt);
+            }
+        });
+
+        labelSeguro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        labelSeguro.setText("Compañia de seguro");
+
+        buttonAñadirPaciente.setText("Añadir");
+        buttonAñadirPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAñadirPacienteActionPerformed(evt);
             }
         });
 
@@ -110,27 +124,34 @@ public class AñadirPaciente extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(labelSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(compSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
-                                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(apellidoOK))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(dni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(DNIOK))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(compSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 17, Short.MAX_VALUE)))
+                                .addComponent(nombreOK)))
+                        .addGap(0, 83, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,26 +160,28 @@ public class AñadirPaciente extends javax.swing.JPanel {
                 .addComponent(tituloPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dni, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DNIOK))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreOK))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(apellidoOK)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(compSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60)
-                .addComponent(jButton1)
-                .addContainerGap(220, Short.MAX_VALUE))
+                    .addComponent(labelSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(compSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(237, Short.MAX_VALUE))
         );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -182,15 +205,11 @@ public class AñadirPaciente extends javax.swing.JPanel {
         });
 
         desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DNI", "Nombre", "Apellidos", "Seguro" }));
-        desplegableColumnas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                desplegableColumnasActionPerformed(evt);
-            }
-        });
 
         labelPacientesExistentes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelPacientesExistentes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelPacientesExistentes.setText("Pacientes existentes");
+        labelPacientesExistentes.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         mostrar.setText("Mostrar datos");
         mostrar.addActionListener(new java.awt.event.ActionListener() {
@@ -206,16 +225,15 @@ public class AñadirPaciente extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(mostrar)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelPacientesExistentes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                                 .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
         );
@@ -226,12 +244,12 @@ public class AñadirPaciente extends javax.swing.JPanel {
                 .addComponent(labelPacientesExistentes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(36, 36, 36)
-                .addComponent(mostrar)
                 .addContainerGap())
         );
 
@@ -257,7 +275,11 @@ public class AñadirPaciente extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+	/**
+	 * Recoge la informacion del formulario y lo añade a la base de datos
+	 * @param evt 
+	 */
+    private void buttonAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirPacienteActionPerformed
 		Object[] options = {"Si", "No"};
 		int confirmar;
 		/*
@@ -283,11 +305,7 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		 }
 		 System.out.println(dni.getText() + "" + nombre.getText() + "" + apellidos.getText() + "" + compSeguro.getText());
 		 */
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
-
-    }//GEN-LAST:event_jButton1KeyPressed
+    }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
 
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBuscarKeyTyped
 		textFieldBuscar.addKeyListener(new KeyAdapter() {
@@ -302,10 +320,10 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		tablaInfo.setRowSorter(trsFiltro);
     }//GEN-LAST:event_textFieldBuscarKeyTyped
 
-    private void desplegableColumnasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableColumnasActionPerformed
-		// TODO add your handling code here:
-    }//GEN-LAST:event_desplegableColumnasActionPerformed
-
+	/**
+	 * Muestra los pacientes en la jTable para el usuario
+	 * @param evt 
+	 */
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
 		try {
 			ResultSet rs = gestor.mostrarPacientes();
@@ -315,6 +333,63 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		}
     }//GEN-LAST:event_mostrarActionPerformed
 
+	/**
+	 * Muestra por pantalla si el campo DNI es correcto
+	 *
+	 * @param evt
+	 */
+    private void DNIKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DNIKeyReleased
+		/*
+		 if (gestor.comprobarDNI(DNI.getText())){
+			DNIOK.setForeground(Color.green);
+			DNIOK.setText("OK!!");
+		 }
+		else if (gestor.existePaciente(DNI.getText()){
+			DNIOK.setForeground(Color.red);
+			DNIOK.setText("Ya existe");
+		}
+		else {
+		DNIOK.setForeground(Color.red);
+		DNIOK.setText("KO!!");
+		}	
+		 */
+    }//GEN-LAST:event_DNIKeyReleased
+
+	/**
+	 * Muestra por pantalla si el campo esta o no vacio
+	 *
+	 * @param evt
+	 */
+    private void nombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyReleased
+		if (nombre.getText().equals("")) {
+			nombreOK.setForeground(Color.red);
+			nombreOK.setText("Vacio!!");
+		} else //if (!nombreOK.contieneNumero())
+		{
+			nombreOK.setForeground(Color.black);
+			nombreOK.setText("OK!!");
+		}
+    }//GEN-LAST:event_nombreKeyReleased
+
+	/**
+	 * Muestra por pantalla si el campo esta o no vacio
+	 *
+	 * @param evt
+	 */
+    private void apellidosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apellidosKeyReleased
+		if (apellidos.getText().equals("")) {
+			apellidoOK.setForeground(Color.red);
+			apellidoOK.setText("Vacio!!");
+		} else //if (!apellidoOK.contieneNumero())
+		{
+			apellidoOK.setForeground(Color.black);
+			apellidoOK.setText("OK!!");
+		}
+    }//GEN-LAST:event_apellidosKeyReleased
+
+	/**
+	 * Filtro necesario para manejar la informacion
+	 */
 	public void filtro() {
 		int columnaABuscar = 0;
 		if (desplegableColumnas.getSelectedItem().equals("DNI")) {
@@ -326,12 +401,19 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		if (desplegableColumnas.getSelectedItem().equals("Apellidos")) {
 			columnaABuscar = 2;
 		}
-		if (desplegableColumnas.getSelectedItem().equals("CompSegur")) {
+		if (desplegableColumnas.getSelectedItem().equals("Seguro")) {
 			columnaABuscar = 3;
 		}
 		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), columnaABuscar));
 	}
 
+	/**
+	 * Crea el modelo de la tabla para insertarlo
+	 * Podriamos sacarlo a otra clase y organizarlo, se repite mucho este codigo
+	 * @param rs
+	 * @return
+	 * @throws SQLException 
+	 */
 	public DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
 		java.sql.ResultSetMetaData metaData = rs.getMetaData();
 
@@ -356,21 +438,24 @@ public class AñadirPaciente extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField DNI;
+    private javax.swing.JLabel DNIOK;
+    private javax.swing.JLabel apellidoOK;
     private javax.swing.JTextField apellidos;
+    private javax.swing.JButton buttonAñadirPaciente;
     private javax.swing.JTextField compSeguro;
     private javax.swing.JComboBox desplegableColumnas;
-    private javax.swing.JTextField dni;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel labelApellidos;
+    private javax.swing.JLabel labelDNI;
+    private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelPacientesExistentes;
+    private javax.swing.JLabel labelSeguro;
     private javax.swing.JButton mostrar;
     private javax.swing.JTextField nombre;
+    private javax.swing.JLabel nombreOK;
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
     private javax.swing.JLabel tituloPaciente;

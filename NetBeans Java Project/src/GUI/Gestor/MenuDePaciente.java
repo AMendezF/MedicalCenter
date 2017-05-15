@@ -28,9 +28,10 @@ public class MenuDePaciente extends javax.swing.JPanel {
 	private Paciente paciente;
 	private Gestor gestor;
 
-	public MenuDePaciente(Gestor gestor) {
+	public MenuDePaciente(Gestor gestor, Paciente paciente) {
 		initComponents();
 		this.gestor = gestor;
+		this.paciente = paciente;
 	}
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -149,8 +150,7 @@ public class MenuDePaciente extends javax.swing.JPanel {
 		mostrarDatos.removeAll();
 		mostrarDatos.add(mostrarCitas, BorderLayout.CENTER);
         mostrarDatos.revalidate();
-        mostrarDatos.repaint();
-                                    
+        mostrarDatos.repaint();                            
     }//GEN-LAST:event_buttonMostrarCitasActionPerformed
 
 

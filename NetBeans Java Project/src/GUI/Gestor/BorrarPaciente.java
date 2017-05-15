@@ -2,6 +2,7 @@ package GUI.Gestor;
 
 import clases.Conexion;
 import clases.Gestor;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -55,6 +56,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
         mostrarActivos = new javax.swing.JButton();
         buttonBorrar = new javax.swing.JButton();
         fieldBorrar = new javax.swing.JTextField();
+        DNIOK = new javax.swing.JLabel();
         panelPacienteInactivo = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tablaInactivos = new javax.swing.JTable();
@@ -64,8 +66,8 @@ public class BorrarPaciente extends javax.swing.JPanel {
         mostrarInactivos = new javax.swing.JButton();
         buttonReinsertar = new javax.swing.JButton();
         fieldReinsertar = new javax.swing.JTextField();
+        DNI2OK = new javax.swing.JLabel();
 
-        panelPacienteActivo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         panelPacienteActivo.setMaximumSize(new java.awt.Dimension(650, 650));
 
         tablaActivos.setModel(new javax.swing.table.DefaultTableModel(
@@ -90,15 +92,11 @@ public class BorrarPaciente extends javax.swing.JPanel {
         });
 
         desplegableActivos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DNI", "Nombre", "Apellidos", "Seguro" }));
-        desplegableActivos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                desplegableActivosActionPerformed(evt);
-            }
-        });
 
         labelActivos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelActivos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelActivos.setText("Pacientes activos");
+        labelActivos.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         mostrarActivos.setText("Mostrar datos");
         mostrarActivos.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +109,12 @@ public class BorrarPaciente extends javax.swing.JPanel {
         buttonBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonBorrarActionPerformed(evt);
+            }
+        });
+
+        fieldBorrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldBorrarKeyReleased(evt);
             }
         });
 
@@ -135,11 +139,13 @@ public class BorrarPaciente extends javax.swing.JPanel {
                                         .addGap(283, 283, 283)
                                         .addComponent(textActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(panelPacienteActivoLayout.createSequentialGroup()
-                                .addComponent(mostrarActivos)
+                                .addComponent(mostrarActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(fieldBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(DNIOK)
                                 .addGap(18, 18, 18)
-                                .addComponent(buttonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(fieldBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(buttonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18))))
         );
         panelPacienteActivoLayout.setVerticalGroup(
@@ -149,19 +155,19 @@ public class BorrarPaciente extends javax.swing.JPanel {
                 .addComponent(labelActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelPacienteActivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(desplegableActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(desplegableActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                 .addGap(36, 36, 36)
                 .addGroup(panelPacienteActivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mostrarActivos)
-                    .addComponent(buttonBorrar)
-                    .addComponent(fieldBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mostrarActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DNIOK))
                 .addContainerGap())
         );
 
-        panelPacienteInactivo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         panelPacienteInactivo.setMaximumSize(new java.awt.Dimension(650, 650));
 
         tablaInactivos.setModel(new javax.swing.table.DefaultTableModel(
@@ -186,15 +192,11 @@ public class BorrarPaciente extends javax.swing.JPanel {
         });
 
         desplegableInactivos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DNI", "Nombre", "Apellidos", "Seguro" }));
-        desplegableInactivos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                desplegableInactivosActionPerformed(evt);
-            }
-        });
 
         labelInactivos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelInactivos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelInactivos.setText("Pacientes inactivos");
+        labelInactivos.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         mostrarInactivos.setText("Mostrar datos");
         mostrarInactivos.addActionListener(new java.awt.event.ActionListener() {
@@ -210,6 +212,12 @@ public class BorrarPaciente extends javax.swing.JPanel {
             }
         });
 
+        fieldReinsertar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldReinsertarKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelPacienteInactivoLayout = new javax.swing.GroupLayout(panelPacienteInactivo);
         panelPacienteInactivo.setLayout(panelPacienteInactivoLayout);
         panelPacienteInactivoLayout.setHorizontalGroup(
@@ -217,18 +225,20 @@ public class BorrarPaciente extends javax.swing.JPanel {
             .addGroup(panelPacienteInactivoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelPacienteInactivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
                     .addComponent(labelInactivos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelPacienteInactivoLayout.createSequentialGroup()
-                        .addComponent(buttonReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(fieldReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fieldReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(DNI2OK)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(mostrarInactivos))
+                        .addComponent(mostrarInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPacienteInactivoLayout.createSequentialGroup()
                         .addComponent(desplegableInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(textInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(textInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panelPacienteInactivoLayout.setVerticalGroup(
@@ -238,15 +248,16 @@ public class BorrarPaciente extends javax.swing.JPanel {
                 .addComponent(labelInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelPacienteInactivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(desplegableInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(desplegableInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addGap(33, 33, 33)
                 .addGroup(panelPacienteInactivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mostrarInactivos)
-                    .addComponent(buttonReinsertar)
-                    .addComponent(fieldReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mostrarInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DNI2OK))
                 .addContainerGap())
         );
 
@@ -285,10 +296,6 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		tablaActivos.setRowSorter(trsActivo);
     }//GEN-LAST:event_textActivosKeyTyped
 
-    private void desplegableActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableActivosActionPerformed
-		// TODO add your handling code here:
-    }//GEN-LAST:event_desplegableActivosActionPerformed
-
     private void mostrarActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActivosActionPerformed
 		try {
 			ResultSet rs = gestor.mostrarPacientes();
@@ -302,16 +309,20 @@ public class BorrarPaciente extends javax.swing.JPanel {
 
     private void buttonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarActionPerformed
 		/*
-		String dni = fieldBorrar.getText();
-		if (gestor.comprobarDNI(dni)) {
-			if (gestor.estaBD(dni)) {
-			} else {
-				
-			}
-		} else {
-			
+		 String dni = fieldBorrar.getText();
+		 if (gestor.comprobarDNI(dni)) {
+		 if (gestor.estaBD(dni)) {
+		confirmar = JOptionPane.showOptionDialog(this,"Se va ha borrar el paciente, ¿desea confirmar la operacion?","Confirmar",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,  options,  options[0]);
+		 if (confirmar == 0){
+		borrarPaciente(dni);
 		}
-		*/
+		 } else {
+		 gestor.borrarPaciente(dni);
+		 }
+		 } else {
+			
+		 }
+		 */
     }//GEN-LAST:event_buttonBorrarActionPerformed
 
     private void textInactivosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textInactivosKeyTyped
@@ -327,10 +338,6 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		tablaInactivos.setRowSorter(trsInactivo);
     }//GEN-LAST:event_textInactivosKeyTyped
 
-    private void desplegableInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableInactivosActionPerformed
-		// TODO add your handling code here:
-    }//GEN-LAST:event_desplegableInactivosActionPerformed
-
     private void mostrarInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarInactivosActionPerformed
 		try {
 			ResultSet rs = gestor.mostrarPacientes();
@@ -343,17 +350,53 @@ public class BorrarPaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_mostrarInactivosActionPerformed
 
     private void buttonReinsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReinsertarActionPerformed
+		int confirmar;
 		/*
-		String dni = fieldBorrar.getText();
-		if (gestor.comprobarDNI(dni)) {
-			if (gestor.estaBDBorrado(dni)) {
-			} else {
-			}
-		} else {
+		 String dni = fieldBorrar.getText();
+		 if (gestor.comprobarDNI(dni)) {
+		 if (gestor.estaBDBorrado(dni)) {
+		 confirmar = JOptionPane.showOptionDialog(this,"Se va ha reinsertar el paciente, ¿desea confirmar la operacion?","Confirmar",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,  options,  options[0]);
+		 if (confirmar == 0){
+		 reinsertarPaciente(dni);
+		 }	
+		 } else {
+		 }
+		 } else {
 			
-		}
-		*/
+		 }
+		 */
     }//GEN-LAST:event_buttonReinsertarActionPerformed
+
+	/**
+	 * Indica si es correcto el DNI a borrar
+	 *
+	 * @param evt
+	 */
+    private void fieldBorrarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldBorrarKeyReleased
+		/*
+		 if (gestor.estaBD(fieldBorrar.getText())){
+		 DNIOK.setForeground(Color.black);
+		 DNIOK.setText("OK!!");
+		 } else {
+		 DNIOK.setForeground(Color.red);
+		 DNIOK.setText("No existe!!");
+		 }
+				
+		 */
+    }//GEN-LAST:event_fieldBorrarKeyReleased
+
+    private void fieldReinsertarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldReinsertarKeyReleased
+		/*
+		 if (gestor.estaBD(fieldReinsertar.getText())){
+		 DNI2OK.setForeground(Color.black);
+		 DNI2OK.setText("OK!!");
+		 } else {
+		 DNI2OK.setForeground(Color.red);
+		 DNI2OK.setText("No existe!!");
+		 }
+				
+		 */
+    }//GEN-LAST:event_fieldReinsertarKeyReleased
 
 	public void filtroActivo() {
 		int columnaABuscar = 0;
@@ -366,7 +409,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		if (desplegableActivos.getSelectedItem().equals("Apellidos")) {
 			columnaABuscar = 2;
 		}
-		if (desplegableActivos.getSelectedItem().equals("CompSegur")) {
+		if (desplegableActivos.getSelectedItem().equals("Seguro")) {
 			columnaABuscar = 3;
 		}
 		trsActivo.setRowFilter(RowFilter.regexFilter(textActivos.getText(), columnaABuscar));
@@ -383,7 +426,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		if (desplegableInactivos.getSelectedItem().equals("Apellidos")) {
 			columnaABuscar = 2;
 		}
-		if (desplegableInactivos.getSelectedItem().equals("CompSegur")) {
+		if (desplegableInactivos.getSelectedItem().equals("Seguro")) {
 			columnaABuscar = 3;
 		}
 		trsInactivo.setRowFilter(RowFilter.regexFilter(textInactivos.getText(), columnaABuscar));
@@ -413,6 +456,8 @@ public class BorrarPaciente extends javax.swing.JPanel {
 
 	}
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel DNI2OK;
+    private javax.swing.JLabel DNIOK;
     private javax.swing.JButton buttonBorrar;
     private javax.swing.JButton buttonReinsertar;
     private javax.swing.JComboBox desplegableActivos;

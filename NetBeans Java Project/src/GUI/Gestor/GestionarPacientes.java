@@ -3,25 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package GUI.Gestor;
 
 import clases.Gestor;
+import clases.Paciente;
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 /**
  *
  * @author bm0275
  */
-
 public class GestionarPacientes extends javax.swing.JPanel {
 
 	/**
 	 * Creates new form GestionarPacientes
 	 */
-	
-	
 	private Gestor gestor;
+	private Paciente paciente;
 	private mostrarPacientes mostrarPacientes;
 	private MenuDePaciente menuDePaciente;
 
@@ -43,6 +42,7 @@ public class GestionarPacientes extends javax.swing.JPanel {
         buttonMostrarPacientes = new javax.swing.JButton();
         buttonCogerPaciente = new javax.swing.JButton();
         fieldDNI = new javax.swing.JTextField();
+        pacienteOK = new javax.swing.JLabel();
         mostrarDatos = new javax.swing.JPanel();
 
         menuOpciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0)));
@@ -61,6 +61,14 @@ public class GestionarPacientes extends javax.swing.JPanel {
             }
         });
 
+        fieldDNI.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldDNIKeyReleased(evt);
+            }
+        });
+
+        pacienteOK.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout menuOpcionesLayout = new javax.swing.GroupLayout(menuOpciones);
         menuOpciones.setLayout(menuOpcionesLayout);
         menuOpcionesLayout.setHorizontalGroup(
@@ -69,10 +77,13 @@ public class GestionarPacientes extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonMostrarPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(menuOpcionesLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuOpcionesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(buttonCogerPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(buttonCogerPaciente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fieldDNI, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(menuOpcionesLayout.createSequentialGroup()
+                        .addComponent(pacienteOK)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -81,20 +92,20 @@ public class GestionarPacientes extends javax.swing.JPanel {
             .addGroup(menuOpcionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(buttonMostrarPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(145, 145, 145)
+                .addGap(36, 36, 36)
                 .addComponent(buttonCogerPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(fieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(pacienteOK)
+                .addContainerGap(187, Short.MAX_VALUE))
         );
-
-        mostrarDatos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 255, 102)));
 
         javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);
         mostrarDatos.setLayout(mostrarDatosLayout);
         mostrarDatosLayout.setHorizontalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 489, Short.MAX_VALUE)
+            .addGap(0, 491, Short.MAX_VALUE)
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,29 +135,49 @@ public class GestionarPacientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMostrarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarPacientesActionPerformed
-        mostrarPacientes = new mostrarPacientes(gestor);
-        mostrarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
-        mostrarPacientes.setLocation(0, 0);
+		mostrarPacientes = new mostrarPacientes(gestor);
+		mostrarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		mostrarPacientes.setLocation(0, 0);
 
-        mostrarDatos.removeAll();
-        mostrarDatos.add(mostrarPacientes, BorderLayout.CENTER);
-        mostrarDatos.revalidate();
-        mostrarDatos.repaint();
-		
+		mostrarDatos.removeAll();
+		mostrarDatos.add(mostrarPacientes, BorderLayout.CENTER);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+
     }//GEN-LAST:event_buttonMostrarPacientesActionPerformed
 
     private void buttonCogerPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCogerPacienteActionPerformed
+		/*if (gestor.estaBD(fieldDNI.getText())){
+		 paciente = new Paciente(fieldDNI.getText());
+			crearMenu();
+		 }
+		 */
+    }//GEN-LAST:event_buttonCogerPacienteActionPerformed
+
+	private void crearMenu() {
 		mostrarDatos.setSize(mostrarDatos.getWidth() + menuOpciones.getWidth(), mostrarDatos.getHeight());
-		menuDePaciente = new MenuDePaciente(gestor);
-        menuDePaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
-        menuDePaciente.setLocation(0, 0);
+		menuDePaciente = new MenuDePaciente(gestor, paciente);
+		menuDePaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		menuDePaciente.setLocation(0, 0);
 
 		mostrarDatos.removeAll();
 		menuOpciones.setVisible(false);
-        mostrarDatos.add(menuDePaciente, BorderLayout.WEST);
-        mostrarDatos.revalidate();
-        mostrarDatos.repaint();
-    }//GEN-LAST:event_buttonCogerPacienteActionPerformed
+		mostrarDatos.add(menuDePaciente, BorderLayout.WEST);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+	}
+    private void fieldDNIKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldDNIKeyReleased
+		/*
+		 if (gestor.estaBD(fieldDNI.getText())){
+		 pacienteOK.setForeground(Color.green);
+		 pacienteOK.setText("OK!!");
+		 } else 
+		 {
+		 pacienteOK.setForeground(Color.red);
+		 pacienteOK.setText("Paciente erroneo");
+		 }
+		 */
+    }//GEN-LAST:event_fieldDNIKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -155,5 +186,6 @@ public class GestionarPacientes extends javax.swing.JPanel {
     private javax.swing.JTextField fieldDNI;
     private javax.swing.JPanel menuOpciones;
     private javax.swing.JPanel mostrarDatos;
+    private javax.swing.JLabel pacienteOK;
     // End of variables declaration//GEN-END:variables
 }
