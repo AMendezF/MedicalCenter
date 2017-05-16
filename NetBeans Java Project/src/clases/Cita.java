@@ -15,7 +15,7 @@ public class Cita {
      * Constructor de cita.
      *
      * @param fecha Formato fecha yyyy/mm/dd.
-     * @param idPaciente Identificador de paciente (DNI).
+     * @param idPaciente Identificador de paciente.
      * @param especialidad Campo especialidad de la cita.
      * @param idMedico Identificador médico.
      */
