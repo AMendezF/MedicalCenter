@@ -111,7 +111,7 @@ public class Gestor {
                     + "AND c.medico=m.n_colegiado "
                     + "AND c.hora>='13:00:00' "
                     + "AND c.dia='" + fecha + "' "
-                    + "ORDER BY c.hora";
+                    + "ORDER BY c.hora" + ";";
             resultSet = conexion.makeQuery(sql);
 
             tieneEspecialidadSala = false;
@@ -144,7 +144,7 @@ public class Gestor {
         ResultSet resultSet;
 
         sql = "SELECT nombre "
-                + "FROM centromedico.especialidad ";
+                + "FROM centromedico.especialidad" + ";";
         resultSet = conexion.makeQuery(sql);
 
         while (resultSet.next()) {
@@ -269,19 +269,28 @@ public class Gestor {
                 miNumero = DNI.substring(1, 8);
             }
 
-            int num = Integer.parseInt(miNumero);
-            int mod = num % (letrasDNI.length());
+            int moduloLetra = Integer.parseInt(miNumero) % letrasDNI.length();
 
-            char miLetra = DNI.charAt(8);
-            char nuevaLetra = letrasDNI.charAt(mod);
+            char letraDNI = DNI.charAt(8);
+            char letraObtenida = letrasDNI.charAt(moduloLetra);
 
-            if (nuevaLetra == miLetra) {
+            if (letraObtenida == letraDNI) {
                 verdadero = true;
             }
         }
 
         return verdadero;
     }
+	
+	public boolean esTexto(String campoTexto) {
+		boolean esTexto = false;
+		
+		if(campoTexto.matches("[^\\d.,<>_´`+¿?!¡@#$%&=\\s]{1,}")) {
+			esTexto = true;
+		}
+		
+		return esTexto;
+	}
 
     /**
      * Comprueba si existe un paciente en la BD con el DNI entregado.
@@ -299,7 +308,7 @@ public class Gestor {
 
         sql = "SELECT dni "
                 + "FROM centromedico.paciente "
-                + "WHERE dni=" + DNI;
+                + "WHERE dni=" + DNI + ";";
         resultSet = conexion.makeQuery(sql);
 
         dniBD = null;
@@ -329,7 +338,7 @@ public class Gestor {
 
         sql = "SELECT dni "
                 + "FROM centromedico.paciente_borrado "
-                + "WHERE dni=" + DNI;
+                + "WHERE dni=" + DNI + ";";
         resultSet = conexion.makeQuery(sql);
 
         String dniBD = null;
@@ -438,26 +447,5 @@ public class Gestor {
 	 boolean eliminado = false;
 
 	 return eliminado;
-	 }*/ /**
-     * Devuleve todas las especialidades médicas existentes en la BD.
-     *
-     * @return Retorna una lista de especialidades médicas.
-     * @throws SQLException Devuelve error si no se pudo realizar la consulta
-     * SQL.
-     */
-    /*public ArrayList<String> mostrarEspecialidades() throws SQLException {
-	 ArrayList<String> listaEspecialidades = null;
-	 String sql;
-	 ResultSet resultSet;
-        
-	 sql = "SELECT * FROM centromedico.especialidad "
-	 "ORDER BY cod_especialidad;";
-	 resultSet = this.conexion.makeQuery(sql);
-        
-	 while (resultSet.next()) {
-	 listaEspecialidades.add(resultSet.getString("nombre"));
-	 }
-        
-	 return listaEspecialidades;
-	 }*/
+	 }*/ 
 }
