@@ -3,6 +3,7 @@ package GUI.Medico;
 import clases.Conexion;
 import clases.Medico;
 import java.awt.BorderLayout;
+import java.awt.Component;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,9 +19,11 @@ public class MenuMedico extends javax.swing.JPanel {
     /**
      * Creates new form MenuMedico
      */
-    private mostrarPacientesMedico mostrarPacientes;
-    private mostrarCitasMedico mostrarCitas;
+    private MostrarPacientesMedico mostrarPacientes;
+    private MostrarCitasMedico mostrarCitas;
     private Medico medico;
+    private EscribirFichaPaciente ecribirFicha;
+    private ModificarFichaPaciente modificarFicha;
 
     public MenuMedico(Medico medico) {
         initComponents();
@@ -170,11 +173,17 @@ public class MenuMedico extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonMostrarCitasActionPerformed
 
     private void buttonModifFichaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonModifFichaActionPerformed
-        // TODO add your handling code here:
+        mostrarDatos.removeAll();
+        mostrarDatos.add(modificarFicha, BorderLayout.CENTER);
+        mostrarDatos.revalidate();
+        mostrarDatos.repaint();
     }//GEN-LAST:event_buttonModifFichaActionPerformed
 
     private void buttonEscribirFichaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEscribirFichaActionPerformed
-        // TODO add your handling code here:
+        mostrarDatos.removeAll();
+        mostrarDatos.add(ecribirFicha, BorderLayout.CENTER);
+        mostrarDatos.revalidate();
+        mostrarDatos.repaint();
     }//GEN-LAST:event_buttonEscribirFichaActionPerformed
 
     private void mostrarDatosComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_mostrarDatosComponentAdded
@@ -186,13 +195,13 @@ public class MenuMedico extends javax.swing.JPanel {
     }//GEN-LAST:event_mostrarDatosComponentRemoved
     
     private void initMostrarPacientes() {
-        this.mostrarPacientes = new mostrarPacientesMedico(medico);
+        this.mostrarPacientes = new MostrarPacientesMedico(medico);
         this.mostrarPacientes.setSize(800, 800);
         this.mostrarPacientes.setLocation(2, 5);
     }
 
     private void initMostrarCitas() {
-        this.mostrarCitas = new mostrarCitasMedico(medico);
+        this.mostrarCitas = new MostrarCitasMedico(medico);
         this.mostrarCitas.setSize(800, 800);
         this.mostrarCitas.setLocation(2, 5);
     }

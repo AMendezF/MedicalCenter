@@ -21,7 +21,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Juan
  */
-public class MostrarCitasMedico extends javax.swing.JPanel {
+public class EscribirFichaPaciente extends javax.swing.JPanel {
 
     /**
      * Creates new form mostrarPacientesMedico
@@ -31,7 +31,7 @@ public class MostrarCitasMedico extends javax.swing.JPanel {
     private DefaultTableModel tabla;
     private String[] columnas;
 
-    public MostrarCitasMedico(Medico medico) {
+    public EscribirFichaPaciente(Medico medico) {
         initComponents();
         this.medico = medico;
     }
@@ -140,7 +140,7 @@ public class MostrarCitasMedico extends javax.swing.JPanel {
             }
             desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
         } catch (SQLException ex) {
-            Logger.getLogger(MostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EscribirFichaPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_BotonMostrarActionPerformed
 
