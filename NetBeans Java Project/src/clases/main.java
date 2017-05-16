@@ -538,7 +538,7 @@ public class main {
 		medico = new Medico(numColegiadoViejo, con);
 		System.out.println("Se procedera al borrado de " + medico.getNombre());
 
-		int codEspecialidad = medico.getN_Especialidad();
+		int codEspecialidad = medico.getCod_Especialidad();
 		String horario = medico.getTurno();
 		eliminarMedicoVacio(medico, con);
 		System.out.println("\nAñada Medico sustituto.");
