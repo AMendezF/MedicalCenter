@@ -30,6 +30,8 @@ public class MenuMedico extends javax.swing.JPanel {
         this.medico = medico;
         initMostrarPacientes();
         initMostrarCitas();
+        initEscribirFichaPaciente();
+        initModificarFichaPaciente();
     }
 
     /**
@@ -204,6 +206,18 @@ public class MenuMedico extends javax.swing.JPanel {
         this.mostrarCitas = new MostrarCitasMedico(medico);
         this.mostrarCitas.setSize(800, 800);
         this.mostrarCitas.setLocation(2, 5);
+    }
+    
+    private void initModificarFichaPaciente(){
+        this.modificarFicha = new ModificarFichaPaciente(medico);
+        this.modificarFicha.setSize(800, 800);
+        this.modificarFicha.setLocation(2, 5);
+    }
+    
+    private void initEscribirFichaPaciente(){
+        this.ecribirFicha = new EscribirFichaPaciente(medico);
+        this.ecribirFicha.setSize(800, 800);
+        this.ecribirFicha.setLocation(2, 5);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
