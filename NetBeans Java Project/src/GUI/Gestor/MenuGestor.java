@@ -1,13 +1,8 @@
 package GUI.Gestor;
 
-
-import clases.Conexion;
 import clases.Gestor;
 import java.awt.BorderLayout;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.TableRowSorter;
 
 /*
@@ -15,29 +10,29 @@ import javax.swing.table.TableRowSorter;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Juan
  */
 public class MenuGestor extends javax.swing.JPanel {
 
-	/**
-	 * Creates new form MenuGestor
-	 */
 	private TableRowSorter trsFiltro;
-    private Gestor gestor;
+	private Gestor gestor;
 	private Connection reg;
 	private AñadirPaciente añadirPaciente;
 	private BorrarPaciente borrarPaciente;
 	private GestionarPacientes gestionarPacientes;
 	private MenuDeMedico menuDeMedico;
 	private mostrarSalas mostrarSalas;
-	private mostrarPacientes mostrarPacientes;
-	
+
 	public MenuGestor(Gestor gestor) {
 		initComponents();
-        this.gestor = gestor;
+		this.gestor = gestor;
+		this.añadirPaciente = new AñadirPaciente(gestor);
+		this.borrarPaciente = new BorrarPaciente(gestor);
+		this.gestionarPacientes = new GestionarPacientes(gestor);
+		this.menuDeMedico = new MenuDeMedico(gestor);
+		this.mostrarSalas = new mostrarSalas(gestor);
 	}
 
 	/**
@@ -58,15 +53,6 @@ public class MenuGestor extends javax.swing.JPanel {
         buttonBorrarPaciente = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                formAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
 
         mostrarDatos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 51)));
         mostrarDatos.setForeground(new java.awt.Color(204, 204, 255));
@@ -173,65 +159,82 @@ public class MenuGestor extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-    private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formAncestorAdded
 
+	/**
+	 * Muestra el panel borrar paciente
+	 *
+	 * @param evt
+	 */
     private void buttonBorrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarPacienteActionPerformed
-        borrarPaciente = new BorrarPaciente(gestor);
-        borrarPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
-        borrarPaciente.setLocation(0, 0);
-
-        mostrarDatos.removeAll();
-        mostrarDatos.add(borrarPaciente, BorderLayout.CENTER);
-        mostrarDatos.revalidate();
-        mostrarDatos.repaint();
-    }//GEN-LAST:event_buttonBorrarPacienteActionPerformed
-
-    private void buttonAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirPacienteActionPerformed
-		añadirPaciente = new AñadirPaciente(gestor);
-        añadirPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
-        añadirPaciente.setLocation(0, 0);
-
-        mostrarDatos.removeAll();
-        mostrarDatos.add(añadirPaciente, BorderLayout.CENTER);
-        mostrarDatos.revalidate();
-        mostrarDatos.repaint();
-    }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
-
-    private void buttonGestionarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGestionarPacientesActionPerformed
-		gestionarPacientes = new  GestionarPacientes(gestor);
-        gestionarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
-        gestionarPacientes.setLocation(0, 0);
+		borrarPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		borrarPaciente.setLocation(0, 0);
 
 		mostrarDatos.removeAll();
-        mostrarDatos.add(gestionarPacientes, BorderLayout.WEST);
-        mostrarDatos.revalidate();
-        mostrarDatos.repaint();
+		mostrarDatos.add(borrarPaciente, BorderLayout.CENTER);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+    }//GEN-LAST:event_buttonBorrarPacienteActionPerformed
+
+	/**
+	 * Muestra el panel añadir paciente
+	 *
+	 * @param evt
+	 */
+    private void buttonAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirPacienteActionPerformed
+		añadirPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		añadirPaciente.setLocation(0, 0);
+
+		mostrarDatos.removeAll();
+		mostrarDatos.add(añadirPaciente, BorderLayout.CENTER);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+    }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
+
+	/**
+	 * Muestra el panel gestionar pacientes
+	 *
+	 * @param evt
+	 */
+    private void buttonGestionarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGestionarPacientesActionPerformed
+		gestionarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		gestionarPacientes.setLocation(0, 0);
+
+		mostrarDatos.removeAll();
+		mostrarDatos.add(gestionarPacientes, BorderLayout.WEST);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
     }//GEN-LAST:event_buttonGestionarPacientesActionPerformed
 
+	/**
+	 * Muestra el panel mostrar salas
+	 *
+	 * @param evt
+	 */
     private void buttonMostrarSalasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarSalasActionPerformed
-      	mostrarSalas = new mostrarSalas(gestor);
 		mostrarSalas.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
-        mostrarSalas.setLocation(0, 0);
-		
+		mostrarSalas.setLocation(0, 0);
+
 		mostrarDatos.removeAll();
 		mostrarDatos.add(mostrarSalas, BorderLayout.CENTER);
 		mostrarDatos.revalidate();
 		mostrarDatos.repaint();
     }//GEN-LAST:event_buttonMostrarSalasActionPerformed
 
+	/**
+	 * Muestra el panel menu de medicos
+	 *
+	 * @param evt
+	 */
     private void buttonGestionarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGestionarMedicoActionPerformed
-		menuDeMedico = new  MenuDeMedico(gestor);
-        menuDeMedico.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
-        menuDeMedico.setLocation(0, 0);
+		menuDeMedico.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		menuDeMedico.setLocation(0, 0);
 
 		mostrarDatos.removeAll();
-        mostrarDatos.add(menuDeMedico, BorderLayout.WEST);
-        mostrarDatos.revalidate();
-        mostrarDatos.repaint();
+		mostrarDatos.add(menuDeMedico, BorderLayout.WEST);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
     }//GEN-LAST:event_buttonGestionarMedicoActionPerformed
-	
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAñadirPaciente;
     private javax.swing.JButton buttonBorrarPaciente;

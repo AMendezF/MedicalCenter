@@ -18,12 +18,16 @@ public class MenuMedico extends javax.swing.JPanel {
 	/**
 	 * Creates new form MenuMedico
 	 */
-	private mostrarPacientesMedico mostrarPacientes;
 	private Medico medico;
+	private mostrarPacientesMedico mostrarPacientes;
+	private escribirFicha escribirFicha;
 
 	public MenuMedico(Medico medico) {
 		initComponents();
 		this.medico = medico;
+		this.mostrarPacientes = new mostrarPacientesMedico(medico);
+		this.escribirFicha = new escribirFicha(medico);
+
 	}
 
 	/**
@@ -67,6 +71,11 @@ public class MenuMedico extends javax.swing.JPanel {
         labelMenuMedico.setText("Menu medico");
 
         buttonEscribirFicha.setText("Escribir ficha");
+        buttonEscribirFicha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEscribirFichaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout menuOpcionesLayout = new javax.swing.GroupLayout(menuOpciones);
         menuOpciones.setLayout(menuOpcionesLayout);
@@ -135,7 +144,6 @@ public class MenuMedico extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMostrarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarPacientesActionPerformed
-		mostrarPacientes = new mostrarPacientesMedico(medico);
 		mostrarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		mostrarPacientes.setLocation(0, 0);
 
@@ -148,6 +156,16 @@ public class MenuMedico extends javax.swing.JPanel {
     private void buttonMostrarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarCitasActionPerformed
 
     }//GEN-LAST:event_buttonMostrarCitasActionPerformed
+
+    private void buttonEscribirFichaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEscribirFichaActionPerformed
+		escribirFicha.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		escribirFicha.setLocation(0, 0);
+
+		mostrarDatos.removeAll();
+		mostrarDatos.add(escribirFicha, BorderLayout.CENTER);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+    }//GEN-LAST:event_buttonEscribirFichaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

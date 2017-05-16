@@ -1,9 +1,6 @@
 package GUI.Gestor;
 
-
-import clases.Conexion;
 import clases.Gestor;
-import java.sql.Connection;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -59,10 +56,6 @@ public class mostrarSalas extends javax.swing.JPanel {
                 .addContainerGap(118, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-	
-	private void getSalas() {
-		jTextArea1.setText("salas");
-	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;

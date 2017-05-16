@@ -1,11 +1,9 @@
 package GUI.Gestor;
 
-import clases.Conexion;
 import clases.Gestor;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -26,9 +24,6 @@ import javax.swing.table.TableRowSorter;
  */
 public class BorrarPaciente extends javax.swing.JPanel {
 
-	/**
-	 * Creates new form BorrarPaciente
-	 */
 	private Gestor gestor;
 	private TableRowSorter trsActivo;
 	private TableRowSorter trsInactivo;
@@ -283,6 +278,11 @@ public class BorrarPaciente extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+	 * Sirve para buscar en el jTable de pacientes activos
+	 *
+	 * @param evt
+	 */
     private void textActivosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textActivosKeyTyped
 		textActivos.addKeyListener(new KeyAdapter() {
 			public void keyReleased(final KeyEvent e) {
@@ -296,26 +296,35 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		tablaActivos.setRowSorter(trsActivo);
     }//GEN-LAST:event_textActivosKeyTyped
 
+	/**
+	 * Muestra los datos de pacientes activos
+	 *
+	 * @param evt
+	 */
     private void mostrarActivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActivosActionPerformed
 		try {
 			ResultSet rs = gestor.mostrarPacientes();
 			tablaActivos.setModel(buildTableModel(rs));
-
 		} catch (SQLException ex) {
 			Logger.getLogger(mostrarPacientes.class
 					.getName()).log(Level.SEVERE, null, ex);
 		}
     }//GEN-LAST:event_mostrarActivosActionPerformed
 
+	/**
+	 * Borra un paciente
+	 *
+	 * @param evt
+	 */
     private void buttonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarActionPerformed
 		/*
 		 String dni = fieldBorrar.getText();
 		 if (gestor.comprobarDNI(dni)) {
 		 if (gestor.estaBD(dni)) {
-		confirmar = JOptionPane.showOptionDialog(this,"Se va ha borrar el paciente, ¿desea confirmar la operacion?","Confirmar",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,  options,  options[0]);
+		 confirmar = JOptionPane.showOptionDialog(this,"Se va ha borrar el paciente, ¿desea confirmar la operacion?","Confirmar",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,  options,  options[0]);
 		 if (confirmar == 0){
-		borrarPaciente(dni);
-		}
+		 borrarPaciente(dni);
+		 }
 		 } else {
 		 gestor.borrarPaciente(dni);
 		 }
@@ -325,6 +334,11 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		 */
     }//GEN-LAST:event_buttonBorrarActionPerformed
 
+	/**
+	 * Sirve para buscar en el jTable de pacientes inactivos
+	 *
+	 * @param evt
+	 */
     private void textInactivosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textInactivosKeyTyped
 		textInactivos.addKeyListener(new KeyAdapter() {
 			public void keyReleased(final KeyEvent e) {
@@ -338,10 +352,14 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		tablaInactivos.setRowSorter(trsInactivo);
     }//GEN-LAST:event_textInactivosKeyTyped
 
+	/**
+	 * Muestra los pacientes inactivos
+	 *
+	 * @param evt
+	 */
     private void mostrarInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarInactivosActionPerformed
 		try {
-			ResultSet rs = gestor.mostrarPacientes();
-			//ResultSet rs = gestor.mostrarPacientesBorrados();
+			ResultSet rs = gestor.mostrarPacientesBorrados();
 			tablaInactivos.setModel(buildTableModel(rs));
 		} catch (SQLException ex) {
 			Logger.getLogger(mostrarPacientes.class
@@ -349,6 +367,11 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		}
     }//GEN-LAST:event_mostrarInactivosActionPerformed
 
+	/**
+	 * Reinserta un paciente
+	 *
+	 * @param evt
+	 */
     private void buttonReinsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReinsertarActionPerformed
 		int confirmar;
 		/*
@@ -373,31 +396,41 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void fieldBorrarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldBorrarKeyReleased
-		/*
-		 if (gestor.estaBD(fieldBorrar.getText())){
-		 DNIOK.setForeground(Color.black);
-		 DNIOK.setText("OK!!");
-		 } else {
-		 DNIOK.setForeground(Color.red);
-		 DNIOK.setText("No existe!!");
-		 }
-				
-		 */
+		try {
+			if (gestor.estaBD(fieldBorrar.getText())) {
+				DNIOK.setForeground(Color.black);
+				DNIOK.setText("OK!!");
+			} else {
+				DNIOK.setForeground(Color.red);
+				DNIOK.setText("No existe!!");
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(BorrarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+		}
     }//GEN-LAST:event_fieldBorrarKeyReleased
 
+	/**
+	 * Indica si es correcto el DNI a reinsertar
+	 *
+	 * @param evt
+	 */
     private void fieldReinsertarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldReinsertarKeyReleased
-		/*
-		 if (gestor.estaBD(fieldReinsertar.getText())){
-		 DNI2OK.setForeground(Color.black);
-		 DNI2OK.setText("OK!!");
-		 } else {
-		 DNI2OK.setForeground(Color.red);
-		 DNI2OK.setText("No existe!!");
-		 }
-				
-		 */
+		try {
+			if (gestor.estaBD(fieldReinsertar.getText())) {
+				DNI2OK.setForeground(Color.black);
+				DNI2OK.setText("OK!!");
+			} else {
+				DNI2OK.setForeground(Color.red);
+				DNI2OK.setText("No existe!!");
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(BorrarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+		}
     }//GEN-LAST:event_fieldReinsertarKeyReleased
 
+	/**
+	 * Sirve para filtar el jTable de pacientes activos
+	 */
 	public void filtroActivo() {
 		int columnaABuscar = 0;
 		if (desplegableActivos.getSelectedItem().equals("DNI")) {
@@ -415,6 +448,9 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		trsActivo.setRowFilter(RowFilter.regexFilter(textActivos.getText(), columnaABuscar));
 	}
 
+	/**
+	 * Sirve para filtar el jTable de pacientes inactivos
+	 */
 	public void filtroInactivo() {
 		int columnaABuscar = 0;
 		if (desplegableInactivos.getSelectedItem().equals("DNI")) {
@@ -432,6 +468,13 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		trsInactivo.setRowFilter(RowFilter.regexFilter(textInactivos.getText(), columnaABuscar));
 	}
 
+	/**
+	 * Crea la tabla
+	 *
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
 	public DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
 		java.sql.ResultSetMetaData metaData = rs.getMetaData();
 
@@ -455,6 +498,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		return new DefaultTableModel(data, columnNames);
 
 	}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DNI2OK;
     private javax.swing.JLabel DNIOK;

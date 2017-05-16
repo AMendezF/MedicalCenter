@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.Gestor;
 
 import clases.Gestor;
 import clases.Paciente;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,6 +25,7 @@ public class GestionarPacientes extends javax.swing.JPanel {
 	public GestionarPacientes(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		this.mostrarPacientes = new mostrarPacientes(gestor);
 	}
 
 	/**
@@ -134,8 +133,12 @@ public class GestionarPacientes extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+	 * Añade un panel y muestra los datos del paciente
+	 *
+	 * @param evt
+	 */
     private void buttonMostrarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarPacientesActionPerformed
-		mostrarPacientes = new mostrarPacientes(gestor);
 		mostrarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		mostrarPacientes.setLocation(0, 0);
 
@@ -143,20 +146,31 @@ public class GestionarPacientes extends javax.swing.JPanel {
 		mostrarDatos.add(mostrarPacientes, BorderLayout.CENTER);
 		mostrarDatos.revalidate();
 		mostrarDatos.repaint();
-
     }//GEN-LAST:event_buttonMostrarPacientesActionPerformed
 
+	/**
+	 * Coge un paciente que exista en la base de datos y monta menuPaciente
+	 *
+	 * @param evt
+	 */
     private void buttonCogerPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCogerPacienteActionPerformed
-		/*if (gestor.estaBD(fieldDNI.getText())){
-		 paciente = new Paciente(fieldDNI.getText());
-			crearMenu();
-		 }
-		 */
+		try {
+			if (gestor.estaBD(fieldDNI.getText())) {
+				//paciente = new Paciente(fieldDNI.getText());
+				crearMenu();
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(GestionarPacientes.class.getName()).log(Level.SEVERE, null, ex);
+		}
     }//GEN-LAST:event_buttonCogerPacienteActionPerformed
 
+	/**
+	 * Crea un menu de paciente
+	 */
 	private void crearMenu() {
-		mostrarDatos.setSize(mostrarDatos.getWidth() + menuOpciones.getWidth(), mostrarDatos.getHeight());
 		menuDePaciente = new MenuDePaciente(gestor, paciente);
+
+		mostrarDatos.setSize(mostrarDatos.getWidth() + menuOpciones.getWidth(), mostrarDatos.getHeight());
 		menuDePaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		menuDePaciente.setLocation(0, 0);
 
@@ -166,19 +180,25 @@ public class GestionarPacientes extends javax.swing.JPanel {
 		mostrarDatos.revalidate();
 		mostrarDatos.repaint();
 	}
-    private void fieldDNIKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldDNIKeyReleased
-		/*
-		 if (gestor.estaBD(fieldDNI.getText())){
-		 pacienteOK.setForeground(Color.green);
-		 pacienteOK.setText("OK!!");
-		 } else 
-		 {
-		 pacienteOK.setForeground(Color.red);
-		 pacienteOK.setText("Paciente erroneo");
-		 }
-		 */
-    }//GEN-LAST:event_fieldDNIKeyReleased
 
+	/**
+	 * Informa de errores en los campos
+	 *
+	 * @param evt
+	 */
+    private void fieldDNIKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldDNIKeyReleased
+		try {
+			if (gestor.estaBD(fieldDNI.getText())) {
+				pacienteOK.setForeground(Color.green);
+				pacienteOK.setText("OK!!");
+			} else {
+				pacienteOK.setForeground(Color.red);
+				pacienteOK.setText("Paciente erroneo");
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(GestionarPacientes.class.getName()).log(Level.SEVERE, null, ex);
+		}
+    }//GEN-LAST:event_fieldDNIKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCogerPaciente;
