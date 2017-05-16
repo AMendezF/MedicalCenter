@@ -27,9 +27,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="labelTitulo" pref="623" max="32767" attributes="0"/>
+                      <Component id="labelTitulo" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="labelUsuario" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="labelUsuario" min="-2" pref="203" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="bottonDesconectar" min="-2" pref="175" max="-2" attributes="0"/>
                   </Group>
@@ -92,7 +92,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="638" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">

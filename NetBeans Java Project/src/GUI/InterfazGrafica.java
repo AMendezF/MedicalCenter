@@ -76,7 +76,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 638, Short.MAX_VALUE)
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,9 +167,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
+                        .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(bottonDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -319,10 +319,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 				labelUsuario.setText(con.getUser());
 			} else if (con.esValida() && con.existeMedico(con.getUser())) {
 				crearMenuMedico();
-				labelUsuario.setText(con.getUser());
-				//llamar a labelUsuario.setText(medico.getNombre());
-				// o la clase medico tiene un constructor con el nombre
-				// o lo saca de la base de datos
+				labelUsuario.setText(medico.getNombre() + ", " + medico.getN_colegiado());
 			}
 
 		} catch (SQLException ex) {
