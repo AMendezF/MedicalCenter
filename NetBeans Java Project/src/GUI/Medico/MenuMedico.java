@@ -25,6 +25,8 @@ public class MenuMedico extends javax.swing.JPanel {
     public MenuMedico(Medico medico) {
         initComponents();
         this.medico = medico;
+        initMostrarPacientes();
+        initMostrarCitas();
     }
 
     /**
@@ -38,7 +40,7 @@ public class MenuMedico extends javax.swing.JPanel {
 
         menuOpciones = new javax.swing.JPanel();
         buttonMostrarPacientes = new javax.swing.JButton();
-        buttonCogerCita = new javax.swing.JButton();
+        buttonModifFicha = new javax.swing.JButton();
         buttonMostrarCitas = new javax.swing.JButton();
         labelMenuMedico = new javax.swing.JLabel();
         buttonEscribirFicha = new javax.swing.JButton();
@@ -55,10 +57,10 @@ public class MenuMedico extends javax.swing.JPanel {
             }
         });
 
-        buttonCogerCita.setText("Coger cita");
-        buttonCogerCita.addActionListener(new java.awt.event.ActionListener() {
+        buttonModifFicha.setText("Modificar Ficha");
+        buttonModifFicha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCogerCitaActionPerformed(evt);
+                buttonModifFichaActionPerformed(evt);
             }
         });
 
@@ -90,7 +92,7 @@ public class MenuMedico extends javax.swing.JPanel {
                         .addComponent(buttonMostrarPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                         .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                         .addComponent(labelMenuMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(buttonCogerCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonModifFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonEscribirFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(121, Short.MAX_VALUE))
         );
@@ -104,9 +106,9 @@ public class MenuMedico extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonCogerCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(buttonEscribirFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonModifFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -154,10 +156,6 @@ public class MenuMedico extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonMostrarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarPacientesActionPerformed
-        mostrarPacientes = new mostrarPacientesMedico(medico);
-        mostrarPacientes.setSize(800, 800);
-        mostrarPacientes.setLocation(2, 5);
-
         mostrarDatos.removeAll();
         mostrarDatos.add(mostrarPacientes, BorderLayout.CENTER);
         mostrarDatos.revalidate();
@@ -165,19 +163,15 @@ public class MenuMedico extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonMostrarPacientesActionPerformed
 
     private void buttonMostrarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarCitasActionPerformed
-        mostrarCitas = new mostrarCitasMedico(medico);
-        mostrarCitas.setSize(800, 800);
-        mostrarCitas.setLocation(2, 5);
-
-        mostrarCitas.removeAll();
-        mostrarCitas.add(mostrarCitas, BorderLayout.CENTER);
-        mostrarCitas.revalidate();
-        mostrarCitas.repaint();
+        mostrarDatos.removeAll();
+        mostrarDatos.add(mostrarCitas, BorderLayout.CENTER);
+        mostrarDatos.revalidate();
+        mostrarDatos.repaint();
     }//GEN-LAST:event_buttonMostrarCitasActionPerformed
 
-    private void buttonCogerCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCogerCitaActionPerformed
+    private void buttonModifFichaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonModifFichaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonCogerCitaActionPerformed
+    }//GEN-LAST:event_buttonModifFichaActionPerformed
 
     private void buttonEscribirFichaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEscribirFichaActionPerformed
         // TODO add your handling code here:
@@ -190,11 +184,22 @@ public class MenuMedico extends javax.swing.JPanel {
     private void mostrarDatosComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_mostrarDatosComponentRemoved
         // TODO add your handling code here:
     }//GEN-LAST:event_mostrarDatosComponentRemoved
+    
+    private void initMostrarPacientes() {
+        this.mostrarPacientes = new mostrarPacientesMedico(medico);
+        this.mostrarPacientes.setSize(800, 800);
+        this.mostrarPacientes.setLocation(2, 5);
+    }
 
+    private void initMostrarCitas() {
+        this.mostrarCitas = new mostrarCitasMedico(medico);
+        this.mostrarCitas.setSize(800, 800);
+        this.mostrarCitas.setLocation(2, 5);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonCogerCita;
     private javax.swing.JButton buttonEscribirFicha;
+    private javax.swing.JButton buttonModifFicha;
     private javax.swing.JButton buttonMostrarCitas;
     private javax.swing.JButton buttonMostrarPacientes;
     private javax.swing.JLabel labelMenuMedico;

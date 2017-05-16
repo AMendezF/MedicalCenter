@@ -28,6 +28,8 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
      */
     private final Medico medico;
     private TableRowSorter trsFiltro;
+    private DefaultTableModel tabla;
+    private String[] columnas;
 
     public mostrarPacientesMedico(Medico medico) {
         initComponents();
@@ -50,7 +52,6 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         BotonMostrar = new javax.swing.JButton();
 
-        desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DNI", "Nombre", "Apellidos", "Seguro" }));
         desplegableColumnas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 desplegableColumnasActionPerformed(evt);
@@ -59,20 +60,12 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
 
         tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+                {}
             },
             new String [] {
-                "DNI", "Nombre", "Apellidos", "Seguro"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-        });
+        ));
         jScrollPane2.setViewportView(tablaInfo);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -128,10 +121,17 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     }//GEN-LAST:event_desplegableColumnasActionPerformed
 
     private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
-
         try {
             ResultSet rs = medico.mostrarPacientesAsociados();
-            tablaInfo.setModel(ResultSetToTableModel(rs));
+            setTabla(ResultSetToTableModel(rs));
+            DefaultTableModel tabla = getTabla();
+            tablaInfo.setModel(tabla);
+            int numColums = tabla.getColumnCount();
+            this.columnas = new String[numColums];
+            for (int i = 0 ; i < numColums ; i++){
+                this.columnas[i] = tabla.getColumnName(i);
+            }
+            desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
         } catch (SQLException ex) {
             Logger.getLogger(mostrarPacientesMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -175,20 +175,19 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     }
 
     public void filtro() {
-        int columnaABuscar = 0;
-        if (desplegableColumnas.getSelectedItem().equals("DNI")) {
-            columnaABuscar = 0;
-        }
-        if (desplegableColumnas.getSelectedItem().equals("Nombre")) {
-            columnaABuscar = 1;
-        }
-        if (desplegableColumnas.getSelectedItem().equals("Apellidos")) {
-            columnaABuscar = 2;
-        }
-        if (desplegableColumnas.getSelectedItem().equals("CompSegur")) {
-            columnaABuscar = 3;
-        }
-        trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), columnaABuscar));
+        int colum = 0;
+        do{
+            colum++;            
+        }while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum]));
+        trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
+    }
+    
+    public DefaultTableModel getTabla() {
+        return this.tabla;
+    }
+
+    public void setTabla(DefaultTableModel tabla) {
+        this.tabla = tabla;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

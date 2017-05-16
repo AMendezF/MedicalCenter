@@ -172,6 +172,20 @@ public class Medico {
 		}
 		return result;
 	}
+        
+
+    public int getNumEspecialidad() throws SQLException {
+		int result = 0;
+		Connection reg = con.getCon();
+		String sql = "SELECT medico.especialidad FROM centromedico.medico WHERE N_colegiado=? ;";
+		preparedStmt = reg.prepareStatement(sql);
+		preparedStmt.setInt(1, n_colegiado);
+		ResultSet rs = preparedStmt.executeQuery();
+		if (rs.next()) {
+			result = rs.getInt("medico.especialidad");
+		}
+		return result;
+	}
 
 	public boolean codCitaEnBD(String codCita) throws SQLException {
 		boolean result = true;
@@ -338,12 +352,12 @@ public class Medico {
     public ResultSet mostrarPacientesAsociados() throws SQLException {
         Connection reg = con.getCon();
         String sql;
-        sql = "SELECT paciente.* FROM centromedico.paciente, centromedico.citas "+
-              "WHERE citas.medico = ?  AND citas.paciente = paciente.DNI "+
-              "GROUP BY citas.paciente";
+        sql = "SELECT paciente.* FROM centromedico.paciente, centromedico.historial "+
+              "WHERE historial.especialidad = ?  AND historial.paciente = paciente.DNI "+
+              "GROUP BY historial.paciente";
 
         preparedStmt = reg.prepareStatement(sql);
-        preparedStmt.setInt(1, this.getN_colegiado());
+        preparedStmt.setInt(1, getNumEspecialidad());
         ResultSet rs = preparedStmt.executeQuery();
         return rs;
     }

@@ -70,7 +70,7 @@
                           <Component id="buttonMostrarCitas" alignment="0" pref="150" max="32767" attributes="0"/>
                           <Component id="labelMenuMedico" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="buttonCogerCita" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="buttonModifFicha" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                       <Component id="buttonEscribirFicha" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="121" max="32767" attributes="0"/>
@@ -87,9 +87,9 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="buttonMostrarCitas" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="buttonCogerCita" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="buttonEscribirFicha" min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="buttonModifFicha" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -104,12 +104,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonMostrarPacientesActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="buttonCogerCita">
+        <Component class="javax.swing.JButton" name="buttonModifFicha">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Coger cita"/>
+            <Property name="text" type="java.lang.String" value="Modificar Ficha"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCogerCitaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonModifFichaActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="buttonMostrarCitas">
