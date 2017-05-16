@@ -1,8 +1,11 @@
 package GUI.Gestor;
 
-
+import GUI.Gestor.Medicos.añadirMedico;
+import GUI.Gestor.Medicos.borrarMedico;
+import GUI.Gestor.Medicos.mostrarMedicos;
 import clases.Conexion;
 import clases.Gestor;
+import java.awt.BorderLayout;
 import java.sql.Connection;
 
 /*
@@ -10,14 +13,16 @@ import java.sql.Connection;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author bm0275
  */
 public class MenuDeMedico extends javax.swing.JPanel {
-	
+
 	private Gestor gestor;
+	private añadirMedico añadirMedico;
+	private borrarMedico borrarMedico;
+	private mostrarMedicos mostrarMedicos;
 
 	public MenuDeMedico(Gestor gestor) {
 		initComponents();
@@ -46,10 +51,25 @@ public class MenuDeMedico extends javax.swing.JPanel {
         labelMenuDelMedico.setText("Menu del medico:");
 
         buttonMostrarMedicos.setText("Mostrar medicos");
+        buttonMostrarMedicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonMostrarMedicosActionPerformed(evt);
+            }
+        });
 
         buttonAñadirMedico.setText("Añadir medico");
+        buttonAñadirMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAñadirMedicoActionPerformed(evt);
+            }
+        });
 
         buttonBorrarMedico.setText("Borrar medico");
+        buttonBorrarMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBorrarMedicoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout menuOpcionesLayout = new javax.swing.GroupLayout(menuOpciones);
         menuOpciones.setLayout(menuOpcionesLayout);
@@ -112,6 +132,39 @@ public class MenuDeMedico extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonMostrarMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarMedicosActionPerformed
+		mostrarMedicos = new mostrarMedicos(gestor);
+		mostrarMedicos.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		mostrarMedicos.setLocation(0, 0);
+
+		mostrarDatos.removeAll();
+		mostrarDatos.add(mostrarMedicos, BorderLayout.CENTER);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+    }//GEN-LAST:event_buttonMostrarMedicosActionPerformed
+
+    private void buttonAñadirMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirMedicoActionPerformed
+		añadirMedico = new añadirMedico(gestor);
+		añadirMedico.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		añadirMedico.setLocation(0, 0);
+
+		mostrarDatos.removeAll();
+		mostrarDatos.add(añadirMedico, BorderLayout.CENTER);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+    }//GEN-LAST:event_buttonAñadirMedicoActionPerformed
+
+    private void buttonBorrarMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarMedicoActionPerformed
+		borrarMedico = new borrarMedico(gestor);
+		borrarMedico.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		borrarMedico.setLocation(0, 0);
+
+		mostrarDatos.removeAll();
+		mostrarDatos.add(borrarMedico, BorderLayout.CENTER);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+    }//GEN-LAST:event_buttonBorrarMedicoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

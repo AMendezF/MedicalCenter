@@ -26,8 +26,7 @@ public class MenuGestor extends javax.swing.JPanel {
 	 * Creates new form MenuGestor
 	 */
 	private TableRowSorter trsFiltro;
-	private Conexion conexion;
-        private Gestor gestor;
+    private Gestor gestor;
 	private Connection reg;
 	private AñadirPaciente añadirPaciente;
 	private BorrarPaciente borrarPaciente;
@@ -36,11 +35,9 @@ public class MenuGestor extends javax.swing.JPanel {
 	private mostrarSalas mostrarSalas;
 	private mostrarPacientes mostrarPacientes;
 	
-	public MenuGestor(Conexion conexion) {
+	public MenuGestor(Gestor gestor) {
 		initComponents();
-		this.conexion = conexion;
-		this.reg = conexion.getCon();
-        this.gestor = new Gestor(conexion);
+        this.gestor = gestor;
 	}
 
 	/**
