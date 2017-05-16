@@ -1,6 +1,5 @@
 package clases;
 
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -11,6 +10,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+/**
+ * TODO: AÑADIR METODO GETHISTORIAL Y GETFICHAS()
+ *
+ * @author niels_420_blazeit
+ */
 public class Medico {
 
 	private final int n_colegiado;
@@ -298,7 +302,7 @@ public class Medico {
 		}
 		return result;
 	}
-        
+
 //        public String mostrarMedico() throws SQLException {
 //        // Selecciona y muestra por pantalla los datos del medico con el parametro n_colegiado
 //        Connection reg = con.getCon();
@@ -328,27 +332,27 @@ public class Medico {
 //        }
 //        return (nColegiado + " - " + nombre + " " + apellidos + "; " + tiempo + ", " + especialidades);
 //    }
+	/**
+	 * Este método retorna un ResultSet de SQL de los pacientes asociados a ese
+	 * médico Si no hay pacientes asociados, no retorna nada.
+	 *
+	 * @return ResultSet
+	 * @throws SQLException
+	 */
+	public ResultSet mostrarPacientesAsociados() throws SQLException {
+		Connection reg = con.getCon();
+		String sql;
+		sql = "SELECT paciente.* FROM centromedico.paciente, centromedico.citas "
+				+ "WHERE citas.medico = ?  AND citas.paciente = paciente.DNI "
+				+ "GROUP BY citas.paciente";
 
-        /**
-         * Este método retorna un ResultSet de SQL de los pacientes asociados a ese médico
-         * Si no hay pacientes asociados, no retorna nada.
-         * @return ResultSet
-         * @throws SQLException 
-         */
-    public ResultSet mostrarPacientesAsociados() throws SQLException {
-        Connection reg = con.getCon();
-        String sql;
-        sql = "SELECT paciente.* FROM centromedico.paciente, centromedico.citas "+
-              "WHERE citas.medico = ?  AND citas.paciente = paciente.DNI "+
-              "GROUP BY citas.paciente";
+		preparedStmt = reg.prepareStatement(sql);
+		preparedStmt.setInt(1, this.getN_colegiado());
+		ResultSet rs = preparedStmt.executeQuery();
+		return rs;
+	}
 
-        preparedStmt = reg.prepareStatement(sql);
-        preparedStmt.setInt(1, this.getN_colegiado());
-        ResultSet rs = preparedStmt.executeQuery();
-        return rs;
-    }
-
-    public int getN_colegiado() {
-        return n_colegiado;
-    }
+	public int getN_colegiado() {
+		return n_colegiado;
+	}
 }
