@@ -32,11 +32,12 @@ class Ficha {
 	 * @param comentario
 	 * @throws SQLException
 	 */
-	public Ficha(int codHistorial, String codCita, String comentario)
-			throws SQLException {
+	public Ficha(int codHistorial, String codCita, String comentario,
+			Conexion conexion) throws SQLException {
 		this.codHistorial = codHistorial;
 		this.codCita = codCita;
 		this.comentario = comentario;
+		this.conexion = conexion;
 		PreparedStatement preparedStmt;
 		Connection reg = this.conexion.getCon();
 		String sql = "INSERT INTO centromedico.ficha (Cod_historial, Cod_cita,"

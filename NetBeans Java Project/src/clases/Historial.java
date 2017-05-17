@@ -53,7 +53,7 @@ public class Historial {
 		this.DNIPaciente = DNIPaciente;
 		this.especialidad = especialidad;
 		// Y se introduce la ficha en la BD
-		this.ficha = new Ficha(this.codigoHistorial, codCita, comentario);
+		this.ficha = new Ficha(this.codigoHistorial, codCita, comentario, conexion);
 	}
 
 	/**
