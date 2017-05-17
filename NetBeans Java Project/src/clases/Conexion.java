@@ -243,7 +243,7 @@ public class Conexion {
 		String crearFicha = "CREATE TABLE IF NOT EXISTS centromedico.`ficha` (\n"
 				+ "  `Cod_historial` int(11) NOT NULL,\n"
 				+ "  `Cod_cita` varchar(20) NOT NULL,\n"
-				+ "  `comentario` varchar(500) DEFAULT NULL,\n"
+				+ "  `comentario` varchar(100) DEFAULT NULL,\n"
 				+ "  `Dia` date NOT NULL,\n"
 				+ "  `Hora` time NOT NULL,\n"
 				+ "   PRIMARY KEY (`Cod_historial`,`Cod_cita`),\n"
@@ -392,7 +392,7 @@ public class Conexion {
 				+ "('00675833R', 'Jose Maria', 'Gimeno De Lucas', 'Sanitas')";
 		makeUpdate(iPacientes);
 
-		String iHistorial = "INSERT INTO centromedico.historial (Paciente, Especialidad) VALUES \n"
+		String iHistorial = "REPLACE INTO centromedico.historial (Paciente, Especialidad) VALUES \n"
 				+ "('57211499B', 1),\n"
 				+ "('15326776J', 2),\n"
 				+ "('57211499B', 2),\n"
@@ -401,8 +401,7 @@ public class Conexion {
 				+ "('15326776J', 4),\n"
 				+ "('34126666W', 1),\n"
 				+ "('34126666W', 3),\n"
-				+ "('19951996W', 4),\n"
-				+ "('34126666W', 4)";
+				+ "('19951996W', 4)";
 		makeUpdate(iHistorial);
 
 		System.out.println("Datos insertados correctamente");
@@ -433,7 +432,7 @@ public class Conexion {
 		preparedStmt = reg.prepareStatement(borrarPaciente);
 		preparedStmt.setString(1, tercerPaciente);
 		preparedStmt.executeUpdate();
-		
+
 		String reinsertarPaciente = "delete from centromedico.paciente_borrado where DNI = ?";
 
 		preparedStmt = reg.prepareStatement(reinsertarPaciente);
@@ -441,7 +440,6 @@ public class Conexion {
 		preparedStmt.executeUpdate();
 
 		System.out.println("Pruebas realizadas correctamente");
-
 	}
 
 	/**

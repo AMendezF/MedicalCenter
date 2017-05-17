@@ -94,16 +94,25 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Mostrar medicos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonMostrarMedicosActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="buttonA&#xf1;adirMedico">
           <Properties>
             <Property name="text" type="java.lang.String" value="A&#xf1;adir medico"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonA&#xf1;adirMedicoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="buttonBorrarMedico">
           <Properties>
             <Property name="text" type="java.lang.String" value="Borrar medico"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonBorrarMedicoActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
