@@ -15,7 +15,6 @@ public class Medico {
 
 	private final int n_colegiado;
 	private final Conexion con;
-        private int n_especialidad;
 	boolean[] dia1;
 	boolean[] dia2;
 	boolean[] dia3;
@@ -120,7 +119,6 @@ public class Medico {
 			dia3[index] = true;
 		}
 		horas.clear();
-                setNumEspecialidad();
 	}
 
 	public int getTiempoMin() throws SQLException {
@@ -165,28 +163,14 @@ public class Medico {
 	public String getEspecialidad() throws SQLException {
 		String result = null;
 		Connection reg = con.getCon();
-		String sql = "SELECT especialidad.nombre FROM centromedico.especialidad WHERE cod_especialidad=?;";
+		String sql = "SELECT especialidad.nombre, especialidad.cod_especialidad FROM centromedico.especialidad, centromedico.medico WHERE N_colegiado=? AND especialidad=cod_especialidad;";
 		preparedStmt = reg.prepareStatement(sql);
-		preparedStmt.setInt(1, getN_Especialidad());
+		preparedStmt.setInt(1, n_colegiado);
 		ResultSet rs = preparedStmt.executeQuery();
 		if (rs.next()) {
 			result = rs.getString("especialidad.nombre");
 		}
 		return result;
-	}
-        
-
-    private void setNumEspecialidad() throws SQLException {
-		int result = 0;
-		Connection reg = con.getCon();
-		String sql = "SELECT medico.especialidad FROM centromedico.medico WHERE N_colegiado=? ;";
-		preparedStmt = reg.prepareStatement(sql);
-		preparedStmt.setInt(1, n_colegiado);
-		ResultSet rs = preparedStmt.executeQuery();
-		if (rs.next()) {
-			result = rs.getInt("medico.especialidad");
-		}
-		this.n_especialidad = result;
 	}
 
 	public boolean codCitaEnBD(String codCita) throws SQLException {
@@ -302,8 +286,17 @@ public class Medico {
 		return resul;
 	}
 
-	public int getN_Especialidad() throws SQLException {
-		return this.n_especialidad;
+	public int getCod_Especialidad() throws SQLException {
+		int result = 0;
+		Connection reg = con.getCon();
+		String sql = "SELECT medico.especialidad FROM centromedico.medico WHERE N_colegiado=?;";
+		preparedStmt = reg.prepareStatement(sql);
+		preparedStmt.setInt(1, n_colegiado);
+		ResultSet rs = preparedStmt.executeQuery();
+		if (rs.next()) {
+			result = rs.getInt("medico.especialidad");
+		}
+		return result;
 	}
         
 //        public String mostrarMedico() throws SQLException {
@@ -345,30 +338,13 @@ public class Medico {
     public ResultSet mostrarPacientesAsociados() throws SQLException {
         Connection reg = con.getCon();
         String sql;
-        sql = "SELECT paciente.* FROM centromedico.paciente, centromedico.historial "+
-              "WHERE historial.especialidad = ?  AND historial.paciente = paciente.DNI "+
-              "GROUP BY historial.paciente";
-
-        preparedStmt = reg.prepareStatement(sql);
-        preparedStmt.setInt(1, getN_Especialidad());
-        ResultSet rs = preparedStmt.executeQuery();
-        
-        return rs;
-    }
-    
-    public ResultSet mostrarCitasMedico()throws SQLException {
-        Connection reg = con.getCon();
-        String sql;
-        sql = "SELECT citas.cod_cita, citas.dia, citas.hora, citas.medico, "+
-              "especialidad.nombre as especialidad, citas.paciente "+
-              "FROM centromedico.citas, centromedico.especialidad "+
-              "WHERE citas.medico = ?  AND especialidad.cod_especialidad = citas.especialidad "+
+        sql = "SELECT paciente.* FROM centromedico.paciente, centromedico.citas "+
+              "WHERE citas.medico = ?  AND citas.paciente = paciente.DNI "+
               "GROUP BY citas.paciente";
 
         preparedStmt = reg.prepareStatement(sql);
-        preparedStmt.setInt(1, getN_colegiado());
+        preparedStmt.setInt(1, this.getN_colegiado());
         ResultSet rs = preparedStmt.executeQuery();
-        
         return rs;
     }
 
