@@ -1,5 +1,6 @@
 package GUI.Gestor;
 
+import GUI.Gestor.Medicos.MenuDeMedico;
 import clases.Gestor;
 import java.awt.BorderLayout;
 import java.sql.Connection;

@@ -1,5 +1,7 @@
 package GUI.Gestor;
 
+import GUI.Gestor.Paciente.MenuDePaciente;
+import clases.Conexion;
 import clases.Gestor;
 import clases.Paciente;
 import java.awt.BorderLayout;
@@ -21,6 +23,7 @@ public class GestionarPacientes extends javax.swing.JPanel {
 	private Paciente paciente;
 	private mostrarPacientes mostrarPacientes;
 	private MenuDePaciente menuDePaciente;
+	private Conexion conexion;
 
 	public GestionarPacientes(Gestor gestor) {
 		initComponents();
@@ -156,7 +159,7 @@ public class GestionarPacientes extends javax.swing.JPanel {
     private void buttonCogerPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCogerPacienteActionPerformed
 		try {
 			if (gestor.estaBD(fieldDNI.getText())) {
-				//paciente = new Paciente(fieldDNI.getText());
+				gestor.getPaciente(fieldDNI.getText());
 				crearMenu();
 			}
 		} catch (SQLException ex) {
