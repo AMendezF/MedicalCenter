@@ -12,7 +12,7 @@ import java.awt.Component;
  */
 /**
  *
- * @author Juan
+ * @author Pablo
  */
 public class MenuMedico extends javax.swing.JPanel {
 

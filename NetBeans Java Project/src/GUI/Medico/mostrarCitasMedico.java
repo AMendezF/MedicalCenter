@@ -19,7 +19,7 @@ import javax.swing.table.TableRowSorter;
  */
 /**
  *
- * @author Juan
+ * @author Pablo
  */
 public class mostrarCitasMedico extends javax.swing.JPanel {
 
@@ -188,9 +188,9 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
 
     public void filtro() {
         int colum = 0;
-        do{
-            colum++;            
-        }while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum]));
+        while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])){
+            colum++;       
+        }
         trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
     }
     
