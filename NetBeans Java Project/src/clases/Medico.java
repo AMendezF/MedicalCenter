@@ -10,15 +10,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-/*
-TODO: 1- mostrarHistoriales() [muestro historiales segun la especialidad del 
-	  médico].
-	  2- mostrarFichas(codigoHistoriall) [mostrar fichas según el código de 
-		historial recibido].
-	  3- modificarFicha(codigoHistorial, codigoCita, comentario) [Actualiza el
-		 comentario y la hora de la ficha con codigoHistorial y codigo Cita 
-		 suministrados]
- */
+
 public class Medico {
 
     private final int n_colegiado;
