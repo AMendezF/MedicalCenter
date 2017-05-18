@@ -1,6 +1,5 @@
 package clases;
 
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -15,6 +14,7 @@ public class Medico {
 
 	private final int n_colegiado;
 	private final Conexion con;
+	private int n_especialidad;
 	boolean[] dia1;
 	boolean[] dia2;
 	boolean[] dia3;
@@ -119,6 +119,7 @@ public class Medico {
 			dia3[index] = true;
 		}
 		horas.clear();
+		setNumEspecialidad();
 	}
 
 	public int getTiempoMin() throws SQLException {
@@ -163,14 +164,27 @@ public class Medico {
 	public String getEspecialidad() throws SQLException {
 		String result = null;
 		Connection reg = con.getCon();
-		String sql = "SELECT especialidad.nombre, especialidad.cod_especialidad FROM centromedico.especialidad, centromedico.medico WHERE N_colegiado=? AND especialidad=cod_especialidad;";
+		String sql = "SELECT especialidad.nombre FROM centromedico.especialidad WHERE cod_especialidad=?;";
 		preparedStmt = reg.prepareStatement(sql);
-		preparedStmt.setInt(1, n_colegiado);
+		preparedStmt.setInt(1, getN_Especialidad());
 		ResultSet rs = preparedStmt.executeQuery();
 		if (rs.next()) {
 			result = rs.getString("especialidad.nombre");
 		}
 		return result;
+	}
+
+	private void setNumEspecialidad() throws SQLException {
+		int result = 0;
+		Connection reg = con.getCon();
+		String sql = "SELECT medico.especialidad FROM centromedico.medico WHERE N_colegiado=? ;";
+		preparedStmt = reg.prepareStatement(sql);
+		preparedStmt.setInt(1, n_colegiado);
+		ResultSet rs = preparedStmt.executeQuery();
+		if (rs.next()) {
+			result = rs.getInt("medico.especialidad");
+		}
+		this.n_especialidad = result;
 	}
 
 	public boolean codCitaEnBD(String codCita) throws SQLException {
@@ -286,19 +300,10 @@ public class Medico {
 		return resul;
 	}
 
-	public int getCod_Especialidad() throws SQLException {
-		int result = 0;
-		Connection reg = con.getCon();
-		String sql = "SELECT medico.especialidad FROM centromedico.medico WHERE N_colegiado=?;";
-		preparedStmt = reg.prepareStatement(sql);
-		preparedStmt.setInt(1, n_colegiado);
-		ResultSet rs = preparedStmt.executeQuery();
-		if (rs.next()) {
-			result = rs.getInt("medico.especialidad");
-		}
-		return result;
+	public int getN_Especialidad() throws SQLException {
+		return this.n_especialidad;
 	}
-        
+
 //        public String mostrarMedico() throws SQLException {
 //        // Selecciona y muestra por pantalla los datos del medico con el parametro n_colegiado
 //        Connection reg = con.getCon();
@@ -328,27 +333,97 @@ public class Medico {
 //        }
 //        return (nColegiado + " - " + nombre + " " + apellidos + "; " + tiempo + ", " + especialidades);
 //    }
+	/**
+	 * Este método retorna un ResultSet de SQL de los pacientes asociados a ese
+	 * médico Si no hay pacientes asociados, no retorna nada.
+	 *
+	 * @return ResultSet
+	 * @throws SQLException
+	 */
+	public ResultSet mostrarPacientesAsociados() throws SQLException {
+		Connection reg = con.getCon();
+		String sql;
+		sql = "SELECT paciente.* FROM centromedico.paciente, centromedico.historial "
+				+ "WHERE historial.especialidad = ?  AND historial.paciente = paciente.DNI "
+				+ "GROUP BY historial.paciente";
 
-        /**
-         * Este método retorna un ResultSet de SQL de los pacientes asociados a ese médico
-         * Si no hay pacientes asociados, no retorna nada.
-         * @return ResultSet
-         * @throws SQLException 
-         */
-    public ResultSet mostrarPacientesAsociados() throws SQLException {
-        Connection reg = con.getCon();
-        String sql;
-        sql = "SELECT paciente.* FROM centromedico.paciente, centromedico.citas "+
-              "WHERE citas.medico = ?  AND citas.paciente = paciente.DNI "+
-              "GROUP BY citas.paciente";
+		preparedStmt = reg.prepareStatement(sql);
+		preparedStmt.setInt(1, getN_Especialidad());
+		ResultSet rs = preparedStmt.executeQuery();
 
-        preparedStmt = reg.prepareStatement(sql);
-        preparedStmt.setInt(1, this.getN_colegiado());
-        ResultSet rs = preparedStmt.executeQuery();
-        return rs;
-    }
+		return rs;
+	}
 
-    public int getN_colegiado() {
-        return n_colegiado;
-    }
+	public ResultSet mostrarCitasMedico() throws SQLException {
+		Connection reg = con.getCon();
+		String sql;
+		sql = "SELECT citas.cod_cita, citas.dia, citas.hora, citas.medico, "
+				+ "especialidad.nombre as especialidad, citas.paciente "
+				+ "FROM centromedico.citas, centromedico.especialidad "
+				+ "WHERE citas.medico = ?  AND especialidad.cod_especialidad = citas.especialidad "
+				+ "GROUP BY citas.paciente";
+
+		preparedStmt = reg.prepareStatement(sql);
+		preparedStmt.setInt(1, getN_colegiado());
+		ResultSet rs = preparedStmt.executeQuery();
+
+		return rs;
+	}
+
+	/**
+	 * Retorna el ResultSet de solo citas que tiene hoy el médico para poder 
+	 * abrir una ficha de historial a un paciente de los presentes.
+	 * 
+	 * @return
+	 * @throws SQLException 
+	 */
+	public ResultSet mostrarCitasHoyMedico() throws SQLException {
+		Connection reg = con.getCon();
+		String sql;
+		sql = "SELECT citas.cod_cita, citas.paciente , citas.dia, citas.hora,"
+				+ "citas.medico, especialidad.nombre as especialidad"
+				+ "FROM centromedico.citas, centromedico.especialidad "
+				+ "WHERE citas.medico = ?  AND " 
+				+ "especialidad.cod_especialidad = citas.especialidad AND "
+				+ "citas.dia = ?"
+				+ "GROUP BY citas.paciente";
+
+		Calendar fecha = new GregorianCalendar();
+		preparedStmt = reg.prepareStatement(sql);
+		preparedStmt.setInt(1, getN_colegiado());
+		preparedStmt.setDate(2, java.sql.Date.valueOf(getDia()));
+		ResultSet rs = preparedStmt.executeQuery();
+
+		return rs;
+	}
+	
+	/**
+	 * Método para invocar un historial y ficha de un paciente.
+	 * DNIPACIENTE Y CODIGO DE CITA DEBEN COINCIDIR!
+	 * 
+	 * @param DNIPaciente
+	 * @param codCita
+	 * @param comentario
+	 * @throws SQLException 
+	 */
+	public void escribirFichaPaciente(String DNIPaciente, String codCita, 
+			String comentario) throws SQLException{
+		Historial historial = new Historial(DNIPaciente, this.n_especialidad,
+		this.con, codCita, comentario);
+	}
+	
+	/**
+	 * Retorna el día actual formato AAAA-MM-DD.
+	 *
+	 * @return
+	 */
+	private String getDia() {
+		return fecha.get(Calendar.YEAR) + "-"
+				+ (fecha.get(Calendar.MONTH) + 1) + "-"
+				+ fecha.get(Calendar.DAY_OF_MONTH);
+	}
+	
+	public int getN_colegiado() {
+		return n_colegiado;
+	}
 }
