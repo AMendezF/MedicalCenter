@@ -6,14 +6,14 @@ import clases.Medico;
  *
  * @author Juan
  */
-public class escribirFicha extends javax.swing.JPanel {
+public class EscribirFichaPaciente extends javax.swing.JPanel {
 
 	/**
 	 * Creates new form escribirFicha
 	 */
 	private Medico medico;
 	
-	public escribirFicha(Medico medico) {
+	public EscribirFichaPaciente(Medico medico) {
 		initComponents();
 		this.medico = medico;
 	}
