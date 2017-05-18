@@ -1,18 +1,15 @@
 package GUI.Gestor;
 
-import clases.Conexion;
 import clases.Gestor;
 import clases.Paciente;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -28,9 +25,6 @@ import javax.swing.table.TableRowSorter;
  */
 public class AñadirPaciente extends javax.swing.JPanel {
 
-	/**
-	 * Creates new form AñadirPaciente
-	 */
 	private Gestor gestor;
 	private Paciente paciente;
 	private TableRowSorter trsFiltro;
@@ -277,7 +271,8 @@ public class AñadirPaciente extends javax.swing.JPanel {
 
 	/**
 	 * Recoge la informacion del formulario y lo añade a la base de datos
-	 * @param evt 
+	 *
+	 * @param evt
 	 */
     private void buttonAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirPacienteActionPerformed
 		Object[] options = {"Si", "No"};
@@ -307,6 +302,11 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		 */
     }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
 
+	/**
+	 * Sirve para filtrar en el jTable
+	 *
+	 * @param evt
+	 */
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBuscarKeyTyped
 		textFieldBuscar.addKeyListener(new KeyAdapter() {
 			public void keyReleased(final KeyEvent e) {
@@ -322,11 +322,12 @@ public class AñadirPaciente extends javax.swing.JPanel {
 
 	/**
 	 * Muestra los pacientes en la jTable para el usuario
-	 * @param evt 
+	 *
+	 * @param evt
 	 */
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
 		try {
-			ResultSet rs = gestor.mostrarPacientes();
+			ResultSet rs = gestor.mostrarPacientesTodos();
 			tablaInfo.setModel(buildTableModel(rs));
 		} catch (SQLException ex) {
 			Logger.getLogger(mostrarPacientes.class.getName()).log(Level.SEVERE, null, ex);
@@ -339,20 +340,22 @@ public class AñadirPaciente extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void DNIKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DNIKeyReleased
-		/*
-		 if (gestor.comprobarDNI(DNI.getText())){
-			DNIOK.setForeground(Color.green);
-			DNIOK.setText("OK!!");
-		 }
-		else if (gestor.existePaciente(DNI.getText()){
-			DNIOK.setForeground(Color.red);
-			DNIOK.setText("Ya existe");
+		try {
+			if (gestor.comprobarDNI(DNI.getText())) {
+				if (gestor.estaBD(DNI.getText())) {
+					DNIOK.setForeground(Color.red);
+					DNIOK.setText("Ya existe");
+				} else {
+					DNIOK.setForeground(Color.green);
+					DNIOK.setText("OK!!");
+				}
+			} else {
+				DNIOK.setForeground(Color.red);
+				DNIOK.setText("KO!!");
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(AñadirPaciente.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		else {
-		DNIOK.setForeground(Color.red);
-		DNIOK.setText("KO!!");
-		}	
-		 */
     }//GEN-LAST:event_DNIKeyReleased
 
 	/**
@@ -364,8 +367,7 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		if (nombre.getText().equals("")) {
 			nombreOK.setForeground(Color.red);
 			nombreOK.setText("Vacio!!");
-		} else //if (!nombreOK.contieneNumero())
-		{
+		} else if (gestor.esTexto(nombre.getText())) {
 			nombreOK.setForeground(Color.black);
 			nombreOK.setText("OK!!");
 		}
@@ -380,8 +382,7 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		if (apellidos.getText().equals("")) {
 			apellidoOK.setForeground(Color.red);
 			apellidoOK.setText("Vacio!!");
-		} else //if (!apellidoOK.contieneNumero())
-		{
+		} else if (gestor.esTexto(apellidos.getText())) {
 			apellidoOK.setForeground(Color.black);
 			apellidoOK.setText("OK!!");
 		}
@@ -408,11 +409,12 @@ public class AñadirPaciente extends javax.swing.JPanel {
 	}
 
 	/**
-	 * Crea el modelo de la tabla para insertarlo
-	 * Podriamos sacarlo a otra clase y organizarlo, se repite mucho este codigo
+	 * Crea el modelo de la tabla para insertarlo Podriamos sacarlo a otra clase
+	 * y organizarlo, se repite mucho este codigo
+	 *
 	 * @param rs
 	 * @return
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
 		java.sql.ResultSetMetaData metaData = rs.getMetaData();
@@ -435,7 +437,6 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		}
 		return new DefaultTableModel(data, columnNames);
 	}
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField DNI;

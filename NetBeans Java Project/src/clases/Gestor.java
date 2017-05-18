@@ -202,10 +202,16 @@ public class Gestor {
         ResultSet listaPacientes;
         String sql;
 
+		sql = "SELECT * FROM centromedico.paciente \n"
+				+ "UNION \n"
+				+ "SELECT * FROM centromedico.paciente_borrado;";
+		/*
         sql = "SELECT * "
                 + "FROM centromedico.paciente, centromedico.paciente_borrado"
-                + "ORDER BY DNI" + ";";
+                + "ORDER BY 'DNI'" + ";";
+		*/
         listaPacientes = this.conexion.makeQuery(sql);
+		// LA SELECT NO ES CORRECTA
 
         return listaPacientes;
     }
@@ -436,6 +442,10 @@ public class Gestor {
                 + "WHERE medico=" + Integer.toString(codMedicoSustituto) + ";";
         this.conexion.makeQuery(sql);
     }
+
+	public boolean existePaciente(String text) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
 
     /**
      * Elimina una cita de un paciente.

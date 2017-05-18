@@ -1,19 +1,14 @@
 package GUI.Gestor;
 
-
-import GUI.InterfazGrafica;
-import clases.Conexion;
 import clases.Gestor;
 import clases.Paciente;
 import java.awt.BorderLayout;
-import java.sql.Connection;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Juan
@@ -23,7 +18,6 @@ public class MenuDePaciente extends javax.swing.JPanel {
 	/**
 	 * Creates new form MenuDePaciente
 	 */
-
 	private mostrarCitas mostrarCitas;
 	private Paciente paciente;
 	private Gestor gestor;
@@ -32,7 +26,9 @@ public class MenuDePaciente extends javax.swing.JPanel {
 		initComponents();
 		this.gestor = gestor;
 		this.paciente = paciente;
+		this.mostrarCitas = new mostrarCitas(gestor);
 	}
+
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,17 +138,20 @@ public class MenuDePaciente extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+	 * Crea y muestra el panel mostrarCitas
+	 *
+	 * @param evt
+	 */
     private void buttonMostrarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarCitasActionPerformed
-		mostrarCitas = new mostrarCitas(gestor);
 		mostrarCitas.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		mostrarCitas.setLocation(0, 0);
-		
+
 		mostrarDatos.removeAll();
 		mostrarDatos.add(mostrarCitas, BorderLayout.CENTER);
-        mostrarDatos.revalidate();
-        mostrarDatos.repaint();                            
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
     }//GEN-LAST:event_buttonMostrarCitasActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancelarCita;

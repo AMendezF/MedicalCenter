@@ -28,7 +28,6 @@ public class InterfazGrafica extends javax.swing.JFrame {
 	private MenuGestor menuGestor;
 	private MenuMedico menuMedico;
 
-	//private Login login;
 	public InterfazGrafica() {
 		initComponents();
 	}
@@ -76,7 +75,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 638, Short.MAX_VALUE)
+            .addGap(0, 777, Short.MAX_VALUE)
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,9 +200,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
 	 */
 	private void crearMenuGestor() {
 		this.gestor = new Gestor(con);
+		this.menuGestor = new MenuGestor(gestor);
+		
 		panelPrincipal.setSize(panelPrincipal.getWidth() + iniciarSesion.getWidth(), panelPrincipal.getHeight());
-
-		menuGestor = new MenuGestor(gestor);
 		menuGestor.setSize(panelPrincipal.getWidth(), panelPrincipal.getHeight());
 		menuGestor.setLocation(0, 0);
 
@@ -220,9 +219,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
 	 */
 	private void crearMenuMedico() throws SQLException {
 		this.medico = new Medico(Integer.parseInt(con.getUser()), con);
+		this.menuMedico = new MenuMedico(medico);
+		
 		panelPrincipal.setSize(panelPrincipal.getWidth() + iniciarSesion.getWidth(), panelPrincipal.getHeight());
-
-		menuMedico = new MenuMedico(medico);
 		menuMedico.setSize(panelPrincipal.getWidth(), panelPrincipal.getHeight());
 		menuMedico.setLocation(0, 0);
 
@@ -236,8 +235,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
 	/**
 	 * Conecta a la base de datos. Crea la base de datos si conectas como root
-	 * Muestra el menu gestor si conectas como gestor Muestra un menu medico si
-	 * conectas como medico
+	 * Muestra el menu gestor si conectas como gestor Muestra un menu medico
+	 * siconectas como medico
 	 *
 	 * @param evt
 	 */
@@ -305,15 +304,15 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_textFieldUserKeyPressed
 
 	/**
-	 * Inicia el programa Crea la conexion con los parametros recogidos del
-	 * formulario Si el usuario es root, crea la base de datos con los
+	 * Inicia el programa. Crea la conexion con los parametros recogidos del
+	 * formulario. Si el usuario es root, crea la base de datos con los
 	 * parametros y valores por defecto Si es gestor, inicia el menu de gestor
 	 * Si es un medico, inicia el menu de medico
 	 */
 	private void iniciarPrograma() {
 		try {
 			con = new Conexion(textFieldUser.getText(), passwordFieldPassword.getPassword());
-			
+
 			if (con.esValida() && con.getUser().equals("Gestor")) {
 				crearMenuGestor();
 				labelUsuario.setText(con.getUser());
