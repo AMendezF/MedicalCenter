@@ -14,14 +14,10 @@ public class TableModelAdaptor {
     private final DefaultTableModel value;
 
     public TableModelAdaptor(ResultSet rs) throws SQLException {
-        this.value = ResultSetToTableModel(rs);        
-    }
-
-    public DefaultTableModel getValue() {
-        return this.value;
+        this.value = resultSetToTableModel(rs);        
     }
     
-    private DefaultTableModel ResultSetToTableModel(ResultSet rs) throws SQLException {
+    private DefaultTableModel resultSetToTableModel(ResultSet rs) throws SQLException {
         java.sql.ResultSetMetaData metaData = rs.getMetaData();
 
         // names of columns
@@ -41,5 +37,9 @@ public class TableModelAdaptor {
             data.add(vector);
         }
         return new DefaultTableModel(data, columnNames);
+    }
+    
+    public DefaultTableModel getValue() {
+        return this.value;
     }
 }

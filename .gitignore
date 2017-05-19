@@ -25,3 +25,6 @@ hs_err_pid*
 /**/dist/
 /**/nbproject/private/
 /**/build/
+*.prefs
+*.project
+NetBeans Java Project/.classpath

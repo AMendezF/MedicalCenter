@@ -1,7 +1,7 @@
 package GUI.Medico;
 
-import clases.Medico;
 import clases.TableModelAdaptor;
+import clases.Medico;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
