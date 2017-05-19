@@ -1,4 +1,4 @@
-package clases;
+package GUI.Gestor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,10 +10,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author lafarga
  */
-public class TableModelAdaptor {
+public class TableAdaptor {
     private final DefaultTableModel value;
 
-    public TableModelAdaptor(ResultSet rs) throws SQLException {
+    public TableAdaptor(ResultSet rs) throws SQLException {
         this.value = resultSetToTableModel(rs);        
     }
     

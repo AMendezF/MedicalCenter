@@ -1,7 +1,7 @@
 package GUI.Medico;
 
+import GUI.Gestor.TableAdaptor;
 import clases.Medico;
-import clases.TableModelAdaptor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -131,7 +131,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
 
         try {
             ResultSet rs = medico.mostrarCitasMedico();
-            TableModelAdaptor aux = new TableModelAdaptor(rs);
+            TableAdaptor aux = new TableAdaptor(rs);
             System.out.println("Prueba: " + aux.getValue().getColumnName(0));
             setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();

@@ -1,6 +1,6 @@
 package GUI.Medico;
 
-import clases.TableModelAdaptor;
+import GUI.Gestor.TableAdaptor;
 import clases.Medico;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -131,7 +131,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
         try {
             ResultSet rs = medico.mostrarPacientesAsociados();
-            TableModelAdaptor aux = new TableModelAdaptor(rs);
+            TableAdaptor aux = new TableAdaptor(rs);
             setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
             tablaInfo.setModel(tabla);
