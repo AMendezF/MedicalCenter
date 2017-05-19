@@ -69,7 +69,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="labelDNI" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="DNI" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="dni" min="-2" pref="100" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="DNIOK" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -100,7 +100,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelDNI" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="DNI" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="dni" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="DNIOK" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -148,9 +148,9 @@
             <Property name="text" type="java.lang.String" value="DNI"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="DNI">
+        <Component class="javax.swing.JTextField" name="dni">
           <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="DNIKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="dniKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelNombre">
