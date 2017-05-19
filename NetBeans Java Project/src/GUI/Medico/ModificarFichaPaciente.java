@@ -1,5 +1,6 @@
 package GUI.Medico;
 
+import GUI.Gestor.TableAdaptor;
 import clases.Medico;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -75,7 +76,7 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
         jScrollPane2.setViewportView(tablaInfo);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Citas Pendientes");
+        jLabel1.setText("Modificar Ficha de Paciente");
 
         BotonMostrar.setText("Mostrar");
         BotonMostrar.setActionCommand("MostrarPacientesMedico");
@@ -92,17 +93,17 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(BotonMostrar))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(BotonMostrar))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -130,7 +131,8 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
 
         try {
             ResultSet rs = medico.mostrarCitasMedico();
-            setTabla(ResultSetToTableModel(rs));
+            TableAdaptor aux = new TableAdaptor(rs);
+            setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
             tablaInfo.setModel(tabla);
             int numColums = tabla.getColumnCount();
@@ -162,28 +164,6 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
         });
         trsFiltro = new TableRowSorter(tablaInfo.getModel());
         tablaInfo.setRowSorter(trsFiltro);
-    }
-
-    private DefaultTableModel ResultSetToTableModel(ResultSet rs) throws SQLException {
-        java.sql.ResultSetMetaData metaData = rs.getMetaData();
-
-        // names of columns
-        Vector<String> columnNames = new Vector<String>();
-        int columnCount = metaData.getColumnCount();
-        for (int column = 1; column <= columnCount; column++) {
-            columnNames.add(metaData.getColumnName(column));
-        }
-
-        // data of the table
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        while (rs.next()) {
-            Vector<Object> vector = new Vector<Object>();
-            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-                vector.add(rs.getObject(columnIndex));
-            }
-            data.add(vector);
-        }
-        return new DefaultTableModel(data, columnNames);
     }
 
     public void filtro() {

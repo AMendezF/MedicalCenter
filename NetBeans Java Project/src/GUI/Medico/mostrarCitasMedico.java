@@ -1,5 +1,6 @@
 package GUI.Medico;
 
+import GUI.Gestor.TableAdaptor;
 import clases.Medico;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -130,7 +131,9 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
 
         try {
             ResultSet rs = medico.mostrarCitasMedico();
-            setTabla(ResultSetToTableModel(rs));
+            TableAdaptor aux = new TableAdaptor(rs);
+            System.out.println("Prueba: " + aux.getValue().getColumnName(0));
+            setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
             tablaInfo.setModel(tabla);
             int numColums = tabla.getColumnCount();
@@ -162,28 +165,6 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
         });
         trsFiltro = new TableRowSorter(tablaInfo.getModel());
         tablaInfo.setRowSorter(trsFiltro);
-    }
-
-    private DefaultTableModel ResultSetToTableModel(ResultSet rs) throws SQLException {
-        java.sql.ResultSetMetaData metaData = rs.getMetaData();
-
-        // names of columns
-        Vector<String> columnNames = new Vector<String>();
-        int columnCount = metaData.getColumnCount();
-        for (int column = 1; column <= columnCount; column++) {
-            columnNames.add(metaData.getColumnName(column));
-        }
-
-        // data of the table
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        while (rs.next()) {
-            Vector<Object> vector = new Vector<Object>();
-            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-                vector.add(rs.getObject(columnIndex));
-            }
-            data.add(vector);
-        }
-        return new DefaultTableModel(data, columnNames);
     }
 
     public void filtro() {

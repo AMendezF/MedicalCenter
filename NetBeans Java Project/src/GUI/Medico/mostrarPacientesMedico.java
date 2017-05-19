@@ -1,5 +1,6 @@
 package GUI.Medico;
 
+import GUI.Gestor.TableAdaptor;
 import clases.Medico;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -51,7 +52,6 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         tablaInfo = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         BotonMostrar = new javax.swing.JButton();
-        textFieldDNI = new javax.swing.JTextField();
 
         desplegableColumnas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,12 +87,6 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
             }
         });
 
-        textFieldDNI.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldDNIActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,11 +104,8 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(160, 160, 160)
                         .addComponent(BotonMostrar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(154, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(348, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,9 +117,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
                     .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(BotonMostrar)
                 .addContainerGap(36, Short.MAX_VALUE))
@@ -142,7 +131,8 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
         try {
             ResultSet rs = medico.mostrarPacientesAsociados();
-            setTabla(ResultSetToTableModel(rs));
+            TableAdaptor aux = new TableAdaptor(rs);
+            setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
             tablaInfo.setModel(tabla);
             int numColums = tabla.getColumnCount();
@@ -171,40 +161,12 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         tablaInfo.setRowSorter(trsFiltro);
     }//GEN-LAST:event_textFieldBuscarKeyTyped
 
-    private void textFieldDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldDNIActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldDNIActionPerformed
-
-
-    private DefaultTableModel ResultSetToTableModel(ResultSet rs) throws SQLException {
-        java.sql.ResultSetMetaData metaData = rs.getMetaData();
-
-        // names of columns
-        Vector<String> columnNames = new Vector<String>();
-        int columnCount = metaData.getColumnCount();
-        for (int column = 1; column <= columnCount; column++) {
-            columnNames.add(metaData.getColumnName(column));
-        }
-
-        // data of the table
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        while (rs.next()) {
-            Vector<Object> vector = new Vector<Object>();
-            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-                vector.add(rs.getObject(columnIndex));
-            }
-            data.add(vector);
-        }
-        return new DefaultTableModel(data, columnNames);
-    }
-
     public void filtro() {
         int colum = 0;
         while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])){
             colum++;       
         }
         trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
-        textFieldDNI.setText((String) tablaInfo.getValueAt(0, 0));
     }
     
     public DefaultTableModel getTabla() {
@@ -222,6 +184,5 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
-    private javax.swing.JTextField textFieldDNI;
     // End of variables declaration//GEN-END:variables
 }

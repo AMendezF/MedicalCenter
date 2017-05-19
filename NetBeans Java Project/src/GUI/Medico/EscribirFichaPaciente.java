@@ -1,5 +1,6 @@
 package GUI.Medico;
 
+import GUI.Gestor.TableAdaptor;
 import clases.Medico;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -50,10 +51,12 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
         codCita = new javax.swing.JLabel();
         comentario = new javax.swing.JLabel();
         DNI = new javax.swing.JLabel();
-        campoDNI = new javax.swing.JTextField();
-        campoCita = new javax.swing.JTextField();
         comentarioField = new javax.swing.JTextField();
         buttonEscribirDiagnostico = new javax.swing.JButton();
+        campoDNI = new javax.swing.JLabel();
+        campoCita = new javax.swing.JLabel();
+        DNI1 = new javax.swing.JLabel();
+        campoDNI1 = new javax.swing.JLabel();
         labelTitulo = new javax.swing.JLabel();
 
         tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
@@ -64,6 +67,11 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
 
             }
         ));
+        tablaInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaInfoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaInfo);
 
         mostrarCitas.setText("Mostrar Citas");
@@ -124,13 +132,25 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
         DNI.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         DNI.setText("DNI");
 
-        campoDNI.addActionListener(new java.awt.event.ActionListener() {
+        comentarioField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoDNIActionPerformed(evt);
+                comentarioFieldActionPerformed(evt);
             }
         });
 
         buttonEscribirDiagnostico.setText("Guardar");
+
+        campoDNI.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        campoDNI.setForeground(new java.awt.Color(0, 51, 102));
+
+        campoCita.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        campoCita.setForeground(new java.awt.Color(0, 51, 102));
+
+        DNI1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        DNI1.setText("Paciente");
+
+        campoDNI1.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        campoDNI1.setForeground(new java.awt.Color(0, 51, 102));
 
         javax.swing.GroupLayout formularioLayout = new javax.swing.GroupLayout(formulario);
         formulario.setLayout(formularioLayout);
@@ -140,31 +160,39 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonEscribirDiagnostico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comentario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comentarioField, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, formularioLayout.createSequentialGroup()
-                            .addComponent(codCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(campoCita))
+                            .addComponent(DNI1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(campoDNI1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, formularioLayout.createSequentialGroup()
-                            .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(campoDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(comentario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comentarioField, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(codCita, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(campoCita, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, formularioLayout.createSequentialGroup()
+                            .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(campoDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(507, Short.MAX_VALUE))
         );
         formularioLayout.setVerticalGroup(
             formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formularioLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(DNI1)
+                    .addComponent(campoDNI1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(codCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoCita, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                    .addComponent(DNI, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(codCita, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoCita, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(comentario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(comentarioField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,12 +214,12 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(mostrarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(formulario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)))
+                .addComponent(formulario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -203,18 +231,15 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(mostrarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(formulario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void campoDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDNIActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoDNIActionPerformed
-
     private void mostrarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarCitasActionPerformed
         try {
-            ResultSet rs = medico.mostrarCitasMedico();
-            setTabla(ResultSetToTableModel(rs));
+            ResultSet rs = medico.mostrarPacientesAsociados();
+            TableAdaptor aux = new TableAdaptor(rs);
+            setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
             tablaInfo.setModel(tabla);
             int numColums = tabla.getColumnCount();
@@ -228,27 +253,6 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_mostrarCitasActionPerformed
 
-    private DefaultTableModel ResultSetToTableModel(ResultSet rs) throws SQLException {
-        java.sql.ResultSetMetaData metaData = rs.getMetaData();
-
-        // names of columns
-        Vector<String> columnNames = new Vector<String>();
-        int columnCount = metaData.getColumnCount();
-        for (int column = 1; column <= columnCount; column++) {
-            columnNames.add(metaData.getColumnName(column));
-        }
-
-        // data of the table
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        while (rs.next()) {
-            Vector<Object> vector = new Vector<Object>();
-            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-                vector.add(rs.getObject(columnIndex));
-            }
-            data.add(vector);
-        }
-        return new DefaultTableModel(data, columnNames);
-    }
     private void desplegableColumnasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableColumnasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_desplegableColumnasActionPerformed
@@ -268,6 +272,19 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
         tablaInfo.setRowSorter(trsFiltro);
     }//GEN-LAST:event_buscarCampoKeyTyped
 
+    private void comentarioFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comentarioFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comentarioFieldActionPerformed
+
+    private void tablaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInfoMouseClicked
+        int row = tablaInfo.rowAtPoint(evt.getPoint());
+        int col = tablaInfo.columnAtPoint(evt.getPoint());
+        if (row >= 0 && col >= 0) {
+            campoDNI.setText((String) tablaInfo.getValueAt(row, 3));
+            campoCita.setText((String) tablaInfo.getValueAt(row, 0));
+        }
+    }//GEN-LAST:event_tablaInfoMouseClicked
+
     public void filtro() {
         int colum = 0;
         while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
@@ -286,10 +303,12 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DNI;
+    private javax.swing.JLabel DNI1;
     private javax.swing.JTextField buscarCampo;
     private javax.swing.JButton buttonEscribirDiagnostico;
-    private javax.swing.JTextField campoCita;
-    private javax.swing.JTextField campoDNI;
+    private javax.swing.JLabel campoCita;
+    private javax.swing.JLabel campoDNI;
+    private javax.swing.JLabel campoDNI1;
     private javax.swing.JLabel codCita;
     private javax.swing.JLabel comentario;
     private javax.swing.JTextField comentarioField;
