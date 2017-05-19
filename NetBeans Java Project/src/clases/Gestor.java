@@ -3,6 +3,8 @@ package clases;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -148,7 +150,7 @@ public class Gestor {
         while (resultSet.next()) {
             especialidades.add(resultSet.getString("nombre"));
         }
-        return (String[]) especialidades.toArray();
+        return especialidades.toArray(new String[especialidades.size()]);
     }
 
     /**
@@ -211,12 +213,13 @@ public class Gestor {
     public boolean addMedico(String[] medico) {
         boolean added = true;
         String sql;
+        String codMedico = medico[0];
 
         sql = "INSERT "
                 + "INTO centromedico.medico "
                 + "(n_colegiado, nombre, apellidos, horario, tiempo_min, especialidad)"
                 + "VALUES "
-                + "('" + medico[0] + "', "
+                + "('" + codMedico + "', "
                 + "'" + medico[1] + "', "
                 + "'" + medico[2] + "', "
                 + "'" + medico[3] + "', "
@@ -227,10 +230,17 @@ public class Gestor {
         } catch (SQLException e) {
             added = false;
         }
-        // Pendiente crear usuario de BBDD
-//        String codigo = medico[0];
-//        crearUserBD(con, codigo);
-//        setPermisosBD(con, codigo);
+
+        // TODO
+//        try {
+//            if(!conexion.existeUser(codMedico)){
+//                conexion.crearUserBD(codMedico);
+//                conexion.setPermisosBD(codMedico);
+//                
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         return added;
     }
 
@@ -276,21 +286,23 @@ public class Gestor {
      */
 	/*
     public Medico getMedico(String numColegiado) throws SQLException {
-        return new Medico(numColegiado, conexion);
+        return new Medico(Integer.parseInt(numColegiado), conexion);
     }
 	*/
 
     /**
      * Sustituye un médico por otro.
      *
-     * @param medico Médico al que se pretende reemplazar.
-     * @param sustituto Médico que reemplaza al anterior.
+     * @param numColegiado Número identificativo del médico que se desea
+     * sustituir.
+     * @param medicoSustito Número identificativo del médico que sustituye al
+     * otro médico.
      * @return true = añadido a la BD, false = fallo al añadir
      */
-    public Boolean sustituirMedico(Medico medico, Medico sustituto) {
+    public Boolean sustituirMedico(String numColegiado, String[] medicoSustito) {
         Boolean sustituido = true;
         //TODO
-        
+
         return sustituido;
     }
 
@@ -530,72 +542,6 @@ public class Gestor {
     }
 
     /**
-     * Exporta, de la BD, el paciente especificado por parámetro a la BD de pacientes
-     * borrados.
-     *
-     * @param DNI Identificador del paciente que se desea exportar.
-     * @return true = exportado con éxito, false = no ha sido exportado
-     */
-    public Boolean exportarPaciente(String DNI) {
-        Boolean exportado = true;
-        String sql;
-        
-        sql = "INSERT "
-                + "INTO centromedico.paciente_borrado "
-                + "SELECT * "
-                + "FROM centromedico.paciente "
-                + "WHERE dni='" + DNI + "'"; 
-        try {
-            conexion.makeUpdate(sql);
-        } catch (SQLException e) {
-            exportado = false;
-        }
-        
-        if (exportado) {
-            if (!removePacienteBD(DNI)) {
-                exportado = false;
-            } else {
-                removePacienteBDBorrado(DNI);
-            }
-        }
-
-        return exportado;
-    }
-
-    /**
-     * Importa, a la BD, el paciente especificado por parámetro de la BD de pacientes
-     * borrados.
-     *
-     * @param DNI Identificador del paciente que se desea importar.
-     * @return true = importado con éxito, false = no ha sido importado
-     */
-    public Boolean importarPaciente(String DNI) {
-        Boolean importado = true;
-        String sql;
-        
-        sql = "INSERT "
-                + "INTO centromedico.paciente "
-                + "SELECT * "
-                + "FROM centromedico.paciente_borrado "
-                + "WHERE dni='" + DNI + "'"; 
-        try {
-            conexion.makeUpdate(sql);
-        } catch (SQLException e) {
-            importado = false;
-        }
-        
-        if (importado) {
-            if (!removePacienteBDBorrado(DNI)) {
-                importado = false;
-            } else {
-                removePacienteBD(DNI);
-            }
-        }
-
-        return importado;
-    }
-
-    /**
      * Elimina, de la BD, el paciente especificado por parámetro.
      *
      * @param DNI Identificador del paciente que se desea borrar.
@@ -617,7 +563,8 @@ public class Gestor {
     }
 
     /**
-     * Elimina, de la BD de pacientes borrados, el paciente especificado por parámetro.
+     * Elimina, de la BD de pacientes borrados, el paciente especificado por
+     * parámetro.
      *
      * @param DNI Identificador del paciente que se desea borrar.
      * @return true = borrado de la BD, false = fallo al borrar
@@ -690,15 +637,28 @@ public class Gestor {
         return esTexto;
     }
 
-    /**
-     * Elimina una cita de un paciente.
-     *
-     * @param paciente Paciente del que se desea borrar una cita.
-     * @return true = eliminado, false = fallo al eliminar
-     */
-    /*public boolean anularCita(Cita cita) {
-	 boolean eliminado = false;
-
-	 return eliminado;
-	 }*/
+//    public String[] getHorarioEspecialidadByDay(String diaDeLaSemana) {
+//        throw new UnsupportedOperationException("TODO");
+//    }
+//
+//    public ResultSet getMedicosByHorarioEspecialidad(String diaDeLaSemana, String especialidad, String horario) {
+//        throw new UnsupportedOperationException("TODO");
+//    }
+//
+//    public String[] getConsultasMedico(String fecha, String especialidad, String horario, String codMedico) throws SQLException {
+//        Medico medico = getMedico(codMedico);
+//        throw new UnsupportedOperationException("TODO");
+//        return medico.getConsultasDisponibles(String fecha, String especialidad, String horario);
+//    }
+//    /**
+//     * Elimina una cita de un paciente.
+//     *
+//     * @param paciente Paciente del que se desea borrar una cita.
+//     * @return true = eliminado, false = fallo al eliminar
+//     */
+//    public boolean anularCita(String codCita) {
+//	 boolean eliminado = false;
+//       // TODO
+//	 return eliminado;
+//	 }
 }
