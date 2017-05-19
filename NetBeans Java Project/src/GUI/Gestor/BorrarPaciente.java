@@ -377,7 +377,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		/*
 		 String dni = fieldBorrar.getText();
 		 if (gestor.comprobarDNI(dni)) {
-		 if (gestor.estaBDBorrado(dni)) {
+		 if (gestor.existePacienteBD(dni)sBDBorrado(dni)) {
 		 confirmar = JOptionPane.showOptionDialog(this,"Se va ha reinsertar el paciente, ¿desea confirmar la operacion?","Confirmar",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,  options,  options[0]);
 		 if (confirmar == 0){
 		 reinsertarPaciente(dni);
@@ -387,7 +387,8 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		 } else {
 			
 		 }
-		 */
+		*/
+		 
     }//GEN-LAST:event_buttonReinsertarActionPerformed
 
 	/**
@@ -396,8 +397,9 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void fieldBorrarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldBorrarKeyReleased
+		
 		try {
-			if (gestor.estaBD(fieldBorrar.getText())) {
+			if (gestor.existePacienteBD(fieldBorrar.getText())) {
 				DNIOK.setForeground(Color.black);
 				DNIOK.setText("OK!!");
 			} else {
@@ -407,6 +409,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		} catch (SQLException ex) {
 			Logger.getLogger(BorrarPaciente.class.getName()).log(Level.SEVERE, null, ex);
 		}
+		
     }//GEN-LAST:event_fieldBorrarKeyReleased
 
 	/**
@@ -415,8 +418,9 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void fieldReinsertarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldReinsertarKeyReleased
+		
 		try {
-			if (gestor.estaBD(fieldReinsertar.getText())) {
+			if (gestor.existePacienteBD(fieldReinsertar.getText())) {
 				DNI2OK.setForeground(Color.black);
 				DNI2OK.setText("OK!!");
 			} else {
@@ -426,6 +430,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		} catch (SQLException ex) {
 			Logger.getLogger(BorrarPaciente.class.getName()).log(Level.SEVERE, null, ex);
 		}
+	
     }//GEN-LAST:event_fieldReinsertarKeyReleased
 
 	/**

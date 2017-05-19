@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package GUI.Gestor.Paciente;
+
+import clases.Gestor;
+import clases.Paciente;
 
 /**
  *
@@ -12,11 +14,13 @@ package GUI.Gestor.Paciente;
  */
 public class cancelarCita extends javax.swing.JPanel {
 
-	/**
-	 * Creates new form cancelarCita
-	 */
-	public cancelarCita() {
+	private Gestor gestor;
+	private Paciente paciente;
+
+	public cancelarCita(Gestor gestor, Paciente paciente) {
 		initComponents();
+		this.gestor = gestor;
+		this.paciente = paciente;
 	}
 
 	/**

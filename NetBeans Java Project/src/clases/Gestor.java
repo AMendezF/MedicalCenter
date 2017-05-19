@@ -3,8 +3,6 @@ package clases;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  *
@@ -12,7 +10,7 @@ import java.util.GregorianCalendar;
  */
 public class Gestor {
 
-    private final int maxMedicosActivos = 3;
+//    private final int maxMedicosActivos = 3;
     private final Conexion conexion;
 
     /**
@@ -111,7 +109,7 @@ public class Gestor {
                     + "AND c.medico=m.n_colegiado "
                     + "AND c.hora>='13:00:00' "
                     + "AND c.dia='" + fecha + "' "
-                    + "ORDER BY c.hora" + ";";
+                    + "ORDER BY c.hora";
             resultSet = conexion.makeQuery(sql);
 
             tieneEspecialidadSala = false;
@@ -144,13 +142,203 @@ public class Gestor {
         ResultSet resultSet;
 
         sql = "SELECT nombre "
-                + "FROM centromedico.especialidad" + ";";
+                + "FROM centromedico.especialidad";
         resultSet = conexion.makeQuery(sql);
 
         while (resultSet.next()) {
             especialidades.add(resultSet.getString("nombre"));
         }
         return (String[]) especialidades.toArray();
+    }
+
+    /**
+     * Devuelve todos los médicos que contiene la base de datos.
+     *
+     * @return Retorna el valor de la consulta SQL.
+     * @throws SQLException Devuelve error si no se pudo realizar la consulta
+     * SQL.
+     */
+    public ResultSet mostrarMedicos() throws SQLException {
+        String sql;
+        ResultSet listaMedicos;
+
+        sql = "SELECT * "
+                + "FROM centromedico.medico";
+        listaMedicos = this.conexion.makeQuery(sql);
+
+        return listaMedicos;
+    }
+
+    /**
+     * Comprueba si existe un médico en la BD con el número de colegiado
+     * entregado.
+     *
+     * @param numColegiado Número de colegiado que se pretende comprobar en la
+     * BD.
+     * @return true = Número de colegiado encontrado, false = Número de
+     * colegiado no encontrado
+     * @throws SQLException Devuelve error si no se pudo realizar la consulta
+     * SQL.
+     */
+    public boolean existeMedico(String numColegiado) throws SQLException {
+        boolean result = false;
+        String sql;
+        ResultSet resultSet;
+
+        sql = "SELECT n_colegiado "
+                + "FROM centromedico.medico "
+                + "WHERE n_colegiado='" + numColegiado + "'";
+        resultSet = conexion.makeQuery(sql);
+
+        while (resultSet.next()) {
+            if (numColegiado.equals(resultSet.getString("n_colegiado"))) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Inserta un nuevo médico en la base de datos.
+     *
+     * @param medico Recibe un array con los datos del médico. El formato con el
+     * que se ha de rellenar el array es {n_colegiado, nombre, apellidos,
+     * horario, tiempo_min, especialidad}.
+     *
+     * @return true = añadido a la BD, false = fallo al añadir
+     */
+    public boolean addMedico(String[] medico) {
+        boolean added = true;
+        String sql;
+
+        sql = "INSERT "
+                + "INTO centromedico.medico "
+                + "(n_colegiado, nombre, apellidos, horario, tiempo_min, especialidad)"
+                + "VALUES "
+                + "('" + medico[0] + "', "
+                + "'" + medico[1] + "', "
+                + "'" + medico[2] + "', "
+                + "'" + medico[3] + "', "
+                + "'" + medico[4] + "', "
+                + "'" + medico[5] + "')";
+        try {
+            conexion.makeUpdate(sql);
+        } catch (SQLException e) {
+            added = false;
+        }
+        // Pendiente crear usuario de BBDD
+//        String codigo = medico[0];
+//        crearUserBD(con, codigo);
+//        setPermisosBD(con, codigo);
+        return added;
+    }
+
+    /**
+     * Actualiza el médico, en parte o en su totalidad, en la base de datos.
+     *
+     * @param numColegiado Recibe el dni del paciente del cual se quiere
+     * modificar los datos.
+     * @param medico Recibe un array de 'tuplas' (arrays de 2 elementos) con los
+     * datos que se desean actualizar del médico. La estructura de cada 'tupla'
+     * debe ser {campo, valor}. Los campos disponibles actualmente para
+     * actualizar son: [n_colegiado, nombre, apellidos, horario, tiempo_min,
+     * especialidad].
+     * @return true = actualizado, false = fallo al actualizar
+     */
+    public boolean updateMedico(String numColegiado, String[][] medico) {
+        boolean updated = true;
+        String sql;
+
+        sql = "UPDATE centromedico.medico "
+                + "SET ";
+        for (String[] tuplas : medico) {
+            sql += tuplas[0] + "='" + tuplas[1] + "' ";
+        }
+        sql += "WHERE DNI='" + numColegiado + "'";
+        try {
+            conexion.makeUpdate(sql);
+        } catch (SQLException e) {
+            updated = false;
+        }
+
+        return updated;
+    }
+
+    /**
+     * Devuelve un médico completo presente en la BD.
+     *
+     * @param numColegiado Número identificativo del médico que se desea
+     * obtener.
+     * @return Retorna el Paciente con toda su información.
+     * @throws SQLException Devuelve error si no se pudo recuperar el paciente
+     * de la BD.
+     */
+	/*
+    public Medico getMedico(String numColegiado) throws SQLException {
+        return new Medico(numColegiado, conexion);
+    }
+	*/
+
+    /**
+     * Sustituye un médico por otro.
+     *
+     * @param medico Médico al que se pretende reemplazar.
+     * @param sustituto Médico que reemplaza al anterior.
+     * @return true = añadido a la BD, false = fallo al añadir
+     */
+    public Boolean sustituirMedico(Medico medico, Medico sustituto) {
+        Boolean sustituido = true;
+        //TODO
+        
+        return sustituido;
+    }
+
+    /**
+     * Elimina, de la BD, el médico especificado por parámetro.
+     *
+     * @param numColegiado Número identificativo del médico que se desea borrar.
+     * @return true = borrado de la BD, false = fallo al borrar
+     */
+    public Boolean removeMedico(String numColegiado) {
+        Boolean removed = true;
+        String sql;
+
+        sql = "DELETE FROM centromedico.medico "
+                + "WHERE N_colegiado='" + numColegiado + "'";
+
+        try {
+            conexion.makeQuery(sql);
+        } catch (SQLException e) {
+            removed = false;
+        }
+
+        return removed;
+    }
+
+    /**
+     * Traslada las citas que posee un medico a un médico sustituto.
+     *
+     * @param numColegiado Número identificativo del médico que posee
+     * actualmente las citas.
+     * @param numColegiadoSustituto Número identificativo del médico sustituto
+     * que recibe las citas.
+     * @return true = trasladadas con éxito, false = fallo al trasladar
+     */
+    public Boolean trasladarCitas(String numColegiado, String numColegiadoSustituto) {
+        Boolean trasladado = true;
+        String sql;
+
+        sql = "UPDATE centromedico.citas"
+                + "SET medico='" + numColegiado + "' "
+                + "WHERE medico='" + numColegiadoSustituto + "'";
+        try {
+            this.conexion.makeQuery(sql);
+        } catch (SQLException e) {
+            trasladado = false;
+        }
+
+        return trasladado;
     }
 
     /**
@@ -161,12 +349,12 @@ public class Gestor {
      * SQL.
      */
     public ResultSet mostrarPacientes() throws SQLException {
-        ResultSet listaPacientes;
         String sql;
+        ResultSet listaPacientes;
 
         sql = "SELECT * "
                 + "FROM centromedico.paciente "
-                + "ORDER BY DNI" + ";";
+                + "ORDER BY DNI";
         listaPacientes = this.conexion.makeQuery(sql);
 
         return listaPacientes;
@@ -180,12 +368,12 @@ public class Gestor {
      * SQL.
      */
     public ResultSet mostrarPacientesBorrados() throws SQLException {
-        ResultSet listaPacientes;
         String sql;
+        ResultSet listaPacientes;
 
         sql = "SELECT * "
                 + "FROM centromedico.paciente_borrado "
-                + "ORDER BY DNI" + ";";
+                + "ORDER BY DNI";
         listaPacientes = this.conexion.makeQuery(sql);
 
         return listaPacientes;
@@ -199,58 +387,254 @@ public class Gestor {
      * SQL.
      */
     public ResultSet mostrarPacientesTodos() throws SQLException {
-        ResultSet listaPacientes;
         String sql;
+        ResultSet listaPacientes;
 
-		sql = "SELECT * FROM centromedico.paciente \n"
-				+ "UNION \n"
-				+ "SELECT * FROM centromedico.paciente_borrado;";
-		/*
-        sql = "SELECT * "
-                + "FROM centromedico.paciente, centromedico.paciente_borrado"
-                + "ORDER BY 'DNI'" + ";";
-		*/
+        sql = "SELECT * FROM centromedico.paciente "
+                + "UNION "
+                + "SELECT * FROM centromedico.paciente_borrado";
         listaPacientes = this.conexion.makeQuery(sql);
-		// LA SELECT NO ES CORRECTA
 
         return listaPacientes;
+    }
+
+    public boolean existePaciente(String DNI) throws SQLException {
+        return existePacienteBD(DNI) || existePacienteBDBorrado(DNI);
+    }
+
+    /**
+     * Comprueba si existe un paciente en la BD con el DNI entregado.
+     *
+     * @param DNI DNI que se pretende comprobar en la BD.
+     * @return true = DNI encontrado, false = DNI no encontrado
+     * @throws SQLException Devuelve error si no se pudo realizar la consulta
+     * SQL.
+     */
+    public boolean existePacienteBD(String DNI) throws SQLException {
+        boolean result = false;
+        String sql;
+        ResultSet resultSet;
+
+        sql = "SELECT dni "
+                + "FROM centromedico.paciente "
+                + "WHERE dni='" + DNI + "'";
+        resultSet = conexion.makeQuery(sql);
+
+        while (resultSet.next()) {
+            if (DNI.equals(resultSet.getString("dni"))) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Comprueba si existe un paciente en la BD de pacientes borrados, con el
+     * DNI entregado.
+     *
+     * @param DNI DNI que se pretende comprobar en la BD de pacientes borrados.
+     * @return true = DNI encontrado, false = DNI no encontrado
+     * @throws SQLException Devuelve error si no se pudo realizar la consulta
+     * SQL.
+     */
+    public boolean existePacienteBDBorrado(String DNI) throws SQLException {
+        boolean result = false;
+        String sql;
+        ResultSet resultSet;
+
+        sql = "SELECT dni "
+                + "FROM centromedico.paciente_borrado "
+                + "WHERE dni='" + DNI + "'";
+        resultSet = conexion.makeQuery(sql);
+
+        while (resultSet.next()) {
+            if (DNI.equals(resultSet.getString("dni"))) {
+                result = true;
+            }
+        }
+
+        return result;
     }
 
     /**
      * Inserta un nuevo paciente en la base de datos.
      *
+     * @param paciente Recibe un array con los datos del paciente. El formato
+     * con el que se ha de rellenar el array es {dni, nombre, apellidos,
+     * seguro}.
+     *
      * @return true = añadido a la BD, false = fallo al añadir
      */
-    public boolean addPaciente(Paciente paciente) {
-        boolean added = false;
+    public boolean addPaciente(String[] paciente) {
+        boolean added = true;
+        String sql;
 
-        //TODO
+        sql = "INSERT "
+                + "INTO centromedico.paciente "
+                + "(DNI, nombre, apellidos, CompSegur)"
+                + "VALUES "
+                + "('" + paciente[0] + "', "
+                + "'" + paciente[1] + "', "
+                + "'" + paciente[2] + "', "
+                + "'" + paciente[3] + "')";
+        try {
+            conexion.makeUpdate(sql);
+        } catch (SQLException e) {
+            added = false;
+        }
+
         return added;
     }
 
     /**
-     * Actualiza el paciente, que recibe, en la base de datos.
+     * Actualiza el paciente, en parte o en su totalidad, en la base de datos.
      *
-     * @param paciente Recibe un paciente relleno con los datos actualizados.
+     * @param DNI Recibe el dni del paciente del cual se quiere modificar los
+     * datos.
+     * @param paciente Recibe un array de 'tuplas' (arrays de 2 elementos) con
+     * los datos que se desean actualizar del paciente. La estructura de cada
+     * 'tupla' debe ser {campo, valor}. Los campos disponibles actualmente para
+     * actualizar son: [dni, nombre, apellidos, compsegur].
      * @return true = actualizado, false = fallo al actualizar
      */
-    public boolean updatePaciente(Paciente paciente) {
-        boolean updated = false;
+    public boolean updatePaciente(String DNI, String[][] paciente) {
+        boolean updated = true;
+        String sql;
 
-        //TODO
+        sql = "UPDATE centromedico.paciente "
+                + "SET ";
+        for (String[] tuplas : paciente) {
+            sql += tuplas[0] + "='" + tuplas[1] + "' ";
+        }
+        sql += "WHERE DNI='" + DNI + "'";
+        try {
+            conexion.makeUpdate(sql);
+        } catch (SQLException e) {
+            updated = false;
+        }
+
         return updated;
     }
 
     /**
-     * Devuelve un paciente completo de presente en la BD.
+     * Devuelve un paciente completo presente en la BD.
      *
-     * @param DNI Identificador del paciente que se desea conseguir.
+     * @param DNI Identificador del paciente que se desea obtener.
      * @return Retorna el Paciente con toda su información.
      * @throws SQLException Devuelve error si no se pudo recuperar el paciente
      * de la BD.
      */
     public Paciente getPaciente(String DNI) throws SQLException {
         return new Paciente(DNI, conexion);
+    }
+
+    /**
+     * Exporta, de la BD, el paciente especificado por parámetro a la BD de pacientes
+     * borrados.
+     *
+     * @param DNI Identificador del paciente que se desea exportar.
+     * @return true = exportado con éxito, false = no ha sido exportado
+     */
+    public Boolean exportarPaciente(String DNI) {
+        Boolean exportado = true;
+        String sql;
+        
+        sql = "INSERT "
+                + "INTO centromedico.paciente_borrado "
+                + "SELECT * "
+                + "FROM centromedico.paciente "
+                + "WHERE dni='" + DNI + "'"; 
+        try {
+            conexion.makeUpdate(sql);
+        } catch (SQLException e) {
+            exportado = false;
+        }
+        
+        if (exportado) {
+            if (!removePacienteBD(DNI)) {
+                exportado = false;
+            } else {
+                removePacienteBDBorrado(DNI);
+            }
+        }
+
+        return exportado;
+    }
+
+    /**
+     * Importa, a la BD, el paciente especificado por parámetro de la BD de pacientes
+     * borrados.
+     *
+     * @param DNI Identificador del paciente que se desea importar.
+     * @return true = importado con éxito, false = no ha sido importado
+     */
+    public Boolean importarPaciente(String DNI) {
+        Boolean importado = true;
+        String sql;
+        
+        sql = "INSERT "
+                + "INTO centromedico.paciente "
+                + "SELECT * "
+                + "FROM centromedico.paciente_borrado "
+                + "WHERE dni='" + DNI + "'"; 
+        try {
+            conexion.makeUpdate(sql);
+        } catch (SQLException e) {
+            importado = false;
+        }
+        
+        if (importado) {
+            if (!removePacienteBDBorrado(DNI)) {
+                importado = false;
+            } else {
+                removePacienteBD(DNI);
+            }
+        }
+
+        return importado;
+    }
+
+    /**
+     * Elimina, de la BD, el paciente especificado por parámetro.
+     *
+     * @param DNI Identificador del paciente que se desea borrar.
+     * @return true = borrado de la BD, false = fallo al borrar
+     */
+    public Boolean removePacienteBD(String DNI) {
+        Boolean removed = true;
+        String sql;
+
+        sql = "DELETE FROM centromedico.paciente "
+                + "WHERE dni='" + DNI + "'";
+        try {
+            conexion.makeExecute(sql);
+        } catch (SQLException e) {
+            removed = false;
+        }
+
+        return removed;
+    }
+
+    /**
+     * Elimina, de la BD de pacientes borrados, el paciente especificado por parámetro.
+     *
+     * @param DNI Identificador del paciente que se desea borrar.
+     * @return true = borrado de la BD, false = fallo al borrar
+     */
+    public Boolean removePacienteBDBorrado(String DNI) {
+        Boolean removed = true;
+        String sql;
+
+        sql = "DELETE FROM centromedico.paciente_borrado "
+                + "WHERE dni='" + DNI + "'";
+        try {
+            conexion.makeExecute(sql);
+        } catch (SQLException e) {
+            removed = false;
+        }
+
+        return removed;
     }
 
     /**
@@ -287,165 +671,24 @@ public class Gestor {
 
         return verdadero;
     }
-	
-	public boolean esTexto(String campoTexto) {
-		boolean esTexto = false;
-		
-		if(campoTexto.matches("[^\\d.,<>_´`+¿?!¡@#$%&=\\s]{1,}")) {
-			esTexto = true;
-		}
-		
-		return esTexto;
-	}
 
     /**
-     * Comprueba si existe un paciente en la BD con el DNI entregado.
+     * Método para discernir si un String contiene o no únicamente carácteres de
+     * texto, es decir, no contiene números, símbolos...
      *
-     * @param DNI DNI que se pretende comprobar en la BD.
-     * @return true = DNI encontrado, false = DNI no encontrado
-     * @throws SQLException Devuelve error si no se pudo realizar la consulta
-     * SQL.
+     * @param campoTexto
+     * @return true = solo contiene carácteres alfabéticos, false = contiene
+     * carácteres no alfebéticos
      */
-    public boolean estaBD(String DNI) throws SQLException {
-        boolean result = false;
-        String sql;
-        ResultSet resultSet;
-        String dniBD;
+    public boolean esTexto(String campoTexto) {
+        boolean esTexto = false;
 
-        sql = "SELECT dni "
-                + "FROM centromedico.paciente "
-                + "WHERE dni=" + DNI + ";";
-        resultSet = conexion.makeQuery(sql);
-
-        dniBD = null;
-        while (resultSet.next()) {
-            dniBD = resultSet.getString("dni");
+        if (campoTexto.matches("[^\\d.,<>_´`+¿?!¡@#$%&=\\s]{1,}")) {
+            esTexto = true;
         }
 
-        if (dniBD.equals(DNI)) {
-            result = true;
-        }
-        return result;
+        return esTexto;
     }
-
-    /**
-     * Comprueba si existe un paciente en la BD de pacientes borrados, con el
-     * DNI entregado.
-     *
-     * @param DNI DNI que se pretende comprobar en la BD de pacientes borrados.
-     * @return true = DNI encontrado, false = DNI no encontrado
-     * @throws SQLException Devuelve error si no se pudo realizar la consulta
-     * SQL.
-     */
-    public boolean estaBDBorrado(String DNI) throws SQLException {
-        boolean result = false;
-        String sql;
-        ResultSet resultSet;
-
-        sql = "SELECT dni "
-                + "FROM centromedico.paciente_borrado "
-                + "WHERE dni=" + DNI + ";";
-        resultSet = conexion.makeQuery(sql);
-
-        String dniBD = null;
-        while (resultSet.next()) {
-            dniBD = resultSet.getString("dni");
-        }
-
-        if (DNI.equals(dniBD)) {
-            result = true;
-        }
-        return result;
-    }
-
-    /**
-     * Devuelve todos los medicos que contiene la base de datos.
-     *
-     * @return Retorna el valor de la consulta SQL.
-     * @throws SQLException Devuelve error si no se pudo realizar la consulta
-     * SQL.
-     */
-    public ResultSet mostrarMedicos() throws SQLException {
-        ResultSet listaMedicos = null;
-        String sql;
-
-        sql = "SELECT * "
-                + "FROM centromedico.medico" + ";";
-        listaMedicos = this.conexion.makeQuery(sql);
-
-        return listaMedicos;
-    }
-
-    /**
-     * Inserta un nuevo médico en la base de datos.
-     *
-     * @return true = añadido a la BD, false = fallo al añadir
-     */
-    public boolean addMedico() {
-        boolean added = false;
-
-        /*try {
-		 if (actualMedicosActivos() < maxMedicosActivos) {
-
-		 } else {
-		 if (this.sustituirMedico(medico, sustituto)) {
-		 added = true;
-		 }
-		 }
-
-		 } catch (Exception e) {
-
-		 }*/
-        //TODO
-        return added;
-    }
-
-    /**
-     * Sustituye un médico por otro.
-     *
-     * @param medico Médico al que se pretende reemplazar.
-     * @param sustituto Médico que reemplaza al anterior.
-     * @return true = añadido a la BD, false = fallo al añadir
-     */
-    public void sustituirMedico(Medico medico, Medico sustituto) throws SQLException {
-        //TODO
-    }
-
-    /**
-     * Elimina el médico de la BD, especificado por parámetro.
-     *
-     * @param codMedico Número identificativo de un médico.
-     * @throws SQLException Devuelve error si no se pudo realizar la consulta
-     * SQL.
-     */
-    public void eliminarMedico(int codMedico) throws SQLException {
-        String sql;
-
-        sql = "DELETE FROM centromedico.medico "
-                + "WHERE N_colegiado=" + Integer.toString(codMedico) + ";";
-        this.conexion.makeQuery(sql);
-    }
-
-    /**
-     * Traslada las citas que posee un medico a un médico sustituto.
-     *
-     * @param codMedico Número identificativo del médico sustituido.
-     * @param codMedicoSustituto Número identificativo del médico sustituto.
-     * @throws SQLException Devuelve error si no se pudo realizar la consulta
-     * SQL.
-     */
-    public void trasladarCitas(int codMedico, int codMedicoSustituto) throws SQLException {
-        String sql;
-
-        sql = "UPDATE centromedico.citas"
-                + "SET medico=" + Integer.toString(codMedico) + " "
-                + "WHERE medico=" + Integer.toString(codMedicoSustituto) + ";";
-        this.conexion.makeQuery(sql);
-    }
-
-	public boolean existePaciente(String text) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
 
     /**
      * Elimina una cita de un paciente.
@@ -457,5 +700,5 @@ public class Gestor {
 	 boolean eliminado = false;
 
 	 return eliminado;
-	 }*/ 
+	 }*/
 }

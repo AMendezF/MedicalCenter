@@ -45,7 +45,10 @@
                       <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="buttonMostrarCitas" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="fieldBorrarCita" min="-2" pref="150" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="buttonCancelarCita" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPane1" pref="821" max="32767" attributes="0"/>
                   </Group>
@@ -59,7 +62,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="buttonMostrarCitas" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="buttonMostrarCitas" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="buttonCancelarCita" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="fieldBorrarCita" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="369" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -104,6 +111,13 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="buttonCancelarCita">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cancelar cita"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="fieldBorrarCita">
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
