@@ -1,6 +1,7 @@
 package GUI.Medico;
 
 import clases.Medico;
+import clases.TableModelAdaptor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -124,9 +125,16 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
         DNI.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         DNI.setText("DNI");
 
+        campoDNI.setToolTipText("");
         campoDNI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoDNIActionPerformed(evt);
+            }
+        });
+
+        comentarioField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comentarioFieldActionPerformed(evt);
             }
         });
 
@@ -214,7 +222,8 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
     private void mostrarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarCitasActionPerformed
         try {
             ResultSet rs = medico.mostrarCitasMedico();
-            setTabla(ResultSetToTableModel(rs));
+            TableModelAdaptor aux = new TableModelAdaptor(rs);
+            setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
             tablaInfo.setModel(tabla);
             int numColums = tabla.getColumnCount();
@@ -228,27 +237,6 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_mostrarCitasActionPerformed
 
-    private DefaultTableModel ResultSetToTableModel(ResultSet rs) throws SQLException {
-        java.sql.ResultSetMetaData metaData = rs.getMetaData();
-
-        // names of columns
-        Vector<String> columnNames = new Vector<String>();
-        int columnCount = metaData.getColumnCount();
-        for (int column = 1; column <= columnCount; column++) {
-            columnNames.add(metaData.getColumnName(column));
-        }
-
-        // data of the table
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        while (rs.next()) {
-            Vector<Object> vector = new Vector<Object>();
-            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-                vector.add(rs.getObject(columnIndex));
-            }
-            data.add(vector);
-        }
-        return new DefaultTableModel(data, columnNames);
-    }
     private void desplegableColumnasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableColumnasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_desplegableColumnasActionPerformed
@@ -268,12 +256,25 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
         tablaInfo.setRowSorter(trsFiltro);
     }//GEN-LAST:event_buscarCampoKeyTyped
 
+    private void comentarioFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comentarioFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comentarioFieldActionPerformed
+
     public void filtro() {
         int colum = 0;
         while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
             colum++;
         }
         trsFiltro.setRowFilter(RowFilter.regexFilter(buscarCampo.getText(), colum));
+    }
+    
+    private void tablaInfoMouseClicked(java.awt.event.MouseEvent evt) {                                       
+        int row = tablaInfo.rowAtPoint(evt.getPoint());
+        int col = tablaInfo.columnAtPoint(evt.getPoint());
+        if (row >= 0 && col >= 0) {
+            campoDNI.setText((String) tablaInfo.getValueAt(row, 3));
+            campoCita.setText((String) tablaInfo.getValueAt(row, 0));
+        }
     }
 
     private void setTabla(DefaultTableModel tabla) {

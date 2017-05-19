@@ -1,6 +1,7 @@
 package GUI.Medico;
 
 import clases.Medico;
+import clases.TableModelAdaptor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -74,6 +75,11 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
             }
         ));
         tablaInfo.setColumnSelectionAllowed(true);
+        tablaInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaInfoMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablaInfo);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -142,7 +148,8 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
         try {
             ResultSet rs = medico.mostrarPacientesAsociados();
-            setTabla(ResultSetToTableModel(rs));
+            TableModelAdaptor aux = new TableModelAdaptor(rs);
+            setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
             tablaInfo.setModel(tabla);
             int numColums = tabla.getColumnCount();
@@ -175,28 +182,13 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_textFieldDNIActionPerformed
 
-
-    private DefaultTableModel ResultSetToTableModel(ResultSet rs) throws SQLException {
-        java.sql.ResultSetMetaData metaData = rs.getMetaData();
-
-        // names of columns
-        Vector<String> columnNames = new Vector<String>();
-        int columnCount = metaData.getColumnCount();
-        for (int column = 1; column <= columnCount; column++) {
-            columnNames.add(metaData.getColumnName(column));
+    private void tablaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInfoMouseClicked
+        int row = tablaInfo.rowAtPoint(evt.getPoint());
+        int col = tablaInfo.columnAtPoint(evt.getPoint());
+        if (row >= 0 && col >= 0) {
+            textFieldDNI.setText((String) tablaInfo.getValueAt(row, 0));
         }
-
-        // data of the table
-        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-        while (rs.next()) {
-            Vector<Object> vector = new Vector<Object>();
-            for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-                vector.add(rs.getObject(columnIndex));
-            }
-            data.add(vector);
-        }
-        return new DefaultTableModel(data, columnNames);
-    }
+    }//GEN-LAST:event_tablaInfoMouseClicked
 
     public void filtro() {
         int colum = 0;
@@ -204,7 +196,6 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
             colum++;       
         }
         trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
-        textFieldDNI.setText((String) tablaInfo.getValueAt(0, 0));
     }
     
     public DefaultTableModel getTabla() {
