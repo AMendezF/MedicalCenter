@@ -61,7 +61,6 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="buttonMostrarCitas" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                               <Component id="buttonPedirCita" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="buttonCancelarCita" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                               <Component id="buttonModificarPaciente" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="0" pref="92" max="32767" attributes="0"/>
@@ -81,10 +80,8 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="buttonPedirCita" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="buttonCancelarCita" min="-2" pref="50" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="buttonModificarPaciente" min="-2" pref="50" max="-2" attributes="0"/>
-                  <EmptySpace pref="144" max="32767" attributes="0"/>
+                  <EmptySpace pref="212" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -114,14 +111,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonPedirCitaActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="buttonCancelarCita">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Cancelar cita"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCancelarCitaActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="buttonModificarPaciente">

@@ -24,7 +24,7 @@ public class MenuGestor extends javax.swing.JPanel {
 	private BorrarPaciente borrarPaciente;
 	private GestionarPacientes gestionarPacientes;
 	private MenuDeMedico menuDeMedico;
-	private mostrarSalas mostrarSalas;
+	private MostrarAgenda mostrarSalas;
 
 	public MenuGestor(Gestor gestor) {
 		initComponents();
@@ -33,7 +33,7 @@ public class MenuGestor extends javax.swing.JPanel {
 		this.borrarPaciente = new BorrarPaciente(gestor);
 
 		this.menuDeMedico = new MenuDeMedico(gestor);
-		this.mostrarSalas = new mostrarSalas(gestor);
+		this.mostrarSalas = new MostrarAgenda(gestor);
 	}
 
 	/**

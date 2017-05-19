@@ -67,6 +67,7 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
 
             }
         ));
+        tablaInfo.getTableHeader().setReorderingAllowed(false);
         tablaInfo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaInfoMouseClicked(evt);
@@ -142,15 +143,18 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
 
         campoDNI.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         campoDNI.setForeground(new java.awt.Color(0, 51, 102));
+        campoDNI.setText("12345Z");
 
         campoCita.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         campoCita.setForeground(new java.awt.Color(0, 51, 102));
+        campoCita.setText("cod_cita");
 
         DNI1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         DNI1.setText("Paciente");
 
         campoDNI1.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         campoDNI1.setForeground(new java.awt.Color(0, 51, 102));
+        campoDNI1.setText("12345Z");
 
         javax.swing.GroupLayout formularioLayout = new javax.swing.GroupLayout(formulario);
         formulario.setLayout(formularioLayout);

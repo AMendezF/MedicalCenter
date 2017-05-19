@@ -43,7 +43,7 @@ public class mostrarCitas extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         buttonMostrarCitas = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaInfo = new javax.swing.JTable();
         buttonCancelarCita = new javax.swing.JButton();
         fieldBorrarCita = new javax.swing.JTextField();
 
@@ -54,7 +54,7 @@ public class mostrarCitas extends javax.swing.JPanel {
 
         buttonMostrarCitas.setText("Mostrar citas");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -64,8 +64,17 @@ public class mostrarCitas extends javax.swing.JPanel {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaInfo.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tablaInfo);
 
         buttonCancelarCita.setText("Cancelar cita");
 
@@ -127,6 +136,6 @@ public class mostrarCitas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaInfo;
     // End of variables declaration//GEN-END:variables
 }

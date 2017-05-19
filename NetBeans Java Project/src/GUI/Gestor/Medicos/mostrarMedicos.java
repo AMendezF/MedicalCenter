@@ -77,8 +77,17 @@ public class mostrarMedicos extends javax.swing.JPanel {
             new String [] {
                 "Numero de colegiado", "Nombre", "Apellidos", "Tiempo", "Especialidad", "Horario"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaInfo.setColumnSelectionAllowed(true);
+        tablaInfo.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaInfo);
         tablaInfo.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
