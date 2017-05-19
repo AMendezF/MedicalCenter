@@ -31,7 +31,7 @@ public class MenuGestor extends javax.swing.JPanel {
 		this.gestor = gestor;
 		this.añadirPaciente = new AñadirPaciente(gestor);
 		this.borrarPaciente = new BorrarPaciente(gestor);
-		this.gestionarPacientes = new GestionarPacientes(gestor);
+
 		this.menuDeMedico = new MenuDeMedico(gestor);
 		this.mostrarSalas = new mostrarSalas(gestor);
 	}
@@ -55,7 +55,7 @@ public class MenuGestor extends javax.swing.JPanel {
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        mostrarDatos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 51)));
+        mostrarDatos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 255), 1, true));
         mostrarDatos.setForeground(new java.awt.Color(204, 204, 255));
 
         javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);
@@ -66,7 +66,7 @@ public class MenuGestor extends javax.swing.JPanel {
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 401, Short.MAX_VALUE)
+            .addGap(0, 420, Short.MAX_VALUE)
         );
 
         menuOpciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
@@ -131,12 +131,12 @@ public class MenuGestor extends javax.swing.JPanel {
             .addGroup(menuOpcionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonGestionarPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonGestionarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonMostrarSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonBorrarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(buttonGestionarPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonGestionarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonMostrarSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonBorrarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -169,7 +169,6 @@ public class MenuGestor extends javax.swing.JPanel {
     private void buttonBorrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarPacienteActionPerformed
 		borrarPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		borrarPaciente.setLocation(0, 0);
-
 		mostrarDatos.removeAll();
 		mostrarDatos.add(borrarPaciente, BorderLayout.CENTER);
 		mostrarDatos.revalidate();
@@ -197,6 +196,7 @@ public class MenuGestor extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void buttonGestionarPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGestionarPacientesActionPerformed
+		gestionarPacientes = new GestionarPacientes(gestor);
 		gestionarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		gestionarPacientes.setLocation(0, 0);
 

@@ -1,6 +1,9 @@
 package GUI.Gestor.Paciente;
 
 import clases.Gestor;
+import clases.Paciente;
+import java.sql.SQLException;
+import javax.swing.DefaultComboBoxModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,10 +18,13 @@ import clases.Gestor;
 public class PedirCita extends javax.swing.JPanel {
 
 	private Gestor gestor;
+	private Paciente paciente;
 
-	public PedirCita(Gestor gestor) {
+	public PedirCita(Gestor gestor, Paciente paciente) {
 		initComponents();
 		this.gestor = gestor;
+		this.paciente = paciente;
+		//desplegableEspecialidad.setModel(new DefaultComboBoxModel(gestor.getEspecialidades()));
 	}
 
 	/**
@@ -33,13 +39,15 @@ public class PedirCita extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         mostrarDatos = new javax.swing.JPanel();
         labelTitulo = new javax.swing.JLabel();
-        labelPaciente = new javax.swing.JLabel();
         labelMedico = new javax.swing.JLabel();
         Especialidad = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
+        desplegableEspecialidad = new javax.swing.JComboBox();
+        desplegableMedico = new javax.swing.JComboBox();
         labelDia = new javax.swing.JLabel();
         labelHora = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        desplegableDia = new javax.swing.JComboBox();
+        desplegableHoras = new javax.swing.JComboBox();
 
         jLabel1.setText("jLabel1");
 
@@ -48,24 +56,27 @@ public class PedirCita extends javax.swing.JPanel {
         labelTitulo.setText("Pedir cita paciente");
         labelTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        labelPaciente.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        labelPaciente.setText("Paciente");
-
         labelMedico.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelMedico.setText("Medico");
 
         Especialidad.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         Especialidad.setText("Especialidad");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        desplegableEspecialidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        desplegableMedico.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         labelDia.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelDia.setText("Dia");
 
         labelHora.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelHora.setText("Hora");
+
+        jButton1.setText("Pedir cita");
+
+        desplegableDia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        desplegableHoras.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);
         mostrarDatos.setLayout(mostrarDatosLayout);
@@ -75,27 +86,30 @@ public class PedirCita extends javax.swing.JPanel {
                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mostrarDatosLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE))
-                    .addGroup(mostrarDatosLayout.createSequentialGroup()
                         .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelPaciente)
-                                    .addComponent(Especialidad)))
+                                .addComponent(labelMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelDia)
-                                    .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                        .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(labelMedico)
-                                            .addComponent(labelHora))
-                                        .addGap(217, 217, 217)
-                                        .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(labelDia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(mostrarDatosLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(desplegableMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(mostrarDatosLayout.createSequentialGroup()
+                                    .addComponent(Especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(66, 66, 66)
+                                    .addComponent(desplegableEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(desplegableDia, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mostrarDatosLayout.createSequentialGroup()
+                                    .addComponent(labelHora, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(desplegableHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 256, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         mostrarDatosLayout.setVerticalGroup(
@@ -104,23 +118,24 @@ public class PedirCita extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(labelPaciente)
-                .addGap(18, 18, 18)
-                .addComponent(Especialidad)
-                .addGap(33, 33, 33)
                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelMedico))
+                    .addComponent(Especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(desplegableEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(labelDia)
-                .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mostrarDatosLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mostrarDatosLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(labelHora)))
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(desplegableMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelDia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(desplegableDia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelHora, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(desplegableHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -144,13 +159,15 @@ public class PedirCita extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Especialidad;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox desplegableDia;
+    private javax.swing.JComboBox desplegableEspecialidad;
+    private javax.swing.JComboBox desplegableHoras;
+    private javax.swing.JComboBox desplegableMedico;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelDia;
     private javax.swing.JLabel labelHora;
     private javax.swing.JLabel labelMedico;
-    private javax.swing.JLabel labelPaciente;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JPanel mostrarDatos;
     // End of variables declaration//GEN-END:variables

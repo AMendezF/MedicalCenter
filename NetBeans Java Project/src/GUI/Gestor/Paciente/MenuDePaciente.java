@@ -4,6 +4,7 @@ import GUI.Gestor.Paciente.mostrarCitas;
 import clases.Gestor;
 import clases.Paciente;
 import java.awt.BorderLayout;
+import java.sql.SQLException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,15 +20,22 @@ public class MenuDePaciente extends javax.swing.JPanel {
 	/**
 	 * Creates new form MenuDePaciente
 	 */
-	private mostrarCitas mostrarCitas;
 	private Paciente paciente;
 	private Gestor gestor;
+	private mostrarCitas mostrarCitas;
+	private PedirCita pedirCita;
+	private cancelarCita cancelarCita;
+	private modificarPaciente modificarPaciente;
 
 	public MenuDePaciente(Gestor gestor, Paciente paciente) {
 		initComponents();
 		this.gestor = gestor;
 		this.paciente = paciente;
-		this.mostrarCitas = new mostrarCitas(gestor);
+		this.mostrarCitas = new mostrarCitas(gestor, paciente);
+		this.pedirCita = new PedirCita(gestor, paciente);
+		this.cancelarCita = new cancelarCita(gestor, paciente);
+		this.modificarPaciente = new modificarPaciente(gestor,paciente);
+		this.labelMenuDelPaciente.setText(paciente.getNombre() + paciente.getDNI());
 	}
 
 	/**
@@ -45,10 +53,9 @@ public class MenuDePaciente extends javax.swing.JPanel {
         buttonPedirCita = new javax.swing.JButton();
         buttonCancelarCita = new javax.swing.JButton();
         buttonModificarPaciente = new javax.swing.JButton();
-        labelPacienteActual = new javax.swing.JLabel();
         mostrarDatos = new javax.swing.JPanel();
 
-        menuOpciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 255, 153)));
+        menuOpciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
 
         buttonMostrarCitas.setText("Mostrar citas");
         buttonMostrarCitas.addActionListener(new java.awt.event.ActionListener() {
@@ -58,16 +65,30 @@ public class MenuDePaciente extends javax.swing.JPanel {
         });
 
         labelMenuDelPaciente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelMenuDelPaciente.setText("Menu del paciente:");
+        labelMenuDelPaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelMenuDelPaciente.setText("Menu del paciente");
+        labelMenuDelPaciente.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         buttonPedirCita.setText("Pedir cita");
+        buttonPedirCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPedirCitaActionPerformed(evt);
+            }
+        });
 
         buttonCancelarCita.setText("Cancelar cita");
+        buttonCancelarCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelarCitaActionPerformed(evt);
+            }
+        });
 
         buttonModificarPaciente.setText("Modificar paciente");
-
-        labelPacienteActual.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelPacienteActual.setText("Paciente");
+        buttonModificarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonModificarPacienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout menuOpcionesLayout = new javax.swing.GroupLayout(menuOpciones);
         menuOpciones.setLayout(menuOpcionesLayout);
@@ -76,41 +97,37 @@ public class MenuDePaciente extends javax.swing.JPanel {
             .addGroup(menuOpcionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelMenuDelPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(menuOpcionesLayout.createSequentialGroup()
-                        .addComponent(labelMenuDelPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(labelPacienteActual, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                        .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 92, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         menuOpcionesLayout.setVerticalGroup(
             menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuOpcionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelMenuDelPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelPacienteActual, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(labelMenuDelPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(144, Short.MAX_VALUE))
         );
-
-        mostrarDatos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
 
         javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);
         mostrarDatos.setLayout(mostrarDatosLayout);
         mostrarDatosLayout.setHorizontalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 453, Short.MAX_VALUE)
+            .addGap(0, 455, Short.MAX_VALUE)
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,13 +171,42 @@ public class MenuDePaciente extends javax.swing.JPanel {
 		mostrarDatos.repaint();
     }//GEN-LAST:event_buttonMostrarCitasActionPerformed
 
+    private void buttonPedirCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPedirCitaActionPerformed
+        pedirCita.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		pedirCita.setLocation(0, 0);
+
+		mostrarDatos.removeAll();
+		mostrarDatos.add(pedirCita, BorderLayout.CENTER);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+    }//GEN-LAST:event_buttonPedirCitaActionPerformed
+
+    private void buttonCancelarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarCitaActionPerformed
+        cancelarCita.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		cancelarCita.setLocation(0, 0);
+
+		mostrarDatos.removeAll();
+		mostrarDatos.add(cancelarCita, BorderLayout.CENTER);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+    }//GEN-LAST:event_buttonCancelarCitaActionPerformed
+
+    private void buttonModificarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonModificarPacienteActionPerformed
+        modificarPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		modificarPaciente.setLocation(0, 0);
+
+		mostrarDatos.removeAll();
+		mostrarDatos.add(modificarPaciente, BorderLayout.CENTER);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+    }//GEN-LAST:event_buttonModificarPacienteActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancelarCita;
     private javax.swing.JButton buttonModificarPaciente;
     private javax.swing.JButton buttonMostrarCitas;
     private javax.swing.JButton buttonPedirCita;
     private javax.swing.JLabel labelMenuDelPaciente;
-    private javax.swing.JLabel labelPacienteActual;
     private javax.swing.JPanel menuOpciones;
     private javax.swing.JPanel mostrarDatos;
     // End of variables declaration//GEN-END:variables

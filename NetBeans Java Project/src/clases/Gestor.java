@@ -274,9 +274,11 @@ public class Gestor {
      * @throws SQLException Devuelve error si no se pudo recuperar el paciente
      * de la BD.
      */
+	/*
     public Medico getMedico(String numColegiado) throws SQLException {
         return new Medico(numColegiado, conexion);
     }
+	*/
 
     /**
      * Sustituye un médico por otro.

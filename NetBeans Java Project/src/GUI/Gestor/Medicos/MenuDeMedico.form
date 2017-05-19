@@ -19,7 +19,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="menuOpciones" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Component id="mostrarDatos" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -30,7 +30,7 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="menuOpciones" max="32767" attributes="0"/>
+                  <Component id="menuOpciones" pref="436" max="32767" attributes="0"/>
                   <Component id="mostrarDatos" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -44,7 +44,7 @@
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder>
-              <Color PropertyName="color" blue="cc" green="0" red="cc" type="rgb"/>
+              <Color PropertyName="color" blue="ff" green="cc" red="cc" type="rgb"/>
             </LineBorder>
           </Border>
         </Property>
@@ -53,15 +53,20 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="labelMenuDelMedico" min="-2" pref="150" max="-2" attributes="0"/>
-                      <Component id="buttonMostrarMedicos" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                      <Component id="buttonAñadirMedico" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                      <Component id="buttonBorrarMedico" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="labelMenuDelMedico" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="buttonMostrarMedicos" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="buttonAñadirMedico" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="buttonBorrarMedico" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="27" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="128" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -71,12 +76,12 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="labelMenuDelMedico" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="buttonMostrarMedicos" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="buttonMostrarMedicos" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="buttonAñadirMedico" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="buttonAñadirMedico" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="buttonBorrarMedico" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace pref="219" max="32767" attributes="0"/>
+                  <Component id="buttonBorrarMedico" min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace pref="189" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -85,9 +90,10 @@
         <Component class="javax.swing.JLabel" name="labelMenuDelMedico">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="1"/>
+              <Font name="Tahoma" size="18" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Menu del medico:"/>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Menu del medico"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="buttonMostrarMedicos">
@@ -117,20 +123,11 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="mostrarDatos">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder>
-              <Color PropertyName="color" blue="0" green="ff" red="33" type="rgb"/>
-            </LineBorder>
-          </Border>
-        </Property>
-      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="438" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="440" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
