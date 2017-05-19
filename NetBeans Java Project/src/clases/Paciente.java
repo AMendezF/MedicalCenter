@@ -32,8 +32,8 @@ public class Paciente {
     PreparedStatement preparedStmt = null;
 
     /**
-     * Este guapísimo constructor inicializa el contador de citas e iguala
-	 * sus atributos a los marcados en la BD.
+     * Este guapísimo constructor inicializa el contador de citas e iguala sus
+     * atributos a los marcados en la BD.
      *
      * @param DNI
      * @param con
@@ -44,17 +44,17 @@ public class Paciente {
         this.con = con;
         Connection reg = con.getCon();
         contCitas = getContCitas();
-		String sql = "SELECT nombre, apellidos, compsegur "
-				+ "FROM centromedico.paciente WHERE dni =?;";
+        String sql = "SELECT nombre, apellidos, compsegur "
+                + "FROM centromedico.paciente WHERE dni =?;";
 
-		PreparedStatement preparedStmt = reg.prepareStatement(sql);
-		preparedStmt.setString(1, DNI);
-		ResultSet rs = preparedStmt.executeQuery();
+        PreparedStatement preparedStmt = reg.prepareStatement(sql);
+        preparedStmt.setString(1, DNI);
+        ResultSet rs = preparedStmt.executeQuery();
 
-		rs.next();
-		this.Nombre = rs.getString("paciente.nombre");
-		this.Apellidos = rs.getString("paciente.apellidos");
-		this.Seguro = rs.getString("paciente.compsegur");
+        rs.next();
+        this.Nombre = rs.getString("paciente.nombre");
+        this.Apellidos = rs.getString("paciente.apellidos");
+        this.Seguro = rs.getString("paciente.compsegur");
     }
 
     public void addCita() {
@@ -107,7 +107,7 @@ public class Paciente {
         int diaSemana = 0;
 
 //        System.out.println("Elija la especialidad: ");
-       Scanner sc = new Scanner(System.in);
+//       Scanner sc = new Scanner(System.in);
 //        PreparedStatement preparedStmt;
 //        Connection reg = con.getCon();
 //        String sql = "SELECT * FROM centromedico.especialidad ORDER BY cod_especialidad;";
@@ -128,101 +128,99 @@ public class Paciente {
 //            System.out.println(listaCodigos.get(i) + ". " + listaNombres.get(i));
 //        }
 //        codEspecialidad = sc.nextInt();
-
-        fecha1 = fecha.get(Calendar.YEAR) + "-"
-                + (fecha.get(Calendar.MONTH) + 1) + "-"
-                + fecha.get(Calendar.DAY_OF_MONTH);
-        int diaSemana1 = fecha.get(Calendar.DAY_OF_WEEK);
-
-        fecha.add(Calendar.DAY_OF_MONTH, 1);
-        fecha2 = fecha.get(Calendar.YEAR) + "-"
-                + (fecha.get(Calendar.MONTH) + 1) + "-"
-                + fecha.get(Calendar.DAY_OF_MONTH);
-        int diaSemana2 = fecha.get(Calendar.DAY_OF_WEEK);
-
-        fecha.add(Calendar.DAY_OF_MONTH, 1);
-        fecha3 = fecha.get(Calendar.YEAR) + "-"
-                + (fecha.get(Calendar.MONTH) + 1) + "-"
-                + fecha.get(Calendar.DAY_OF_MONTH);
-        int diaSemana3 = fecha.get(Calendar.DAY_OF_WEEK);
-
-        do {
-            System.out.println("Elija una fecha: ");
-
-            System.out.println("1. " + fecha1);
-            System.out.println("2. " + fecha2);
-            System.out.println("3. " + fecha3);
-            op = sc.nextInt();
-
-            if (op == 1) {
-                fechaDia = fecha1;
-                diaSemana = diaSemana1;
-            }
-            if (op == 2) {
-                fechaDia = fecha2;
-                diaSemana = diaSemana2;
-            }
-            if (op == 3) {
-                fechaDia = fecha3;
-                diaSemana = diaSemana3;
-            }
-            if (diaSemana == 1) {
-                diaSemana = 7;
-            } else {
-                diaSemana--;
-            }
-            Especialidad especialidad = new Especialidad(codEspecialidad, con);
-            int horarioDia = especialidad.getHorario(diaSemana);
-
-            do {
-                System.out.println("Elija el turno: ");
-                System.out.println("0. Elija otro día");
-                if (horarioDia == 1 || horarioDia == 3) {
-                    System.out.println("1. Mañana");
-                }
-                if (horarioDia == 2 || horarioDia == 3) {
-                    System.out.println("2. Tarde");
-                }
-                opTurno = sc.nextInt();
-                if (opTurno == 1) {
-                    turno = "Mañana";
-                }
-                if (opTurno == 2) {
-                    turno = "Tarde";
-                }
-            } while (opTurno != 1 && opTurno != 2 && opTurno != 0);
-        } while (opTurno == 0);
-        sql = "SELECT * FROM centromedico.medico WHERE horario=? AND especialidad=?;";
-        preparedStmt = reg.prepareStatement(sql);
-        preparedStmt.setString(1, turno);
-        preparedStmt.setInt(2, codEspecialidad);
-        rs = preparedStmt.executeQuery();
-        List<String> listaMedicos = new ArrayList();
-        Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
-        int j = 1;
-        while (rs.next()) {
-            listaMedicos.add(rs.getString("nombre") + " " + rs.getString("apellidos"));
-            mapa.put(j, rs.getInt("n_colegiado"));
-            j++;
-        }
-        sc.nextLine();
-        System.out.println("¿Desea elegir el médico? (S/N) ");
-        String opcionS = sc.nextLine().toUpperCase();
-        if (opcionS.equals("S")) {
-            System.out.println("Elija el médico: ");
-            for (int i = 0; i < listaMedicos.size(); i++) {
-                System.out.println((i + 1) + ". " + listaMedicos.get(i));
-                op = sc.nextInt();
-            }
-        } else if (opcionS.equals("N")) {
-            op = 1;
-        }
-        codMedico = mapa.get(op);
-
-        Medico medico = new Medico(codMedico, con);
-
-        this.pedirConsulta(medico, fechaDia);
-
+//        fecha1 = fecha.get(Calendar.YEAR) + "-"
+//                + (fecha.get(Calendar.MONTH) + 1) + "-"
+//                + fecha.get(Calendar.DAY_OF_MONTH);
+//        int diaSemana1 = fecha.get(Calendar.DAY_OF_WEEK);
+//
+//        fecha.add(Calendar.DAY_OF_MONTH, 1);
+//        fecha2 = fecha.get(Calendar.YEAR) + "-"
+//                + (fecha.get(Calendar.MONTH) + 1) + "-"
+//                + fecha.get(Calendar.DAY_OF_MONTH);
+//        int diaSemana2 = fecha.get(Calendar.DAY_OF_WEEK);
+//
+//        fecha.add(Calendar.DAY_OF_MONTH, 1);
+//        fecha3 = fecha.get(Calendar.YEAR) + "-"
+//                + (fecha.get(Calendar.MONTH) + 1) + "-"
+//                + fecha.get(Calendar.DAY_OF_MONTH);
+//        int diaSemana3 = fecha.get(Calendar.DAY_OF_WEEK);
+//
+//        do {
+//            System.out.println("Elija una fecha: ");
+//
+//            System.out.println("1. " + fecha1);
+//            System.out.println("2. " + fecha2);
+//            System.out.println("3. " + fecha3);
+//            op = sc.nextInt();
+//
+//            if (op == 1) {
+//                fechaDia = fecha1;
+//                diaSemana = diaSemana1;
+//            }
+//            if (op == 2) {
+//                fechaDia = fecha2;
+//                diaSemana = diaSemana2;
+//            }
+//            if (op == 3) {
+//                fechaDia = fecha3;
+//                diaSemana = diaSemana3;
+//            }
+//            if (diaSemana == 1) {
+//                diaSemana = 7;
+//            } else {
+//                diaSemana--;
+//            }
+//            Especialidad especialidad = new Especialidad(codEspecialidad, con);
+//            int horarioDia = especialidad.getHorario(diaSemana);
+//
+//            do {
+//                System.out.println("Elija el turno: ");
+//                System.out.println("0. Elija otro día");
+//                if (horarioDia == 1 || horarioDia == 3) {
+//                    System.out.println("1. Mañana");
+//                }
+//                if (horarioDia == 2 || horarioDia == 3) {
+//                    System.out.println("2. Tarde");
+//                }
+//                opTurno = sc.nextInt();
+//                if (opTurno == 1) {
+//                    turno = "Mañana";
+//                }
+//                if (opTurno == 2) {
+//                    turno = "Tarde";
+//                }
+//            } while (opTurno != 1 && opTurno != 2 && opTurno != 0);
+//        } while (opTurno == 0);
+//        sql = "SELECT * FROM centromedico.medico WHERE horario=? AND especialidad=?;";
+//        preparedStmt = reg.prepareStatement(sql);
+//        preparedStmt.setString(1, turno);
+//        preparedStmt.setInt(2, codEspecialidad);
+//        rs = preparedStmt.executeQuery();
+//        List<String> listaMedicos = new ArrayList();
+//        Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
+//        int j = 1;
+//        while (rs.next()) {
+//            listaMedicos.add(rs.getString("nombre") + " " + rs.getString("apellidos"));
+//            mapa.put(j, rs.getInt("n_colegiado"));
+//            j++;
+//        }
+//        sc.nextLine();
+//        System.out.println("¿Desea elegir el médico? (S/N) ");
+//        String opcionS = sc.nextLine().toUpperCase();
+//        if (opcionS.equals("S")) {
+//            System.out.println("Elija el médico: ");
+//            for (int i = 0; i < listaMedicos.size(); i++) {
+//                System.out.println((i + 1) + ". " + listaMedicos.get(i));
+//                op = sc.nextInt();
+//            }
+//        } else if (opcionS.equals("N")) {
+//            op = 1;
+//        }
+//        codMedico = mapa.get(op);
+//
+//        Medico medico = new Medico(codMedico, con);
+//
+//        this.pedirConsulta(medico, fechaDia);
     }
 
     private void pedirConsulta(Medico med, String dia) throws SQLException {
@@ -267,14 +265,14 @@ public class Paciente {
         med.addCita(mapa.get(cadena), dia, getDNI(), getContCitas()); // 
         addCita();
     }
-	
-	/**
-	 * Devuelve el número de citas donde aparece el Paciente.
-	 * TODO: QUE SEAN CITAS PENDIENTEEEES
-	 * 
-	 * @return
-	 * @throws SQLException 
-	 */
+
+    /**
+     * Devuelve el número de citas donde aparece el Paciente. TODO: QUE SEAN
+     * CITAS PENDIENTEEEES
+     *
+     * @return
+     * @throws SQLException
+     */
     public int getContCitas() throws SQLException {
         Connection reg = con.getCon();
         String sql = "SELECT COUNT(*) AS cuenta FROM centromedico.citas WHERE paciente=? ;";
@@ -289,13 +287,13 @@ public class Paciente {
         return contCitas;
     }
 
-	/**
-	 * Devuelve si el paciente tiene citas pendientes o no.
-	 * WWOOOOOOOOOOWWWW!!!     ;)    
-	 * 
-	 * @return
-	 * @throws SQLException 
-	 */
+    /**
+     * Devuelve si el paciente tiene citas pendientes o no. WWOOOOOOOOOOWWWW!!!
+     * ;)
+     *
+     * @return
+     * @throws SQLException
+     */
     public boolean tieneCitas() throws SQLException {
         boolean tieneCitas = false;
         if (this.getContCitas() > 0) {
@@ -303,7 +301,7 @@ public class Paciente {
         }
         return tieneCitas;
     }
-	
+
     private String tieneSeguro() {
         if (this.Seguro == "NULL" || this.Seguro == "null") {
             return "No tiene seguro";

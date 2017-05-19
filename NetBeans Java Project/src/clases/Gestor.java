@@ -3,8 +3,6 @@ package clases;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -58,7 +56,7 @@ public class Gestor {
         especialidades = getEspecialidades();
         for (String especialidad : especialidades) {
             sql = "SELECT c.hora, c.paciente, m.nombre, m.apellidos "
-                    + "FROM citas c, medico m, especialidad e "
+                    + "FROM centromedico.citas c, centromedico.medico m, centromedico.especialidad e "
                     + "WHERE e.nombre='" + especialidad + "' "
                     + "AND c.especialidad=e.cod_especialidad "
                     + "AND c.medico=m.n_colegiado "
@@ -105,7 +103,7 @@ public class Gestor {
         especialidades = getEspecialidades();
         for (String especialidad : especialidades) {
             sql = "SELECT c.hora, c.paciente, m.nombre, m.apellidos "
-                    + "FROM citas c, medico m, especialidad e "
+                    + "FROM centromedico.citas c, centromedico.medico m, centromedico.especialidad e "
                     + "WHERE e.nombre='" + especialidad + "' "
                     + "AND c.especialidad=e.cod_especialidad "
                     + "AND c.medico=m.n_colegiado "
@@ -284,12 +282,11 @@ public class Gestor {
      * @throws SQLException Devuelve error si no se pudo recuperar el paciente
      * de la BD.
      */
-	/*
+    /*
     public Medico getMedico(String numColegiado) throws SQLException {
         return new Medico(Integer.parseInt(numColegiado), conexion);
     }
-	*/
-
+     */
     /**
      * Sustituye un médico por otro.
      *

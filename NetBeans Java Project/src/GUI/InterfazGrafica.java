@@ -54,6 +54,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         textFieldUser = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1280, 720));
 
         labelTitulo.setFont(new java.awt.Font("Calibri", 3, 48)); // NOI18N
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
