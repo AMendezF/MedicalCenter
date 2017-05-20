@@ -46,12 +46,11 @@ public class Gestor {
      * SQL.
      */
     public String mostrarAgendaMatinal(String fecha) throws SQLException {
-        String agenda = "";
+        String agenda = "--------------------------MAÑANA--------------------------\n";
         String[] especialidades;
         String sql;
         ResultSet resultSet;
 
-        boolean tieneEspecialidadSala; // Chapuzilla para asignar sala
         int numSala = 0; // Parte de la chapuzilla
 
         especialidades = getEspecialidades();
@@ -66,20 +65,29 @@ public class Gestor {
                     + "ORDER BY c.hora";
             resultSet = conexion.makeQuery(sql);
 
-            tieneEspecialidadSala = false;
-            while (resultSet.next()) {
-                if (!tieneEspecialidadSala) {
-                    numSala++;
-                    agenda += "Sala " + numSala + ": " + especialidad + "\n";
-                    tieneEspecialidadSala = true;
-                }
-                agenda += "    " + resultSet.getString("hora") + " "
-                        + "DNI: " + resultSet.getString("paciente") + " "
-                        + "con el médico: "
-                        + resultSet.getString("nombre") + " "
-                        + resultSet.getString("apellidos") + "\n";
+            if (resultSet.next()) {
+                numSala++;
+                agenda += "Sala " + numSala + ": " + especialidad + "\n";
+
+                do {
+                    agenda += "    " + resultSet.getString("hora") + " "
+                            + "DNI: "
+                            + resultSet.getString("paciente") + " "
+                            + "Médico: "
+                            + resultSet.getString("nombre") + " "
+                            + resultSet.getString("apellidos") + "\n";
+                } while (resultSet.next());
             }
         }
+
+        if (numSala == 0) {
+            agenda += "\n"
+                    + "                          "
+                    + "(NADA)"
+                    + "                          "
+                    + "\n\n";
+        }
+        agenda += "--------------------------______--------------------------\n";
         return agenda;
     }
 
@@ -93,12 +101,11 @@ public class Gestor {
      * SQL.
      */
     public String mostrarAgendaVespertina(String fecha) throws SQLException {
-        String agenda = "";
+        String agenda = "--------------------------TARDE---------------------------\n";
         String[] especialidades;
         String sql;
         ResultSet resultSet;
 
-        boolean tieneEspecialidadSala; // Chapuzilla para asignar sala
         int numSala = 0; // Parte de la chapuzilla
 
         especialidades = getEspecialidades();
@@ -113,20 +120,29 @@ public class Gestor {
                     + "ORDER BY c.hora";
             resultSet = conexion.makeQuery(sql);
 
-            tieneEspecialidadSala = false;
-            while (resultSet.next()) {
-                if (!tieneEspecialidadSala) {
-                    numSala++;
-                    agenda += "Sala " + numSala + ": " + especialidad + "\n";
-                    tieneEspecialidadSala = true;
-                }
-                agenda += "    " + resultSet.getString("hora") + " "
-                        + "DNI: " + resultSet.getString("paciente") + " "
-                        + "con el médico: "
-                        + resultSet.getString("nombre") + " "
-                        + resultSet.getString("apellidos") + "\n";
+            if (resultSet.next()) {
+                numSala++;
+                agenda += "Sala " + numSala + ": " + especialidad + "\n";
+
+                do {
+                    agenda += "    " + resultSet.getString("hora") + " "
+                            + "DNI: "
+                            + resultSet.getString("paciente") + " "
+                            + "Médico: "
+                            + resultSet.getString("nombre") + " "
+                            + resultSet.getString("apellidos") + "\n";
+                } while (resultSet.next());
             }
         }
+
+        if (numSala == 0) {
+            agenda += "\n"
+                    + "                          "
+                    + "(NADA)"
+                    + "                          "
+                    + "\n\n";
+        }
+        agenda += "--------------------------______--------------------------\n";
         return agenda;
     }
 
@@ -194,8 +210,9 @@ public class Gestor {
         String sql;
         ResultSet listaMedicos;
 
-        sql = "SELECT * "
-                + "FROM centromedico.medico";
+        sql = "SELECT m.n_colegiado, m.nombre, m.apellidos, m.horario, e.nombre "
+                + "FROM centromedico.medico m, centromedico.especialidad e "
+                + "WHERE e.cod_especialidad=m.especialidad ";
         listaMedicos = this.conexion.makeQuery(sql);
 
         return listaMedicos;

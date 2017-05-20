@@ -296,7 +296,7 @@ public class Conexion {
 
         String crearHorarioLunes = "CREATE TABLE IF NOT EXISTS centromedico.`horario_lunes` ("
                 + "`Cod_especialidad` int(11) NOT NULL, "
-                + "`Horario` varchar(14) NOT NULL,"
+                + "`Horario` varchar(14) NOT NULL, "
                 + "KEY `horario01` (`Cod_especialidad`))";
         makeExecute(crearHorarioLunes);
 
