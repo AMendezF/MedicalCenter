@@ -3,6 +3,7 @@ package clases;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -130,7 +131,7 @@ public class Gestor {
     }
 
     /**
-     * Obtiene todas las especialidades por nombre, que contiene la BD.
+     * Muestra todas las especialidades por nombre, que contiene la BD.
      *
      * @return String[] que contiene cada una de las especialidades.
      * @throws SQLException Devuelve error si no se pudo realizar la consulta
@@ -152,9 +153,40 @@ public class Gestor {
     }
 
     /**
+     * Devuelve los turnos del horario de una especialidad en un día de la
+     * semana.
+     *
+     * @param especialidad Nombre de la especialidad de la que se desea obtener
+     * su horario.
+     * @param diaDeLaSemana Día de la semana de la que se desea obtener su
+     * horario. Ej. "Lunes".
+     * @return Retorna los turnos para ese día.
+     * @throws SQLException Devuelve error si no se pudo obtener el horario de
+     * la especialidad de la BD.
+     */
+    public String[] getHorarioEspecialidadByDay(String especialidad, String diaDeLaSemana) throws SQLException {
+        List<String> horario = new ArrayList<String>();
+        String sql;
+        ResultSet resultSet;
+
+        sql = "SELECT d.horario "
+                + "FROM centromedico.horario_" + diaDeLaSemana + " d, centromedico.especialidad e "
+                + "WHERE d.cod_especialidad=e.cod_especialidad "
+                + "AND e.nombre='" + especialidad + "' "
+                + "ORDER BY d.horario";
+        resultSet = conexion.makeQuery(sql);
+
+        while (resultSet.next()) {
+            horario.add(resultSet.getString(1));
+        }
+
+        return horario.toArray(new String[horario.size()]);
+    }
+
+    /**
      * Devuelve todos los médicos que contiene la base de datos.
      *
-     * @return Retorna el valor de la consulta SQL.
+     * @return Retorna un objeto ResultSet con el valor de la consulta SQL.
      * @throws SQLException Devuelve error si no se pudo realizar la consulta
      * SQL.
      */
@@ -167,6 +199,29 @@ public class Gestor {
         listaMedicos = this.conexion.makeQuery(sql);
 
         return listaMedicos;
+    }
+
+    /**
+     * Devuelve los médicos de una especialidad en un turno.
+     *
+     * @param especialidad Especialidad de la que se quiere obtener los médicos.
+     * @param horario Turno del que se quiere obtener los médicos.
+     * @return Retorna un objeto ResultSet con el valor de la consulta SQL.
+     * @throws SQLException Devuelve error si no se puderon obtener los médicos,
+     * de la especialidad y en el horario deseados, de la BD.
+     */
+    public ResultSet mostrarMedicosByHorarioEspecialidad(String especialidad, String horario) throws SQLException {
+        String sql;
+        ResultSet resultSet;
+
+        sql = "SELECT m.n_colegiado, m.nombre, m.apellidos "
+                + "FROM centromedico.medico m, centromedico.especialidad e "
+                + "WHERE e.cod_especialidad=m.especialidad "
+                + "AND e.nombre='" + especialidad + "' "
+                + "AND m.horario='" + horario + "'";
+        resultSet = conexion.makeQuery(sql);
+
+        return resultSet;
     }
 
     /**
@@ -282,11 +337,32 @@ public class Gestor {
      * @throws SQLException Devuelve error si no se pudo recuperar el paciente
      * de la BD.
      */
-    /*
     public Medico getMedico(String numColegiado) throws SQLException {
         return new Medico(Integer.parseInt(numColegiado), conexion);
     }
+
+    /**
+     * Devuelve todas las horas que tiene disponibles, de consulta, un médico en
+     * una fecha y para una especialidad en concreto.
+     *
+     * @param fecha Formato de fecha: "yy-mm-dd"
+     * @param especialidad Especialidad de la que se desea obtener las consultas
+     * disponibles.
+     * @param horario Turno en el que se desea conocer las consultas disponibles
+     * del médico.
+     * @param numColegiado Número identificativo del médico del que se desea
+     * conocer las consultas disponibles.
+     * @return Retorna las horas de las consultas disponibles, dentro del turno
+     * indicado, de un médico perteneciente a una especialidad.
+     * @throws SQLException Devuelve error si no se pudo realizar la consulta
+     * SQL.
      */
+    public String[] getConsultasMedico(String fecha, String especialidad, String horario, String numColegiado) throws SQLException {
+        Medico medico = getMedico(numColegiado);
+
+        return medico.getConsultasDisponibles(fecha, especialidad, horario);
+    }
+
     /**
      * Sustituye un médico por otro.
      *
@@ -353,7 +429,7 @@ public class Gestor {
     /**
      * Devuelve todos los pacientes que contiene la base de datos.
      *
-     * @return Retorna el valor de la consulta SQL.
+     * @return Retorna un objeto ResultSet con el valor de la consulta SQL.
      * @throws SQLException Devuelve error si no se pudo realizar la consulta
      * SQL.
      */
@@ -372,7 +448,7 @@ public class Gestor {
     /**
      * Devuelve todos los pacientes borrados que contiene la base de datos.
      *
-     * @return Retorna el valor de la consulta SQL.
+     * @return Retorna un objeto ResultSet con el valor de la consulta SQL.
      * @throws SQLException Devuelve error si no se pudo realizar la consulta
      * SQL.
      */
@@ -391,7 +467,7 @@ public class Gestor {
     /**
      * Devuelve todos los pacientes que contiene la base de datos.
      *
-     * @return Retorna el valor de la consulta SQL.
+     * @return Retorna un objeto ResultSet con el valor de la consulta SQL.
      * @throws SQLException Devuelve error si no se pudo realizar la consulta
      * SQL.
      */
@@ -634,19 +710,6 @@ public class Gestor {
         return esTexto;
     }
 
-//    public String[] getHorarioEspecialidadByDay(String diaDeLaSemana) {
-//        throw new UnsupportedOperationException("TODO");
-//    }
-//
-//    public ResultSet getMedicosByHorarioEspecialidad(String diaDeLaSemana, String especialidad, String horario) {
-//        throw new UnsupportedOperationException("TODO");
-//    }
-//
-//    public String[] getConsultasMedico(String fecha, String especialidad, String horario, String codMedico) throws SQLException {
-//        Medico medico = getMedico(codMedico);
-//        throw new UnsupportedOperationException("TODO");
-//        return medico.getConsultasDisponibles(String fecha, String especialidad, String horario);
-//    }
 //    /**
 //     * Elimina una cita de un paciente.
 //     *
