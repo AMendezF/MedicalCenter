@@ -18,26 +18,28 @@ TODO: 1- IMPLEMENTAR METODOS DE INTERFAZ "MenuDePaciente" orientado a interfaz
  */
 public class Paciente {
 
-    private String DNI;
-    private String Nombre;
-    private String Apellidos;
-    private String Seguro;
+    private String dni;
+    private String nombre;
+    private String apellidos;
+    private String telefono;
+    private String direccion;
+    private String seguro;
     private Conexion con;
     PreparedStatement preparedStmt = null;
 
     /**
-     * Este guapísimo constructor inicializa el contador de citas e iguala sus
-     * atributos a los marcados en la BD.
+     * Este guapísimo constructor retira de la BD el paciente con el DNI 
+     * proporcionado para cargar los atributos con los datos de la BD
      *
      * @param DNI
      * @param con
      * @throws SQLException
      */
     public Paciente(String DNI, Conexion con) throws SQLException {
-        this.DNI = DNI;
+        this.dni = DNI;
         this.con = con;
         Connection reg = con.getCon();
-        String sql = "SELECT nombre, apellidos, compsegur "
+        String sql = "SELECT nombre, apellidos, compsegur, telefono, direccion "
                 + "FROM centromedico.paciente WHERE dni =?;";
 
         PreparedStatement preparedStmt = reg.prepareStatement(sql);
@@ -45,9 +47,11 @@ public class Paciente {
         ResultSet rs = preparedStmt.executeQuery();
 
         rs.next();
-        this.Nombre = rs.getString("paciente.nombre");
-        this.Apellidos = rs.getString("paciente.apellidos");
-        this.Seguro = rs.getString("paciente.compsegur");
+        this.nombre = rs.getString("paciente.nombre");
+        this.apellidos = rs.getString("paciente.apellidos");
+        this.telefono = rs.getString("paciente.telefono");
+        this.direccion = rs.getString("paciente.direccion");
+        this.seguro = rs.getString("paciente.compsegur");
     }
 
     /**
@@ -60,9 +64,24 @@ public class Paciente {
         Connection reg = this.con.getCon();
         String sql = "SELECT * FROM centromedico.citas WHERE (Dia>"
                 + this.getDia() + " OR (Dia=" + this.getDia() + " AND Hora>"
-                + this.getHora() + ")) AND Paciente='" + this.DNI + "';";
-        PreparedStatement preparedStmt = reg.prepareStatement(sql);
-        ResultSet rs = preparedStmt.executeQuery();
+                + this.getHora() + ")) AND Paciente='" + this.dni + "';";
+        ResultSet rs = reg.prepareStatement(sql).executeQuery();
+
+        return rs;
+    }
+
+    /**
+     * Devuelve las citas pasadas de fecha del paciente.
+     *
+     * @return
+     * @throws SQLException
+     */
+    public ResultSet mostrarCitasPasadas() throws SQLException {
+        Connection reg = this.con.getCon();
+        String sql = "SELECT * FROM centromedico.citas WHERE (Dia<"
+                + this.getDia() + " OR (Dia=" + this.getDia() + " AND Hora<"
+                + this.getHora() + ")) AND Paciente='" + this.dni + "';";
+        ResultSet rs = reg.prepareStatement(sql).executeQuery();
 
         return rs;
     }
@@ -91,31 +110,39 @@ public class Paciente {
     }
 
     private String tieneSeguro() {
-        if ("NULL".equals(this.Seguro) || "null".equals(this.Seguro)) {
+        if ("NULL".equals(this.seguro) || "null".equals(this.seguro)) {
             return "No tiene seguro";
         } else {
-            return this.Seguro;
+            return this.seguro;
         }
     }
 
     @Override
     public String toString() {
-        return this.DNI + " - " + this.Nombre + " - " + this.Apellidos + "; " + tieneSeguro() + ".";
+        return this.dni + " - " + this.nombre + " - " + this.apellidos + "; " + tieneSeguro() + ".";
     }
 
     public String getDNI() {
-        return DNI;
+        return dni;
     }
 
     public String getNombre() {
-        return this.Nombre;
+        return this.nombre;
     }
 
     public String getApellidos() {
-        return this.Apellidos;
+        return this.apellidos;
+    }
+
+    public String getTelefono() {
+        return this.telefono;
+    }
+
+    public String getDireccion() {
+        return this.direccion;
     }
 
     public String getSeguro() {
-        return this.Seguro;
+        return this.seguro;
     }
 }
