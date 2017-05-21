@@ -103,8 +103,8 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(160, 160, 160)
                         .addComponent(BotonMostrar))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,7 +132,6 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
         try {
             ResultSet rs = medico.mostrarCitasMedico();
             TableAdaptor aux = new TableAdaptor(rs);
-            System.out.println("Prueba: " + aux.getValue().getColumnName(0));
             setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
             tablaInfo.setModel(tabla);
