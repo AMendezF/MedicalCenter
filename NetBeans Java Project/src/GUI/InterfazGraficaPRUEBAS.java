@@ -170,7 +170,7 @@ public class InterfazGraficaPRUEBAS extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pack();
+        setBounds(0, 0, 1159, 603);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
