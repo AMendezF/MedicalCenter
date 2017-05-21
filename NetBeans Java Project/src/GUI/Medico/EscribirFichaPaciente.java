@@ -23,6 +23,8 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
      * Creates new form escribirFicha
      */
     private Medico medico;
+    private String nDNI = null;
+    private String cCita = null;
     private TableRowSorter trsFiltro;
     private DefaultTableModel tabla;
     private String[] columnas;
@@ -297,15 +299,22 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
         if (row >= 0 && col >= 0) {
             campoNombre.setText((String) tablaInfo.getValueAt(row, 1) + ", "
                     + (String) tablaInfo.getValueAt(row, 2));
-            campoDNI.setText((String) tablaInfo.getValueAt(row, 6));
-            campoCita.setText((String) tablaInfo.getValueAt(row, 0));
+            nDNI = (String) tablaInfo.getValueAt(row, 6);
+            cCita = (String) tablaInfo.getValueAt(row, 0);
+            campoDNI.setText(nDNI);
+            campoCita.setText(cCita);
             pacienteSeleccionado = true;
         }
     }//GEN-LAST:event_tablaInfoMousePressed
 
     private void buttonEscribirDiagnosticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEscribirDiagnosticoActionPerformed
         if (pacienteSeleccionado) {
-            System.out.println(comentarioTextArea.getText());
+            try {
+                System.out.println(comentarioTextArea.getText());
+                medico.escribirFichaPaciente(nDNI, cCita, comentarioTextArea.getText());
+            } catch (SQLException ex) {
+                Logger.getLogger(EscribirFichaPaciente.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             Errortext.setText("** No se ha seleccionado correctamente un paciente.");
         }
