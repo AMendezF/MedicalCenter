@@ -262,7 +262,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="textFieldBuscar" min="-2" pref="150" max="-2" attributes="0"/>
                           <EmptySpace pref="141" max="32767" attributes="0"/>
-                          <Component id="mostrar" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="actualizarDatos" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -277,7 +277,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="desplegableColumnas" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="textFieldBuscar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="mostrar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="actualizarDatos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane4" pref="425" max="32767" attributes="0"/>
@@ -363,12 +363,12 @@
             <Property name="verticalAlignment" type="int" value="1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="mostrar">
+        <Component class="javax.swing.JButton" name="actualizarDatos">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Mostrar datos"/>
+            <Property name="text" type="java.lang.String" value="Actualizar datos"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mostrarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="actualizarDatosActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

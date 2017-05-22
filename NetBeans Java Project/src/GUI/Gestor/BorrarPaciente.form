@@ -70,11 +70,11 @@
                                   </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="mostrarActivos" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="actualizarActivos" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="fieldBorrar" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="buttonBorrar" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="buttonExportar" min="-2" pref="150" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
@@ -97,8 +97,8 @@
                   <Component id="jScrollPane4" pref="355" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="mostrarActivos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="buttonBorrar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="actualizarActivos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="buttonExportar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="fieldBorrar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -160,20 +160,20 @@
             <Property name="verticalAlignment" type="int" value="1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="mostrarActivos">
+        <Component class="javax.swing.JButton" name="actualizarActivos">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Mostrar datos"/>
+            <Property name="text" type="java.lang.String" value="Actualizar datos"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mostrarActivosActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="actualizarActivosActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="buttonBorrar">
+        <Component class="javax.swing.JButton" name="buttonExportar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Borrar"/>
+            <Property name="text" type="java.lang.String" value="Exportar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonBorrarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonExportarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="fieldBorrar">
@@ -202,11 +202,11 @@
                       <Component id="jScrollPane5" pref="647" max="32767" attributes="0"/>
                       <Component id="labelInactivos" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="buttonReinsertar" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="buttonImportar" min="-2" pref="150" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="fieldReinsertar" min="-2" pref="150" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="mostrarInactivos" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="actualizarInactivos" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="desplegableInactivos" min="-2" pref="150" max="-2" attributes="0"/>
@@ -232,8 +232,8 @@
                   <Component id="jScrollPane5" pref="358" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="mostrarInactivos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="buttonReinsertar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="actualizarInactivos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="buttonImportar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="fieldReinsertar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -295,20 +295,20 @@
             <Property name="verticalAlignment" type="int" value="1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="mostrarInactivos">
+        <Component class="javax.swing.JButton" name="actualizarInactivos">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Mostrar datos"/>
+            <Property name="text" type="java.lang.String" value="Actualizar datos"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mostrarInactivosActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="actualizarInactivosActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="buttonReinsertar">
+        <Component class="javax.swing.JButton" name="buttonImportar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Reinsertar"/>
+            <Property name="text" type="java.lang.String" value="Importar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonReinsertarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonImportarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="fieldReinsertar">

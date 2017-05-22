@@ -29,11 +29,13 @@ public class AñadirPaciente extends javax.swing.JPanel {
 	private Gestor gestor;
 	private Paciente paciente;
 	private TableRowSorter trsFiltro;
+	private DefaultTableModel tabla;
 	private String[] columnas;
 
 	public AñadirPaciente(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		actualizarDatos();
 	}
 
 	/**
@@ -69,7 +71,7 @@ public class AñadirPaciente extends javax.swing.JPanel {
         textFieldBuscar = new javax.swing.JTextField();
         desplegableColumnas = new javax.swing.JComboBox();
         labelPacientesExistentes = new javax.swing.JLabel();
-        mostrar = new javax.swing.JButton();
+        actualizarDatos = new javax.swing.JButton();
 
         tituloPaciente.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         tituloPaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -242,10 +244,10 @@ public class AñadirPaciente extends javax.swing.JPanel {
         labelPacientesExistentes.setText("Pacientes existentes");
         labelPacientesExistentes.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        mostrar.setText("Mostrar datos");
-        mostrar.addActionListener(new java.awt.event.ActionListener() {
+        actualizarDatos.setText("Actualizar datos");
+        actualizarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mostrarActionPerformed(evt);
+                actualizarDatosActionPerformed(evt);
             }
         });
 
@@ -265,7 +267,7 @@ public class AñadirPaciente extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
-                        .addComponent(mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(actualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         mostrarPacientesExistentesLayout.setVerticalGroup(
             mostrarPacientesExistentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,7 +278,7 @@ public class AñadirPaciente extends javax.swing.JPanel {
                 .addGroup(mostrarPacientesExistentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(actualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                 .addContainerGap())
@@ -323,19 +325,29 @@ public class AñadirPaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_textFieldBuscarKeyTyped
 
 	/**
-	 * Muestra los pacientes en la jTable para el usuario
-	 *
-	 * @param evt
+	 * Carga un resulSet y lo muestra en la tabla
 	 */
-    private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
+	private void actualizarDatos() {
 		try {
 			ResultSet rs = gestor.mostrarPacientesTodos();
-			tablaInfo.setModel(buildTableModel(rs));
+			TableAdaptor aux = new TableAdaptor(rs);
+			setTabla(aux.getValue());
+			DefaultTableModel tabla = getTabla();
+			tablaInfo.setModel(tabla);
 			cargarDesplegables();
 		} catch (SQLException ex) {
 			Logger.getLogger(AñadirPaciente.class.getName()).log(Level.SEVERE, null, ex);
 		}
-    }//GEN-LAST:event_mostrarActionPerformed
+	}
+
+	/**
+	 * Muestra los pacientes en la jTable para el usuario
+	 *
+	 * @param evt
+	 */
+    private void actualizarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarDatosActionPerformed
+		actualizarDatos();
+    }//GEN-LAST:event_actualizarDatosActionPerformed
 
 	/**
 	 * Recoge la informacion del formulario y lo añade a la base de datos
@@ -343,37 +355,37 @@ public class AñadirPaciente extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void buttonAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirPacienteActionPerformed
-        Object[] options = {"Si", "No"};
-        int confirmar;
+		Object[] options = {"Si", "No"};
+		int confirmar;
 
-        if (gestor.comprobarDNI(dni.getText())) {
-            if (gestor.esTexto(nombre.getText()) && gestor.esTexto(apellidos.getText())) {
-                try {
-                    if (!gestor.existePaciente(dni.getText())) {
-                        confirmar = JOptionPane.showOptionDialog(this, "Se va ha crear el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-                        // Confirmar devuelve un 0 si quiere confirmarlo
-                        //devuelve un 1 si no lo confirma
-                        if (confirmar == 0) {
-                            String[] paciente = {dni.getText(), nombre.getText(), apellidos.getText(), compSeguro.getText()};
-                            if (gestor.addPaciente(paciente)) {
-                                JOptionPane.showMessageDialog(this, "Se ha añadido el paciente con DNI " + dni.getText());
-                            } else {
-                                JOptionPane.showMessageDialog(this, "No se ha podido añadir", "Error", JOptionPane.ERROR_MESSAGE);
-                            }
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "El dni ya esta en uso", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, "Hubo problemas al consultar la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Algun campo esta vacio o es erróneo", "Cuidado!", JOptionPane.WARNING_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "El dni no es correcto", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        System.out.println(dni.getText() + "" + nombre.getText() + "" + apellidos.getText() + "" + compSeguro.getText());
+		if (gestor.comprobarDNI(dni.getText())) {
+			if (gestor.esTexto(nombre.getText()) && gestor.esTexto(apellidos.getText())) {
+				try {
+					if (!gestor.existePaciente(dni.getText())) {
+						confirmar = JOptionPane.showOptionDialog(this, "Se va ha crear el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+						// Confirmar devuelve un 0 si quiere confirmarlo
+						//devuelve un 1 si no lo confirma
+						if (confirmar == 0) {
+							String[] paciente = {dni.getText(), nombre.getText(), apellidos.getText(), compSeguro.getText()};
+							if (gestor.addPaciente(paciente)) {
+								JOptionPane.showMessageDialog(this, "Se ha añadido el paciente con DNI " + dni.getText());
+							} else {
+								JOptionPane.showMessageDialog(this, "No se ha podido añadir", "Error", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					} else {
+						JOptionPane.showMessageDialog(this, "El dni ya esta en uso", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (SQLException ex) {
+					JOptionPane.showMessageDialog(this, "Hubo problemas al consultar la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Algun campo esta vacio o es erróneo", "Cuidado!", JOptionPane.WARNING_MESSAGE);
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "El dni no es correcto", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+		System.out.println(dni.getText() + "" + nombre.getText() + "" + apellidos.getText() + "" + compSeguro.getText());
     }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
 
 	/**
@@ -382,13 +394,13 @@ public class AñadirPaciente extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void apellidosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apellidosKeyReleased
-        if (apellidos.getText().equals("")) {
-           apellidoOK.setForeground(Color.red);
-            apellidoOK.setText("Vacio!!");
-        } else if (gestor.esTexto(apellidos.getText())) {
-            apellidoOK.setForeground(Color.black);
-            apellidoOK.setText("OK!!");
-        }
+		if (apellidos.getText().equals("")) {
+			apellidoOK.setForeground(Color.red);
+			apellidoOK.setText("Vacio!!");
+		} else if (gestor.esTexto(apellidos.getText())) {
+			apellidoOK.setForeground(Color.black);
+			apellidoOK.setText("OK!!");
+		}
     }//GEN-LAST:event_apellidosKeyReleased
 
 	/**
@@ -397,13 +409,13 @@ public class AñadirPaciente extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void nombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyReleased
-        if (nombre.getText().equals("")) {
-            nombreOK.setForeground(Color.red);
-            nombreOK.setText("Vacio!!");
-        } else if (gestor.esTexto(nombre.getText())) {
-            nombreOK.setForeground(Color.black);
-            nombreOK.setText("OK!!");
-        }
+		if (nombre.getText().equals("")) {
+			nombreOK.setForeground(Color.red);
+			nombreOK.setText("Vacio!!");
+		} else if (gestor.esTexto(nombre.getText())) {
+			nombreOK.setForeground(Color.black);
+			nombreOK.setText("OK!!");
+		}
     }//GEN-LAST:event_nombreKeyReleased
 
 	/**
@@ -412,24 +424,35 @@ public class AñadirPaciente extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void dniKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dniKeyReleased
-        try {
-            if (gestor.comprobarDNI(dni.getText())) {
-                if (gestor.existePacienteBD(dni.getText())) {
-                    DNIOK.setForeground(Color.red);
-                    DNIOK.setText("Ya existe");
-                } else {
-                    DNIOK.setForeground(Color.green);
-                    DNIOK.setText("OK!!");
-                }
-            } else {
-                DNIOK.setForeground(Color.red);
-                DNIOK.setText("KO!!");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AñadirPaciente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+		try {
+			if (gestor.comprobarDNI(dni.getText())) {
+				if (gestor.existePacienteBD(dni.getText())) {
+					DNIOK.setForeground(Color.red);
+					DNIOK.setText("Ya existe");
+				} else {
+					DNIOK.setForeground(Color.green);
+					DNIOK.setText("OK!!");
+				}
+			} else {
+				DNIOK.setForeground(Color.red);
+				DNIOK.setText("KO!!");
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(AñadirPaciente.class.getName()).log(Level.SEVERE, null, ex);
+		}
     }//GEN-LAST:event_dniKeyReleased
 
+	public DefaultTableModel getTabla() {
+		return this.tabla;
+	}
+
+	public void setTabla(DefaultTableModel tabla) {
+		this.tabla = tabla;
+	}
+
+	/**
+	 * Carga el desplegable de paciente a partir de la tabla
+	 */
 	private void cargarDesplegables() {
 		int numColums = tablaInfo.getColumnCount();
 		this.columnas = new String[numColums];
@@ -444,44 +467,15 @@ public class AñadirPaciente extends javax.swing.JPanel {
 	 */
 	public void filtro() {
 		int colum = 0;
-        while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
-            colum++;
-        }
-        trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
-	}
-
-	/**
-	 * Crea el modelo de la tabla para insertarlo Podriamos sacarlo a otra clase
-	 * y organizarlo, se repite mucho este codigo
-	 *
-	 * @param rs
-	 * @return
-	 * @throws SQLException
-	 */
-	public DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
-		java.sql.ResultSetMetaData metaData = rs.getMetaData();
-
-		// names of columns
-		Vector<String> columnNames = new Vector<String>();
-		int columnCount = metaData.getColumnCount();
-		for (int column = 1; column <= columnCount; column++) {
-			columnNames.add(metaData.getColumnName(column));
+		while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
+			colum++;
 		}
-
-		// data of the table
-		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-		while (rs.next()) {
-			Vector<Object> vector = new Vector<Object>();
-			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-				vector.add(rs.getObject(columnIndex));
-			}
-			data.add(vector);
-		}
-		return new DefaultTableModel(data, columnNames);
+		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DNIOK;
+    private javax.swing.JButton actualizarDatos;
     private javax.swing.JLabel apellidoOK;
     private javax.swing.JTextField apellidos;
     private javax.swing.JPanel añadirPaciente;
@@ -498,7 +492,6 @@ public class AñadirPaciente extends javax.swing.JPanel {
     private javax.swing.JLabel labelPacientesExistentes;
     private javax.swing.JLabel labelSeguro;
     private javax.swing.JLabel labelTelefono;
-    private javax.swing.JButton mostrar;
     private javax.swing.JPanel mostrarPacientesExistentes;
     private javax.swing.JTextField nombre;
     private javax.swing.JLabel nombreOK;

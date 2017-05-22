@@ -65,6 +65,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setForeground(new java.awt.Color(0, 0, 0));
+        setPreferredSize(new java.awt.Dimension(1000, 700));
 
         labelTitulo.setFont(new java.awt.Font("Cambria", 3, 54)); // NOI18N
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -97,8 +98,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
         );
 
         labelUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelUsuario.setText("Sin usuario");
-        labelUsuario.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         iniciarSesion.setForeground(new java.awt.Color(242, 236, 190));
 
@@ -183,7 +184,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                     .addGap(40, 40, 40)))
         );
 
-        imagen.setIcon(new javax.swing.ImageIcon("F:\\MedicalCenter\\Others\\logo_redimensionado.png")); // NOI18N
+        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_redimensionado.png"))); // NOI18N
 
         javax.swing.GroupLayout iniciarSesionLayout = new javax.swing.GroupLayout(iniciarSesion);
         iniciarSesion.setLayout(iniciarSesionLayout);
@@ -206,7 +207,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        icono.setIcon(new javax.swing.ImageIcon("F:\\MedicalCenter\\Others\\logo_pequeño.png")); // NOI18N
+        icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_pequeño.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -221,7 +222,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                         .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(28, 28, 28)
                         .addComponent(bottonDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -234,10 +235,11 @@ public class InterfazGrafica extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bottonDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(icono)
-                    .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(labelUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bottonDesconectar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
