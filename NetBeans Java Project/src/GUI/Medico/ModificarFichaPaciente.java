@@ -30,11 +30,13 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     private final Medico medico;
     private TableRowSorter trsFiltro;
     private DefaultTableModel tabla;
+    private int codHistoria = 0;
     private String[] columnas;
 
     public ModificarFichaPaciente(Medico medico) {
         initComponents();
         this.medico = medico;
+        mostrarDatos();
     }
 
     /**
@@ -52,6 +54,7 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
         tablaInfo = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         BotonMostrar = new javax.swing.JButton();
+        BotonModificarHisto = new javax.swing.JButton();
 
         addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
@@ -73,6 +76,11 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
 
             }
         ));
+        tablaInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tablaInfoMousePressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(tablaInfo);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -86,6 +94,15 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
             }
         });
 
+        BotonModificarHisto.setText("Ver Fichas");
+        BotonModificarHisto.setActionCommand("MostrarPacientesMedico");
+        BotonModificarHisto.setEnabled(false);
+        BotonModificarHisto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonModificarHistoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,17 +110,19 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(BotonMostrar))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(BotonMostrar)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BotonModificarHisto, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -118,7 +137,9 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(BotonMostrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BotonMostrar)
+                    .addComponent(BotonModificarHisto))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -128,9 +149,12 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_desplegableColumnasActionPerformed
 
     private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
+        mostrarDatos();
+    }//GEN-LAST:event_BotonMostrarActionPerformed
 
+    private void mostrarDatos() {
         try {
-            ResultSet rs = medico.mostrarCitasMedico();
+            ResultSet rs = medico.mostrarHistoriales();
             TableAdaptor aux = new TableAdaptor(rs);
             setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
@@ -144,11 +168,24 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(ModificarFichaPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_BotonMostrarActionPerformed
-
+    }
+    
     private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_formComponentAdded
+
+    private void BotonModificarHistoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonModificarHistoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BotonModificarHistoActionPerformed
+
+    private void tablaInfoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInfoMousePressed
+        int row = tablaInfo.rowAtPoint(evt.getPoint());
+        int col = tablaInfo.columnAtPoint(evt.getPoint());
+        if (row >= 0 && col >= 0) {
+            codHistoria = (int) tablaInfo.getValueAt(row, 0);
+            BotonModificarHisto.setEnabled(true);
+        }
+    }//GEN-LAST:event_tablaInfoMousePressed
 
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
@@ -183,6 +220,7 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonModificarHisto;
     private javax.swing.JButton BotonMostrar;
     private javax.swing.JComboBox desplegableColumnas;
     private javax.swing.JLabel jLabel1;
@@ -190,4 +228,6 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
     // End of variables declaration//GEN-END:variables
+
+    
 }

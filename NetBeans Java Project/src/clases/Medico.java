@@ -506,7 +506,10 @@ public class Medico {
     public ResultSet mostrarHistoriales() throws SQLException {
         Connection reg = con.getCon();
         String sql;
-        sql = "SELECT * FROM centromedico.historial WHERE especialidad=?";
+        sql = "SELECT historial.cod_historial, historial.paciente, "
+                + "paciente.nombre, paciente.apellidos FROM "
+                + "centromedico.historial, centromedico.paciente WHERE "
+                + "especialidad=?  AND historial.paciente = paciente.DNI";
 
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.setInt(1, this.n_especialidad);
