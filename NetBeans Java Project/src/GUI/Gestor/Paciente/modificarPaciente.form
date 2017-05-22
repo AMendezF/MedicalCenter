@@ -46,19 +46,35 @@
                           <Component id="jLabel1" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="labelDNI" min="-2" pref="150" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="labelApellidos" min="-2" pref="250" max="-2" attributes="0"/>
-                                      <Component id="labelSeguro" min="-2" pref="250" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="96" pref="96" max="-2" attributes="0"/>
+                                  <Component id="labelDireccion" min="-2" pref="250" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="fieldDireccion" min="-2" pref="200" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="fieldApellidos" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="fieldSeguro" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="buttonActualizarDatos" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" attributes="0">
+                                          <Component id="labelApellidos" min="-2" pref="250" max="-2" attributes="0"/>
+                                          <Component id="labelSeguro" min="-2" pref="250" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="labelTelefono" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="fieldApellidos" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <Component id="fieldSeguro" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <Component id="buttonActualizarDatos" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="fieldTelefono" min="-2" pref="200" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="labelNombre" min="-2" pref="250" max="-2" attributes="0"/>
@@ -71,12 +87,10 @@
                               <Component id="nombreOK" min="-2" max="-2" attributes="0"/>
                               <Component id="apellidosOK" min="-2" max="-2" attributes="0"/>
                               <Component id="seguroOK" min="-2" max="-2" attributes="0"/>
+                              <Component id="telefonoOK" min="-2" max="-2" attributes="0"/>
+                              <Component id="direccionOK" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="labelDNI" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -115,8 +129,20 @@
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelTelefono" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="fieldTelefono" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="telefonoOK" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelDireccion" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="fieldDireccion" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="direccionOK" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="buttonActualizarDatos" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace pref="65" max="32767" attributes="0"/>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -210,6 +236,48 @@
               <Font name="Tahoma" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Modifica el seguro"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelTelefono">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Telefono"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelDireccion">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Direccion"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="fieldTelefono">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="fieldTelefonoKeyReleased"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="fieldDireccion">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="fieldDireccionKeyReleased"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="telefonoOK">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Modifica el telefono"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="direccionOK">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Modifica la direccion"/>
           </Properties>
         </Component>
       </SubComponents>

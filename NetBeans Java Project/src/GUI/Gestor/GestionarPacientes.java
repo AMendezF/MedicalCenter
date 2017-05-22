@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -46,8 +47,7 @@ public class GestionarPacientes extends javax.swing.JPanel {
 
         menuOpciones = new javax.swing.JPanel();
         buttonCogerPaciente = new javax.swing.JButton();
-        fieldDNI = new javax.swing.JTextField();
-        pacienteOK = new javax.swing.JLabel();
+        fieldDNI = new javax.swing.JLabel();
         labelTitulo = new javax.swing.JLabel();
         mostrarDatos = new javax.swing.JPanel();
         jScrollPane14 = new javax.swing.JScrollPane();
@@ -57,8 +57,6 @@ public class GestionarPacientes extends javax.swing.JPanel {
         desplegableColumnas = new javax.swing.JComboBox();
         textFieldBuscar = new javax.swing.JTextField();
 
-        menuOpciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-
         buttonCogerPaciente.setText("Coger paciente");
         buttonCogerPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,14 +64,9 @@ public class GestionarPacientes extends javax.swing.JPanel {
             }
         });
 
-        fieldDNI.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                fieldDNIKeyReleased(evt);
-            }
-        });
-
-        pacienteOK.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        pacienteOK.setText("Introduce un DNI");
+        fieldDNI.setFont(new java.awt.Font("Century", 1, 14)); // NOI18N
+        fieldDNI.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fieldDNI.setText("DNI PACIENTE");
 
         labelTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -87,21 +80,13 @@ public class GestionarPacientes extends javax.swing.JPanel {
             .addGroup(menuOpcionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                     .addGroup(menuOpcionesLayout.createSequentialGroup()
-                        .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(menuOpcionesLayout.createSequentialGroup()
-                        .addComponent(fieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(menuOpcionesLayout.createSequentialGroup()
-                .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(menuOpcionesLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(buttonCogerPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(menuOpcionesLayout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(pacienteOK)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(buttonCogerPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fieldDNI, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         menuOpcionesLayout.setVerticalGroup(
             menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,10 +95,8 @@ public class GestionarPacientes extends javax.swing.JPanel {
                 .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonCogerPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(fieldDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(pacienteOK)
+                .addGap(33, 33, 33)
+                .addComponent(fieldDNI)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -177,7 +160,7 @@ public class GestionarPacientes extends javax.swing.JPanel {
                     .addGroup(mostrarDatosLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 887, Short.MAX_VALUE)
+                            .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
                             .addGroup(mostrarDatosLayout.createSequentialGroup()
                                 .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -208,7 +191,7 @@ public class GestionarPacientes extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(menuOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(48, 48, 48)
                 .addComponent(mostrarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(21, 21, 21))
         );
@@ -223,25 +206,6 @@ public class GestionarPacientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 	/**
-	 * Informa de errores en los campos
-	 *
-	 * @param evt
-	 */
-    private void fieldDNIKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldDNIKeyReleased
-		try {
-			if (gestor.existePacienteBD(fieldDNI.getText())) {
-				pacienteOK.setForeground(Color.green);
-				pacienteOK.setText("OK!!");
-			} else {
-				pacienteOK.setForeground(Color.red);
-				pacienteOK.setText("Paciente erroneo");
-			}
-		} catch (SQLException ex) {
-			Logger.getLogger(GestionarPacientes.class.getName()).log(Level.SEVERE, null, ex);
-		}
-    }//GEN-LAST:event_fieldDNIKeyReleased
-
-	/**
 	 * Coge un paciente que exista en la base de datos y monta menuPaciente
 	 *
 	 * @param evt
@@ -251,6 +215,8 @@ public class GestionarPacientes extends javax.swing.JPanel {
 			if (gestor.existePacienteBD(fieldDNI.getText())) {
 				this.paciente = gestor.getPaciente(fieldDNI.getText());
 				crearMenu();
+			} else {
+				JOptionPane.showMessageDialog(this, "El dni no es correcto", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (SQLException ex) {
 			Logger.getLogger(GestionarPacientes.class.getName()).log(Level.SEVERE, null, ex);
@@ -361,13 +327,12 @@ public class GestionarPacientes extends javax.swing.JPanel {
     private javax.swing.JButton buttonCogerPaciente;
     private javax.swing.JButton buttonMostrar;
     private javax.swing.JComboBox desplegableColumnas;
-    private javax.swing.JTextField fieldDNI;
+    private javax.swing.JLabel fieldDNI;
     private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JLabel labelMostrar;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JPanel menuOpciones;
     private javax.swing.JPanel mostrarDatos;
-    private javax.swing.JLabel pacienteOK;
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
     // End of variables declaration//GEN-END:variables

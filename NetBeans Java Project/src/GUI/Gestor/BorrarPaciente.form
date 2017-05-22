@@ -72,8 +72,6 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="mostrarActivos" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="DNIOK" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="fieldBorrar" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="buttonBorrar" min="-2" pref="150" max="-2" attributes="0"/>
@@ -101,8 +99,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="mostrarActivos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="buttonBorrar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="fieldBorrar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="DNIOK" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fieldBorrar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -120,36 +117,10 @@
             <Component class="javax.swing.JTable" name="tablaActivos">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="5">
-                    <Column editable="false" title="DNI" type="java.lang.Object"/>
-                    <Column editable="false" title="Nombre" type="java.lang.Object"/>
-                    <Column editable="false" title="Apellidos" type="java.lang.Object"/>
-                    <Column editable="false" title="Seguro" type="java.lang.Object"/>
-                  </Table>
+                  <Table columnCount="0" rowCount="0"/>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                  <TableColumnModel selectionModel="2">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                  </TableColumnModel>
+                  <TableColumnModel selectionModel="2"/>
                 </Property>
                 <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -205,12 +176,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonBorrarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="fieldBorrar">
-          <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="fieldBorrarKeyReleased"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="DNIOK">
+        <Component class="javax.swing.JLabel" name="fieldBorrar">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Century" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Introduce DNI"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -233,8 +205,6 @@
                           <Component id="buttonReinsertar" min="-2" pref="150" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="fieldReinsertar" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="DNI2OK" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="mostrarInactivos" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
@@ -259,13 +229,12 @@
                       <Component id="textInactivos" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jScrollPane5" pref="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane5" pref="358" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="mostrarInactivos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="buttonReinsertar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="fieldReinsertar" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="DNI2OK" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fieldReinsertar" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -283,36 +252,10 @@
             <Component class="javax.swing.JTable" name="tablaInactivos">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="5">
-                    <Column editable="false" title="DNI" type="java.lang.Object"/>
-                    <Column editable="false" title="Nombre" type="java.lang.Object"/>
-                    <Column editable="false" title="Apellidos" type="java.lang.Object"/>
-                    <Column editable="false" title="Seguro" type="java.lang.Object"/>
-                  </Table>
+                  <Table columnCount="0" rowCount="0"/>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                  <TableColumnModel selectionModel="2">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                  </TableColumnModel>
+                  <TableColumnModel selectionModel="2"/>
                 </Property>
                 <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -368,12 +311,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonReinsertarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="fieldReinsertar">
-          <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="fieldReinsertarKeyReleased"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="DNI2OK">
+        <Component class="javax.swing.JLabel" name="fieldReinsertar">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Century" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Introduce DNI"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

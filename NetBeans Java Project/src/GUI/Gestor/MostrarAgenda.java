@@ -26,6 +26,7 @@ public class MostrarAgenda extends javax.swing.JPanel {
 	public MostrarAgenda(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		areaDatos.setVisible(false);
 	}
 
 	/**
@@ -42,9 +43,14 @@ public class MostrarAgenda extends javax.swing.JPanel {
         areaDatos = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         labelTitulo = new javax.swing.JLabel();
+        buttonExportar = new javax.swing.JButton();
 
         areaDatos.setColumns(20);
         areaDatos.setRows(5);
+        areaDatos.setEnabled(false);
+        areaDatos.setMaximumSize(new java.awt.Dimension(800, 800));
+        areaDatos.setMinimumSize(new java.awt.Dimension(600, 600));
+        areaDatos.setPreferredSize(new java.awt.Dimension(600, 600));
         jScrollPane1.setViewportView(areaDatos);
 
         jButton1.setText("Cargar datos");
@@ -59,19 +65,22 @@ public class MostrarAgenda extends javax.swing.JPanel {
         labelTitulo.setText("Agenda del día");
         labelTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        buttonExportar.setText("Exportar a PDF");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 140, Short.MAX_VALUE))
-                    .addComponent(labelTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -81,10 +90,11 @@ public class MostrarAgenda extends javax.swing.JPanel {
                 .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -107,11 +117,15 @@ public class MostrarAgenda extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
 		try {
+			areaDatos.setVisible(true);
+			areaDatos.setEnabled(true);
 			Calendar fecha = Calendar.getInstance();
 			String dia = fecha.get(Calendar.YEAR) + "-"
 					+ (fecha.get(Calendar.MONTH) + 1) + "-"
 					+ (fecha.get(Calendar.DAY_OF_MONTH));
+			areaDatos.setText("probandito");
 			areaDatos.setText(gestor.mostrarAgenda(dia));
 		} catch (SQLException ex) {
 			Logger.getLogger(MostrarAgenda.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,6 +134,7 @@ public class MostrarAgenda extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaDatos;
+    private javax.swing.JButton buttonExportar;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

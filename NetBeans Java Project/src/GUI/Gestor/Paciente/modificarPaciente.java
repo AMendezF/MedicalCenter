@@ -48,6 +48,12 @@ public class modificarPaciente extends javax.swing.JPanel {
         nombreOK = new javax.swing.JLabel();
         apellidosOK = new javax.swing.JLabel();
         seguroOK = new javax.swing.JLabel();
+        labelTelefono = new javax.swing.JLabel();
+        labelDireccion = new javax.swing.JLabel();
+        fieldTelefono = new javax.swing.JTextField();
+        fieldDireccion = new javax.swing.JTextField();
+        telefonoOK = new javax.swing.JLabel();
+        direccionOK = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -101,6 +107,30 @@ public class modificarPaciente extends javax.swing.JPanel {
         seguroOK.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         seguroOK.setText("Modifica el seguro");
 
+        labelTelefono.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelTelefono.setText("Telefono");
+
+        labelDireccion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelDireccion.setText("Direccion");
+
+        fieldTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldTelefonoKeyReleased(evt);
+            }
+        });
+
+        fieldDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldDireccionKeyReleased(evt);
+            }
+        });
+
+        telefonoOK.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        telefonoOK.setText("Modifica el telefono");
+
+        direccionOK.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        direccionOK.setText("Modifica la direccion");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -111,18 +141,30 @@ public class modificarPaciente extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(96, 96, 96)
+                                .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(fieldDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fieldSeguro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(buttonActualizarDatos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(labelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(114, 114, 114)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(fieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(fieldSeguro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(buttonActualizarDatos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(fieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -130,11 +172,10 @@ public class modificarPaciente extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nombreOK)
                             .addComponent(apellidosOK)
-                            .addComponent(seguroOK))
-                        .addGap(203, 203, 203))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(seguroOK)
+                            .addComponent(telefonoOK)
+                            .addComponent(direccionOK))
+                        .addGap(203, 203, 203))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,8 +204,18 @@ public class modificarPaciente extends javax.swing.JPanel {
                             .addComponent(fieldSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(seguroOK))))
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(telefonoOK))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(direccionOK))
+                .addGap(18, 18, 18)
                 .addComponent(buttonActualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -190,6 +241,8 @@ public class modificarPaciente extends javax.swing.JPanel {
 		labelNombre.setText(paciente.getNombre());
 		labelApellidos.setText(paciente.getApellidos());
 		labelSeguro.setText(paciente.getSeguro());
+		//labelTelefono.setText(paciente.getTelefono);
+		//labelDireccion.setText(paciente.getDireccion);
 
 		/*
 		 fieldNombre.setText(paciente.getNombre());
@@ -250,6 +303,14 @@ public class modificarPaciente extends javax.swing.JPanel {
 		}
     }//GEN-LAST:event_fieldSeguroKeyReleased
 
+    private void fieldTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldTelefonoKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldTelefonoKeyReleased
+
+    private void fieldDireccionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldDireccionKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldDireccionKeyReleased
+
 	private void actualizarBoton() {
 		if (!gestor.esTexto(fieldNombre.getText()) || !gestor.esTexto(fieldApellidos.getText())) {
 			buttonActualizarDatos.setEnabled(false);
@@ -261,16 +322,22 @@ public class modificarPaciente extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel apellidosOK;
     private javax.swing.JButton buttonActualizarDatos;
+    private javax.swing.JLabel direccionOK;
     private javax.swing.JTextField fieldApellidos;
+    private javax.swing.JTextField fieldDireccion;
     private javax.swing.JTextField fieldNombre;
     private javax.swing.JTextField fieldSeguro;
+    private javax.swing.JTextField fieldTelefono;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelApellidos;
     private javax.swing.JLabel labelDNI;
+    private javax.swing.JLabel labelDireccion;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelSeguro;
+    private javax.swing.JLabel labelTelefono;
     private javax.swing.JLabel nombreOK;
     private javax.swing.JLabel seguroOK;
+    private javax.swing.JLabel telefonoOK;
     // End of variables declaration//GEN-END:variables
 }

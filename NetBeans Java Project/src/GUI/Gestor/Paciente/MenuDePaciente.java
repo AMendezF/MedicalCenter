@@ -52,8 +52,6 @@ public class MenuDePaciente extends javax.swing.JPanel {
         buttonModificarPaciente = new javax.swing.JButton();
         mostrarDatos = new javax.swing.JPanel();
 
-        menuOpciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-
         buttonMostrarCitas.setText("Mostrar citas");
         buttonMostrarCitas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,7 +59,7 @@ public class MenuDePaciente extends javax.swing.JPanel {
             }
         });
 
-        labelMenuDelPaciente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelMenuDelPaciente.setFont(new java.awt.Font("Cambria Math", 1, 18)); // NOI18N
         labelMenuDelPaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelMenuDelPaciente.setText("Menu del paciente");
         labelMenuDelPaciente.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -93,7 +91,7 @@ public class MenuDePaciente extends javax.swing.JPanel {
                             .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 92, Short.MAX_VALUE)))
+                        .addGap(0, 27, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         menuOpcionesLayout.setVerticalGroup(
@@ -107,14 +105,14 @@ public class MenuDePaciente extends javax.swing.JPanel {
                 .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(212, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);
         mostrarDatos.setLayout(mostrarDatosLayout);
         mostrarDatosLayout.setHorizontalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGap(0, 522, Short.MAX_VALUE)
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
