@@ -493,7 +493,7 @@ public class Medico {
     public void escribirFichaPaciente(String DNIPaciente, String codCita,
             String comentario) throws SQLException {
         Historial historial = new Historial(DNIPaciente, this.n_especialidad,
-                this.con, codCita, comentario);
+                this.con);
     }
 
     /**
