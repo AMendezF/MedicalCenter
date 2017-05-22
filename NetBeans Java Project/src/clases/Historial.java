@@ -14,16 +14,13 @@ public class Historial {
     private int codigoHistorial;
     private String DNIPaciente;
     private int especialidad;
-    private Ficha ficha;
     private Conexion conexion;
 
     /**
-     * ¡La clase medico debe proporcionar un DNI y un código de cita válido!
      * Comprobamos presencia en la BD de un historial con el DNI y la
      * especialidad suministrada. Si ya existen se obtiene su codigo de
      * historial. En caso contrario se genera otro código. Se igualan el valor
-     * del codigo y acto seguido se registra la row en la tabla historial y
-     * ficha.
+     * del codigo y acto seguido se registra la row en la tabla historial.
      *
      * @param DNIPaciente
      * @param especialidad
@@ -32,8 +29,8 @@ public class Historial {
      * @param comentario
      * @throws SQLException
      */
-    public Historial(String DNIPaciente, int especialidad, Conexion conexion,
-            String codCita, String comentario) throws SQLException {
+    public Historial(String DNIPaciente, int especialidad, Conexion conexion)
+			throws SQLException {
         this.conexion = conexion;   // Igualamos atributos
         // Se busca el codigo en la BD para igualarlo 
         this.codigoHistorial = getCodigoHistorialBD(DNIPaciente, especialidad);
@@ -51,8 +48,6 @@ public class Historial {
         }// Se adoptan los atributos
         this.DNIPaciente = DNIPaciente;
         this.especialidad = especialidad;
-        // Y se introduce la ficha en la BD
-        this.ficha = new Ficha(this.codigoHistorial, codCita, comentario, conexion);
     }
 
     /**
@@ -95,11 +90,24 @@ public class Historial {
         preparedStmt.setString(1, DNIPaciente);
         preparedStmt.setInt(2, especialidad);
         ResultSet rs = preparedStmt.executeQuery();
-        rs.next();
-
-        return rs.getInt("Cod_historial");
+        if(rs.next())
+			return rs.getInt("Cod_historial");
+        return 0;
     }
 
+	/**
+	 * 
+	 * @param codigoHistorial
+	 * @param codigoCita
+	 * @param comentario
+	 * @throws SQLException 
+	 */
+	public void añadirFicha(String codigoCita, 
+			String comentario) throws SQLException{
+		 Ficha ficha = new Ficha(this.codigoHistorial, codigoCita, comentario, 
+				 this.conexion);
+	}
+	
     /**
      * Se recogen las fichas donde coincide el codigo de historial para así dar
      * acceso al médico de solo las citas y especialidades que el maneja para

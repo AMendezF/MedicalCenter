@@ -36,18 +36,18 @@ class Ficha {
 			Conexion conexion) throws SQLException {
 		this.codHistorial = codHistorial;
 		this.codCita = codCita;
-		this.comentario = comentario;
+		this.comentario = "[" + getDia() + ", " + getHora() + "] " + comentario;
+		System.out.println(this.comentario);
 		this.conexion = conexion;
 		PreparedStatement preparedStmt;
 		Connection reg = this.conexion.getCon();
 		String sql = "INSERT INTO centromedico.ficha (Cod_historial, Cod_cita,"
-				+ "comentario, Dia, Hora) VALUES (?, ?, ?, ?, ?)";
+				+ "comentario, Dia, Hora) VALUES (?, ?, ?, '" + getDia() 
+				+ "', '" + getHora() + "')";
 		preparedStmt = reg.prepareStatement(sql);
 		preparedStmt.setInt(1, codHistorial);
 		preparedStmt.setString(2, codCita);
-		preparedStmt.setString(3, comentario);
-		preparedStmt.setDate(4, java.sql.Date.valueOf(getDia()));
-		preparedStmt.setTime(5, java.sql.Time.valueOf(getHora()));
+		preparedStmt.setString(3, this.comentario);
 		preparedStmt.execute();
 	}
 
@@ -101,15 +101,14 @@ class Ficha {
 	public void updateFicha(String comentario) throws SQLException {
 		PreparedStatement preparedStmt;
 		Connection reg = this.conexion.getCon();
-		this.comentario = comentario;
+		this.comentario+="\n[" + getDia() + ", " + getHora() + "] " +comentario;
 		String sql = "UPDATE centromedico.Ficha SET comentario=?, "
-				+ "Dia=?, Hora=? WHERE Cod_cita=? AND Cod_historial=?;";
+				+ "Dia='" + getDia() + "', Hora='" + getHora() + "' " 
+				+ "WHERE Cod_cita=? AND Cod_historial=?;";
 		preparedStmt = reg.prepareStatement(sql);
-		preparedStmt.setString(1, comentario);
-		preparedStmt.setDate(2, java.sql.Date.valueOf(getDia()));
-		preparedStmt.setTime(3, java.sql.Time.valueOf(getHora()));
-		preparedStmt.setString(4, this.codCita);
-		preparedStmt.setInt(5, this.codHistorial);
+		preparedStmt.setString(1, this.comentario);
+		preparedStmt.setString(2, this.codCita);
+		preparedStmt.setInt(3, this.codHistorial);
 		preparedStmt.execute();
 	}
 
