@@ -1,9 +1,11 @@
 package GUI.Medico;
 
 import GUI.Gestor.TableAdaptor;
+import clases.Historial;
 import clases.Medico;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -161,7 +163,7 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
             tablaInfo.setModel(tabla);
             int numColums = tabla.getColumnCount();
             this.columnas = new String[numColums];
-            for (int i = 0 ; i < numColums ; i++){
+            for (int i = 0; i < numColums; i++) {
                 this.columnas[i] = tabla.getColumnName(i);
             }
             desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
@@ -169,13 +171,30 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
             Logger.getLogger(ModificarFichaPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    private void mostrarDatosFichas() {
+        try {
+            ResultSet rs = medico.mostrarFichas(this.codHistoria);
+            TableAdaptor aux = new TableAdaptor(rs);
+            tablaInfo.setModel(aux.getValue());
+            int numColums = tabla.getColumnCount();
+            this.columnas = new String[numColums];
+            for (int i = 0; i < numColums; i++) {
+                this.columnas[i] = tabla.getColumnName(i);
+            }
+            desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
+        } catch (SQLException ex) {
+            Logger.getLogger(ModificarFichaPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_formComponentAdded
 
     private void BotonModificarHistoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonModificarHistoActionPerformed
-        // TODO add your handling code here:
+        mostrarDatosFichas();
+
     }//GEN-LAST:event_BotonModificarHistoActionPerformed
 
     private void tablaInfoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInfoMousePressed
@@ -205,12 +224,12 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
 
     public void filtro() {
         int colum = 0;
-        while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])){
-            colum++;       
+        while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
+            colum++;
         }
         trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
     }
-    
+
     public DefaultTableModel getTabla() {
         return this.tabla;
     }
@@ -229,5 +248,4 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     private javax.swing.JTextField textFieldBuscar;
     // End of variables declaration//GEN-END:variables
 
-    
 }
