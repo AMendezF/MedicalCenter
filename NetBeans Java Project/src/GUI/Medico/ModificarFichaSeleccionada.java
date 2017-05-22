@@ -27,15 +27,19 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
     /**
      * Creates new form mostrarPacientesMedico
      */
-    private final Medico medico;
-    private TableRowSorter trsFiltro;
-    private DefaultTableModel tabla;
-    private String[] columnas;
+    private final String codFicha;
+    private final String hora;
+    private final String dia;
+    private final String comentario;
 
-    public ModificarFichaSeleccionada(Medico medico) {
+    public ModificarFichaSeleccionada(String codFicha, String hora, String dia, String comentario) {
+        this.codFicha = codFicha;
+        this.hora = hora;
+        this.dia = dia;
+        this.comentario = comentario;
+        
         initComponents();
-        this.medico = medico;
-        mostrarDatos();
+        initVentana();
     }
 
     /**
@@ -47,12 +51,14 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        desplegableColumnas = new javax.swing.JComboBox();
-        textFieldBuscar = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tablaInfo = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        BotonMostrar = new javax.swing.JButton();
+        DiaHora = new javax.swing.JLabel();
+        campoDiaHora = new javax.swing.JLabel();
+        labelFicha = new javax.swing.JLabel();
+        campoCodFicha = new javax.swing.JLabel();
+        labelComentario = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextAreaComentario = new javax.swing.JTextArea();
+        labelComentario1 = new javax.swing.JLabel();
 
         addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
@@ -60,139 +66,93 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
             }
         });
 
-        desplegableColumnas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                desplegableColumnasActionPerformed(evt);
-            }
-        });
+        DiaHora.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        DiaHora.setText("Dia");
 
-        tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {}
-            },
-            new String [] {
+        campoDiaHora.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        campoDiaHora.setForeground(new java.awt.Color(0, 51, 102));
+        campoDiaHora.setText("");
 
-            }
-        ));
-        jScrollPane2.setViewportView(tablaInfo);
+        labelFicha.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelFicha.setText("Ficha");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Citas Pendientes");
+        campoCodFicha.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        campoCodFicha.setForeground(new java.awt.Color(0, 51, 102));
+        campoCodFicha.setText("");
 
-        BotonMostrar.setText("Mostrar");
-        BotonMostrar.setActionCommand("MostrarPacientesMedico");
-        BotonMostrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonMostrarActionPerformed(evt);
-            }
-        });
+        labelComentario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelComentario.setText("Comentario:");
+
+        jTextAreaComentario.setColumns(20);
+        jTextAreaComentario.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaComentario);
+
+        labelComentario1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelComentario1.setText("Comentario:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(DiaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(campoDiaHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(241, 241, 241))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(BotonMostrar))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addComponent(labelFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(campoCodFicha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelComentario, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+                            .addComponent(labelComentario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DiaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoDiaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoCodFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BotonMostrar)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addComponent(labelComentario, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelComentario1, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void desplegableColumnasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableColumnasActionPerformed
-
-    }//GEN-LAST:event_desplegableColumnasActionPerformed
-
-    private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
-        mostrarDatos();
-    }//GEN-LAST:event_BotonMostrarActionPerformed
-
-    private void mostrarDatos() {
-        try {
-            ResultSet rs = medico.mostrarCitasMedico();
-            TableAdaptor aux = new TableAdaptor(rs);
-            setTabla(aux.getValue());
-            DefaultTableModel tabla = getTabla();
-            tablaInfo.setModel(tabla);
-            int numColums = tabla.getColumnCount();
-            this.columnas = new String[numColums];
-            for (int i = 0; i < numColums; i++) {
-                this.columnas[i] = tabla.getColumnName(i);
-            }
-            desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
-        } catch (SQLException ex) {
-            Logger.getLogger(ModificarFichaSeleccionada.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_formComponentAdded
-
-    private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {
-        // TODO add your handling code here:
-        textFieldBuscar.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(final KeyEvent e) {
-                String cadena = (textFieldBuscar.getText());
-                System.out.println(cadena);
-                textFieldBuscar.setText(cadena);
-                repaint();
-                filtro();
-            }
-        });
-        trsFiltro = new TableRowSorter(tablaInfo.getModel());
-        tablaInfo.setRowSorter(trsFiltro);
+    private void initVentana(){
+        campoDiaHora.setText(dia + "  " + hora);
+        campoCodFicha.setText(codFicha);
+        jTextAreaComentario.setText(comentario);
     }
-
-    public void filtro() {
-        int colum = 0;
-        while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
-            colum++;
-        }
-        trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
-    }
-
-    public DefaultTableModel getTabla() {
-        return this.tabla;
-    }
-
-    public void setTabla(DefaultTableModel tabla) {
-        this.tabla = tabla;
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotonMostrar;
-    private javax.swing.JComboBox desplegableColumnas;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tablaInfo;
-    private javax.swing.JTextField textFieldBuscar;
+    private javax.swing.JLabel DiaHora;
+    private javax.swing.JLabel campoCodFicha;
+    private javax.swing.JLabel campoDiaHora;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextAreaComentario;
+    private javax.swing.JLabel labelComentario;
+    private javax.swing.JLabel labelComentario1;
+    private javax.swing.JLabel labelFicha;
     // End of variables declaration//GEN-END:variables
 
 }
