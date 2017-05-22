@@ -14,6 +14,7 @@ import java.util.List;
  *
  * @author OMG_DaNgErOuS_PablO_MLG
  */
+
 public class Medico {
 
     private final int n_colegiado;
@@ -314,36 +315,7 @@ public class Medico {
     public int getN_Especialidad() throws SQLException {
         return this.n_especialidad;
     }
-
-//        public String mostrarMedico() throws SQLException {
-//        // Selecciona y muestra por pantalla los datos del medico con el parametro n_colegiado
-//        Connection reg = con.getCon();
-//        String sql;
-//        int nColegiado = 0;
-//        String nombre = "";
-//        String apellidos = "";
-//        String horario = "";
-//        String tiempo = "";
-//        String especialidades = "";
-//        sql = "SELECT medico.n_colegiado, medico.nombre, medico.apellidos, medico.horario, medico.tiempo_min, medico.especialidad, especialidad.nombre "
-//                + "FROM centromedico.medico, centromedico.especialidad "
-//                + "WHERE medico.especialidad = especialidad.cod_especialidad "
-//                + "and medico.n_colegiado = ?;";
-//
-//        preparedStmt = reg.prepareStatement(sql);
-//        preparedStmt.setInt(1, this.getN_colegiado());
-//        ResultSet rs = preparedStmt.executeQuery();
-//
-//       if (rs.next()) {
-//            nColegiado = rs.getInt("medico.n_colegiado");
-//            nombre = rs.getString("medico.nombre");
-//            apellidos = rs.getString("medico.apellidos");
-//            horario = rs.getString("medico.horario");
-//            tiempo = rs.getString("medico.tiempo_min");
-//            especialidades = rs.getString("especialidad.nombre");
-//        }
-//        return (nColegiado + " - " + nombre + " " + apellidos + "; " + tiempo + ", " + especialidades);
-//    }
+    
     /**
      * Este método retorna un ResultSet de SQL de los pacientes asociados a ese
      * médico Si no hay pacientes asociados, no retorna nada.
@@ -470,12 +442,11 @@ public class Medico {
     public ResultSet mostrarCitasMedico() throws SQLException {
         Connection reg = con.getCon();
         String sql;
-        sql = "SELECT citas.cod_cita, citas.dia, citas.hora, citas.medico, "
-                + "especialidad.nombre as especialidad, citas.paciente "
-                + "FROM centromedico.citas, centromedico.especialidad "
-                + "WHERE citas.medico = ?  AND especialidad.cod_especialidad = citas.especialidad "
-                + "GROUP BY citas.paciente";
-
+        sql = "SELECT citas.cod_cita, paciente.nombre, paciente.apellidos, "
+                + "citas.dia, citas.hora, citas.medico, citas.paciente "
+                + "FROM centromedico.citas, centromedico.paciente "
+                + "WHERE citas.medico = ? AND paciente.DNI = citas.paciente ";
+        
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.setInt(1, getN_colegiado());
         ResultSet rs = preparedStmt.executeQuery();
@@ -501,10 +472,10 @@ public class Medico {
                 + "citas.dia = ?"
                 + "GROUP BY citas.paciente";
 
-        Calendar fecha = new GregorianCalendar();
+        System.out.println("Yaaaaas Fecha " + fecha1 + " yaaaaaas");
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.setInt(1, getN_colegiado());
-        preparedStmt.setDate(2, java.sql.Date.valueOf(getDia()));
+        preparedStmt.setDate(2, java.sql.Date.valueOf(fecha1));
         ResultSet rs = preparedStmt.executeQuery();
 
         return rs;
@@ -522,7 +493,7 @@ public class Medico {
     public void escribirFichaPaciente(String DNIPaciente, String codCita,
             String comentario) throws SQLException {
         Historial historial = new Historial(DNIPaciente, this.n_especialidad,
-                this.con, codCita, comentario);
+                this.con);
     }
 
     /**
@@ -535,7 +506,10 @@ public class Medico {
     public ResultSet mostrarHistoriales() throws SQLException {
         Connection reg = con.getCon();
         String sql;
-        sql = "SELECT * FROM centromedico.historial WHERE especialidad=?";
+        sql = "SELECT historial.cod_historial, historial.paciente, "
+                + "paciente.nombre, paciente.apellidos FROM "
+                + "centromedico.historial, centromedico.paciente WHERE "
+                + "especialidad=?  AND historial.paciente = paciente.DNI";
 
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.setInt(1, this.n_especialidad);
@@ -571,17 +545,6 @@ public class Medico {
             String comentario) throws SQLException {
         Historial historial = new Historial(codigoHistorial, this.con);
         historial.modificarFicha(codigoCita, comentario);
-    }
-
-    /**
-     * Retorna el día actual formato AAAA-MM-DD.
-     *
-     * @return
-     */
-    private String getDia() {
-        return fecha.get(Calendar.YEAR) + "-"
-                + (fecha.get(Calendar.MONTH) + 1) + "-"
-                + fecha.get(Calendar.DAY_OF_MONTH);
     }
 
     public int getN_colegiado() {
