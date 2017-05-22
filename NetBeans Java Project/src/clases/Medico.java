@@ -527,9 +527,10 @@ public class Medico {
         return fecha.get(Calendar.HOUR) + ":" + fecha.get(Calendar.MINUTE);
     }
 
-    private void addFichaNueva(String codCita, int codHistoria, String comentario) throws SQLException {
-        comentario = "[" + getDia() + ", " + getHora() + ", " + getN_colegiado() +"] " + 
-                comentario;
+    private void addFichaNueva(String codCita, int codHistoria,
+            String comentario) throws SQLException {
+        comentario = "[" + getDia() + ", " + getHora() + ", "
+                + getN_colegiado() + "] " + comentario;
         Connection reg = this.con.getCon();
         String sql = "INSERT INTO centromedico.ficha (Cod_historial, Cod_cita,"
                 + "comentario, Dia, Hora) VALUES (?, ?, ?, '" + getDia()
