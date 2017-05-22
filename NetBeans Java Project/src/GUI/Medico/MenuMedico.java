@@ -22,7 +22,7 @@ public class MenuMedico extends javax.swing.JPanel {
     private mostrarPacientesMedico mostrarPacientes;
     private mostrarCitasMedico mostrarCitas;
     private Medico medico;
-    private EscribirFichaPaciente ecribirFicha;
+    private EscribirFichaPaciente escribirFicha;
     private ModificarFichaPaciente modificarFicha;
 
     public MenuMedico(Medico medico) {
@@ -189,7 +189,7 @@ public class MenuMedico extends javax.swing.JPanel {
 
     private void buttonEscribirFichaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEscribirFichaActionPerformed
         mostrarDatos.removeAll();
-        mostrarDatos.add(ecribirFicha, BorderLayout.CENTER);
+        mostrarDatos.add(escribirFicha, BorderLayout.CENTER);
         mostrarDatos.revalidate();
         mostrarDatos.repaint();
     }//GEN-LAST:event_buttonEscribirFichaActionPerformed
@@ -221,9 +221,9 @@ public class MenuMedico extends javax.swing.JPanel {
     }
     
     private void initEscribirFichaPaciente(){
-        this.ecribirFicha = new EscribirFichaPaciente(medico);
-        this.ecribirFicha.setSize(800, 800);
-        this.ecribirFicha.setLocation(2, 5);
+        this.escribirFicha = new EscribirFichaPaciente(medico);
+        this.escribirFicha.setSize(800, 800);
+        this.escribirFicha.setLocation(2, 5);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -35,6 +35,9 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     public mostrarPacientesMedico(Medico medico) {
         initComponents();
         this.medico = medico;
+        mostrarDatos();
+        
+        
     }
 
     /**
@@ -128,7 +131,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
 
     }//GEN-LAST:event_desplegableColumnasActionPerformed
 
-    private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
+    private void mostrarDatos(){
         try {
             ResultSet rs = medico.mostrarPacientesAsociados();
             TableAdaptor aux = new TableAdaptor(rs);
@@ -144,6 +147,9 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(mostrarPacientesMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
+        mostrarDatos();
     }//GEN-LAST:event_BotonMostrarActionPerformed
 
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBuscarKeyTyped
