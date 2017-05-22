@@ -14,7 +14,6 @@ import java.util.List;
  *
  * @author OMG_DaNgErOuS_PablO_MLG
  */
-
 public class Medico {
 
     private final int n_colegiado;
@@ -192,69 +191,6 @@ public class Medico {
         this.n_especialidad = result;
     }
 
-    public boolean codCitaEnBD(String codCita) throws SQLException {
-        boolean result = true;
-        PreparedStatement preparedStmt;
-        Connection reg = con.getCon();
-        String codCitaDB = null;
-        String sql = "SELECT cod_cita FROM centromedico.citas WHERE cod_cita=? ;";
-        preparedStmt = reg.prepareStatement(sql);
-        preparedStmt.setString(1, codCita);
-        ResultSet rs = preparedStmt.executeQuery();
-        while (rs.next()) {
-            codCitaDB = rs.getString("cod_cita");
-        }
-        if (codCitaDB == null) {
-            result = false;
-        }
-        return result;
-    }
-
-    public void addCita(String hora, String fecha, String paciente, int contCitas) throws SQLException {
-        String horas[] = hora.split(":");
-        int codEsp = 0;
-        int horadiv = Integer.parseInt(horas[0]);
-        int minutos = Integer.parseInt(horas[1]);
-        Connection reg = con.getCon();
-        String sql = "SELECT especialidad FROM centromedico.medico WHERE N_colegiado=?;";
-        preparedStmt = reg.prepareStatement(sql);
-        preparedStmt.setInt(1, n_colegiado);
-        ResultSet rs = preparedStmt.executeQuery();
-        if (rs.next()) {
-            codEsp = rs.getInt("especialidad");
-        }
-        sql = "INSERT INTO centromedico.citas ( cod_cita, dia, hora, medico, especialidad, paciente)"
-                + "VALUES (?,?,?,?,?,?)";
-        preparedStmt = reg.prepareStatement(sql);
-        String codcita = paciente + (contCitas + 1);
-        while (codCitaEnBD(codcita)) {
-            contCitas++;
-            codcita = paciente + (contCitas + 1);
-        }
-        preparedStmt.setString(1, codcita);
-        preparedStmt.setString(2, fecha);
-        preparedStmt.setString(3, hora);
-        preparedStmt.setInt(4, n_colegiado);
-        preparedStmt.setInt(5, codEsp);
-        preparedStmt.setString(6, paciente);
-        preparedStmt.execute();
-
-        int index = ((horadiv - horaI) * 60 + minutos) / this.getTiempoMin();
-        boolean consultaFecha[] = getConsultas(fecha);
-        consultaFecha[index] = false;
-    }
-
-    public void eliminarCita(String dia, String hora) throws SQLException {
-        String horas[] = hora.split(":");
-        int codEsp = 0;
-        boolean consultaFecha[] = getConsultas(dia);
-        int horadiv = Integer.parseInt(horas[0]);
-        int minutos = Integer.parseInt(horas[1]);
-
-        int index = ((horadiv - horaI) * 60 + minutos) / this.getTiempoMin();
-        consultaFecha[index] = true;
-    }
-
     /**
      * Retorna los turnos disponibles para atender en ese día concreto.
      *
@@ -315,7 +251,7 @@ public class Medico {
     public int getN_Especialidad() throws SQLException {
         return this.n_especialidad;
     }
-    
+
     /**
      * Este método retorna un ResultSet de SQL de los pacientes asociados a ese
      * médico Si no hay pacientes asociados, no retorna nada.
@@ -446,7 +382,7 @@ public class Medico {
                 + "citas.dia, citas.hora, citas.medico, citas.paciente "
                 + "FROM centromedico.citas, centromedico.paciente "
                 + "WHERE citas.medico = ? AND paciente.DNI = citas.paciente ";
-        
+
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.setInt(1, getN_colegiado());
         ResultSet rs = preparedStmt.executeQuery();
@@ -492,8 +428,9 @@ public class Medico {
      */
     public void escribirFichaPaciente(String DNIPaciente, String codCita,
             String comentario) throws SQLException {
-        Historial historial = new Historial(DNIPaciente, this.n_especialidad,
-                this.con);
+        int codHistoria = getCodigoHistorialBD(DNIPaciente, getN_Especialidad());
+        addFichaNueva(codCita, codHistoria, comentario);
+
     }
 
     /**
@@ -547,7 +484,60 @@ public class Medico {
         historial.modificarFicha(codigoCita, comentario);
     }
 
+    /**
+     * Se busca un row en la tabla Historial donde coincidan DNIPaciente con la
+     * especialidad. Si ya existe retorna su clave. Sino retorna 0.
+     *
+     * @param DNIPaciente
+     * @param especialidad
+     * @return integer
+     * @throws SQLException
+     */
+    private int getCodigoHistorialBD(String DNIPaciente, int especialidad) throws SQLException {
+        Connection reg = con.getCon();
+        String sql = "SELECT Cod_historial FROM centromedico.historial WHERE "
+                + "paciente=? AND especialidad=? ;";
+        preparedStmt = reg.prepareStatement(sql);
+        preparedStmt.setString(1, DNIPaciente);
+        preparedStmt.setInt(2, especialidad);
+        ResultSet rs = preparedStmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("Cod_historial");
+        }
+        return 0;
+    }
+
     public int getN_colegiado() {
         return n_colegiado;
+    }
+
+    private String getDia() {
+        Calendar fechaActual = new GregorianCalendar();
+        return fechaActual.get(Calendar.YEAR) + "-"
+                + (fechaActual.get(Calendar.MONTH) + 1) + "-"
+                + fechaActual.get(Calendar.DAY_OF_MONTH);
+    }
+
+    /**
+     * Retorna la hora actual formato HH:MM.
+     *
+     * @return
+     */
+    private String getHora() {
+        return fecha.get(Calendar.HOUR) + ":" + fecha.get(Calendar.MINUTE);
+    }
+
+    private void addFichaNueva(String codCita, int codHistoria, String comentario) throws SQLException {
+        comentario = "[" + getDia() + ", " + getHora() + ", " + getN_colegiado() +"] " + 
+                comentario;
+        Connection reg = this.con.getCon();
+        String sql = "INSERT INTO centromedico.ficha (Cod_historial, Cod_cita,"
+                + "comentario, Dia, Hora) VALUES (?, ?, ?, '" + getDia()
+                + "', '" + getHora() + "')";
+        preparedStmt = reg.prepareStatement(sql);
+        preparedStmt.setInt(1, codHistoria);
+        preparedStmt.setString(2, codCita);
+        preparedStmt.setString(3, comentario);
+        preparedStmt.execute();
     }
 }

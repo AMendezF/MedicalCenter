@@ -305,7 +305,6 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
 
     private void buttonEscribirDiagnosticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEscribirDiagnosticoActionPerformed
             try {
-                System.out.println(comentarioTextArea.getText());
                 medico.escribirFichaPaciente(nDNI, cCita, comentarioTextArea.getText());
             } catch (SQLException ex) {
                 Logger.getLogger(EscribirFichaPaciente.class.getName()).log(Level.SEVERE, null, ex);
