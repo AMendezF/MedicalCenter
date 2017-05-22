@@ -33,6 +33,7 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
     public EscribirFichaPaciente(Medico medico) {
         initComponents();
         this.medico = medico;
+        mostrarDatos();
     }
 
     /**
@@ -257,6 +258,10 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mostrarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarCitasActionPerformed
+        mostrarDatos();
+    }//GEN-LAST:event_mostrarCitasActionPerformed
+
+    private void mostrarDatos() {
         try {
             ResultSet rs = medico.mostrarCitasMedico();
             TableAdaptor aux = new TableAdaptor(rs);
@@ -272,8 +277,8 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_mostrarCitasActionPerformed
-
+    }
+    
     private void desplegableColumnasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableColumnasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_desplegableColumnasActionPerformed

@@ -35,6 +35,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
     public mostrarCitasMedico(Medico medico) {
         initComponents();
         this.medico = medico;
+        mostrarDatos();
     }
 
     /**
@@ -128,7 +129,10 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
     }//GEN-LAST:event_desplegableColumnasActionPerformed
 
     private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
+        mostrarDatos();
+    }//GEN-LAST:event_BotonMostrarActionPerformed
 
+    private void mostrarDatos() {
         try {
             ResultSet rs = medico.mostrarCitasMedico();
             TableAdaptor aux = new TableAdaptor(rs);
@@ -137,14 +141,14 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
             tablaInfo.setModel(tabla);
             int numColums = tabla.getColumnCount();
             this.columnas = new String[numColums];
-            for (int i = 0 ; i < numColums ; i++){
+            for (int i = 0; i < numColums; i++) {
                 this.columnas[i] = tabla.getColumnName(i);
             }
             desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
         } catch (SQLException ex) {
             Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_BotonMostrarActionPerformed
+    }
 
     private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
         // TODO add your handling code here:
@@ -168,12 +172,12 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
 
     public void filtro() {
         int colum = 0;
-        while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])){
-            colum++;       
+        while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
+            colum++;
         }
         trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
     }
-    
+
     public DefaultTableModel getTabla() {
         return this.tabla;
     }
@@ -190,4 +194,5 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
     // End of variables declaration//GEN-END:variables
+
 }
