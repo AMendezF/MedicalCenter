@@ -30,10 +30,13 @@ public class GestionarPacientes extends javax.swing.JPanel {
 	private Paciente paciente;
 	private MenuDePaciente menuDePaciente;
 	private TableRowSorter trsFiltro;
+	private DefaultTableModel tabla;
+	private String[] columnas;
 
 	public GestionarPacientes(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		actualizarDatos();
 	}
 
 	/**
@@ -206,6 +209,22 @@ public class GestionarPacientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 	/**
+	 * Carga un resulSet y lo muestra en la tabla
+	 */
+	private void actualizarDatos() {
+		try {
+			ResultSet rs = gestor.mostrarPacientesTodos();
+			TableAdaptor aux = new TableAdaptor(rs);
+			setTabla(aux.getValue());
+			DefaultTableModel tabla = getTabla();
+			tablaInfo.setModel(tabla);
+			cargarDesplegables();
+		} catch (SQLException ex) {
+			Logger.getLogger(AñadirPaciente.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	/**
 	 * Coge un paciente que exista en la base de datos y monta menuPaciente
 	 *
 	 * @param evt
@@ -239,13 +258,7 @@ public class GestionarPacientes extends javax.swing.JPanel {
     }//GEN-LAST:event_textFieldBuscarKeyTyped
 
     private void buttonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarActionPerformed
-		try {
-			ResultSet rs = gestor.mostrarPacientes();
-			tablaInfo.setModel(buildTableModel(rs));
-
-		} catch (SQLException ex) {
-			Logger.getLogger(GestionarPacientes.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		actualizarDatos();
     }//GEN-LAST:event_buttonMostrarActionPerformed
 
     private void tablaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInfoMouseClicked
@@ -255,56 +268,6 @@ public class GestionarPacientes extends javax.swing.JPanel {
 			fieldDNI.setText((String) tablaInfo.getValueAt(row, 0));
 		}
     }//GEN-LAST:event_tablaInfoMouseClicked
-
-	/**
-	 * Crea el modelo para el jTable
-	 *
-	 * @param rs
-	 * @return
-	 * @throws SQLException
-	 */
-	public DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
-		java.sql.ResultSetMetaData metaData = rs.getMetaData();
-
-		// names of columns
-		Vector<String> columnNames = new Vector<String>();
-		int columnCount = metaData.getColumnCount();
-		for (int column = 1; column <= columnCount; column++) {
-			columnNames.add(metaData.getColumnName(column));
-		}
-
-		// data of the table
-		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-		while (rs.next()) {
-			Vector<Object> vector = new Vector<Object>();
-			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-				vector.add(rs.getObject(columnIndex));
-			}
-			data.add(vector);
-		}
-
-		return new DefaultTableModel(data, columnNames);
-	}
-
-	/**
-	 * Sirve para filtar en el jTable
-	 */
-	public void filtro() {
-		int columnaABuscar = 0;
-		if (desplegableColumnas.getSelectedItem().equals("DNI")) {
-			columnaABuscar = 0;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Nombre")) {
-			columnaABuscar = 1;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Apellidos")) {
-			columnaABuscar = 2;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Seguro")) {
-			columnaABuscar = 3;
-		}
-		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), columnaABuscar));
-	}
 
 	/**
 	 * Crea un menu de paciente
@@ -322,6 +285,38 @@ public class GestionarPacientes extends javax.swing.JPanel {
 		mostrarDatos.revalidate();
 		mostrarDatos.repaint();
 	}
+
+	public DefaultTableModel getTabla() {
+		return this.tabla;
+	}
+
+	public void setTabla(DefaultTableModel tabla) {
+		this.tabla = tabla;
+	}
+
+	/**
+	 * Carga el desplegable de paciente a partir de la tabla
+	 */
+	private void cargarDesplegables() {
+		int numColums = tablaInfo.getColumnCount();
+		this.columnas = new String[numColums];
+		for (int i = 0; i < numColums; i++) {
+			this.columnas[i] = tablaInfo.getColumnName(i);
+		}
+		desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
+	}
+
+	/**
+	 * Filtro necesario para manejar la informacion
+	 */
+	public void filtro() {
+		int colum = 0;
+		while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
+			colum++;
+		}
+		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
+	}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCogerPaciente;
