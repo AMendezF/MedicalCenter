@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class Gestor {
 
+    int especialidadMaxMedicos = 2;
+
 //    private final int maxMedicosActivos = 3;
     private final Conexion conexion;
 
@@ -154,7 +156,7 @@ public class Gestor {
      * SQL.
      */
     public String[] getEspecialidades() throws SQLException {
-        ArrayList<String> especialidades = new ArrayList<>();
+        ArrayList<String> especialidades = new ArrayList();
         String sql;
         ResultSet resultSet;
 
@@ -166,6 +168,26 @@ public class Gestor {
             especialidades.add(resultSet.getString("nombre"));
         }
         return especialidades.toArray(new String[especialidades.size()]);
+    }
+
+    public boolean isEspecialidadMaxMedicos(String especialidad) throws SQLException {
+        boolean maxMedicos = false;
+        String sql;
+        ResultSet resultSet;
+
+        sql = "SELECT COUNT(m.n_colegiado) "
+                + "FROM centromedico.medico m, centromedico.especialidad e "
+                + "WHERE e.cod_especialidad=m.especialidad "
+                + "AND e.nombre='" + especialidad + "'";
+        resultSet = conexion.makeQuery(sql);
+
+        while (resultSet.next()) {
+            if (resultSet.getInt(1) >= this.especialidadMaxMedicos) {
+                maxMedicos = true;
+            }
+        }
+
+        return maxMedicos;
     }
 
     /**
@@ -181,7 +203,7 @@ public class Gestor {
      * la especialidad de la BD.
      */
     public String[] getHorarioEspecialidadByDay(String especialidad, String diaDeLaSemana) throws SQLException {
-        List<String> horario = new ArrayList<String>();
+        List<String> horario = new ArrayList();
         String sql;
         ResultSet resultSet;
 
@@ -272,7 +294,8 @@ public class Gestor {
     }
 
     /**
-     * Inserta un nuevo médico en la base de datos.
+     * Inserta un nuevo médico en la base de datos, si no ha sobrepasado el
+     * límite de médicos por especialidad.
      *
      * @param medico Recibe un array con los datos del médico. El formato con el
      * que se ha de rellenar el array es {n_colegiado, nombre, apellidos,
@@ -282,35 +305,41 @@ public class Gestor {
      */
     public boolean addMedico(String[] medico) {
         boolean added = true;
-        String sql;
-        String codMedico = medico[0];
+        String especialidad = medico[5];
 
-        sql = "INSERT "
-                + "INTO centromedico.medico "
-                + "(n_colegiado, nombre, apellidos, horario, tiempo_min, especialidad)"
-                + "VALUES "
-                + "('" + codMedico + "', "
-                + "'" + medico[1] + "', "
-                + "'" + medico[2] + "', "
-                + "'" + medico[3] + "', "
-                + "'" + medico[4] + "', "
-                + "'" + medico[5] + "')";
         try {
-            conexion.makeUpdate(sql);
+            if (!isEspecialidadMaxMedicos(especialidad)) {
+                String sql;
+                String codMedico = medico[0];
+
+                sql = "INSERT"
+                        + "INTO centromedico.medico "
+                        + "(n_colegiado, nombre, apellidos, horario, tiempo_min, especialidad)"
+                        + "VALUES"
+                        + "("
+                        + "'" + codMedico + ", "
+                        + "'" + medico[1] + ", "
+                        + "'" + medico[2] + ", "
+                        + "'" + medico[3] + ", "
+                        + "'" + medico[4] + ", "
+                        + "(SELECT e.cod_especialidad "
+                        + "FROM centromedico.especialidad e "
+                        + "WHERE e.nombre='" + especialidad + "')"
+                        + ")";
+                conexion.makeUpdate(sql);
+
+                // TODO
+//                if (!conexion.existeUser(codMedico)) {
+//                    conexion.crearUserBD(codMedico);
+//                    conexion.setPermisosBD(codMedico);
+//                }
+            } else {
+                added = false;
+            }
         } catch (SQLException e) {
             added = false;
         }
 
-        // TODO
-//        try {
-//            if(!conexion.existeUser(codMedico)){
-//                conexion.crearUserBD(codMedico);
-//                conexion.setPermisosBD(codMedico);
-//                
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         return added;
     }
 
@@ -374,7 +403,7 @@ public class Gestor {
      * @throws SQLException Devuelve error si no se pudo realizar la consulta
      * SQL.
      */
-    public String[] getConsultasMedico(String fecha, String especialidad, String horario, String numColegiado) throws SQLException {
+    public String[] getConsultasDisponiblesMedico(String fecha, String especialidad, String horario, String numColegiado) throws SQLException {
         Medico medico = getMedico(numColegiado);
 
         return medico.getConsultasDisponibles(fecha, especialidad, horario);
@@ -385,13 +414,21 @@ public class Gestor {
      *
      * @param numColegiado Número identificativo del médico que se desea
      * sustituir.
-     * @param medicoSustito Número identificativo del médico que sustituye al
-     * otro médico.
+     * @param medicoSustituto Recibe un array con los datos del médico
+     * sustituto. El formato con el que se ha de rellenar el array es
+     * {n_colegiado, nombre, apellidos, horario, tiempo_min, especialidad}
      * @return true = añadido a la BD, false = fallo al añadir
      */
-    public Boolean sustituirMedico(String numColegiado, String[] medicoSustito) {
-        Boolean sustituido = true;
-        //TODO
+    public Boolean sustituirMedico(String numColegiado, String[] medicoSustituto) {
+        Boolean sustituido = false;
+
+        if (removeMedico(numColegiado)) {
+            if (addPaciente(medicoSustituto)) {
+                if (trasladarCitas(numColegiado, medicoSustituto[0])) {
+                    sustituido = true;
+                }
+            }
+        }
 
         return sustituido;
     }
@@ -675,6 +712,128 @@ public class Gestor {
     }
 
     /**
+     * Comprueba si existe un historial, en la BD, perteneciente a un paciente y
+     * a una especialidad.
+     *
+     * @param DNI Código identificativo de un paciente.
+     * @param especialidad Nombre de la especialidad.
+     * @return true = existe el historial, false = no existe el historial
+     * @throws SQLException Devuelve error si no se pudo realizar la consulta
+     * SQL.
+     */
+    public Boolean existeHistorial(String DNI, String especialidad) throws SQLException {
+        Boolean existe = false;
+        String sql;
+        ResultSet resultSet;
+
+        sql = "SELECT COUNT(*)"
+                + "FROM centromedico.historial h, centromedico.especialidad e "
+                + "WHERE e.cod_especialidad=h.especialidad "
+                + "AND e.nombre='" + especialidad + "'"
+                + "AND h.paciente='" + DNI + "'";
+        resultSet = conexion.makeQuery(sql);
+
+        while (resultSet.next()) {
+            if (resultSet.getInt(1) > 0) {
+                existe = true;
+            }
+        }
+
+        return existe;
+    }
+
+    /**
+     * Añade un historial de una especialidad perteneciente a un paciente, a la
+     * BD.
+     *
+     * @param DNI Código identificativo de un paciente.
+     * @param especialidad Nombre de la especialidad.
+     * @return true = se ha añadido, false = no se ha añadido
+     */
+    public Boolean addHistorial(String DNI, String especialidad) {
+        Boolean added;
+        String sql;
+
+        sql = "INSERT "
+                + "INTO centromedico.historial "
+                + "(paciente, especialidad)"
+                + "VALUES "
+                + "("
+                + "'" + DNI + "', "
+                + "(SELECT e.cod_especialidad "
+                + "FROM centromedico.especialidad e "
+                + "WHERE e.nombre='" + especialidad + "')"
+                + ")";
+        try {
+            added = conexion.makeExecute(sql);
+
+        } catch (SQLException e) {
+            added = false;
+        }
+
+        return added;
+    }
+
+    /**
+     * Añade una cita de un paciente en una fecha, para una hora con un médico
+     * en concreto.
+     *
+     * @param cita Colección de valores con el siguiente formato: El formato a
+     * recibir es {fecha, hora, codMedico, especialidad, DNI}.
+     * @return true = se ha añadido, false = no se ha añadido
+     */
+    public Boolean addCita(String[] cita) {
+        Boolean added;
+        String sql;
+        String especialidad = cita[3];
+        String DNI = cita[4];
+
+        sql = "INSERT "
+                + "INTO centromedico.citas "
+                + "(dia, hora, medico, especialidad, paciente)"
+                + "VALUES "
+                + "("
+                + "'" + cita[0] + "', "
+                + "'" + cita[1] + "', "
+                + "'" + cita[2] + "', "
+                + "(SELECT e.cod_especialidad "
+                + "FROM centromedico.especialidad e "
+                + "WHERE e.nombre='" + especialidad + "')"
+                + "'" + DNI + "')";
+        try {
+            added = conexion.makeExecute(sql);
+            if (!existeHistorial(DNI, especialidad)) {
+                addHistorial(DNI, especialidad);
+            }
+        } catch (SQLException e) {
+            added = false;
+        }
+
+        return added;
+    }
+
+    /**
+     * Elimina una cita de un paciente.
+     *
+     * @param codCita 
+     * @return true = eliminado, false = fallo al eliminar
+     */
+    public boolean removeCita(String codCita) {
+        boolean removed;
+        String sql;
+        
+        sql = "DELETE FROM centromedico.citas "
+                + "WHERE cod_cita='" + codCita + "'";
+        try {
+        removed = conexion.makeExecute(sql);
+        } catch (SQLException e) {
+            removed = false;
+        }
+
+        return removed;
+    }
+
+    /**
      * Comprueba que el DNI es verdadero, ya sea nacional o extranjero.
      *
      * @param DNI DNI que se desea comprobar en formato texto.
@@ -727,15 +886,21 @@ public class Gestor {
         return esTexto;
     }
 
-//    /**
-//     * Elimina una cita de un paciente.
-//     *
-//     * @param paciente Paciente del que se desea borrar una cita.
-//     * @return true = eliminado, false = fallo al eliminar
-//     */
-//    public boolean anularCita(String codCita) {
-//	 boolean eliminado = false;
-//       // TODO
-//	 return eliminado;
-//	 }
+    /**
+     * Método para discernir si un String contiene o no únicamente carácteres
+     * numéricos, es decir, no contiene letras, símbolos...
+     *
+     * @param campoNumerico
+     * @return true = solo contiene carácteres numéricos, false = contiene
+     * carácteres no numéricos
+     */
+    public boolean esNumerico(String campoNumerico) {
+        boolean esNumerico = false;
+
+        if (campoNumerico.matches("[^\\D.,<>_´`+¿?!¡@#$%&=\\\\|\"#·¬/();:-{}*]{1,}")) {
+            esNumerico = true;
+        }
+
+        return esNumerico;
+    }
 }
