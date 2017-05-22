@@ -1,6 +1,5 @@
 package GUI.Gestor.Paciente;
 
-
 import clases.Conexion;
 import clases.Gestor;
 import clases.Paciente;
@@ -11,7 +10,6 @@ import java.sql.Connection;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Juan
@@ -43,9 +41,10 @@ public class mostrarCitas extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         buttonMostrarCitas = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaInfo = new javax.swing.JTable();
         buttonCancelarCita = new javax.swing.JButton();
         fieldBorrarCita = new javax.swing.JTextField();
+        borrarCita = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -54,7 +53,7 @@ public class mostrarCitas extends javax.swing.JPanel {
 
         buttonMostrarCitas.setText("Mostrar citas");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -64,10 +63,32 @@ public class mostrarCitas extends javax.swing.JPanel {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaInfo.getTableHeader().setReorderingAllowed(false);
+        tablaInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaInfoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaInfo);
 
         buttonCancelarCita.setText("Cancelar cita");
+        buttonCancelarCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelarCitaActionPerformed(evt);
+            }
+        });
+
+        borrarCita.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        borrarCita.setText("Selecciona una cita");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -79,8 +100,10 @@ public class mostrarCitas extends javax.swing.JPanel {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(fieldBorrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(borrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 821, Short.MAX_VALUE))
@@ -95,7 +118,8 @@ public class mostrarCitas extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldBorrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fieldBorrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(borrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
                 .addContainerGap())
@@ -119,14 +143,27 @@ public class mostrarCitas extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tablaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInfoMouseClicked
+		int row = tablaInfo.rowAtPoint(evt.getPoint());
+		int col = tablaInfo.columnAtPoint(evt.getPoint());
+		if (row >= 0 && col >= 0) {
+			borrarCita.setText((String) tablaInfo.getValueAt(row, 0));
+		}
+    }//GEN-LAST:event_tablaInfoMouseClicked
+
+    private void buttonCancelarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarCitaActionPerformed
+		//borrarCita(borrarCita.getText());
+    }//GEN-LAST:event_buttonCancelarCitaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel borrarCita;
     private javax.swing.JButton buttonCancelarCita;
     private javax.swing.JButton buttonMostrarCitas;
     private javax.swing.JTextField fieldBorrarCita;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaInfo;
     // End of variables declaration//GEN-END:variables
 }

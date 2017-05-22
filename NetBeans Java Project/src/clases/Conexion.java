@@ -1,5 +1,8 @@
 package clases;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,7 +20,7 @@ public class Conexion {
 	private static String password = "";
 	private static final String url = "jdbc:mysql://localhost:3306/";
 	private static final String dbName = "centromedico";
-	private PreparedStatement preparedStmt;
+	//private PreparedStatement preparedStmt;
 
 	public Conexion(String usuario, char[] cPassword) {
 		this.connection = null;
@@ -30,10 +33,11 @@ public class Conexion {
 
 			if (getCon() != null) {
 				System.out.println("Conexion establecida");
-
-				if (getUser().equals("root") && !existeBD()) {
-					crearBD();
-				}
+				/*
+				 if (getUser().equals("root") && !existeBD()) {
+				 crearBD();
+				 }
+				 */
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println("Error al conectar " + e);
@@ -142,6 +146,47 @@ public class Conexion {
 			this.password += cPassword[i];
 		}
 	}
+	
+	/**
+	 * Crea un backup de la base de datos especificada
+	 * @param nombre
+	 * @throws SQLException
+	 * @throws IOException 
+	 */
+	public void crearBackup(String nombre) throws SQLException, IOException {
+		try {
+			Process p = Runtime
+					.getRuntime()
+					.exec("C:\\xampp\\mysql\\mysqldump -u root " + nombre);
+
+			Process d = Runtime
+					.getRuntime()
+					.exec("C:\\xampp\\xampp_shell.bat\\mysqldump -u root " + nombre);
+
+			InputStream is = p.getInputStream();
+			FileOutputStream fos = new FileOutputStream(nombre + "_backup.sql");
+			byte[] buffer = new byte[1000];
+
+			int leido = is.read(buffer);
+			while (leido > 0) {
+				fos.write(buffer, 0, leido);
+				leido = is.read(buffer);
+			}
+
+			fos.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/** 
+	 * Carga un fichero.sql en una base de datos del sistema
+	 * @param fichero 
+	 */
+	public void cargarBackup(String fichero) {
+
+	}
 
 	/**
 	 * Devuelve true si existe el medico determinado por el String "nColegiado".
@@ -188,6 +233,15 @@ public class Conexion {
 	}
 
 	/**
+	 * Destruye la base de datos
+	 */
+	public void destruirBD() throws SQLException {
+		String sql = "DROP database centromedico;";
+		makeExecute(sql);   // CREAR LA BD
+		System.out.println("Base de datos destruida correctamente");
+	}
+
+	/**
 	 * Crea la base de datos Usa otras funciones para rellenarla y añadirle
 	 * nuevas utilidades
 	 *
@@ -196,11 +250,12 @@ public class Conexion {
 	public void crearBD() throws SQLException {
 		Connection reg = connection;
 		System.out.println("Cargando los datos ");
+
 		String sql = "CREATE DATABASE IF NOT EXISTS centromedico;";
-		preparedStmt = reg.prepareStatement(sql);
-		preparedStmt.execute(); //CREAR LA BD
+		makeExecute(sql);   // CREAR LA BD
 		System.out.println("Base de datos creada correctamente");
-		crearTablas(reg);
+
+		crearTablas();
 		crearProdecimientos();
 		insertarDatos();
 		probarFuncionamiento(reg);
@@ -213,7 +268,7 @@ public class Conexion {
 	 * @param reg
 	 * @throws SQLException
 	 */
-	private void crearTablas(Connection reg) throws SQLException {
+	private void crearTablas() throws SQLException {
 		String crearCitas = "CREATE TABLE IF NOT EXISTS centromedico.`citas` (\n"
 				+ "  `Cod_cita` varchar(20) NOT NULL,\n"
 				+ "  `Dia` date NOT NULL,\n"
@@ -226,12 +281,10 @@ public class Conexion {
 				+ "   KEY `citas02` (`Medico`),\n"
 				+ "   KEY `citas03` (`Paciente`)"
 				+ ")";
-		preparedStmt = reg.prepareStatement(crearCitas);
-		preparedStmt.execute();
+		makeExecute(crearCitas);
 
 		String drop = "DROP TABLE IF EXISTS centromedico.`especialidad`";
-		preparedStmt = reg.prepareStatement(drop);
-		preparedStmt.execute();
+		makeExecute(drop);
 
 		String crearEspecialidades = "CREATE TABLE IF NOT EXISTS centromedico.`especialidad` (\n"
 				+ "  `Cod_especialidad` int(11) NOT NULL,\n"
@@ -284,6 +337,8 @@ public class Conexion {
 				+ "  `Nombre` varchar(25) NOT NULL,\n"
 				+ "  `Apellidos` varchar(50) NOT NULL,\n"
 				+ "  `CompSegur` varchar(50) DEFAULT NULL,\n"
+				+ "  `Telefono`  varchar(15) DEFAULT NULL, \n"
+				+ "  `Direccion` varchar(100) DEFAULT NULL, \n"
 				+ "  PRIMARY KEY (`DNI`))";
 		makeExecute(crearPaciente);
 
@@ -292,8 +347,53 @@ public class Conexion {
 				+ "  `Nombre` varchar(25) NOT NULL,\n"
 				+ "  `Apellidos` varchar(50) NOT NULL,\n"
 				+ "  `CompSegur` varchar(50) DEFAULT NULL,\n"
+				+ "  `Telefono`  varchar(15) DEFAULT NULL, \n"
+				+ "  `Direccion` varchar(100) DEFAULT NULL, \n"
 				+ "  PRIMARY KEY (`DNI`))";
 		makeExecute(crearPacienteBorrado);
+
+		String crearHorarioLunes = "CREATE TABLE IF NOT EXISTS centromedico.`horario_lunes` ("
+				+ "`Cod_especialidad` int(11) NOT NULL, "
+				+ "`Horario` varchar(14) NOT NULL, "
+				+ "KEY `horario01` (`Cod_especialidad`))";
+		makeExecute(crearHorarioLunes);
+
+		String crearHorarioMartes = "CREATE TABLE IF NOT EXISTS centromedico.`horario_martes` ("
+				+ "`Cod_especialidad` int(11) NOT NULL, "
+				+ "`Horario` varchar(14) NOT NULL,"
+				+ "KEY `horario01` (`Cod_especialidad`))";
+		makeExecute(crearHorarioMartes);
+
+		String crearHorarioMiercoles = "CREATE TABLE IF NOT EXISTS centromedico.`horario_miercoles` ("
+				+ "`Cod_especialidad` int(11) NOT NULL, "
+				+ "`Horario` varchar(14) NOT NULL,"
+				+ "KEY `horario01` (`Cod_especialidad`))";
+		makeExecute(crearHorarioMiercoles);
+
+		String crearHorarioJueves = "CREATE TABLE IF NOT EXISTS centromedico.`horario_jueves` ("
+				+ "`Cod_especialidad` int(11) NOT NULL, "
+				+ "`Horario` varchar(14) NOT NULL,"
+				+ "KEY `horario01` (`Cod_especialidad`))";
+		makeExecute(crearHorarioJueves);
+
+		String crearHorarioViernes = "CREATE TABLE IF NOT EXISTS centromedico.`horario_viernes` ("
+				+ "`Cod_especialidad` int(11) NOT NULL, "
+				+ "`Horario` varchar(14) NOT NULL,"
+				+ "KEY `horario01` (`Cod_especialidad`))";
+		makeExecute(crearHorarioViernes);
+
+		String crearHorarioSabado = "CREATE TABLE IF NOT EXISTS centromedico.`horario_sabado` ("
+				+ "`Cod_especialidad` int(11) NOT NULL, "
+				+ "`Horario` varchar(14) NOT NULL,"
+				+ "KEY `horario01` (`Cod_especialidad`))";
+		makeExecute(crearHorarioSabado);
+
+		String crearHorarioDomingo = "CREATE TABLE IF NOT EXISTS centromedico.`horario_domingo` ("
+				+ "`Cod_especialidad` int(11) NOT NULL, "
+				+ "`Horario` varchar(14) NOT NULL,"
+				+ "KEY `horario01` (`Cod_especialidad`))";
+		makeExecute(crearHorarioDomingo);
+
 		System.out.println("Tablas creadas correctamente");
 	}
 
@@ -309,14 +409,14 @@ public class Conexion {
 	private void crearProdecimientos() throws SQLException {
 		// Antes de borrar un paciente activo, lo inserta en la tabla paciente_borrado
 		String insertarEnPacienteBorrado = "CREATE TRIGGER centromedico.insertar_en_paciente_borrado BEFORE DELETE ON centromedico.paciente FOR EACH ROW "
-				+ " INSERT INTO centromedico.paciente_borrado (DNI, Nombre, Apellidos, CompSegur)\n"
-				+ " values (OLD.DNI, OLD.Nombre, OLD.Apellidos, OLD.CompSegur);";
+				+ " INSERT INTO centromedico.paciente_borrado (DNI, Nombre, Apellidos, CompSegur, Telefono, Direccion)\n"
+				+ " values (OLD.DNI, OLD.Nombre, OLD.Apellidos, OLD.CompSegur, OLD.Telefono, OLD.Direccion);";
 		makeUpdate(insertarEnPacienteBorrado);
 
 		// Antes de borrar un paciente inactivo, lo inserta en la tabla paciente
 		String reinsertarEnPaciente = "CREATE TRIGGER centromedico.reinsertar_en_paciente BEFORE DELETE ON centromedico.paciente_borrado FOR EACH ROW "
-				+ " INSERT INTO paciente (DNI, Nombre, Apellidos, CompSegur)\n"
-				+ " values (OLD.DNI, OLD.Nombre, OLD.Apellidos, OLD.CompSegur);";
+				+ " INSERT INTO paciente (DNI, Nombre, Apellidos, CompSegur, Telefono, Direccion)\n"
+				+ " values (OLD.DNI, OLD.Nombre, OLD.Apellidos, OLD.CompSegur, OLD.Telefono, OLD.Direccion);";
 		makeUpdate(reinsertarEnPaciente);
 
 		// Despues de borrar un paciente activo, borra el historial de dicho paciente
@@ -379,17 +479,17 @@ public class Conexion {
 				+ "(129589, 'Román', 'Perez', 'Tarde', 15, 6)";
 		makeUpdate(iMedicos);
 
-		String iPacientes = "REPLACE INTO centromedico.paciente (DNI, Nombre, Apellidos, CompSegur) VALUES\n"
-				+ "('57211499B', 'Juan Antonio', 'Huesa Aranda', 'Seguros Ocaso'),\n"
-				+ "('15326776J', 'Felipe', 'Solano Carrillo', 'NULL'),\n"
-				+ "('26352431C', 'Mariano', 'Jimenez Poleo', 'Mafre'),\n"
-				+ "('52323400X', 'Lucia', 'Aranda Huesa', 'NULL'),\n"
-				+ "('67511200J', 'Berta', 'Garcia Blas', 'Mutua'),\n"
-				+ "('23456123X', 'Leonardo', 'Matamoros Sanz', 'Adeslas'),\n"
-				+ "('34126666W', 'Alejandro', 'Mendes Guela', 'Adeslas'),\n"
-				+ "('19951996W', 'Pablo', 'Meson De Toro', 'NULL'),\n"
-				+ "('23488209B', 'Ismael', 'Garcia Garcia', 'Sanitas'),\n"
-				+ "('00675833R', 'Jose Maria', 'Gimeno De Lucas', 'Sanitas')";
+		String iPacientes = "REPLACE INTO centromedico.paciente (DNI, Nombre, Apellidos, CompSegur, Telefono, Direccion) VALUES\n"
+				+ "('57211499B', 'Juan Antonio', 'Huesa Aranda', 'Seguros Ocaso', '6292743542', 'Calle Augusto N 20, Guadalajara'),\n"
+				+ "('15326776J', 'Felipe', 'Solano Carrillo', 'NULL', '657575757', 'Bulevar de Amancio N 4, 3ºB, Madrid'),\n"
+				+ "('26352431C', 'Mariano', 'Jimenez Poleo', 'Mafre', 'NULL', 'NULL'),\n"
+				+ "('52323400X', 'Lucia', 'Aranda Huesa', 'NULL', 'NULL', 'Calle Alcala N 228, 9ºB, Madrid'),\n"
+				+ "('67511200J', 'Berta', 'Garcia Blas', 'Mutua', 'NULL', 'NULL'),\n"
+				+ "('23456123X', 'Leonardo', 'Matamoros Sanz', 'Adeslas', 'NULL', 'Calle Augusto N 10, Guadalajara'),\n"
+				+ "('34126666W', 'Alejandro', 'Mendes Guela', 'Adeslas', '614879604', 'NULL'),\n"
+				+ "('19951996W', 'Pablo', 'Meson De Toro', 'NULL', '621999999', 'Calle Guadalajara N 7, Toledo'),\n"
+				+ "('23488209B', 'Ismael', 'Garcia Garcia', 'Sanitas', '622135678', 'NULL'),\n"
+				+ "('00675833R', 'Jose Maria', 'Gimeno De Lucas', 'Sanitas', '612345674', 'NULL')";
 		makeUpdate(iPacientes);
 
 		String iHistorial = "INSERT INTO centromedico.historial (Paciente, Especialidad) VALUES \n"
@@ -405,6 +505,97 @@ public class Conexion {
 				+ "('34126666W', 4)";
 		makeUpdate(iHistorial);
 
+		String horarioLunes = "INSERT INTO centromedico.horario_lunes (Cod_especialidad, Horario) VALUES "
+				+ "(1, 'Mañana'), "
+				+ "(2, 'Mañana'), "
+				+ "(3, 'Tarde'), "
+				+ "(4, 'Tarde'), "
+				+ "(5, 'Mañana'), "
+				+ "(5, 'Tarde'), "
+				+ "(6, 'Mañana'), "
+				+ "(6, 'Tarde'), "
+				+ "(7, 'Mañana'), "
+				+ "(7, 'Tarde')";
+		makeUpdate(horarioLunes);
+
+		String horarioMartes = "INSERT INTO centromedico.horario_martes (Cod_especialidad, Horario) VALUES "
+				+ "(1, 'Tarde'), "
+				+ "(2, 'Tarde'), "
+				+ "(3, 'Mañana'), "
+				+ "(3, 'Tarde'), "
+				+ "(4, 'Mañana'), "
+				+ "(4, 'Tarde'), "
+				+ "(5, 'Mañana'), "
+				+ "(5, 'Tarde'), "
+				+ "(6, 'Mañana'), "
+				+ "(7, 'Mañana')";
+		makeUpdate(horarioMartes);
+
+		String horarioMiercoles = "INSERT INTO centromedico.horario_miercoles (Cod_especialidad, Horario) VALUES "
+				+ "(1, 'Mañana'), "
+				+ "(1, 'Tarde'), "
+				+ "(2, 'Mañana'), "
+				+ "(2, 'Tarde'), "
+				+ "(3, 'Mañana'), "
+				+ "(4, 'Mañana'), "
+				+ "(4, 'Tarde'), "
+				+ "(5, 'Mañana'), "
+				+ "(6, 'Tarde'), "
+				+ "(7, 'Tarde')";
+		makeUpdate(horarioMiercoles);
+
+		String horarioJueves = "INSERT INTO centromedico.horario_jueves (Cod_especialidad, Horario) VALUES "
+				+ "(1, 'Mañana'), "
+				+ "(2, 'Mañana'), "
+				+ "(2, 'Tarde'), "
+				+ "(3, 'Mañana'), "
+				+ "(3, 'Tarde'), "
+				+ "(4, 'Mañana'), "
+				+ "(5, 'Tarde'), "
+				+ "(6, 'Mañana'), "
+				+ "(6, 'Tarde'), "
+				+ "(7, 'Tarde')";
+		makeUpdate(horarioJueves);
+
+		String horarioViernes = "INSERT INTO centromedico.horario_viernes (Cod_especialidad, Horario) VALUES "
+				+ "(1, 'Tarde'), "
+				+ "(2, 'Mañana'), "
+				+ "(2, 'Tarde'), "
+				+ "(3, 'Mañana'), "
+				+ "(4, 'Mañana'), "
+				+ "(4, 'Tarde'), "
+				+ "(5, 'Mañana'), "
+				+ "(6, 'Tarde'), "
+				+ "(7, 'Mañana'), "
+				+ "(7, 'Tarde')";
+		makeUpdate(horarioViernes);
+
+		String horarioSabado = "INSERT INTO centromedico.horario_sabado (Cod_especialidad, Horario) VALUES "
+				+ "(1, 'Mañana'), "
+				+ "(1, 'Tarde'), "
+				+ "(2, 'Mañana'), "
+				+ "(3, 'Mañana'), "
+				+ "(3, 'Tarde'), "
+				+ "(4, 'Mañana'), "
+				+ "(5, 'Mañana'), "
+				+ "(5, 'Tarde'), "
+				+ "(6, 'Tarde'), "
+				+ "(7, 'Tarde')";
+		makeUpdate(horarioSabado);
+
+		String horarioDomingo = "INSERT INTO centromedico.horario_domingo (Cod_especialidad, Horario) VALUES "
+				+ "(1, 'Mañana'), "
+				+ "(1, 'Tarde'), "
+				+ "(2, 'Tarde'), "
+				+ "(3, 'Tarde'), "
+				+ "(4, 'Mañana'), "
+				+ "(4, 'Tarde'), "
+				+ "(5, 'Mañana'), "
+				+ "(5, 'Tarde'), "
+				+ "(6, 'Mañana'), "
+				+ "(7, 'Mañana')";
+		makeUpdate(horarioDomingo);
+
 		System.out.println("Datos insertados correctamente");
 	}
 
@@ -417,6 +608,7 @@ public class Conexion {
 	 * @throws SQLException
 	 */
 	private void probarFuncionamiento(Connection reg) throws SQLException {
+		PreparedStatement preparedStmt;
 		String primerPaciente = "23488209B";
 		String segundoPaciente = "34126666W";
 		String tercerPaciente = "15326776J";
@@ -433,7 +625,7 @@ public class Conexion {
 		preparedStmt = reg.prepareStatement(borrarPaciente);
 		preparedStmt.setString(1, tercerPaciente);
 		preparedStmt.executeUpdate();
-		
+
 		String reinsertarPaciente = "delete from centromedico.paciente_borrado where DNI = ?";
 
 		preparedStmt = reg.prepareStatement(reinsertarPaciente);
@@ -470,6 +662,7 @@ public class Conexion {
 
 		String createUser;
 		String privilegiosUser;
+		PreparedStatement preparedStmt;
 		for (int i = 0; i < nColegiado.size(); i++) {
 			if (!existeUser(nColegiado.get(i))) {
 				createUser = "create user ?@localhost identified by ?;";
@@ -489,8 +682,8 @@ public class Conexion {
 }
 
 /*
-select * from centromedico.paciente;
-select * from centromedico.paciente_borrado;
-select * from centromedico.historial;
-select * from centromedico.historial_borrado;
-*/
+ select * from centromedico.paciente;
+ select * from centromedico.paciente_borrado;
+ select * from centromedico.historial;
+ select * from centromedico.historial_borrado;
+ */

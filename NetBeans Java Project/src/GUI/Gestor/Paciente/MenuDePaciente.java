@@ -24,7 +24,6 @@ public class MenuDePaciente extends javax.swing.JPanel {
 	private Gestor gestor;
 	private mostrarCitas mostrarCitas;
 	private PedirCita pedirCita;
-	private cancelarCita cancelarCita;
 	private modificarPaciente modificarPaciente;
 
 	public MenuDePaciente(Gestor gestor, Paciente paciente) {
@@ -33,9 +32,8 @@ public class MenuDePaciente extends javax.swing.JPanel {
 		this.paciente = paciente;
 		this.mostrarCitas = new mostrarCitas(gestor, paciente);
 		this.pedirCita = new PedirCita(gestor, paciente);
-		this.cancelarCita = new cancelarCita(gestor, paciente);
 		this.modificarPaciente = new modificarPaciente(gestor,paciente);
-		this.labelMenuDelPaciente.setText(paciente.getNombre() + paciente.getDNI());
+		this.labelMenuDelPaciente.setText(paciente.getNombre() +":   " + paciente.getDNI());
 	}
 
 	/**
@@ -51,11 +49,8 @@ public class MenuDePaciente extends javax.swing.JPanel {
         buttonMostrarCitas = new javax.swing.JButton();
         labelMenuDelPaciente = new javax.swing.JLabel();
         buttonPedirCita = new javax.swing.JButton();
-        buttonCancelarCita = new javax.swing.JButton();
         buttonModificarPaciente = new javax.swing.JButton();
         mostrarDatos = new javax.swing.JPanel();
-
-        menuOpciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
 
         buttonMostrarCitas.setText("Mostrar citas");
         buttonMostrarCitas.addActionListener(new java.awt.event.ActionListener() {
@@ -64,7 +59,7 @@ public class MenuDePaciente extends javax.swing.JPanel {
             }
         });
 
-        labelMenuDelPaciente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelMenuDelPaciente.setFont(new java.awt.Font("Cambria Math", 1, 18)); // NOI18N
         labelMenuDelPaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelMenuDelPaciente.setText("Menu del paciente");
         labelMenuDelPaciente.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -73,13 +68,6 @@ public class MenuDePaciente extends javax.swing.JPanel {
         buttonPedirCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonPedirCitaActionPerformed(evt);
-            }
-        });
-
-        buttonCancelarCita.setText("Cancelar cita");
-        buttonCancelarCita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCancelarCitaActionPerformed(evt);
             }
         });
 
@@ -102,9 +90,8 @@ public class MenuDePaciente extends javax.swing.JPanel {
                         .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 92, Short.MAX_VALUE)))
+                        .addGap(0, 27, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         menuOpcionesLayout.setVerticalGroup(
@@ -117,17 +104,15 @@ public class MenuDePaciente extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);
         mostrarDatos.setLayout(mostrarDatosLayout);
         mostrarDatosLayout.setHorizontalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGap(0, 522, Short.MAX_VALUE)
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,16 +166,6 @@ public class MenuDePaciente extends javax.swing.JPanel {
 		mostrarDatos.repaint();
     }//GEN-LAST:event_buttonPedirCitaActionPerformed
 
-    private void buttonCancelarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarCitaActionPerformed
-        cancelarCita.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
-		cancelarCita.setLocation(0, 0);
-
-		mostrarDatos.removeAll();
-		mostrarDatos.add(cancelarCita, BorderLayout.CENTER);
-		mostrarDatos.revalidate();
-		mostrarDatos.repaint();
-    }//GEN-LAST:event_buttonCancelarCitaActionPerformed
-
     private void buttonModificarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonModificarPacienteActionPerformed
         modificarPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		modificarPaciente.setLocation(0, 0);
@@ -202,7 +177,6 @@ public class MenuDePaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonModificarPacienteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonCancelarCita;
     private javax.swing.JButton buttonModificarPaciente;
     private javax.swing.JButton buttonMostrarCitas;
     private javax.swing.JButton buttonPedirCita;

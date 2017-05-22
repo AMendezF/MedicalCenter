@@ -50,7 +50,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="labelHorario" min="-2" pref="150" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="elegirHorario" min="-2" pref="150" max="-2" attributes="0"/>
+                                          <Component id="desplegableHorario" min="-2" pref="150" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="labelNombre" min="-2" pref="150" max="-2" attributes="0"/>
@@ -60,17 +60,17 @@
                                           <Component id="nombreOK" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="152" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="168" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="labelNColegiado" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="textNColegiado" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="fieldColegiado" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="NColegiadoOK" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -84,22 +84,22 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="labelEspecialidad" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="elegirEspecialidad" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="desplegableEspecialidad" min="-2" pref="150" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="labelTiempo" min="-2" pref="150" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="buttonAñadirMedico" min="-2" pref="150" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
-                                          <Component id="buttonAñadirMedico" min="-2" pref="150" max="-2" attributes="0"/>
+                                          <Component id="labelTiempo" min="-2" pref="150" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="todoCorrecto" min="-2" max="-2" attributes="0"/>
+                                          <Component id="desplegableTiempoMinimo" min="-2" pref="150" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="elegirTiempo" min="-2" pref="150" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="todoCorrecto" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="0" pref="90" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -112,8 +112,13 @@
                   <Component id="jLabel1" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelEspecialidad" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="desplegableEspecialidad" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelNColegiado" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="textNColegiado" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="fieldColegiado" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="NColegiadoOK" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -129,26 +134,23 @@
                       <Component id="apellidosOK" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelHorario" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="elegirHorario" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelHorario" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="desplegableHorario" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelTiempo" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="desplegableTiempoMinimo" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="buttonAñadirMedico" min="-2" pref="40" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="todoCorrecto" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelEspecialidad" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="elegirEspecialidad" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelTiempo" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="elegirTiempo" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="buttonAñadirMedico" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="todoCorrecto" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="59" max="32767" attributes="0"/>
+                  <EmptySpace pref="83" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -197,10 +199,19 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="fieldNombre">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="fieldNombreKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="fieldApellidos">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="fieldApellidosKeyReleased"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="textNColegiado">
+        <Component class="javax.swing.JTextField" name="fieldColegiado">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="fieldColegiadoKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelTiempo">
           <Properties>
@@ -218,39 +229,27 @@
             <Property name="text" type="java.lang.String" value="Horario"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="elegirEspecialidad">
+        <Component class="javax.swing.JComboBox" name="desplegableEspecialidad">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="desplegableHorario">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="2">
+                <StringItem index="0" value="Ma&#xf1;ana"/>
+                <StringItem index="1" value="Tarde"/>
               </StringArray>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="elegirHorario">
+        <Component class="javax.swing.JComboBox" name="desplegableTiempoMinimo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="elegirTiempo">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
         </Component>
@@ -273,6 +272,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="A&#xf1;adir nuevo medico"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonA&#xf1;adirMedicoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="todoCorrecto">
           <Properties>

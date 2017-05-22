@@ -3,6 +3,7 @@ package clases;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -45,18 +46,17 @@ public class Gestor {
      * SQL.
      */
     public String mostrarAgendaMatinal(String fecha) throws SQLException {
-        String agenda = "";
+        String agenda = "--------------------------MAÑANA--------------------------\n";
         String[] especialidades;
         String sql;
         ResultSet resultSet;
 
-        boolean tieneEspecialidadSala; // Chapuzilla para asignar sala
         int numSala = 0; // Parte de la chapuzilla
 
         especialidades = getEspecialidades();
         for (String especialidad : especialidades) {
             sql = "SELECT c.hora, c.paciente, m.nombre, m.apellidos "
-                    + "FROM citas c, medico m, especialidad e "
+                    + "FROM centromedico.citas c, centromedico.medico m, centromedico.especialidad e "
                     + "WHERE e.nombre='" + especialidad + "' "
                     + "AND c.especialidad=e.cod_especialidad "
                     + "AND c.medico=m.n_colegiado "
@@ -65,20 +65,29 @@ public class Gestor {
                     + "ORDER BY c.hora";
             resultSet = conexion.makeQuery(sql);
 
-            tieneEspecialidadSala = false;
-            while (resultSet.next()) {
-                if (!tieneEspecialidadSala) {
-                    numSala++;
-                    agenda += "Sala " + numSala + ": " + especialidad + "\n";
-                    tieneEspecialidadSala = true;
-                }
-                agenda += "    " + resultSet.getString("hora") + " "
-                        + "DNI: " + resultSet.getString("paciente") + " "
-                        + "con el médico: "
-                        + resultSet.getString("nombre") + " "
-                        + resultSet.getString("apellidos") + "\n";
+            if (resultSet.next()) {
+                numSala++;
+                agenda += "Sala " + numSala + ": " + especialidad + "\n";
+
+                do {
+                    agenda += "    " + resultSet.getString("hora") + " "
+                            + "DNI: "
+                            + resultSet.getString("paciente") + " "
+                            + "Médico: "
+                            + resultSet.getString("nombre") + " "
+                            + resultSet.getString("apellidos") + "\n";
+                } while (resultSet.next());
             }
         }
+
+        if (numSala == 0) {
+            agenda += "\n"
+                    + "                          "
+                    + "(NADA)"
+                    + "                          "
+                    + "\n\n";
+        }
+        agenda += "--------------------------______--------------------------\n";
         return agenda;
     }
 
@@ -92,18 +101,17 @@ public class Gestor {
      * SQL.
      */
     public String mostrarAgendaVespertina(String fecha) throws SQLException {
-        String agenda = "";
+        String agenda = "--------------------------TARDE---------------------------\n";
         String[] especialidades;
         String sql;
         ResultSet resultSet;
 
-        boolean tieneEspecialidadSala; // Chapuzilla para asignar sala
         int numSala = 0; // Parte de la chapuzilla
 
         especialidades = getEspecialidades();
         for (String especialidad : especialidades) {
             sql = "SELECT c.hora, c.paciente, m.nombre, m.apellidos "
-                    + "FROM citas c, medico m, especialidad e "
+                    + "FROM centromedico.citas c, centromedico.medico m, centromedico.especialidad e "
                     + "WHERE e.nombre='" + especialidad + "' "
                     + "AND c.especialidad=e.cod_especialidad "
                     + "AND c.medico=m.n_colegiado "
@@ -112,25 +120,34 @@ public class Gestor {
                     + "ORDER BY c.hora";
             resultSet = conexion.makeQuery(sql);
 
-            tieneEspecialidadSala = false;
-            while (resultSet.next()) {
-                if (!tieneEspecialidadSala) {
-                    numSala++;
-                    agenda += "Sala " + numSala + ": " + especialidad + "\n";
-                    tieneEspecialidadSala = true;
-                }
-                agenda += "    " + resultSet.getString("hora") + " "
-                        + "DNI: " + resultSet.getString("paciente") + " "
-                        + "con el médico: "
-                        + resultSet.getString("nombre") + " "
-                        + resultSet.getString("apellidos") + "\n";
+            if (resultSet.next()) {
+                numSala++;
+                agenda += "Sala " + numSala + ": " + especialidad + "\n";
+
+                do {
+                    agenda += "    " + resultSet.getString("hora") + " "
+                            + "DNI: "
+                            + resultSet.getString("paciente") + " "
+                            + "Médico: "
+                            + resultSet.getString("nombre") + " "
+                            + resultSet.getString("apellidos") + "\n";
+                } while (resultSet.next());
             }
         }
+
+        if (numSala == 0) {
+            agenda += "\n"
+                    + "                          "
+                    + "(NADA)"
+                    + "                          "
+                    + "\n\n";
+        }
+        agenda += "--------------------------______--------------------------\n";
         return agenda;
     }
 
     /**
-     * Obtiene todas las especialidades por nombre, que contiene la BD.
+     * Muestra todas las especialidades por nombre, que contiene la BD.
      *
      * @return String[] que contiene cada una de las especialidades.
      * @throws SQLException Devuelve error si no se pudo realizar la consulta
@@ -148,13 +165,44 @@ public class Gestor {
         while (resultSet.next()) {
             especialidades.add(resultSet.getString("nombre"));
         }
-        return (String[]) especialidades.toArray();
+        return especialidades.toArray(new String[especialidades.size()]);
+    }
+
+    /**
+     * Devuelve los turnos del horario de una especialidad en un día de la
+     * semana.
+     *
+     * @param especialidad Nombre de la especialidad de la que se desea obtener
+     * su horario.
+     * @param diaDeLaSemana Día de la semana de la que se desea obtener su
+     * horario. Ej. "Lunes".
+     * @return Retorna los turnos para ese día.
+     * @throws SQLException Devuelve error si no se pudo obtener el horario de
+     * la especialidad de la BD.
+     */
+    public String[] getHorarioEspecialidadByDay(String especialidad, String diaDeLaSemana) throws SQLException {
+        List<String> horario = new ArrayList<String>();
+        String sql;
+        ResultSet resultSet;
+
+        sql = "SELECT d.horario "
+                + "FROM centromedico.horario_" + diaDeLaSemana + " d, centromedico.especialidad e "
+                + "WHERE d.cod_especialidad=e.cod_especialidad "
+                + "AND e.nombre='" + especialidad + "' "
+                + "ORDER BY d.horario";
+        resultSet = conexion.makeQuery(sql);
+
+        while (resultSet.next()) {
+            horario.add(resultSet.getString(1));
+        }
+
+        return horario.toArray(new String[horario.size()]);
     }
 
     /**
      * Devuelve todos los médicos que contiene la base de datos.
      *
-     * @return Retorna el valor de la consulta SQL.
+     * @return Retorna un objeto ResultSet con el valor de la consulta SQL.
      * @throws SQLException Devuelve error si no se pudo realizar la consulta
      * SQL.
      */
@@ -162,11 +210,35 @@ public class Gestor {
         String sql;
         ResultSet listaMedicos;
 
-        sql = "SELECT * "
-                + "FROM centromedico.medico";
+        sql = "SELECT m.n_colegiado, m.nombre, m.apellidos, m.horario, e.nombre "
+                + "FROM centromedico.medico m, centromedico.especialidad e "
+                + "WHERE e.cod_especialidad=m.especialidad ";
         listaMedicos = this.conexion.makeQuery(sql);
 
         return listaMedicos;
+    }
+
+    /**
+     * Devuelve los médicos de una especialidad en un turno.
+     *
+     * @param especialidad Especialidad de la que se quiere obtener los médicos.
+     * @param horario Turno del que se quiere obtener los médicos.
+     * @return Retorna un objeto ResultSet con el valor de la consulta SQL.
+     * @throws SQLException Devuelve error si no se puderon obtener los médicos,
+     * de la especialidad y en el horario deseados, de la BD.
+     */
+    public ResultSet mostrarMedicosByHorarioEspecialidad(String especialidad, String horario) throws SQLException {
+        String sql;
+        ResultSet resultSet;
+
+        sql = "SELECT m.n_colegiado, m.nombre, m.apellidos "
+                + "FROM centromedico.medico m, centromedico.especialidad e "
+                + "WHERE e.cod_especialidad=m.especialidad "
+                + "AND e.nombre='" + especialidad + "' "
+                + "AND m.horario='" + horario + "'";
+        resultSet = conexion.makeQuery(sql);
+
+        return resultSet;
     }
 
     /**
@@ -211,12 +283,13 @@ public class Gestor {
     public boolean addMedico(String[] medico) {
         boolean added = true;
         String sql;
+        String codMedico = medico[0];
 
         sql = "INSERT "
                 + "INTO centromedico.medico "
                 + "(n_colegiado, nombre, apellidos, horario, tiempo_min, especialidad)"
                 + "VALUES "
-                + "('" + medico[0] + "', "
+                + "('" + codMedico + "', "
                 + "'" + medico[1] + "', "
                 + "'" + medico[2] + "', "
                 + "'" + medico[3] + "', "
@@ -227,10 +300,17 @@ public class Gestor {
         } catch (SQLException e) {
             added = false;
         }
-        // Pendiente crear usuario de BBDD
-//        String codigo = medico[0];
-//        crearUserBD(con, codigo);
-//        setPermisosBD(con, codigo);
+
+        // TODO
+//        try {
+//            if(!conexion.existeUser(codMedico)){
+//                conexion.crearUserBD(codMedico);
+//                conexion.setPermisosBD(codMedico);
+//                
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         return added;
     }
 
@@ -274,23 +354,45 @@ public class Gestor {
      * @throws SQLException Devuelve error si no se pudo recuperar el paciente
      * de la BD.
      */
-	/*
     public Medico getMedico(String numColegiado) throws SQLException {
-        return new Medico(numColegiado, conexion);
+        return new Medico(Integer.parseInt(numColegiado), conexion);
     }
-	*/
+
+    /**
+     * Devuelve todas las horas que tiene disponibles, de consulta, un médico en
+     * una fecha y para una especialidad en concreto.
+     *
+     * @param fecha Formato de fecha: "yy-mm-dd"
+     * @param especialidad Especialidad de la que se desea obtener las consultas
+     * disponibles.
+     * @param horario Turno en el que se desea conocer las consultas disponibles
+     * del médico.
+     * @param numColegiado Número identificativo del médico del que se desea
+     * conocer las consultas disponibles.
+     * @return Retorna las horas de las consultas disponibles, dentro del turno
+     * indicado, de un médico perteneciente a una especialidad.
+     * @throws SQLException Devuelve error si no se pudo realizar la consulta
+     * SQL.
+     */
+    public String[] getConsultasMedico(String fecha, String especialidad, String horario, String numColegiado) throws SQLException {
+        Medico medico = getMedico(numColegiado);
+
+        return medico.getConsultasDisponibles(fecha, especialidad, horario);
+    }
 
     /**
      * Sustituye un médico por otro.
      *
-     * @param medico Médico al que se pretende reemplazar.
-     * @param sustituto Médico que reemplaza al anterior.
+     * @param numColegiado Número identificativo del médico que se desea
+     * sustituir.
+     * @param medicoSustito Número identificativo del médico que sustituye al
+     * otro médico.
      * @return true = añadido a la BD, false = fallo al añadir
      */
-    public Boolean sustituirMedico(Medico medico, Medico sustituto) {
+    public Boolean sustituirMedico(String numColegiado, String[] medicoSustito) {
         Boolean sustituido = true;
         //TODO
-        
+
         return sustituido;
     }
 
@@ -344,7 +446,7 @@ public class Gestor {
     /**
      * Devuelve todos los pacientes que contiene la base de datos.
      *
-     * @return Retorna el valor de la consulta SQL.
+     * @return Retorna un objeto ResultSet con el valor de la consulta SQL.
      * @throws SQLException Devuelve error si no se pudo realizar la consulta
      * SQL.
      */
@@ -363,7 +465,7 @@ public class Gestor {
     /**
      * Devuelve todos los pacientes borrados que contiene la base de datos.
      *
-     * @return Retorna el valor de la consulta SQL.
+     * @return Retorna un objeto ResultSet con el valor de la consulta SQL.
      * @throws SQLException Devuelve error si no se pudo realizar la consulta
      * SQL.
      */
@@ -382,7 +484,7 @@ public class Gestor {
     /**
      * Devuelve todos los pacientes que contiene la base de datos.
      *
-     * @return Retorna el valor de la consulta SQL.
+     * @return Retorna un objeto ResultSet con el valor de la consulta SQL.
      * @throws SQLException Devuelve error si no se pudo realizar la consulta
      * SQL.
      */
@@ -530,72 +632,6 @@ public class Gestor {
     }
 
     /**
-     * Exporta, de la BD, el paciente especificado por parámetro a la BD de pacientes
-     * borrados.
-     *
-     * @param DNI Identificador del paciente que se desea exportar.
-     * @return true = exportado con éxito, false = no ha sido exportado
-     */
-    public Boolean exportarPaciente(String DNI) {
-        Boolean exportado = true;
-        String sql;
-        
-        sql = "INSERT "
-                + "INTO centromedico.paciente_borrado "
-                + "SELECT * "
-                + "FROM centromedico.paciente "
-                + "WHERE dni='" + DNI + "'"; 
-        try {
-            conexion.makeUpdate(sql);
-        } catch (SQLException e) {
-            exportado = false;
-        }
-        
-        if (exportado) {
-            if (!removePacienteBD(DNI)) {
-                exportado = false;
-            } else {
-                removePacienteBDBorrado(DNI);
-            }
-        }
-
-        return exportado;
-    }
-
-    /**
-     * Importa, a la BD, el paciente especificado por parámetro de la BD de pacientes
-     * borrados.
-     *
-     * @param DNI Identificador del paciente que se desea importar.
-     * @return true = importado con éxito, false = no ha sido importado
-     */
-    public Boolean importarPaciente(String DNI) {
-        Boolean importado = true;
-        String sql;
-        
-        sql = "INSERT "
-                + "INTO centromedico.paciente "
-                + "SELECT * "
-                + "FROM centromedico.paciente_borrado "
-                + "WHERE dni='" + DNI + "'"; 
-        try {
-            conexion.makeUpdate(sql);
-        } catch (SQLException e) {
-            importado = false;
-        }
-        
-        if (importado) {
-            if (!removePacienteBDBorrado(DNI)) {
-                importado = false;
-            } else {
-                removePacienteBD(DNI);
-            }
-        }
-
-        return importado;
-    }
-
-    /**
      * Elimina, de la BD, el paciente especificado por parámetro.
      *
      * @param DNI Identificador del paciente que se desea borrar.
@@ -617,7 +653,8 @@ public class Gestor {
     }
 
     /**
-     * Elimina, de la BD de pacientes borrados, el paciente especificado por parámetro.
+     * Elimina, de la BD de pacientes borrados, el paciente especificado por
+     * parámetro.
      *
      * @param DNI Identificador del paciente que se desea borrar.
      * @return true = borrado de la BD, false = fallo al borrar
@@ -690,15 +727,15 @@ public class Gestor {
         return esTexto;
     }
 
-    /**
-     * Elimina una cita de un paciente.
-     *
-     * @param paciente Paciente del que se desea borrar una cita.
-     * @return true = eliminado, false = fallo al eliminar
-     */
-    /*public boolean anularCita(Cita cita) {
-	 boolean eliminado = false;
-
-	 return eliminado;
-	 }*/
+//    /**
+//     * Elimina una cita de un paciente.
+//     *
+//     * @param paciente Paciente del que se desea borrar una cita.
+//     * @return true = eliminado, false = fallo al eliminar
+//     */
+//    public boolean anularCita(String codCita) {
+//	 boolean eliminado = false;
+//       // TODO
+//	 return eliminado;
+//	 }
 }

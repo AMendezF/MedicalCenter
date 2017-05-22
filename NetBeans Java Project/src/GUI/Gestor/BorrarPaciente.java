@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -50,8 +51,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
         labelActivos = new javax.swing.JLabel();
         mostrarActivos = new javax.swing.JButton();
         buttonBorrar = new javax.swing.JButton();
-        fieldBorrar = new javax.swing.JTextField();
-        DNIOK = new javax.swing.JLabel();
+        fieldBorrar = new javax.swing.JLabel();
         panelPacienteInactivo = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         tablaInactivos = new javax.swing.JTable();
@@ -60,25 +60,27 @@ public class BorrarPaciente extends javax.swing.JPanel {
         labelInactivos = new javax.swing.JLabel();
         mostrarInactivos = new javax.swing.JButton();
         buttonReinsertar = new javax.swing.JButton();
-        fieldReinsertar = new javax.swing.JTextField();
-        DNI2OK = new javax.swing.JLabel();
+        fieldReinsertar = new javax.swing.JLabel();
 
         panelPacienteActivo.setMaximumSize(new java.awt.Dimension(650, 650));
 
         tablaActivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "DNI", "Nombre", "Apellidos", "Seguro"
+
             }
         ));
         tablaActivos.setColumnSelectionAllowed(true);
+        tablaActivos.getTableHeader().setReorderingAllowed(false);
+        tablaActivos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaActivosMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tablaActivos);
+        tablaActivos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         textActivos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -107,11 +109,8 @@ public class BorrarPaciente extends javax.swing.JPanel {
             }
         });
 
-        fieldBorrar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                fieldBorrarKeyReleased(evt);
-            }
-        });
+        fieldBorrar.setFont(new java.awt.Font("Century", 1, 14)); // NOI18N
+        fieldBorrar.setText("Introduce DNI");
 
         javax.swing.GroupLayout panelPacienteActivoLayout = new javax.swing.GroupLayout(panelPacienteActivo);
         panelPacienteActivo.setLayout(panelPacienteActivoLayout);
@@ -136,8 +135,6 @@ public class BorrarPaciente extends javax.swing.JPanel {
                             .addGroup(panelPacienteActivoLayout.createSequentialGroup()
                                 .addComponent(mostrarActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(DNIOK)
-                                .addGap(18, 18, 18)
                                 .addComponent(fieldBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(buttonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -158,8 +155,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
                 .addGroup(panelPacienteActivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mostrarActivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DNIOK))
+                    .addComponent(fieldBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -167,18 +163,21 @@ public class BorrarPaciente extends javax.swing.JPanel {
 
         tablaInactivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "DNI", "Nombre", "Apellidos", "Seguro"
+
             }
         ));
         tablaInactivos.setColumnSelectionAllowed(true);
+        tablaInactivos.getTableHeader().setReorderingAllowed(false);
+        tablaInactivos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaInactivosMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(tablaInactivos);
+        tablaInactivos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         textInactivos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -207,11 +206,8 @@ public class BorrarPaciente extends javax.swing.JPanel {
             }
         });
 
-        fieldReinsertar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                fieldReinsertarKeyReleased(evt);
-            }
-        });
+        fieldReinsertar.setFont(new java.awt.Font("Century", 1, 14)); // NOI18N
+        fieldReinsertar.setText("Introduce DNI");
 
         javax.swing.GroupLayout panelPacienteInactivoLayout = new javax.swing.GroupLayout(panelPacienteInactivo);
         panelPacienteInactivo.setLayout(panelPacienteInactivoLayout);
@@ -226,8 +222,6 @@ public class BorrarPaciente extends javax.swing.JPanel {
                         .addComponent(buttonReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(fieldReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(DNI2OK)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(mostrarInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPacienteInactivoLayout.createSequentialGroup()
@@ -246,13 +240,12 @@ public class BorrarPaciente extends javax.swing.JPanel {
                     .addComponent(desplegableInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addGap(33, 33, 33)
                 .addGroup(panelPacienteInactivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mostrarInactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DNI2OK))
+                    .addComponent(fieldReinsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -306,7 +299,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 			ResultSet rs = gestor.mostrarPacientes();
 			tablaActivos.setModel(buildTableModel(rs));
 		} catch (SQLException ex) {
-			Logger.getLogger(mostrarPacientes.class
+			Logger.getLogger(BorrarPaciente.class
 					.getName()).log(Level.SEVERE, null, ex);
 		}
     }//GEN-LAST:event_mostrarActivosActionPerformed
@@ -317,21 +310,31 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void buttonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBorrarActionPerformed
-		/*
-		 String dni = fieldBorrar.getText();
-		 if (gestor.comprobarDNI(dni)) {
-		 if (gestor.estaBD(dni)) {
-		 confirmar = JOptionPane.showOptionDialog(this,"Se va ha borrar el paciente, ¿desea confirmar la operacion?","Confirmar",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,  options,  options[0]);
-		 if (confirmar == 0){
-		 borrarPaciente(dni);
-		 }
-		 } else {
-		 gestor.borrarPaciente(dni);
-		 }
-		 } else {
-			
-		 }
-		 */
+		Object[] options = {"Si", "No"};
+		String dni = fieldBorrar.getText();
+		int confirmar;
+
+		try {
+			if (gestor.comprobarDNI(dni)) {
+				if (gestor.existePacienteBD(dni)) {
+					confirmar = JOptionPane.showOptionDialog(this, "Se va ha borrar el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+					if (confirmar == 0) {
+						if (gestor.removePacienteBD(dni)) {
+							JOptionPane.showMessageDialog(this, "Se ha borrado el paciente con DNI " + dni);
+							fieldBorrar.setText("Introduce DNI");
+						} else {
+							JOptionPane.showMessageDialog(this, "No se ha podido borrar", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "No existe un paciente con este DNI" + dni, "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "El dni no es correcto" + dni, "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(BorrarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+		}
     }//GEN-LAST:event_buttonBorrarActionPerformed
 
 	/**
@@ -362,7 +365,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 			ResultSet rs = gestor.mostrarPacientesBorrados();
 			tablaInactivos.setModel(buildTableModel(rs));
 		} catch (SQLException ex) {
-			Logger.getLogger(mostrarPacientes.class
+			Logger.getLogger(BorrarPaciente.class
 					.getName()).log(Level.SEVERE, null, ex);
 		}
     }//GEN-LAST:event_mostrarInactivosActionPerformed
@@ -373,65 +376,58 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void buttonReinsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReinsertarActionPerformed
+		Object[] options = {"Si", "No"};
+		String dni = fieldReinsertar.getText();
 		int confirmar;
-		/*
-		 String dni = fieldBorrar.getText();
-		 if (gestor.comprobarDNI(dni)) {
-		 if (gestor.existePacienteBD(dni)sBDBorrado(dni)) {
-		 confirmar = JOptionPane.showOptionDialog(this,"Se va ha reinsertar el paciente, ¿desea confirmar la operacion?","Confirmar",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,  options,  options[0]);
-		 if (confirmar == 0){
-		 reinsertarPaciente(dni);
-		 }	
-		 } else {
-		 }
-		 } else {
-			
-		 }
-		*/
-		 
+
+		try {
+			if (gestor.comprobarDNI(dni)) {
+				if (gestor.existePacienteBDBorrado(dni)) {
+					confirmar = JOptionPane.showOptionDialog(this, "Se va ha reinsertar el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+					if (confirmar == 0) {
+						if (gestor.removePacienteBDBorrado(dni)) {
+							JOptionPane.showMessageDialog(this, "Se ha reinsertado el paciente con DNI " + dni);
+							fieldReinsertar.setText("Introduce DNI");
+						} else {
+							JOptionPane.showMessageDialog(this, "No se ha podido reinsertar", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "No existe un paciente con este DNI" + dni, "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "El dni no es correcto" + dni, "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(BorrarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+		}
     }//GEN-LAST:event_buttonReinsertarActionPerformed
 
 	/**
-	 * Indica si es correcto el DNI a borrar
+	 * Coge el valor DNI al pinchar sobre la tabla
 	 *
 	 * @param evt
 	 */
-    private void fieldBorrarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldBorrarKeyReleased
-		
-		try {
-			if (gestor.existePacienteBD(fieldBorrar.getText())) {
-				DNIOK.setForeground(Color.black);
-				DNIOK.setText("OK!!");
-			} else {
-				DNIOK.setForeground(Color.red);
-				DNIOK.setText("No existe!!");
-			}
-		} catch (SQLException ex) {
-			Logger.getLogger(BorrarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+    private void tablaActivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaActivosMouseClicked
+		int row = tablaActivos.rowAtPoint(evt.getPoint());
+		int col = tablaActivos.columnAtPoint(evt.getPoint());
+		if (row >= 0 && col >= 0) {
+			fieldBorrar.setText((String) tablaActivos.getValueAt(row, 0));
 		}
-		
-    }//GEN-LAST:event_fieldBorrarKeyReleased
+    }//GEN-LAST:event_tablaActivosMouseClicked
 
 	/**
-	 * Indica si es correcto el DNI a reinsertar
+	 * Coge el valor DNI al pinchar sobre la tabla
 	 *
 	 * @param evt
 	 */
-    private void fieldReinsertarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldReinsertarKeyReleased
-		
-		try {
-			if (gestor.existePacienteBD(fieldReinsertar.getText())) {
-				DNI2OK.setForeground(Color.black);
-				DNI2OK.setText("OK!!");
-			} else {
-				DNI2OK.setForeground(Color.red);
-				DNI2OK.setText("No existe!!");
-			}
-		} catch (SQLException ex) {
-			Logger.getLogger(BorrarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+    private void tablaInactivosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInactivosMouseClicked
+		int row = tablaInactivos.rowAtPoint(evt.getPoint());
+		int col = tablaInactivos.columnAtPoint(evt.getPoint());
+		if (row >= 0 && col >= 0) {
+			fieldReinsertar.setText((String) tablaInactivos.getValueAt(row, 0));
 		}
-	
-    }//GEN-LAST:event_fieldReinsertarKeyReleased
+    }//GEN-LAST:event_tablaInactivosMouseClicked
 
 	/**
 	 * Sirve para filtar el jTable de pacientes activos
@@ -505,14 +501,12 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel DNI2OK;
-    private javax.swing.JLabel DNIOK;
     private javax.swing.JButton buttonBorrar;
     private javax.swing.JButton buttonReinsertar;
     private javax.swing.JComboBox desplegableActivos;
     private javax.swing.JComboBox desplegableInactivos;
-    private javax.swing.JTextField fieldBorrar;
-    private javax.swing.JTextField fieldReinsertar;
+    private javax.swing.JLabel fieldBorrar;
+    private javax.swing.JLabel fieldReinsertar;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel labelActivos;

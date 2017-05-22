@@ -44,9 +44,8 @@ public class Historial {
             String sql = "INSERT INTO centromedico.historial "
                     + "(Paciente, Especialidad) VALUES (?, ?)";
             preparedStmt = reg.prepareStatement(sql);
-            preparedStmt.setInt(1, this.codigoHistorial);
-            preparedStmt.setString(2, DNIPaciente);
-            preparedStmt.setInt(3, especialidad);
+            preparedStmt.setString(1, DNIPaciente);
+            preparedStmt.setInt(2, especialidad);
             preparedStmt.execute();
             this.codigoHistorial = getCodigoHistorialBD(DNIPaciente, especialidad);
         }// Se adoptan los atributos

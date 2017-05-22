@@ -10,6 +10,13 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+/**
+ *
+ * @author OMG_DaNgErOuS_PablO_MLG
+ */
+>>>>>>> refs/remotes/origin/Next-Sprint
 public class Medico {
 
     private final int n_colegiado;
@@ -29,11 +36,11 @@ public class Medico {
     public Medico(int n_colegiado, Conexion con) throws SQLException {
         this.n_colegiado = n_colegiado;
         this.con = con;
-        dia1 = new boolean[(240 / this.getTiempoMin())];
-        dia2 = new boolean[(240 / this.getTiempoMin())];
-        dia3 = new boolean[(240 / this.getTiempoMin())];
-        diaVacio = new boolean[(240 / this.getTiempoMin())];
-        for (int i = 0; i < diaVacio.length; i++) {
+        dia1 = new boolean[(240 / this.getTiempoMin())]; // 240 minutos de turno
+        dia2 = new boolean[(240 / this.getTiempoMin())]; // entre el tiempo minimo
+        dia3 = new boolean[(240 / this.getTiempoMin())]; // de atencion del medico
+        diaVacio = new boolean[(240 / this.getTiempoMin())]; // Día libre sin 
+        for (int i = 0; i < diaVacio.length; i++) {	// turnos ocupados
             diaVacio[i] = false;
         }
 
@@ -250,6 +257,13 @@ public class Medico {
         consultaFecha[index] = true;
     }
 
+    /**
+     * Retorna los turnos disponibles para atender en ese día concreto.
+     *
+     * @param dia
+     * @return
+     * @throws SQLException
+     */
     public boolean[] getConsultas(String dia) throws SQLException {
         String fechas[] = dia.split("-");
         Date fechacita = new Date(Integer.parseInt(fechas[0]),
@@ -352,6 +366,108 @@ public class Medico {
         ResultSet rs = preparedStmt.executeQuery();
 
         return rs;
+    }
+
+    /**
+     * HOLA ALEEEX! Devuelve el horario libre de citas del médico para la fecha,
+     * hora y especialidad proporcionada.
+     *
+     * @param fecha
+     * @param especialidad
+     * @param horario
+     * @return String[]
+     * @throws SQLException
+     */
+    public String[] getConsultasDisponibles(String fecha, String especialidad,
+            String horario) throws SQLException {
+        int inicioHorario;
+        // Preparamos consulta
+        Connection reg = this.con.getCon();
+        String sql;
+        sql = "SELECT Hora FROM centromedico.citas WHERE Dia='" + fecha
+                + "' ";	// Queremos los horarios de las citas del médico de ese dia
+        if (horario.equals("Mañana")) { // Solo horarios de turno mañana
+            sql += "AND Hora<'13:00:00' ";
+            inicioHorario = 9;
+        } else {                        // Solo horarios de turno tarde
+            sql += "AND Hora>='13:00:00' ";
+            inicioHorario = 13;
+        }
+        sql += "AND Especialidad=(SELECT Cod_especialidad "
+                + // y de esta 
+                "FROM centromedico.especialidad WHERE Nombre=?);"; // especialidad
+
+        preparedStmt = reg.prepareStatement(sql);
+        preparedStmt.setString(1, especialidad);
+        ResultSet rs = preparedStmt.executeQuery();
+
+        return this.construirHorario(rs, inicioHorario);
+    }
+
+    /**
+     * Con el ResultSet obtenido devuelve un array de strings de horarios libres
+     * del médico menos los ya ocupados señalados en el ResultSet.
+     *
+     * @param rs
+     * @return String[]
+     */
+    private String[] construirHorario(ResultSet rs, int horaInicio)
+            throws SQLException {
+        ArrayList<String> horariosOcupados = new ArrayList<>();
+        String horaReserv, minutoReservado;
+        while (rs.next()) { // cargamos en el arraylist los horarios de citas ya 
+            horaReserv = rs.getString("Hora"); // reservadas y guardamos en 
+            // formato HH:MM
+            horariosOcupados.add(horaReserv.substring(0, horaReserv.length() - 3));
+        }
+
+        int minutoLibre = 59, horaLibre = horaInicio - 1;
+        String[] horarioFinal = new String[240 / this.getTiempoMin()];
+        for (int i = 0; i < horarioFinal.length; i++) { // iteramos sobre 
+            if (minutoLibre >= 59) {                    // número de turnos
+                horaLibre++;
+                minutoLibre = minutoLibre - 59;
+            } else {
+                minutoLibre += this.getTiempoMin();
+            }
+
+            // comprobamos si coincide con hora y minuto 
+            if (!this.coincidenHorarios(horaLibre, minutoLibre, horariosOcupados)) {
+                if (minutoLibre < 10) {
+                    horarioFinal[i] = horaLibre + ":0" + minutoLibre;
+                } else {
+                    horarioFinal[i] = horaLibre + ":" + minutoLibre;
+                }
+            }
+        }
+
+        return horarioFinal;
+    }
+
+    /**
+     * Comprueba que la hora y minutos propuestos no coincidan con alguno de los
+     * turnos contenidos en el ArrayList de horarios ocupados.
+     *
+     * @param horaLibre
+     * @param minutoLibre
+     * @param horariosOcupados
+     * @return
+     */
+    private boolean coincidenHorarios(int horaLibre, int minutoLibre,
+            ArrayList<String> horariosOcupados) {
+        int i = 0;
+        boolean match = false;  // colisión
+        String horaOcupada, minutoOcupado;
+
+        while (!match && i < horariosOcupados.size()) {
+            horaOcupada = horariosOcupados.get(i).substring(0, 3);
+            minutoOcupado = horariosOcupados.get(i).substring(3);
+            if (horaLibre == Integer.parseInt(horaOcupada)
+                    && minutoLibre == Integer.parseInt(minutoOcupado)) {
+                match = true;
+            }
+        }
+        return match;
     }
 
     public ResultSet mostrarCitasMedico() throws SQLException {
