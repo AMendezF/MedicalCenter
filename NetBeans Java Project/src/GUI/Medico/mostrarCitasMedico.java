@@ -2,8 +2,10 @@ package GUI.Medico;
 
 import GUI.Gestor.TableAdaptor;
 import clases.Medico;
+import clases.PdfConversor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -53,6 +55,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
         tablaInfo = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         BotonMostrar = new javax.swing.JButton();
+        DescargarPdf = new javax.swing.JButton();
 
         addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
@@ -87,25 +90,33 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
             }
         });
 
+        DescargarPdf.setText("PDF");
+        DescargarPdf.setActionCommand("MostrarPacientesMedico");
+        DescargarPdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DescargarPdfActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(BotonMostrar))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotonMostrar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(DescargarPdf)
+                .addGap(0, 63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,10 +128,12 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
                     .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DescargarPdf))
                 .addGap(18, 18, 18)
                 .addComponent(BotonMostrar)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -134,7 +147,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
 
     private void mostrarDatos() {
         try {
-            ResultSet rs = medico.mostrarCitasMedico();
+            ResultSet rs = medico.mostrarCitasHoyMedico();
             TableAdaptor aux = new TableAdaptor(rs);
             setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
@@ -153,6 +166,12 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
     private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_formComponentAdded
+
+    private void DescargarPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescargarPdfActionPerformed
+        File NameFile = new File("Citas_" + medico.getDia() + ".pdf");
+        PdfConversor conversor = new PdfConversor(tablaInfo);
+        conversor.getPdf(NameFile, "Citas de " + medico.getDia());
+    }//GEN-LAST:event_DescargarPdfActionPerformed
 
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
@@ -188,6 +207,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonMostrar;
+    private javax.swing.JButton DescargarPdf;
     private javax.swing.JComboBox desplegableColumnas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;

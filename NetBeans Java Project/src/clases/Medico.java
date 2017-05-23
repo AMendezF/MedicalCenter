@@ -401,18 +401,16 @@ public class Medico {
     public ResultSet mostrarCitasHoyMedico() throws SQLException {
         Connection reg = con.getCon();
         String sql;
-        sql = "SELECT citas.cod_cita, citas.paciente , citas.dia, citas.hora,"
-                + "citas.medico, especialidad.nombre as especialidad"
-                + "FROM centromedico.citas, centromedico.especialidad "
-                + "WHERE citas.medico = ?  AND "
-                + "especialidad.cod_especialidad = citas.especialidad AND "
-                + "citas.dia = ?"
-                + "GROUP BY citas.paciente";
+         sql = "SELECT citas.cod_cita, citas.dia, citas.hora,"
+                + "paciente.nombre, paciente.apellidos, citas.paciente "
+                + "FROM centromedico.citas, centromedico.paciente "
+                + "WHERE citas.medico = ? AND paciente.DNI = citas.paciente "
+                + "AND citas.dia = ?"
+                + "ORDER BY citas.hora";
 
-        System.out.println("Yaaaaas Fecha " + fecha1 + " yaaaaaas");
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.setInt(1, getN_colegiado());
-        preparedStmt.setDate(2, java.sql.Date.valueOf(fecha1));
+        preparedStmt.setDate(2, java.sql.Date.valueOf(getDia()));
         ResultSet rs = preparedStmt.executeQuery();
 
         return rs;
@@ -512,7 +510,7 @@ public class Medico {
         return n_colegiado;
     }
 
-    private String getDia() {
+    public String getDia() {
         Calendar fechaActual = new GregorianCalendar();
         return fechaActual.get(Calendar.YEAR) + "-"
                 + (fechaActual.get(Calendar.MONTH) + 1) + "-"
@@ -525,7 +523,8 @@ public class Medico {
      * @return
      */
     private String getHora() {
-        return fecha.get(Calendar.HOUR) + ":" + fecha.get(Calendar.MINUTE);
+        Calendar fechaActual = new GregorianCalendar();
+        return fechaActual.get(Calendar.HOUR_OF_DAY) + ":" + fecha.get(Calendar.MINUTE);
     }
 
     private void addFichaNueva(String codCita, int codHistoria,

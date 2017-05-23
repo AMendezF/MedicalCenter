@@ -100,10 +100,10 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(mostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(mostrarDatosLayout.createSequentialGroup()
+                    .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mostrarDatosLayout.createSequentialGroup()
                             .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(buscarCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -258,7 +258,7 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
      */
     private void mostrarDatos() {
         try {
-            ResultSet rs = medico.mostrarCitasMedico();
+            ResultSet rs = medico.mostrarCitasHoyMedico();
             TableAdaptor aux = new TableAdaptor(rs);
             setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
@@ -293,9 +293,9 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
         int row = tablaInfo.rowAtPoint(evt.getPoint());
         int col = tablaInfo.columnAtPoint(evt.getPoint());
         if (row >= 0 && col >= 0) {
-            campoNombre.setText((String) tablaInfo.getValueAt(row, 2) + ", "
-                    + (String) tablaInfo.getValueAt(row, 1));
-            nDNI = (String) tablaInfo.getValueAt(row, 6);
+            campoNombre.setText((String) tablaInfo.getValueAt(row, 4) + ", "
+                    + (String) tablaInfo.getValueAt(row, 3));
+            nDNI = (String) tablaInfo.getValueAt(row, 5);
             cCita = (String) tablaInfo.getValueAt(row, 0);
             campoDNI.setText(nDNI);
             campoCita.setText(cCita);
