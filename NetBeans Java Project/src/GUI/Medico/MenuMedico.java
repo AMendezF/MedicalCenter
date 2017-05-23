@@ -49,7 +49,6 @@ public class MenuMedico extends javax.swing.JPanel {
         buttonMostrarCitas = new javax.swing.JButton();
         labelMenuMedico = new javax.swing.JLabel();
         buttonEscribirFicha = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         mostrarDatos = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 0)));
@@ -87,8 +86,6 @@ public class MenuMedico extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("mostrar fichas por especialdiad (historial)");
-
         javax.swing.GroupLayout menuOpcionesLayout = new javax.swing.GroupLayout(menuOpciones);
         menuOpciones.setLayout(menuOpcionesLayout);
         menuOpcionesLayout.setHorizontalGroup(
@@ -101,9 +98,8 @@ public class MenuMedico extends javax.swing.JPanel {
                         .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                         .addComponent(labelMenuMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(buttonModifFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonEscribirFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(121, Short.MAX_VALUE))
+                    .addComponent(buttonEscribirFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         menuOpcionesLayout.setVerticalGroup(
             menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,8 +114,6 @@ public class MenuMedico extends javax.swing.JPanel {
                 .addComponent(buttonEscribirFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonModifFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -231,7 +225,6 @@ public class MenuMedico extends javax.swing.JPanel {
     private javax.swing.JButton buttonModifFicha;
     private javax.swing.JButton buttonMostrarCitas;
     private javax.swing.JButton buttonMostrarPacientes;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel labelMenuMedico;
     private javax.swing.JPanel menuOpciones;
     private javax.swing.JPanel mostrarDatos;

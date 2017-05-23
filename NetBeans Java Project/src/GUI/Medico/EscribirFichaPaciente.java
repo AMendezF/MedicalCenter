@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -85,12 +86,6 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
             }
         });
 
-        desplegableColumnas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                desplegableColumnasActionPerformed(evt);
-            }
-        });
-
         buscarCampo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 buscarCampoKeyTyped(evt);
@@ -161,6 +156,7 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
 
         comentarioTextArea.setColumns(20);
         comentarioTextArea.setRows(5);
+        comentarioTextArea.setText(null);
         jScrollPane2.setViewportView(comentarioTextArea);
 
         javax.swing.GroupLayout formularioLayout = new javax.swing.GroupLayout(formulario);
@@ -247,11 +243,19 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
                 .addContainerGap(50, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Este escribe la tabla jTable
+     *
+     * @param evt
+     */
     private void mostrarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarCitasActionPerformed
         mostrarDatos();
     }//GEN-LAST:event_mostrarCitasActionPerformed
 
+    /**
+     * Este metodo coge un ResultSet de uan consulta y lo transforma en un
+     * jtable
+     */
     private void mostrarDatos() {
         try {
             ResultSet rs = medico.mostrarCitasMedico();
@@ -269,10 +273,6 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
             Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void desplegableColumnasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableColumnasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_desplegableColumnasActionPerformed
 
     private void buscarCampoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarCampoKeyTyped
         buscarCampo.addKeyListener(new KeyAdapter() {
@@ -304,10 +304,19 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_tablaInfoMousePressed
 
     private void buttonEscribirDiagnosticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEscribirDiagnosticoActionPerformed
-            try {
+        try {
+            int confirmacion = 0;
+            confirmacion = ventanaConfirmar();
+            if (confirmacion == 1) {
                 medico.escribirFichaPaciente(nDNI, cCita, comentarioTextArea.getText());
-            } catch (SQLException ex) {
+            }
+        } catch (SQLException ex) {
+            if (ex.getErrorCode() == 1062) {
+                JOptionPane.showMessageDialog(this, "Ya hay un diagnostico guardado en esta cita");
+            } else {
                 Logger.getLogger(EscribirFichaPaciente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            initComponents();
 
         }
     }//GEN-LAST:event_buttonEscribirDiagnosticoActionPerformed
@@ -318,6 +327,11 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
             colum++;
         }
         trsFiltro.setRowFilter(RowFilter.regexFilter(buscarCampo.getText(), colum));
+    }
+
+    private int ventanaConfirmar() {
+        Object[] options = {"Cancelar", "Guardar"};
+        return JOptionPane.showOptionDialog(this, "Se van a guardar los cambios, ¿Desea confirmar la operación?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
 
     private void setTabla(DefaultTableModel tabla) {

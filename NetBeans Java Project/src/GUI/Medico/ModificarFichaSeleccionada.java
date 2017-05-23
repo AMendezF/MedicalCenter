@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -28,11 +29,11 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
     /**
      * Creates new form mostrarPacientesMedico
      */
-    private  Medico medico;
-    private  String codFicha;
-    private  String hora;
-    private  String dia;
-    private  String comentario;
+    private Medico medico;
+    private String codFicha;
+    private String hora;
+    private String dia;
+    private String comentario;
 
     public ModificarFichaSeleccionada(Medico medico, String codFicha, String hora, String dia, String comentario) {
         this.medico = medico;
@@ -91,6 +92,11 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
 
         jTextAreaComentario.setColumns(20);
         jTextAreaComentario.setRows(5);
+        jTextAreaComentario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextAreaComentarioKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTextAreaComentario);
 
         jTextAreaComentario1.setBackground(new java.awt.Color(204, 204, 204));
@@ -101,8 +107,9 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
         jLabel1.setForeground(java.awt.Color.blue);
         jLabel1.setText("(?)");
 
-        Guardar.setText("jButton1");
+        Guardar.setText("Guardar");
         Guardar.setActionCommand("Guardar");
+        Guardar.setEnabled(false);
         Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GuardarActionPerformed(evt);
@@ -170,19 +177,31 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         try {
-            String comentarioNuevo = jTextAreaComentario.getText();
-            jTextAreaComentario.setText("");
-            medico.updateFicha(this.comentario, comentarioNuevo, codFicha);
-            recargarVentana();
+            int confirmacion = 0;
+            confirmacion = ventanaConfirmar();
+            if (confirmacion == 1) {
+                String comentarioNuevo = jTextAreaComentario.getText();
+                jTextAreaComentario.setText("");
+                medico.updateFicha(this.comentario, comentarioNuevo, codFicha);
+                recargarVentana();
+            } else {
+                initVentana();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ModificarFichaSeleccionada.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_GuardarActionPerformed
+
+    private void jTextAreaComentarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaComentarioKeyTyped
+        Guardar.setEnabled(true);
+    }//GEN-LAST:event_jTextAreaComentarioKeyTyped
     private void initVentana() {
         campoDiaHora.setText(dia + "  " + hora);
         campoCodFicha.setText(codFicha);
         jTextAreaComentario1.setText(comentario);
+        Guardar.setEnabled(false);
+        jTextAreaComentario.setText(null);
     }
 
     private void recargarVentana() throws SQLException {
@@ -192,7 +211,12 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
         this.dia = ficha.get(2);
         this.hora = ficha.get(3);
         initVentana();
-        
+
+    }
+
+    private int ventanaConfirmar() {
+        Object[] options = {"Cancelar", "Guardar"};
+        return JOptionPane.showOptionDialog(this, "Se van a guardar los cambios, ¿Desea confirmar la operación?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
 
 
