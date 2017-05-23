@@ -77,14 +77,20 @@
                                   <Component id="labelTelefono" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="textTelefono" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="telefonoOK" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="buttonAñadirPaciente" min="-2" pref="150" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="labelDireccion" min="-2" pref="150" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="textDireccion" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="buttonAñadirPaciente" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="labelDireccion" min="-2" pref="150" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="textDireccion" min="-2" pref="150" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="direccionOK" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="labelNombre" min="-2" pref="150" max="-2" attributes="0"/>
@@ -135,15 +141,17 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelTelefono" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="textTelefono" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="telefonoOK" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelDireccion" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="textDireccion" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="direccionOK" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="buttonAñadirPaciente" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="132" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -248,8 +256,24 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="textTelefono">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textTelefonoKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="textDireccion">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textDireccionKeyReleased"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="telefonoOK">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="rellena tel&#xe9;fono"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="direccionOK">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="rellena direcci&#xf3;n"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -270,7 +294,7 @@
                           <Component id="desplegableColumnas" min="-2" pref="150" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="textFieldBuscar" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace pref="12" max="32767" attributes="0"/>
+                          <EmptySpace pref="11" max="32767" attributes="0"/>
                           <Component id="actualizarDatos" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
                   </Group>

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -109,6 +110,11 @@ public class PedirCita extends javax.swing.JPanel {
         });
 
         checkElegirMedico.setText("Elegir medico");
+        checkElegirMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkElegirMedicoActionPerformed(evt);
+            }
+        });
         checkElegirMedico.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 checkElegirMedicoPropertyChange(evt);
@@ -133,25 +139,22 @@ public class PedirCita extends javax.swing.JPanel {
                                 .addComponent(desplegableEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(labelDia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15)
                         .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mostrarDatosLayout.createSequentialGroup()
-                                        .addComponent(labelHora, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(desplegableHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                        .addComponent(labelMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(desplegableMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                        .addComponent(Turno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(desplegableTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mostrarDatosLayout.createSequentialGroup()
+                                    .addComponent(labelHora, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(desplegableHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(mostrarDatosLayout.createSequentialGroup()
+                                    .addComponent(labelMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(desplegableMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(mostrarDatosLayout.createSequentialGroup()
+                                    .addComponent(Turno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(desplegableTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(33, 33, 33)
                         .addComponent(checkElegirMedico)
                         .addGap(0, 68, Short.MAX_VALUE))))
@@ -213,9 +216,28 @@ public class PedirCita extends javax.swing.JPanel {
 	private void cargarDatos() {
 		try {
 			desplegableEspecialidad.setModel(new DefaultComboBoxModel(gestor.getEspecialidades()));
-			calendario.setMinSelectableDate(calendario.getDate());
-			Calendar fecha = Calendar.getInstance();
-			//calendario.setMaxSelectableDate(calendario.add(fecha.MONTH, +1));
+
+			Date fechaMinima = calendario.getDate();
+			Date fechaMaxima = new Date();
+			calendario.setMinSelectableDate(fechaMinima);
+
+			/*
+			 calendario.setMaxSelectableDate();
+			
+			 Calendar date = Calendar.getInstance();
+			 date.add(Calendar.MONTH, 1);
+			
+			
+			 calendario.setMaxSelectableDate((date) date);
+						
+			 int prevDayOfWeekInMonth = date.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+			 int prevDayOfWeek = date.get(Calendar.DAY_OF_WEEK);
+
+
+			 date.set(Calendar.DAY_OF_WEEK, prevDayOfWeek);
+			 date.set(Calendar.DAY_OF_WEEK_IN_MONTH, prevDayOfWeekInMonth);
+			
+			 */
 		} catch (SQLException ex) {
 			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -382,6 +404,11 @@ public class PedirCita extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void desplegableTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableTurnoActionPerformed
+		if (cambiarEstadoDesplegableMedicos()){
+			
+		} else {
+			
+		}
 		if (checkElegirMedico.isEnabled()) {
 			desplegableMedico.setEnabled(true);
 			//desplegableMedico.setModel(new DefaultComboBoxModel((String) gestor.mostrarMedicosByHorarioEspecialidad(especialidad, turno)));
@@ -391,6 +418,38 @@ public class PedirCita extends javax.swing.JPanel {
 		}
 
     }//GEN-LAST:event_desplegableTurnoActionPerformed
+
+	/**
+	 * 
+	 * @return 
+	 */
+	private boolean desplegableTurnoEventoGenerado(){
+		boolean resul = false;
+		
+		return resul;
+	}
+	
+	/**
+	 * Modifica el estado de desplegableMedicos
+	 */
+	private boolean cambiarEstadoDesplegableMedicos(){
+		boolean resul = false;
+		if (checkElegirMedico.isSelected()){
+			desplegableMedico.setEnabled(true);
+			resul = true;
+		} else {
+			desplegableMedico.setEnabled(false);
+		}
+		return resul;
+	}
+	
+	/**
+	 * Lanza un metodo al cambiar el valor de la checkbox
+	 * @param evt 
+	 */
+    private void checkElegirMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkElegirMedicoActionPerformed
+		cambiarEstadoDesplegableMedicos();
+    }//GEN-LAST:event_checkElegirMedicoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Especialidad;

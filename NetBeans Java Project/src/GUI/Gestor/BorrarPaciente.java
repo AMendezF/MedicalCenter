@@ -533,9 +533,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	private boolean comprobarDNIInactivo(String dni) {
 		boolean resul = false;
 		try {
-			if (estaVacio(dni) || !gestor.comprobarDNI(dni) || !gestor.existePacienteBDBorrado(dni)) {
-				resul = false;
-			} else {
+			if (!estaVacio(dni) && gestor.comprobarDNI(dni) && gestor.existePacienteBDBorrado(dni)) {
 				resul = true;
 			}
 		} catch (SQLException ex) {
@@ -553,9 +551,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	private boolean comprobarDNIActivo(String dni) {
 		boolean resul = false;
 		try {
-			if (estaVacio(dni) || !gestor.comprobarDNI(dni) || !gestor.existePacienteBD(dni)) {
-				resul = false;
-			} else {
+			if (!estaVacio(dni) && gestor.comprobarDNI(dni) && gestor.existePacienteBD(dni)) {
 				resul = true;
 			}
 		} catch (SQLException ex) {

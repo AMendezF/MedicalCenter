@@ -92,7 +92,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 88, Short.MAX_VALUE)
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,8 +220,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(icono)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -394,25 +394,25 @@ public class InterfazGrafica extends javax.swing.JFrame {
 			try {
 				con = new Conexion(textFieldUser.getText(), passwordFieldPassword.getPassword());
 			} catch (ClassNotFoundException ex) {
-				JOptionPane.showMessageDialog(this, "Ha ocurrido algun error, ", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Ha ocurrido algun error, " + ex, "Error", JOptionPane.ERROR_MESSAGE);
 				Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
 			}
-		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(this, "Error al conectarse\nPruebe cambiando de contraseña\n" + ex, "SQL EXCEPTION", JOptionPane.ERROR_MESSAGE);
+		} catch (SQLException exSQL) {
+			JOptionPane.showMessageDialog(this, "Error al conectarse\nPruebe cambiando de contraseña\n" + exSQL, "SQL EXCEPTION", JOptionPane.ERROR_MESSAGE);
 		}
 
 		try {
-			if (con.existeMedico(con.getUser()) || con.existeUser(textFieldUser.getText())) {
-				if (con.getUser().equals("root")) {
+			if (con.getUser().equals("root") || con.existeMedico(con.getUser()) || con.existeUser(textFieldUser.getText())) {
+				if (con.esValida() && con.getUser().equals("root")) {
 					crearMenuAdmin();
 					labelUsuario.setText("Administrador");
 					icono.setVisible(true);
 				} else if (con.existeBD()) {
-					if (con.getUser().equals("Gestor")) {
+					if (con.esValida() && con.getUser().equals("Gestor")) {
 						crearMenuGestor();
 						icono.setVisible(true);
 						labelUsuario.setText(con.getUser());
-					} else if (con.existeMedico(con.getUser())) {
+					} else if (con.esValida() && con.existeMedico(con.getUser())) {
 						crearMenuMedico();
 						icono.setVisible(true);
 						labelUsuario.setText(medico.getNombre() + ", " + medico.getN_colegiado());
@@ -424,8 +424,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 				JOptionPane.showMessageDialog(this, "Usuario incorrecto\nVuelva a intentarlo", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(this, "Usuario incorrecto\nVuelva a intentarlo\n", "Error", JOptionPane.ERROR_MESSAGE);
-			Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(this, "Usuario incorrecto\nVuelva a intentarlo\n" + ex, "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}

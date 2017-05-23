@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 /**
  *
@@ -28,6 +31,11 @@ public class modificarPaciente extends javax.swing.JPanel {
 		initComponents();
 		this.gestor = gestor;
 		this.paciente = paciente;
+		fieldNombre.setDocument(new JTextFieldLimit(50));
+		fieldApellidos.setDocument(new JTextFieldLimit(50));
+		fieldSeguro.setDocument(new JTextFieldLimit(50));
+		fieldTelefono.setDocument(new JTextFieldLimit(15));
+		fieldDireccion.setDocument(new JTextFieldLimit(50));
 		mostrarValores();
 	}
 
@@ -329,35 +337,47 @@ public class modificarPaciente extends javax.swing.JPanel {
 
 		if (comprobarNombre(datos.get(0))) {
 			if (comprobarApellido(datos.get(1))) {
-				if (!datos.get(0).equals(paciente.getNombre())) {
-					modificarPaciente.add(new String[]{"nombre", datos.get(0)});
-				}
-				if (!datos.get(1).equals(paciente.getApellidos())) {
-					modificarPaciente.add(new String[]{"apellidos", datos.get(1)});
-				}
-				if (!datos.get(2).equals(paciente.getSeguro())) {
-					modificarPaciente.add(new String[]{"CompSegur", datos.get(2)});
-				}
-				if (!datos.get(3).equals(paciente.getTelefono())) {
-					modificarPaciente.add(new String[]{"telefono", datos.get(3)});
-				}
-				if (!datos.get(4).equals(paciente.getDireccion())) {
-					modificarPaciente.add(new String[]{"direccion", datos.get(4)});
-				}
+				if (comprobarTelefono(datos.get(3))) {
+					if (comprobarDireccion(datos.get(4))) {
 
-				String[][] datosModificar = modificarPaciente.toArray(new String[modificarPaciente.size()][2]);
+						if (!datos.get(0).equals(paciente.getNombre())) {
+							modificarPaciente.add(new String[]{"nombre", datos.get(0)});
+						}
+						if (!datos.get(1).equals(paciente.getApellidos())) {
+							modificarPaciente.add(new String[]{"apellidos", datos.get(1)});
+						}
+						if (!datos.get(2).equals(paciente.getSeguro())) {
+							if (estaVacio(datos.get(2))) {
+								datos.set(2, "NULL");
+							}
+							modificarPaciente.add(new String[]{"CompSegur", datos.get(2)});
+						}
+						if (!datos.get(3).equals(paciente.getTelefono())) {
+							modificarPaciente.add(new String[]{"telefono", datos.get(3)});
+						}
+						if (!datos.get(4).equals(paciente.getDireccion())) {
+							modificarPaciente.add(new String[]{"direccion", datos.get(4)});
+						}
 
-				if (gestor.updatePaciente(paciente.getDNI(), datosModificar)) {
-					JOptionPane.showMessageDialog(this, "Se modificado el paciente con DNI " + paciente.getDNI());
-					try {
-						paciente = gestor.getPaciente(paciente.getDNI());
-					} catch (SQLException ex) {
-						Logger.getLogger(modificarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+						String[][] datosModificar = modificarPaciente.toArray(new String[modificarPaciente.size()][2]);
+
+						if (gestor.updatePaciente(paciente.getDNI(), datosModificar)) {
+							JOptionPane.showMessageDialog(this, "Se modificado el paciente con DNI " + paciente.getDNI());
+							try {
+								paciente = gestor.getPaciente(paciente.getDNI());
+							} catch (SQLException ex) {
+								Logger.getLogger(modificarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+							}
+							buttonActualizarDatos.setEnabled(false);
+							mostrarValores();
+						} else {
+							JOptionPane.showMessageDialog(this, "Error al modificar paciente");
+						}
+					} else {
+						JOptionPane.showMessageDialog(this, "Error con el dirección", "Cuidado!", JOptionPane.WARNING_MESSAGE);
 					}
-					buttonActualizarDatos.setEnabled(false);
-					mostrarValores();
 				} else {
-					JOptionPane.showMessageDialog(this, "Error al modificar paciente");
+					JOptionPane.showMessageDialog(this, "Error con el teléfono", "Cuidado!", JOptionPane.WARNING_MESSAGE);
 				}
 			} else {
 				JOptionPane.showMessageDialog(this, "Error con el apellido", "Cuidado!", JOptionPane.WARNING_MESSAGE);
@@ -419,25 +439,39 @@ public class modificarPaciente extends javax.swing.JPanel {
 		}
     }//GEN-LAST:event_fieldSeguroKeyReleased
 
+	/**
+	 * Modifica el valor del titulo telefono
+	 *
+	 * @param evt
+	 */
     private void fieldTelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldTelefonoKeyReleased
-		actualizarBoton();
-		if (paciente.getTelefono().equals(fieldTelefono.getText())) {
-			telefonoOK.setForeground(Color.black);
-			telefonoOK.setText("No se modificará este campo");
-		} else {
-			telefonoOK.setForeground(Color.green);
-			telefonoOK.setText("Se actualizara este campo");
+		if (comprobarTelefono(fieldTelefono.getText())) {
+			actualizarBoton();
+			if (paciente.getTelefono().equals(fieldTelefono.getText())) {
+				telefonoOK.setForeground(Color.black);
+				telefonoOK.setText("No se modificará este campo");
+			} else {
+				telefonoOK.setForeground(Color.green);
+				telefonoOK.setText("Se actualizara este campo");
+			}
 		}
     }//GEN-LAST:event_fieldTelefonoKeyReleased
 
+	/**
+	 * Modifica el valor del titulo direccion
+	 *
+	 * @param evt
+	 */
     private void fieldDireccionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldDireccionKeyReleased
-		actualizarBoton();
-		if (paciente.getDireccion().equals(fieldDireccion.getText())) {
-			direccionOK.setForeground(Color.black);
-			direccionOK.setText("No se modificará este campo");
-		} else {
-			direccionOK.setForeground(Color.green);
-			direccionOK.setText("Se actualizara este campo");
+		if (comprobarDireccion(fieldDireccion.getText())) {
+			actualizarBoton();
+			if (paciente.getDireccion().equals(fieldDireccion.getText())) {
+				direccionOK.setForeground(Color.black);
+				direccionOK.setText("No se modificará este campo");
+			} else {
+				direccionOK.setForeground(Color.green);
+				direccionOK.setText("Se actualizara este campo");
+			}
 		}
     }//GEN-LAST:event_fieldDireccionKeyReleased
 
@@ -515,6 +549,41 @@ public class modificarPaciente extends javax.swing.JPanel {
 		return resul;
 	}
 
+	/**
+	 * Comprueba el telefono
+	 *
+	 * @return
+	 */
+	private boolean comprobarTelefono(String telefono) {
+		boolean resul = false;
+		if (estaVacio(telefono)) {
+			telefonoOK.setForeground(Color.red);
+			telefonoOK.setText("Vacio!!");
+		} else if (!gestor.esNumerico(telefono)) {
+			telefonoOK.setForeground(Color.red);
+			telefonoOK.setText("Incorrecto!!");
+		} else {
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Comprueba la direccion
+	 *
+	 * @return
+	 */
+	private boolean comprobarDireccion(String direccion) {
+		boolean resul = false;
+		if (estaVacio(direccion)) {
+			direccionOK.setForeground(Color.red);
+			direccionOK.setText("Vacio!!");
+		} else {
+			resul = true;
+		}
+		return resul;
+	}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel apellidosOK;
     private javax.swing.JButton buttonActualizarDatos;
@@ -542,4 +611,30 @@ public class modificarPaciente extends javax.swing.JPanel {
     private javax.swing.JLabel seguroOK;
     private javax.swing.JLabel telefonoOK;
     // End of variables declaration//GEN-END:variables
+}
+
+
+class JTextFieldLimit extends PlainDocument {
+
+	private int limit;
+
+	JTextFieldLimit(int limit) {
+		super();
+		this.limit = limit;
+	}
+
+	JTextFieldLimit(int limit, boolean upper) {
+		super();
+		this.limit = limit;
+	}
+
+	public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+		if (str == null) {
+			return;
+		}
+
+		if ((getLength() + str.length()) <= limit) {
+			super.insertString(offset, str, attr);
+		}
+	}
 }
