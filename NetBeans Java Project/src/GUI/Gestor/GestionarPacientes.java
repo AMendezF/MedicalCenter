@@ -4,12 +4,10 @@ import GUI.Gestor.Paciente.MenuDePaciente;
 import clases.Gestor;
 import clases.Paciente;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -213,7 +211,7 @@ public class GestionarPacientes extends javax.swing.JPanel {
 	 */
 	private void actualizarDatos() {
 		try {
-			ResultSet rs = gestor.mostrarPacientesTodos();
+			ResultSet rs = gestor.mostrarPacientes();
 			TableAdaptor aux = new TableAdaptor(rs);
 			setTabla(aux.getValue());
 			DefaultTableModel tabla = getTabla();
@@ -230,8 +228,16 @@ public class GestionarPacientes extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void buttonCogerPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCogerPacienteActionPerformed
+		cogerPaciente(fieldDNI.getText());
+
+    }//GEN-LAST:event_buttonCogerPacienteActionPerformed
+
+	/**
+	 * Crea un paciente con el dni
+	 */
+	private void cogerPaciente(String dni) {
 		try {
-			if (gestor.existePacienteBD(fieldDNI.getText())) {
+			if (comprobarDNI(dni)) {
 				this.paciente = gestor.getPaciente(fieldDNI.getText());
 				crearMenu();
 			} else {
@@ -240,9 +246,33 @@ public class GestionarPacientes extends javax.swing.JPanel {
 		} catch (SQLException ex) {
 			Logger.getLogger(GestionarPacientes.class.getName()).log(Level.SEVERE, null, ex);
 		}
-    }//GEN-LAST:event_buttonCogerPacienteActionPerformed
+	}
 
+	/**
+	 * Comprueba el campo DNI de campo Activo
+	 *
+	 * @return
+	 */
+	private boolean comprobarDNI(String dni) {
+		boolean resul = false;
+		try {
+			if (estaVacio(dni) || !gestor.comprobarDNI(dni) || !gestor.existePacienteBD(dni)) {
+				resul = false;
+			} else {
+				resul = true;
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(AñadirPaciente.class
+					.getName()).log(Level.SEVERE, null, ex);
+		}
+		return resul;
+	}
 
+	/**
+	 * Sirve para buscar en el jtable
+	 *
+	 * @param evt
+	 */
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBuscarKeyTyped
 		// TODO add your handling code here:
 		textFieldBuscar.addKeyListener(new KeyAdapter() {
@@ -257,10 +287,20 @@ public class GestionarPacientes extends javax.swing.JPanel {
 		tablaInfo.setRowSorter(trsFiltro);
     }//GEN-LAST:event_textFieldBuscarKeyTyped
 
+	/**
+	 * Actualiza los datos de la tabla
+	 *
+	 * @param evt
+	 */
     private void buttonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonMostrarActionPerformed
 		actualizarDatos();
     }//GEN-LAST:event_buttonMostrarActionPerformed
 
+	/**
+	 * Carga un dato al clicar en la tabla
+	 *
+	 * @param evt
+	 */
     private void tablaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInfoMouseClicked
 		int row = tablaInfo.rowAtPoint(evt.getPoint());
 		int col = tablaInfo.columnAtPoint(evt.getPoint());
@@ -286,10 +326,20 @@ public class GestionarPacientes extends javax.swing.JPanel {
 		mostrarDatos.repaint();
 	}
 
+	/**
+	 * Getters de la tabla
+	 *
+	 * @return
+	 */
 	public DefaultTableModel getTabla() {
 		return this.tabla;
 	}
 
+	/**
+	 * Setters de la tabla
+	 *
+	 * @param tabla
+	 */
 	public void setTabla(DefaultTableModel tabla) {
 		this.tabla = tabla;
 	}
@@ -317,6 +367,20 @@ public class GestionarPacientes extends javax.swing.JPanel {
 		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
 	}
 
+	/**
+	 * Devuelve true si un stirng esta vacio Funcion equals muy simple, pero
+	 * ayuda a que el codigo sea mas sencillo y se vea mejor
+	 *
+	 * @param texto
+	 * @return
+	 */
+	private boolean estaVacio(String texto) {
+		boolean resul = false;
+		if (texto.equals("")) {
+			resul = true;
+		}
+		return resul;
+	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCogerPaciente;

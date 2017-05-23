@@ -46,6 +46,7 @@ public class MostrarAgenda extends javax.swing.JPanel {
         buttonExportar = new javax.swing.JButton();
 
         areaDatos.setColumns(20);
+        areaDatos.setFont(new java.awt.Font("Times New Roman", 0, 15)); // NOI18N
         areaDatos.setRows(5);
         areaDatos.setEnabled(false);
         areaDatos.setMaximumSize(new java.awt.Dimension(800, 800));

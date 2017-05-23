@@ -1,9 +1,17 @@
 package GUI.Gestor.Paciente;
 
-import clases.Conexion;
+import GUI.Gestor.AñadirPaciente;
+import GUI.Gestor.TableAdaptor;
 import clases.Gestor;
 import clases.Paciente;
-import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,11 +29,15 @@ public class mostrarCitas extends javax.swing.JPanel {
 	 */
 	private Gestor gestor;
 	private Paciente paciente;
+	private TableRowSorter trsFiltro;
+	private DefaultTableModel tabla;
+	private String[] columnas;
 
 	public mostrarCitas(Gestor gestor, Paciente paciente) {
 		initComponents();
 		this.gestor = gestor;
 		this.paciente = paciente;
+		actualizarDatos();
 	}
 
 	/**
@@ -39,39 +51,29 @@ public class mostrarCitas extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        buttonMostrarCitas = new javax.swing.JButton();
+        buttonActualizarCitas = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaInfo = new javax.swing.JTable();
         buttonCancelarCita = new javax.swing.JButton();
-        fieldBorrarCita = new javax.swing.JTextField();
+        textFieldBuscar = new javax.swing.JTextField();
         borrarCita = new javax.swing.JLabel();
+        desplegableColumnas = new javax.swing.JComboBox();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Mostrar citas Paciente");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        buttonMostrarCitas.setText("Mostrar citas");
+        buttonActualizarCitas.setText("Actualizar datos");
 
         tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         tablaInfo.getTableHeader().setReorderingAllowed(false);
         tablaInfo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -97,29 +99,34 @@ public class mostrarCitas extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(fieldBorrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(borrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(borrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 821, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 821, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(buttonActualizarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonActualizarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonCancelarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldBorrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(borrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(borrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
                 .addContainerGap())
@@ -143,6 +150,11 @@ public class mostrarCitas extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+	 * Coge el valor del codigo de cita de una tabla
+	 *
+	 * @param evt
+	 */
     private void tablaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInfoMouseClicked
 		int row = tablaInfo.rowAtPoint(evt.getPoint());
 		int col = tablaInfo.columnAtPoint(evt.getPoint());
@@ -152,18 +164,97 @@ public class mostrarCitas extends javax.swing.JPanel {
     }//GEN-LAST:event_tablaInfoMouseClicked
 
     private void buttonCancelarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarCitaActionPerformed
-		//borrarCita(borrarCita.getText());
+		borrarCita(borrarCita.getText());
     }//GEN-LAST:event_buttonCancelarCitaActionPerformed
 
+	private void borrarCita(String codCita) {
+		Object[] options = {"Si", "No"};
+		int confirmar;
+
+//		if (gestor.citaEsValida(paciente.getDNI(), codCita)) {
+//			confirmar = JOptionPane.showOptionDialog(this, "Se borrara la cita, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+//			// Confirmar devuelve un 0 si quiere confirmarlo
+//			// Devuelve un 1 si no lo confirma
+//			if (confirmar == 0) {
+//				if (paciente.removeCita(codCita)) {
+//					JOptionPane.showMessageDialog(this, "Se ha borrado la cita del paciente " + paciente.getDNI());
+//					actualizarDatos();
+//				} else {
+//					JOptionPane.showMessageDialog(this, "No se ha podido cancelar la cita", "Error", JOptionPane.ERROR_MESSAGE);
+//				}
+//			}
+//
+//		} else {
+//			JOptionPane.showMessageDialog(this, "La cita no es correcta", "Error", JOptionPane.ERROR_MESSAGE);
+//		}
+	}
+
+	/**
+	 * Carga un resulSet y lo muestra en la tabla
+	 */
+	private void actualizarDatos() {
+		try {
+			ResultSet rs = paciente.mostrarCitasPendientes();
+			TableAdaptor aux = new TableAdaptor(rs);
+			setTabla(aux.getValue());
+			DefaultTableModel tabla = getTabla();
+			tablaInfo.setModel(tabla);
+			cargarDesplegables();
+		} catch (SQLException ex) {
+			Logger.getLogger(AñadirPaciente.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	/**
+	 * Carga el desplegable de paciente a partir de la tabla
+	 */
+	private void cargarDesplegables() {
+		int numColums = tablaInfo.getColumnCount();
+		this.columnas = new String[numColums];
+		for (int i = 0; i < numColums; i++) {
+			this.columnas[i] = tablaInfo.getColumnName(i);
+		}
+		desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
+	}
+
+	/**
+	 * Filtro necesario para manejar la informacion
+	 */
+	public void filtro() {
+		int colum = 0;
+		while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
+			colum++;
+		}
+		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
+	}
+
+	/**
+	 * Getter para la tabla
+	 *
+	 * @return
+	 */
+	public DefaultTableModel getTabla() {
+		return this.tabla;
+	}
+
+	/**
+	 * Setters para la tabla
+	 *
+	 * @param tabla
+	 */
+	public void setTabla(DefaultTableModel tabla) {
+		this.tabla = tabla;
+	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel borrarCita;
+    private javax.swing.JButton buttonActualizarCitas;
     private javax.swing.JButton buttonCancelarCita;
-    private javax.swing.JButton buttonMostrarCitas;
-    private javax.swing.JTextField fieldBorrarCita;
+    private javax.swing.JComboBox desplegableColumnas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaInfo;
+    private javax.swing.JTextField textFieldBuscar;
     // End of variables declaration//GEN-END:variables
 }

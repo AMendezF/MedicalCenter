@@ -32,7 +32,7 @@ public class MenuDePaciente extends javax.swing.JPanel {
 		this.paciente = paciente;
 		this.mostrarCitas = new mostrarCitas(gestor, paciente);
 		this.pedirCita = new PedirCita(gestor, paciente);
-		this.modificarPaciente = new modificarPaciente(gestor,paciente);
+		//this.modificarPaciente = new modificarPaciente(gestor,paciente);
 		this.labelMenuDelPaciente.setText(paciente.getNombre() +":   " + paciente.getDNI());
 	}
 
@@ -167,7 +167,8 @@ public class MenuDePaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonPedirCitaActionPerformed
 
     private void buttonModificarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonModificarPacienteActionPerformed
-        modificarPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+        this.modificarPaciente = new modificarPaciente(gestor,paciente);
+		modificarPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		modificarPaciente.setLocation(0, 0);
 
 		mostrarDatos.removeAll();

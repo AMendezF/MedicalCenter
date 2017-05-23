@@ -1,12 +1,10 @@
 package GUI.Gestor;
 
 import clases.Gestor;
-import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -277,7 +275,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 	/**
-	 * Carga un resulSet y lo muestra en la tabla
+	 * Carga un resulSet y lo muestra en la tabla Activos
 	 */
 	private void actualizarDatosPacientesActivos() {
 		try {
@@ -293,7 +291,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	}
 
 	/**
-	 * Carga un resulSet y lo muestra en la tabla
+	 * Carga un resulSet y lo muestra en la tabla Inactivos
 	 */
 	private void actualizarDatosPacientesInactivos() {
 		try {
@@ -336,37 +334,32 @@ public class BorrarPaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_actualizarActivosActionPerformed
 
 	/**
-	 * Borra un paciente
+	 * Exporta un paciente a la tabla borrado
 	 *
 	 * @param evt
 	 */
     private void buttonExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExportarActionPerformed
 		Object[] options = {"Si", "No"};
-		String dni = fieldBorrar.getText();
 		int confirmar;
 
-		try {
-			if (gestor.comprobarDNI(dni)) {
-				if (gestor.existePacienteBD(dni)) {
-					confirmar = JOptionPane.showOptionDialog(this, "Se va ha borrar el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-					if (confirmar == 0) {
-						if (gestor.removePacienteBD(dni)) {
-							JOptionPane.showMessageDialog(this, "Se ha borrado el paciente con DNI " + dni);
-							fieldBorrar.setText("Introduce DNI");
-							actualizarDatosPacientesActivos();
-							actualizarDatosPacientesInactivos();
-						} else {
-							JOptionPane.showMessageDialog(this, "No se ha podido borrar", "Error", JOptionPane.ERROR_MESSAGE);
-						}
-					}
+		String dni = fieldBorrar.getText();
+
+		if (comprobarDNIActivo(dni)) {
+			confirmar = JOptionPane.showOptionDialog(this, "Se va ha exportar el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			// Confirmar devuelve un 0 si quiere confirmarlo
+			// Devuelve un 1 si no lo confirma
+			if (confirmar == 0) {
+				if (gestor.removePacienteBD(dni)) {
+					JOptionPane.showMessageDialog(this, "Se ha borrado el paciente con DNI " + dni);
+					fieldBorrar.setText("Introduce DNI");
+					actualizarDatosPacientesActivos();
+					actualizarDatosPacientesInactivos();
 				} else {
-					JOptionPane.showMessageDialog(this, "No existe un paciente con este DNI" + dni, "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "No se ha podido exportar", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-			} else {
-				JOptionPane.showMessageDialog(this, "El dni no es correcto" + dni, "Error", JOptionPane.ERROR_MESSAGE);
 			}
-		} catch (SQLException ex) {
-			Logger.getLogger(BorrarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+		} else {
+			JOptionPane.showMessageDialog(this, "El dni es incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
 		}
     }//GEN-LAST:event_buttonExportarActionPerformed
 
@@ -398,37 +391,32 @@ public class BorrarPaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_actualizarInactivosActionPerformed
 
 	/**
-	 * Reinserta un paciente
+	 * Importa un paciente de la tabla borrado
 	 *
 	 * @param evt
 	 */
     private void buttonImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImportarActionPerformed
 		Object[] options = {"Si", "No"};
-		String dni = fieldReinsertar.getText();
 		int confirmar;
 
-		try {
-			if (gestor.comprobarDNI(dni)) {
-				if (gestor.existePacienteBDBorrado(dni)) {
-					confirmar = JOptionPane.showOptionDialog(this, "Se va ha reinsertar el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-					if (confirmar == 0) {
-						if (gestor.removePacienteBDBorrado(dni)) {
-							JOptionPane.showMessageDialog(this, "Se ha reinsertado el paciente con DNI " + dni);
-							fieldReinsertar.setText("Introduce DNI");
-							actualizarDatosPacientesActivos();
-							actualizarDatosPacientesInactivos();
-						} else {
-							JOptionPane.showMessageDialog(this, "No se ha podido reinsertar", "Error", JOptionPane.ERROR_MESSAGE);
-						}
-					}
+		String dni = fieldReinsertar.getText();
+
+		if (comprobarDNIInactivo(dni)) {
+			confirmar = JOptionPane.showOptionDialog(this, "Se va ha importar el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			// Confirmar devuelve un 0 si quiere confirmarlo
+			// Devuelve un 1 si no lo confirma
+			if (confirmar == 0) {
+				if (gestor.removePacienteBDBorrado(dni)) {
+					JOptionPane.showMessageDialog(this, "Se ha importado el paciente con DNI " + dni);
+					fieldReinsertar.setText("Introduce DNI");
+					actualizarDatosPacientesActivos();
+					actualizarDatosPacientesInactivos();
 				} else {
-					JOptionPane.showMessageDialog(this, "No existe un paciente con este DNI" + dni, "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "No se ha podido importar", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-			} else {
-				JOptionPane.showMessageDialog(this, "El dni no es correcto" + dni, "Error", JOptionPane.ERROR_MESSAGE);
 			}
-		} catch (SQLException ex) {
-			Logger.getLogger(BorrarPaciente.class.getName()).log(Level.SEVERE, null, ex);
+		} else {
+			JOptionPane.showMessageDialog(this, "El dni es incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
 		}
     }//GEN-LAST:event_buttonImportarActionPerformed
 
@@ -458,10 +446,20 @@ public class BorrarPaciente extends javax.swing.JPanel {
 		}
     }//GEN-LAST:event_tablaInactivosMouseClicked
 
+	/**
+	 * Getters de la tabla
+	 *
+	 * @return
+	 */
 	public DefaultTableModel getTabla() {
 		return this.tabla;
 	}
 
+	/**
+	 * Setters de la tabla
+	 *
+	 * @param tabla
+	 */
 	public void setTabla(DefaultTableModel tabla) {
 		this.tabla = tabla;
 	}
@@ -491,7 +489,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	}
 
 	/**
-	 * Filtro necesario para manejar la informacion
+	 * Filtro en paciente inactivo necesario para manejar la informacion
 	 */
 	public void filtroInactivo() {
 		int colum = 0;
@@ -502,7 +500,7 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	}
 
 	/**
-	 * Filtro necesario para manejar la informacion
+	 * Filtro en paciente activo necesario para manejar la informacion
 	 */
 	public void filtroActivo() {
 		int colum = 0;
@@ -510,6 +508,61 @@ public class BorrarPaciente extends javax.swing.JPanel {
 			colum++;
 		}
 		trsActivo.setRowFilter(RowFilter.regexFilter(textActivos.getText(), colum));
+	}
+
+	/**
+	 * Devuelve true si un stirng esta vacio Funcion equals muy simple, pero
+	 * ayuda a que el codigo sea mas sencillo y se vea mejor
+	 *
+	 * @param texto
+	 * @return
+	 */
+	private boolean estaVacio(String texto) {
+		boolean resul = false;
+		if (texto.equals("")) {
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Comprueba el campo DNI de campo Inactivo
+	 *
+	 * @return
+	 */
+	private boolean comprobarDNIInactivo(String dni) {
+		boolean resul = false;
+		try {
+			if (estaVacio(dni) || !gestor.comprobarDNI(dni) || !gestor.existePacienteBDBorrado(dni)) {
+				resul = false;
+			} else {
+				resul = true;
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(AñadirPaciente.class
+					.getName()).log(Level.SEVERE, null, ex);
+		}
+		return resul;
+	}
+
+	/**
+	 * Comprueba el campo DNI de campo Activo
+	 *
+	 * @return
+	 */
+	private boolean comprobarDNIActivo(String dni) {
+		boolean resul = false;
+		try {
+			if (estaVacio(dni) || !gestor.comprobarDNI(dni) || !gestor.existePacienteBD(dni)) {
+				resul = false;
+			} else {
+				resul = true;
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(AñadirPaciente.class
+					.getName()).log(Level.SEVERE, null, ex);
+		}
+		return resul;
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

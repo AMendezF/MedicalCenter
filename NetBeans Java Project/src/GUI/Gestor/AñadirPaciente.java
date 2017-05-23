@@ -7,7 +7,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -50,21 +49,21 @@ public class AñadirPaciente extends javax.swing.JPanel {
         añadirPaciente = new javax.swing.JPanel();
         tituloPaciente = new javax.swing.JLabel();
         labelDNI = new javax.swing.JLabel();
-        dni = new javax.swing.JTextField();
+        textDNI = new javax.swing.JTextField();
         labelNombre = new javax.swing.JLabel();
-        nombre = new javax.swing.JTextField();
+        textNombre = new javax.swing.JTextField();
         labelApellidos = new javax.swing.JLabel();
-        apellidos = new javax.swing.JTextField();
+        textApellidos = new javax.swing.JTextField();
         labelSeguro = new javax.swing.JLabel();
-        compSeguro = new javax.swing.JTextField();
+        textSeguro = new javax.swing.JTextField();
         buttonAñadirPaciente = new javax.swing.JButton();
         DNIOK = new javax.swing.JLabel();
         nombreOK = new javax.swing.JLabel();
         apellidoOK = new javax.swing.JLabel();
         labelTelefono = new javax.swing.JLabel();
         labelDireccion = new javax.swing.JLabel();
-        telefono = new javax.swing.JTextField();
-        direccion = new javax.swing.JTextField();
+        textTelefono = new javax.swing.JTextField();
+        textDireccion = new javax.swing.JTextField();
         mostrarPacientesExistentes = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaInfo = new javax.swing.JTable();
@@ -81,32 +80,32 @@ public class AñadirPaciente extends javax.swing.JPanel {
         labelDNI.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelDNI.setText("DNI");
 
-        dni.addKeyListener(new java.awt.event.KeyAdapter() {
+        textDNI.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                dniKeyReleased(evt);
+                textDNIKeyReleased(evt);
             }
         });
 
         labelNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelNombre.setText("Nombre");
 
-        nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+        textNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                nombreKeyReleased(evt);
+                textNombreKeyReleased(evt);
             }
         });
 
         labelApellidos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelApellidos.setText("Apellidos");
 
-        apellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+        textApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                apellidosKeyReleased(evt);
+                textApellidosKeyReleased(evt);
             }
         });
 
         labelSeguro.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelSeguro.setText("Compañia de seguro");
+        labelSeguro.setText("Compañía de seguro");
 
         buttonAñadirPaciente.setText("Añadir");
         buttonAñadirPaciente.addActionListener(new java.awt.event.ActionListener() {
@@ -115,11 +114,17 @@ public class AñadirPaciente extends javax.swing.JPanel {
             }
         });
 
+        DNIOK.setText("rellena dni");
+
+        nombreOK.setText("rellena nombre");
+
+        apellidoOK.setText("rellena apellidos");
+
         labelTelefono.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelTelefono.setText("Telefono");
+        labelTelefono.setText("Teléfono");
 
         labelDireccion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelDireccion.setText("Direccion");
+        labelDireccion.setText("Dirección");
 
         javax.swing.GroupLayout añadirPacienteLayout = new javax.swing.GroupLayout(añadirPaciente);
         añadirPaciente.setLayout(añadirPacienteLayout);
@@ -136,36 +141,36 @@ public class AñadirPaciente extends javax.swing.JPanel {
                                     .addGroup(añadirPacienteLayout.createSequentialGroup()
                                         .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(textApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(añadirPacienteLayout.createSequentialGroup()
                                         .addComponent(labelSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(compSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(textSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addComponent(apellidoOK))
                             .addGroup(añadirPacienteLayout.createSequentialGroup()
                                 .addComponent(labelDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(dni, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(DNIOK))
                             .addGroup(añadirPacienteLayout.createSequentialGroup()
-                                .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(nombreOK))
-                            .addGroup(añadirPacienteLayout.createSequentialGroup()
                                 .addComponent(labelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(textTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(añadirPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(añadirPacienteLayout.createSequentialGroup()
                                     .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 15, Short.MAX_VALUE)))
+                                    .addComponent(textDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(añadirPacienteLayout.createSequentialGroup()
+                                .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(textNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(nombreOK)))
+                        .addGap(0, 40, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         añadirPacienteLayout.setVerticalGroup(
@@ -176,31 +181,31 @@ public class AñadirPaciente extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(añadirPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dni, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DNIOK))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(añadirPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nombreOK))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(añadirPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(añadirPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(apellidoOK)))
                 .addGap(18, 18, 18)
                 .addGroup(añadirPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(compSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(añadirPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(añadirPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -266,7 +271,7 @@ public class AñadirPaciente extends javax.swing.JPanel {
                         .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addComponent(actualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         mostrarPacientesExistentesLayout.setVerticalGroup(
@@ -358,34 +363,37 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		Object[] options = {"Si", "No"};
 		int confirmar;
 
-		if (gestor.comprobarDNI(dni.getText())) {
-			if (gestor.esTexto(nombre.getText()) && gestor.esTexto(apellidos.getText())) {
-				try {
-					if (!gestor.existePaciente(dni.getText())) {
-						confirmar = JOptionPane.showOptionDialog(this, "Se va ha crear el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-						// Confirmar devuelve un 0 si quiere confirmarlo
-						//devuelve un 1 si no lo confirma
-						if (confirmar == 0) {
-							String[] paciente = {dni.getText(), nombre.getText(), apellidos.getText(), compSeguro.getText()};
-							if (gestor.addPaciente(paciente)) {
-								JOptionPane.showMessageDialog(this, "Se ha añadido el paciente con DNI " + dni.getText());
-							} else {
-								JOptionPane.showMessageDialog(this, "No se ha podido añadir", "Error", JOptionPane.ERROR_MESSAGE);
-							}
+		String dni = textDNI.getText().trim();
+		String nombre = textNombre.getText().trim();
+		String apellidos = textApellidos.getText().trim();
+		String compañiaSeguro = textSeguro.getText().trim();
+		String telefono = textTelefono.getText().trim();
+		String direccion = textDireccion.getText().trim();
+
+		if (comprobarDNI(dni)) {
+			if (comprobarNombre(nombre)) {
+				if (comprobarApellido(apellidos)) {
+					confirmar = JOptionPane.showOptionDialog(this, "Se va ha crear el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+					// Confirmar devuelve un 0 si quiere confirmarlo
+					// Devuelve un 1 si no lo confirma
+					if (confirmar == 0) {
+						String[] paciente = {dni, nombre, apellidos, compañiaSeguro, telefono, direccion};
+						if (gestor.addPaciente(paciente)) {
+							JOptionPane.showMessageDialog(this, "Se ha añadido el paciente con DNI " + textDNI.getText());
+							actualizarDatos();
+						} else {
+							JOptionPane.showMessageDialog(this, "No se ha podido añadir", "Error", JOptionPane.ERROR_MESSAGE);
 						}
-					} else {
-						JOptionPane.showMessageDialog(this, "El dni ya esta en uso", "Error", JOptionPane.ERROR_MESSAGE);
 					}
-				} catch (SQLException ex) {
-					JOptionPane.showMessageDialog(this, "Hubo problemas al consultar la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(this, "Error con el apellido", "Cuidado!", JOptionPane.WARNING_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(this, "Algun campo esta vacio o es erróneo", "Cuidado!", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error con el nombre", "Cuidado!", JOptionPane.WARNING_MESSAGE);
 			}
 		} else {
 			JOptionPane.showMessageDialog(this, "El dni no es correcto", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		System.out.println(dni.getText() + "" + nombre.getText() + "" + apellidos.getText() + "" + compSeguro.getText());
     }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
 
 	/**
@@ -393,61 +401,100 @@ public class AñadirPaciente extends javax.swing.JPanel {
 	 *
 	 * @param evt
 	 */
-    private void apellidosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apellidosKeyReleased
-		if (apellidos.getText().equals("")) {
-			apellidoOK.setForeground(Color.red);
-			apellidoOK.setText("Vacio!!");
-		} else if (gestor.esTexto(apellidos.getText())) {
-			apellidoOK.setForeground(Color.black);
-			apellidoOK.setText("OK!!");
-		}
-    }//GEN-LAST:event_apellidosKeyReleased
+    private void textApellidosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textApellidosKeyReleased
+		comprobarApellido(textApellidos.getText());
+    }//GEN-LAST:event_textApellidosKeyReleased
 
 	/**
 	 * Muestra por pantalla si el campo esta o no vacio
 	 *
 	 * @param evt
 	 */
-    private void nombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyReleased
-		if (nombre.getText().equals("")) {
-			nombreOK.setForeground(Color.red);
-			nombreOK.setText("Vacio!!");
-		} else if (gestor.esTexto(nombre.getText())) {
-			nombreOK.setForeground(Color.black);
-			nombreOK.setText("OK!!");
-		}
-    }//GEN-LAST:event_nombreKeyReleased
+    private void textNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreKeyReleased
+		comprobarNombre(textNombre.getText());
+    }//GEN-LAST:event_textNombreKeyReleased
 
 	/**
 	 * Muestra por pantalla si el campo DNI es correcto
 	 *
 	 * @param evt
 	 */
-    private void dniKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dniKeyReleased
-		try {
-			if (gestor.comprobarDNI(dni.getText())) {
-				if (gestor.existePacienteBD(dni.getText())) {
-					DNIOK.setForeground(Color.red);
-					DNIOK.setText("Ya existe");
-				} else {
-					DNIOK.setForeground(Color.green);
-					DNIOK.setText("OK!!");
-				}
-			} else {
-				DNIOK.setForeground(Color.red);
-				DNIOK.setText("KO!!");
-			}
-		} catch (SQLException ex) {
-			Logger.getLogger(AñadirPaciente.class.getName()).log(Level.SEVERE, null, ex);
-		}
-    }//GEN-LAST:event_dniKeyReleased
+    private void textDNIKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textDNIKeyReleased
+		comprobarDNI(textDNI.getText());
+    }//GEN-LAST:event_textDNIKeyReleased
 
-	public DefaultTableModel getTabla() {
-		return this.tabla;
+	/**
+	 * Comprueba si el valor apellido es correcto
+	 *
+	 * @param campo
+	 * @return
+	 */
+	private boolean comprobarApellido(String apellido) {
+		boolean resul = false;
+		if (estaVacio(apellido)) {
+			apellidoOK.setForeground(Color.red);
+			apellidoOK.setText("Vacio!!");
+		} else if (!gestor.esTexto(apellido)) {
+			apellidoOK.setForeground(Color.red);
+			apellidoOK.setText("Incorrecto!!");
+		} else {
+			apellidoOK.setForeground(Color.green);
+			apellidoOK.setText("OK!!");
+			resul = true;
+		}
+		return resul;
 	}
 
-	public void setTabla(DefaultTableModel tabla) {
-		this.tabla = tabla;
+	/**
+	 * Comprueba si el valor apellido es correcto
+	 *
+	 * @param campo
+	 * @return
+	 */
+	private boolean comprobarNombre(String nombre) {
+		boolean resul = false;
+		if (estaVacio(nombre)) {
+			nombreOK.setForeground(Color.red);
+			nombreOK.setText("Vacio!!");
+		} else if (!gestor.esTexto(nombre)) {
+			nombreOK.setForeground(Color.red);
+			nombreOK.setText("Incorrecto!!");
+		} else {
+			nombreOK.setForeground(Color.green);
+			nombreOK.setText("OK!!");
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Comprueba el campo DNI
+	 *
+	 * @return
+	 */
+	private boolean comprobarDNI(String dni) {
+		boolean resul = false;
+		try {
+			if (estaVacio(dni)) {
+				DNIOK.setForeground(Color.red);
+				DNIOK.setText("Vacio!!");
+			} else if (!gestor.comprobarDNI(dni)) {
+				DNIOK.setForeground(Color.red);
+				DNIOK.setText("Incorrecto!!");
+			} else if (gestor.existePaciente(dni)) {
+				DNIOK.setForeground(Color.red);
+				DNIOK.setText("Ya existe!!");
+			} else {
+				DNIOK.setForeground(Color.green);
+				DNIOK.setText("OK!!");
+				resul = true;
+
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(AñadirPaciente.class
+					.getName()).log(Level.SEVERE, null, ex);
+		}
+		return resul;
 	}
 
 	/**
@@ -473,17 +520,46 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
 	}
 
+	/**
+	 * Devuelve true si un stirng esta vacio Funcion equals muy simple, pero
+	 * ayuda a que el codigo sea mas sencillo y se vea mejor
+	 *
+	 * @param texto
+	 * @return
+	 */
+	private boolean estaVacio(String texto) {
+		boolean resul = false;
+		if (texto.equals("")) {
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Getter para la tabla
+	 *
+	 * @return
+	 */
+	public DefaultTableModel getTabla() {
+		return this.tabla;
+	}
+
+	/**
+	 * Setters para la tabla
+	 *
+	 * @param tabla
+	 */
+	public void setTabla(DefaultTableModel tabla) {
+		this.tabla = tabla;
+	}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DNIOK;
     private javax.swing.JButton actualizarDatos;
     private javax.swing.JLabel apellidoOK;
-    private javax.swing.JTextField apellidos;
     private javax.swing.JPanel añadirPaciente;
     private javax.swing.JButton buttonAñadirPaciente;
-    private javax.swing.JTextField compSeguro;
     private javax.swing.JComboBox desplegableColumnas;
-    private javax.swing.JTextField direccion;
-    private javax.swing.JTextField dni;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel labelApellidos;
     private javax.swing.JLabel labelDNI;
@@ -493,11 +569,15 @@ public class AñadirPaciente extends javax.swing.JPanel {
     private javax.swing.JLabel labelSeguro;
     private javax.swing.JLabel labelTelefono;
     private javax.swing.JPanel mostrarPacientesExistentes;
-    private javax.swing.JTextField nombre;
     private javax.swing.JLabel nombreOK;
     private javax.swing.JTable tablaInfo;
-    private javax.swing.JTextField telefono;
+    private javax.swing.JTextField textApellidos;
+    private javax.swing.JTextField textDNI;
+    private javax.swing.JTextField textDireccion;
     private javax.swing.JTextField textFieldBuscar;
+    private javax.swing.JTextField textNombre;
+    private javax.swing.JTextField textSeguro;
+    private javax.swing.JTextField textTelefono;
     private javax.swing.JLabel tituloPaciente;
     // End of variables declaration//GEN-END:variables
 }
