@@ -22,26 +22,22 @@ public class Conexion {
 	private static final String dbName = "centromedico";
 	//private PreparedStatement preparedStmt;
 
-	public Conexion(String usuario, char[] cPassword) {
+	public Conexion(String usuario, char[] cPassword) throws SQLException, ClassNotFoundException {
 		this.connection = null;
 		this.user = usuario;
 		setPassword(cPassword);
 
-		try {
-			Class.forName(driver);
-			this.connection = DriverManager.getConnection(url, user, password);
+		Class.forName(driver);
+		this.connection = DriverManager.getConnection(url, user, password);
 
-			if (getCon() != null) {
-				System.out.println("Conexion establecida");
-				/*
-				 if (getUser().equals("root") && !existeBD()) {
-				 crearBD();
-				 }
-				 */
-			}
-		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("Error al conectar " + e);
+		if (getCon().isValid(0)) {
+			System.out.println("Conexion establecida");
+
+//			if (getUser().equals("root") && !existeBD()) {
+//				crearBD();
+//			}
 		}
+
 	}
 
 	public Connection getCon() {
@@ -146,12 +142,13 @@ public class Conexion {
 			this.password += cPassword[i];
 		}
 	}
-	
+
 	/**
 	 * Crea un backup de la base de datos especificada
+	 *
 	 * @param nombre
 	 * @throws SQLException
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void crearBackup(String nombre) throws SQLException, IOException {
 		try {
@@ -180,9 +177,10 @@ public class Conexion {
 		}
 	}
 
-	/** 
+	/**
 	 * Carga un fichero.sql en una base de datos del sistema
-	 * @param fichero 
+	 *
+	 * @param fichero
 	 */
 	public void cargarBackup(String fichero) {
 
@@ -196,13 +194,13 @@ public class Conexion {
 	 * @return boolean
 	 * @throws SQLException
 	 */
-	public boolean existeUser(String nColegiado) throws SQLException {
+	public boolean existeUser(String user) throws SQLException {
 		PreparedStatement preparedStmt;
 		boolean resul = false;
 
 		String sql = "SELECT user from mysql.user where user = ?;";
 		preparedStmt = connection.prepareStatement(sql);
-		preparedStmt.setString(1, nColegiado);
+		preparedStmt.setString(1, user);
 		ResultSet rs = preparedStmt.executeQuery();
 		while (rs.next()) {
 			resul = true;
