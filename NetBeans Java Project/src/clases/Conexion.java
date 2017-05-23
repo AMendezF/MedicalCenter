@@ -286,15 +286,15 @@ public class Conexion {
 
 		String crearEspecialidades = "CREATE TABLE IF NOT EXISTS centromedico.`especialidad` (\n"
 				+ "  `Cod_especialidad` int(11) NOT NULL,\n"
-				+ "  `Nombre` varchar(25) NOT NULL,\n"
-				+ "  `Horario` varchar(14) NOT NULL, \n"
+				+ "  `Nombre` varchar(50) NOT NULL,\n"
+				+ "  `Horario` varchar(50) NOT NULL, \n"
 				+ "  PRIMARY KEY (`Cod_especialidad`))";
 		makeExecute(crearEspecialidades);
 
 		String crearFicha = "CREATE TABLE IF NOT EXISTS centromedico.`ficha` (\n"
 				+ "  `Cod_historial` int(11) NOT NULL,\n"
 				+ "  `Cod_cita` varchar(20) NOT NULL,\n"
-				+ "  `comentario` varchar(500) DEFAULT NULL,\n"
+				+ "  `comentario` varchar(5000) DEFAULT NULL,\n"
 				+ "  `Dia` date NOT NULL,\n"
 				+ "  `Hora` time NOT NULL,\n"
 				+ "   PRIMARY KEY (`Cod_historial`,`Cod_cita`),\n"
@@ -321,9 +321,9 @@ public class Conexion {
 
 		String crearMedico = "CREATE TABLE IF NOT EXISTS centromedico.`medico` (\n"
 				+ "  `N_colegiado` int(11) NOT NULL,\n"
-				+ "  `Nombre` varchar(25) NOT NULL,\n"
+				+ "  `Nombre` varchar(50) NOT NULL,\n"
 				+ "  `Apellidos` varchar(50) NOT NULL,\n"
-				+ "  `Horario` varchar(10) NOT NULL,\n"
+				+ "  `Horario` varchar(50) NOT NULL,\n"
 				+ "  `Tiempo_min` int(11) NOT NULL,\n"
 				+ "  `Especialidad` int(11) NOT NULL,\n"
 				+ "  PRIMARY KEY (`N_colegiado`),\n"
@@ -332,7 +332,7 @@ public class Conexion {
 
 		String crearPaciente = "CREATE TABLE IF NOT EXISTS centromedico.`paciente` (\n"
 				+ "  `DNI` varchar(15) NOT NULL,\n"
-				+ "  `Nombre` varchar(25) NOT NULL,\n"
+				+ "  `Nombre` varchar(50) NOT NULL,\n"
 				+ "  `Apellidos` varchar(50) NOT NULL,\n"
 				+ "  `CompSegur` varchar(50) DEFAULT NULL,\n"
 				+ "  `Telefono`  varchar(15) DEFAULT NULL, \n"
@@ -342,7 +342,7 @@ public class Conexion {
 
 		String crearPacienteBorrado = "CREATE TABLE IF NOT EXISTS centromedico.`paciente_borrado` (\n"
 				+ "  `DNI` varchar(15) NOT NULL,\n"
-				+ "  `Nombre` varchar(25) NOT NULL,\n"
+				+ "  `Nombre` varchar(50) NOT NULL,\n"
 				+ "  `Apellidos` varchar(50) NOT NULL,\n"
 				+ "  `CompSegur` varchar(50) DEFAULT NULL,\n"
 				+ "  `Telefono`  varchar(15) DEFAULT NULL, \n"
@@ -352,43 +352,43 @@ public class Conexion {
 
 		String crearHorarioLunes = "CREATE TABLE IF NOT EXISTS centromedico.`horario_lunes` ("
 				+ "`Cod_especialidad` int(11) NOT NULL, "
-				+ "`Horario` varchar(14) NOT NULL, "
+				+ "`Horario` varchar(50) NOT NULL, "
 				+ "KEY `horario01` (`Cod_especialidad`))";
 		makeExecute(crearHorarioLunes);
 
 		String crearHorarioMartes = "CREATE TABLE IF NOT EXISTS centromedico.`horario_martes` ("
 				+ "`Cod_especialidad` int(11) NOT NULL, "
-				+ "`Horario` varchar(14) NOT NULL,"
+				+ "`Horario` varchar(50) NOT NULL,"
 				+ "KEY `horario01` (`Cod_especialidad`))";
 		makeExecute(crearHorarioMartes);
 
 		String crearHorarioMiercoles = "CREATE TABLE IF NOT EXISTS centromedico.`horario_miercoles` ("
 				+ "`Cod_especialidad` int(11) NOT NULL, "
-				+ "`Horario` varchar(14) NOT NULL,"
+				+ "`Horario` varchar(50) NOT NULL,"
 				+ "KEY `horario01` (`Cod_especialidad`))";
 		makeExecute(crearHorarioMiercoles);
 
 		String crearHorarioJueves = "CREATE TABLE IF NOT EXISTS centromedico.`horario_jueves` ("
 				+ "`Cod_especialidad` int(11) NOT NULL, "
-				+ "`Horario` varchar(14) NOT NULL,"
+				+ "`Horario` varchar(50) NOT NULL,"
 				+ "KEY `horario01` (`Cod_especialidad`))";
 		makeExecute(crearHorarioJueves);
 
 		String crearHorarioViernes = "CREATE TABLE IF NOT EXISTS centromedico.`horario_viernes` ("
 				+ "`Cod_especialidad` int(11) NOT NULL, "
-				+ "`Horario` varchar(14) NOT NULL,"
+				+ "`Horario` varchar(50) NOT NULL,"
 				+ "KEY `horario01` (`Cod_especialidad`))";
 		makeExecute(crearHorarioViernes);
 
 		String crearHorarioSabado = "CREATE TABLE IF NOT EXISTS centromedico.`horario_sabado` ("
 				+ "`Cod_especialidad` int(11) NOT NULL, "
-				+ "`Horario` varchar(14) NOT NULL,"
+				+ "`Horario` varchar(50) NOT NULL,"
 				+ "KEY `horario01` (`Cod_especialidad`))";
 		makeExecute(crearHorarioSabado);
 
 		String crearHorarioDomingo = "CREATE TABLE IF NOT EXISTS centromedico.`horario_domingo` ("
 				+ "`Cod_especialidad` int(11) NOT NULL, "
-				+ "`Horario` varchar(14) NOT NULL,"
+				+ "`Horario` varchar(50) NOT NULL,"
 				+ "KEY `horario01` (`Cod_especialidad`))";
 		makeExecute(crearHorarioDomingo);
 
@@ -480,14 +480,14 @@ public class Conexion {
 		String iPacientes = "REPLACE INTO centromedico.paciente (DNI, Nombre, Apellidos, CompSegur, Telefono, Direccion) VALUES\n"
 				+ "('57211499B', 'Juan Antonio', 'Huesa Aranda', 'Seguros Ocaso', '6292743542', 'Calle Augusto N 20, Guadalajara'),\n"
 				+ "('15326776J', 'Felipe', 'Solano Carrillo', 'NULL', '657575757', 'Bulevar de Amancio N 4, 3ºB, Madrid'),\n"
-				+ "('26352431C', 'Mariano', 'Jimenez Poleo', 'Mafre', 'NULL', 'NULL'),\n"
-				+ "('52323400X', 'Lucia', 'Aranda Huesa', 'NULL', 'NULL', 'Calle Alcala N 228, 9ºB, Madrid'),\n"
-				+ "('67511200J', 'Berta', 'Garcia Blas', 'Mutua', 'NULL', 'NULL'),\n"
-				+ "('23456123X', 'Leonardo', 'Matamoros Sanz', 'Adeslas', 'NULL', 'Calle Augusto N 10, Guadalajara'),\n"
-				+ "('34126666W', 'Alejandro', 'Mendes Guela', 'Adeslas', '614879604', 'NULL'),\n"
+				+ "('26352431C', 'Mariano', 'Jimenez Poleo', 'Mafre', '987523547', 'Calle del generalisimo Nº80, Bloque 3, 2ºD, Berrueco, Madrid'),\n"
+				+ "('52323400X', 'Lucia', 'Aranda Huesa', 'NULL', '635894125', 'Calle Alcala N 228, 9ºB, Madrid'),\n"
+				+ "('67511200J', 'Berta', 'Garcia Blas', 'Mutua', '648512359', 'Paseo de Paquito embalsador Nº52, 3ºB, Alcorcón, Madrid'),\n"
+				+ "('23456123X', 'Leonardo', 'Matamoros Sanz', 'Adeslas', '695423157', 'Calle Augusto N 10, Guadalajara'),\n"
+				+ "('34126666W', 'Alejandro', 'Mendes Guela', 'Adeslas', '614879604', 'Avenida constitución Nº94, escalera 2, 5ºB, Vallecas, Madrid'),\n"
 				+ "('19951996W', 'Pablo', 'Meson De Toro', 'NULL', '621999999', 'Calle Guadalajara N 7, Toledo'),\n"
-				+ "('23488209B', 'Ismael', 'Garcia Garcia', 'Sanitas', '622135678', 'NULL'),\n"
-				+ "('00675833R', 'Jose Maria', 'Gimeno De Lucas', 'Sanitas', '612345674', 'NULL')";
+				+ "('23488209B', 'Ismael', 'Garcia Garcia', 'Sanitas', '622135678', 'Calle de Sonsoles de las neveras Nº32, 3ºE, Escorial, Madrid'),\n"
+				+ "('00675833R', 'Jose Maria', 'Gimeno De Lucas', 'Sanitas', '612345674', 'Calle de Abraham Mateo Nº21, Escalera izquierda, 4ºD, Madrid')";
 		makeUpdate(iPacientes);
 
 
@@ -603,6 +603,21 @@ public class Conexion {
 				+ "(5, '57211499B'), "
 				+ "(5, '67511200J')";
 		makeUpdate(iHistorial);
+		
+		String iFichas = "INSERT INTO centromedico.ficha (Cod_historial, Cod_cita, comentario, Dia, Hora) VALUES " +
+				"(1, 1, '[2017-05-20, 10:00:00, 123456] Tensión alta por consumo frecuente de MontainDews y Doritos. Se recomienda abstinencia de dicha dieta.', " +
+				" '2017-05-20', '10:00:00'), " +
+				"(2, 2, '[2017-05-21, 15:20:00, 123656] El alto consumo de cannabis está reduciendo su sinapsis causando episodios chungos de epilepsia.', " +
+				" '2017-05-21', '15:20:00'), " +
+				"(3, 3, '[2017-05-21, 16:10:00, 126156] Se ha confundido de consulta... No me pagan lo suficiente para esto.', " +
+				" '2017-05-21', '16:10:00'), " +
+				"(4, 4, '', '2017-05-21', '16:20:00'), " +
+				"(5, 5, '[2017-05-21, 16:50:00, 126156] Se encuentra mal.', '2017-05-21', '16:50:00'), " +
+				"(6, 6, '[2017-05-21, 16:50:00, 126156] Revisión por molestia dolorosa. Se recetan unas píldoras.\n[2017-05-25, 19:30:00, 126156] Se descubre un error en la receta.', '2017-05-21', '16:50:00'), " +
+				"(7, 7, '[2017-05-21, 10:15:00, 129777] Revisión rutinaria sin novedades.', '2017-05-21', '10:15:00'), " +
+				"(8, 8, '[2017-05-21, 10:30:00, 129777] Nada nuevo.', '2017-05-21', '10:30:00');";
+		
+		makeUpdate(iFichas);
 		
 		System.out.println("Datos insertados correctamente");
 	}
