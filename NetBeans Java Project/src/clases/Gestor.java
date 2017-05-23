@@ -222,8 +222,8 @@ public class Gestor {
 		String sql;
 		ResultSet listaMedicos;
 
-		sql = "SELECT m.n_colegiado, m.nombre, m.apellidos, m.horario, e.nombre"
-				+ " as Especialidad FROM centromedico.medico m, "
+		sql = "SELECT m.n_colegiado, m.nombre, m.apellidos, m.horario, "
+				+ "m.tiempo_min, e.nombre FROM centromedico.medico m, "
 				+ "centromedico.especialidad e "
 				+ "WHERE e.cod_especialidad=m.especialidad ";
 		listaMedicos = this.conexion.makeQuery(sql);
@@ -328,6 +328,7 @@ public class Gestor {
 				added = false;
 			}
 		} catch (SQLException e) {
+			System.out.println(e);
 			added = false;
 		}
 
@@ -473,12 +474,14 @@ public class Gestor {
 		Boolean removed = true;
 		String sql;
 
+		System.out.println(numColegiado);
 		sql = "DELETE FROM centromedico.medico "
 				+ "WHERE N_colegiado='" + numColegiado + "'";
 
 		try {
-			conexion.makeQuery(sql);
+			conexion.makeUpdate(sql);
 		} catch (SQLException e) {
+			System.out.println(e);
 			removed = false;
 		}
 
