@@ -173,13 +173,37 @@ public class mostrarMedicos extends javax.swing.JPanel {
 		actualizarDatos();
     }//GEN-LAST:event_mostrarActionPerformed
 
+	private DefaultTableModel resultSetToTableModel(ResultSet rs) throws SQLException {
+		java.sql.ResultSetMetaData metaData = rs.getMetaData();
+
+		// names of columns
+		Vector<String> columnNames = new Vector<String>();
+		int columnCount = metaData.getColumnCount();
+		for (int column = 1; column <= columnCount - 1; column++) {
+			columnNames.add(metaData.getColumnName(column));
+		}
+		columnNames.add("Especialidad");
+
+		// data of the table
+		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+		while (rs.next()) {
+			Vector<Object> vector = new Vector<Object>();
+			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+				vector.add(rs.getObject(columnIndex));
+			}
+			data.add(vector);
+		}
+		return new DefaultTableModel(data, columnNames);
+	}
+
 	/**
 	 * Carga un resulSet y lo muestra en la tabla
 	 */
 	private void actualizarDatos() {
 		try {
 			ResultSet rs = gestor.mostrarMedicos();
-			tabla = resultSetToTableModel(rs);
+			setTabla(resultSetToTableModel(rs));
+			DefaultTableModel tabla = getTabla();
 			tablaInfo.setModel(tabla);
 			cargarDesplegables();
 		} catch (SQLException ex) {
@@ -228,34 +252,6 @@ public class mostrarMedicos extends javax.swing.JPanel {
 		this.tabla = tabla;
 	}
 
-	/**
-	 * Construye la tabla para mostrar los valores
-	 * @param rs
-	 * @return
-	 * @throws SQLException 
-	 */
-	private DefaultTableModel resultSetToTableModel(ResultSet rs) throws SQLException {
-		java.sql.ResultSetMetaData metaData = rs.getMetaData();
-
-		// names of columns
-		Vector<String> columnNames = new Vector<String>();
-		int columnCount = metaData.getColumnCount();
-		for (int column = 1; column <= columnCount - 1; column++) {
-			columnNames.add(metaData.getColumnName(column));
-		}
-		columnNames.add("Especialidad");
-
-		// data of the table
-		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-		while (rs.next()) {
-			Vector<Object> vector = new Vector<Object>();
-			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-				vector.add(rs.getObject(columnIndex));
-			}
-			data.add(vector);
-		}
-		return new DefaultTableModel(data, columnNames);
-	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox desplegableColumnas;
