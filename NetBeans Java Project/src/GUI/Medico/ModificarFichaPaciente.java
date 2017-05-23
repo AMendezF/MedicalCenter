@@ -238,7 +238,6 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     private void BotonModificarHistoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonModificarHistoActionPerformed
         controlTablas = 2;
         mostrarDatosFichas();
-
     }//GEN-LAST:event_BotonModificarHistoActionPerformed
 
     private void tablaInfoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInfoMousePressed
@@ -251,9 +250,8 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
                 codHistoria = (int) tablaInfo.getValueAt(row, 0);
                 BotonModificarHisto.setEnabled(true);
             } else if (controlTablas == 2) {
-                String codFicha = (int) tablaInfo.getValueAt(row, 0) + "/" + 
-                        (String) tablaInfo.getValueAt(row, 1);
-                String hora =  tablaInfo.getValueAt(row, 3).toString();
+                String codFicha = (String) tablaInfo.getValueAt(row, 1);
+                String hora = tablaInfo.getValueAt(row, 3).toString();
                 String dia = (String) tablaInfo.getValueAt(row, 4).toString();
                 String comentario = (String) tablaInfo.getValueAt(row, 2);
 
@@ -296,7 +294,7 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     }
 
     private void createModificarFicha(String codFicha, String hora, String dia, String comentario) {
-        this.modificador = new ModificarFichaSeleccionada(codFicha, hora, dia, comentario);
+        this.modificador = new ModificarFichaSeleccionada(this.medico, codFicha, hora, dia, comentario);
         this.modificador.setSize(800, 800);
         this.modificador.setLocation(2, 5);
 
