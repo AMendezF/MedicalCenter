@@ -7,6 +7,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -26,10 +27,13 @@ public class borrarMedico extends javax.swing.JPanel {
 	private DefaultTableModel tabla;
 	private final int tiempoMinimoCita = 10;
 	private final int tiempoMaximoCita = 25;
+	private int numColegiadoABorrar;
 
 	public borrarMedico(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		cargarDatos();
+
 	}
 
 	/**
@@ -45,7 +49,7 @@ public class borrarMedico extends javax.swing.JPanel {
         labelTitulo = new javax.swing.JLabel();
         desplegableColumnas = new javax.swing.JComboBox();
         textFieldBuscar = new javax.swing.JTextField();
-        mostrar = new javax.swing.JButton();
+        buttonACtualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaInfo = new javax.swing.JTable();
         medicoABorrar = new javax.swing.JLabel();
@@ -75,41 +79,27 @@ public class borrarMedico extends javax.swing.JPanel {
         labelTitulo.setText("Borrar medico");
         labelTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Numero de colegiado", "Nombre", "Apellidos", "Horario", "Tiempo", "Especialidad" }));
-
         textFieldBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 textFieldBuscarKeyTyped(evt);
             }
         });
 
-        mostrar.setText("Mostrar datos");
-        mostrar.addActionListener(new java.awt.event.ActionListener() {
+        buttonACtualizar.setText("Actualizar datos");
+        buttonACtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mostrarActionPerformed(evt);
+                buttonACtualizarActionPerformed(evt);
             }
         });
 
         tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Numero de colegiado", "Nombre", "Apellidos", "Tiempo", "Especialidad", "Horario"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         tablaInfo.setColumnSelectionAllowed(true);
         tablaInfo.getTableHeader().setReorderingAllowed(false);
         tablaInfo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -118,6 +108,7 @@ public class borrarMedico extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(tablaInfo);
+        tablaInfo.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         medicoABorrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         medicoABorrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -131,7 +122,7 @@ public class borrarMedico extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonACtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -148,7 +139,7 @@ public class borrarMedico extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonACtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,8 +348,9 @@ public class borrarMedico extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 	/**
-	 * Sirve para filtrar en el jTABLE DE 
-	 * @param evt 
+	 * Sirve para filtrar en el jTABLE DE
+	 *
+	 * @param evt
 	 */
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBuscarKeyTyped
 		// TODO add your handling code here:
@@ -384,38 +376,69 @@ public class borrarMedico extends javax.swing.JPanel {
 		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
 	}
 
-    private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
+	/**
+	 * Prepara el jTable con el ResultSet cambiando el último campo a
+	 * especialidad.
+	 *
+	 * @param rs
+	 * @return TableModel
+	 * @throws SQLException
+	 */
+	private DefaultTableModel resultSetToTableModel(ResultSet rs) throws SQLException {
+		java.sql.ResultSetMetaData metaData = rs.getMetaData();
+
+		// names of columns
+		Vector<String> columnNames = new Vector<String>();
+		int columnCount = metaData.getColumnCount();
+		for (int column = 1; column <= columnCount - 2; column++) {
+			columnNames.add(metaData.getColumnName(column));
+		}
+		columnNames.add("Tiempo mínimo");
+		columnNames.add("Especialidad");
+
+		// data of the table
+		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+		while (rs.next()) {
+			Vector<Object> vector = new Vector<Object>();
+			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+				vector.add(rs.getObject(columnIndex));
+			}
+			data.add(vector);
+		}
+		return new DefaultTableModel(data, columnNames);
+	}
+
+	private void cargarDatos() {
 		try {
-			ResultSet rs = gestor.mostrarMedicos();
-			TableAdaptor aux = new TableAdaptor(rs);
-			setTabla(aux.getValue());
+			ResultSet rs = gestor.mostrarMedicos();;
+			setTabla(resultSetToTableModel(rs));
 			DefaultTableModel tabla = getTabla();
 			tablaInfo.setModel(tabla);
-			this.columnas = new String[tabla.getColumnCount()];
+			cargarDesplegables();
 		} catch (SQLException ex) {
 			Logger.getLogger(mostrarMedicos.class.getName()).log(Level.SEVERE, null, ex);
 		}
-    }//GEN-LAST:event_mostrarActionPerformed
+	}
+
+
+    private void buttonACtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonACtualizarActionPerformed
+		cargarDatos();
+    }//GEN-LAST:event_buttonACtualizarActionPerformed
 
     private void tablaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInfoMouseClicked
 		int row = tablaInfo.rowAtPoint(evt.getPoint());
 		int col = tablaInfo.columnAtPoint(evt.getPoint());
 		if (row >= 0 && col >= 0) {
 			medicoABorrar.setText((String) tablaInfo.getValueAt(row, 1) + ": " + Integer.toString((int) tablaInfo.getValueAt(row, 0)));
+			numColegiadoABorrar = (int) tablaInfo.getValueAt(row, 0);
 			labelHorarioAñadir.setText((String) tablaInfo.getValueAt(row, 3));
-			labelTiempoAñadir.setText((String) tablaInfo.getValueAt(row, 3));
-			especialidadAñadir.setText((String) tablaInfo.getValueAt(row, 4));
+			labelTiempoAñadir.setText(String.valueOf(tablaInfo.getValueAt(row, 4)));
+			especialidadAñadir.setText(String.valueOf(tablaInfo.getValueAt(row, 5)));
 		}
     }//GEN-LAST:event_tablaInfoMouseClicked
 
     private void fieldNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldNombreKeyReleased
-		if (campoEsCorrecto(fieldNombre.getText())) {
-			nombreOK.setForeground(Color.black);
-			nombreOK.setText("Correcto");
-		} else {
-			nombreOK.setForeground(Color.red);
-			nombreOK.setText("Incorrecto");
-		}
+		comprobarNombre(fieldNombre.getText());
     }//GEN-LAST:event_fieldNombreKeyReleased
 
 	/**
@@ -464,14 +487,67 @@ public class borrarMedico extends javax.swing.JPanel {
 		return resul;
 	}
 
-    private void fieldApellidosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldApellidosKeyReleased
-		if (campoEsCorrecto(fieldApellidos.getText())) {
-			apellidosOK.setForeground(Color.black);
-			apellidosOK.setText("Correcto");
-		} else {
-			apellidosOK.setForeground(Color.red);
-			apellidosOK.setText("Incorrecto");
+	/**
+	 * Devuelve true si un stirng esta vacio Funcion equals muy simple, pero
+	 * ayuda a que el codigo sea mas sencillo y se vea mejor
+	 *
+	 * @param texto
+	 * @return
+	 */
+	private boolean estaVacio(String texto) {
+		boolean resul = false;
+		if (texto.equals("")) {
+			resul = true;
 		}
+		return resul;
+	}
+
+	/**
+	 * Comprueba si el valor apellido es correcto
+	 *
+	 * @param campo
+	 * @return
+	 */
+	private boolean comprobarNombre(String nombre) {
+		boolean resul = false;
+		if (estaVacio(nombre)) {
+			nombreOK.setForeground(Color.red);
+			nombreOK.setText("Vacio!!");
+		} else if (!gestor.esTexto(nombre)) {
+			nombreOK.setForeground(Color.red);
+			nombreOK.setText("Incorrecto!!");
+		} else {
+			nombreOK.setForeground(Color.green);
+			nombreOK.setText("OK!!");
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Comprueba si el valor apellido es correcto
+	 *
+	 * @param campo
+	 * @return
+	 */
+	private boolean comprobarApellido(String apellido) {
+		boolean resul = false;
+		if (estaVacio(apellido)) {
+			apellidosOK.setForeground(Color.red);
+			apellidosOK.setText("Vacio!!");
+		} else if (!gestor.esTexto(apellido)) {
+			apellidosOK.setForeground(Color.red);
+			apellidosOK.setText("Incorrecto!!");
+		} else {
+			apellidosOK.setForeground(Color.green);
+			apellidosOK.setText("OK!!");
+			resul = true;
+		}
+		return resul;
+	}
+
+    private void fieldApellidosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldApellidosKeyReleased
+		comprobarApellido(fieldApellidos.getText());
     }//GEN-LAST:event_fieldApellidosKeyReleased
 
     private void fieldColegiadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldColegiadoKeyReleased
@@ -499,10 +575,14 @@ public class borrarMedico extends javax.swing.JPanel {
 			if (todoCorrecto(medico)) {
 				confirmar = JOptionPane.showOptionDialog(this, "Se va ha crear el medico ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 				if (confirmar == 0) {
-					if (gestor.addMedico(medico)) {
-						JOptionPane.showMessageDialog(this, "Se ha añadido el medico con codigo " + fieldColegiado.getText());
+					if (gestor.removeMedico(String.valueOf(String.valueOf(numColegiadoABorrar)))) {
+						if (gestor.addMedico(medico)) {
+							JOptionPane.showMessageDialog(this, "Se ha añadido el medico con codigo " + fieldColegiado.getText());
+						} else {
+							JOptionPane.showMessageDialog(this, "No se ha podido añadir", "Error", JOptionPane.ERROR_MESSAGE);
+						}
 					} else {
-						JOptionPane.showMessageDialog(this, "No se ha podido añadir", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(this, "No se ha podido borrar el médico seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 
@@ -520,9 +600,23 @@ public class borrarMedico extends javax.swing.JPanel {
 		this.tabla = tabla;
 	}
 
+	/**
+	 * Carga el desplegable de medico a partir de la tabla
+	 */
+	private void cargarDesplegables() {
+		int numColums = tablaInfo.getColumnCount();
+		this.columnas = new String[numColums];
+		for (int i = 0; i < numColums; i++) {
+			this.columnas[i] = tablaInfo.getColumnName(i);
+		}
+		desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
+	}
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel NColegiadoOK;
     private javax.swing.JLabel apellidosOK;
+    private javax.swing.JButton buttonACtualizar;
     private javax.swing.JButton buttonAñadirMedico;
     private javax.swing.JComboBox desplegableColumnas;
     private javax.swing.JLabel especialidadAñadir;
@@ -544,7 +638,6 @@ public class borrarMedico extends javax.swing.JPanel {
     private javax.swing.JLabel labelTiempoAñadir;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel medicoABorrar;
-    private javax.swing.JButton mostrar;
     private javax.swing.JLabel nombreOK;
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
