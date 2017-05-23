@@ -2,6 +2,8 @@ package GUI.Medico;
 
 import GUI.Gestor.TableAdaptor;
 import clases.Medico;
+import clases.PdfConversor;
+import com.itextpdf.text.DocumentException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -54,7 +56,8 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaInfo = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        BotonMostrar = new javax.swing.JButton();
+        mostrar = new javax.swing.JButton();
+        buttonPDF = new javax.swing.JButton();
 
         desplegableColumnas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,11 +85,19 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Mostrar pacientes");
 
-        BotonMostrar.setText("Mostrar");
-        BotonMostrar.setActionCommand("MostrarPacientesMedico");
-        BotonMostrar.addActionListener(new java.awt.event.ActionListener() {
+        mostrar.setText("Mostrar");
+        mostrar.setActionCommand("MostrarPacientesMedico");
+        mostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonMostrarActionPerformed(evt);
+                mostrarActionPerformed(evt);
+            }
+        });
+
+        buttonPDF.setText("PDF");
+        buttonPDF.setActionCommand("MostrarPacientesMedico");
+        buttonPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPDFActionPerformed(evt);
             }
         });
 
@@ -105,10 +116,13 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
                                 .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(BotonMostrar))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(348, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonPDF))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(175, 175, 175)
+                        .addComponent(mostrar)))
+                .addContainerGap(291, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,10 +134,12 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
                     .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BotonMostrar)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonPDF))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(mostrar)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -148,9 +164,9 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
             Logger.getLogger(mostrarPacientesMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
+    private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
         mostrarDatos();
-    }//GEN-LAST:event_BotonMostrarActionPerformed
+    }//GEN-LAST:event_mostrarActionPerformed
 
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBuscarKeyTyped
         // TODO add your handling code here:
@@ -166,6 +182,15 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         trsFiltro = new TableRowSorter(tablaInfo.getModel());
         tablaInfo.setRowSorter(trsFiltro);
     }//GEN-LAST:event_textFieldBuscarKeyTyped
+
+    private void buttonPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPDFActionPerformed
+        try {
+            PdfConversor conversor = new PdfConversor(tablaInfo, "Paciente de colegiado " + medico.getN_colegiado() +"  " + medico.getDia());
+            conversor.getPdf();
+        } catch (DocumentException ex) {
+            Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonPDFActionPerformed
 
     public void filtro() {
         int colum = 0;
@@ -184,10 +209,11 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotonMostrar;
+    private javax.swing.JButton buttonPDF;
     private javax.swing.JComboBox desplegableColumnas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton mostrar;
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
     // End of variables declaration//GEN-END:variables

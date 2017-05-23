@@ -3,6 +3,7 @@ package GUI.Medico;
 import GUI.Gestor.TableAdaptor;
 import clases.Medico;
 import clases.PdfConversor;
+import com.itextpdf.text.DocumentException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -168,9 +169,12 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
     }//GEN-LAST:event_formComponentAdded
 
     private void DescargarPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescargarPdfActionPerformed
-        File NameFile = new File("Citas_" + medico.getDia() + ".pdf");
-        PdfConversor conversor = new PdfConversor(tablaInfo);
-        conversor.getPdf(NameFile, "Citas de " + medico.getDia());
+        try {
+            PdfConversor conversor = new PdfConversor(tablaInfo, "Citas de " + medico.getDia());
+            conversor.getPdf();
+        } catch (DocumentException ex) {
+            Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_DescargarPdfActionPerformed
 
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {
