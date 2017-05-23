@@ -39,7 +39,13 @@ public class main {
             System.out.println(text);
         }
         
-        System.out.println(gestor.mostrarAgenda("2017-05-31"));     
+        System.out.println(gestor.mostrarAgenda("2017-05-31"));
+        
+        if (gestor.isEspecialidadMaxMedicos("Urología")) {
+            System.out.println("MAX MEDS");
+        } else {
+            System.out.println("LOW MEDS");
+        }
     }
 
 //	public static int[] especialidadesMa(Conexion con, int dia) throws SQLException {

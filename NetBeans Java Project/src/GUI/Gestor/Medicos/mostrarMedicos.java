@@ -1,5 +1,7 @@
 package GUI.Gestor.Medicos;
 
+import GUI.Gestor.AñadirPaciente;
+import GUI.Gestor.TableAdaptor;
 import clases.Gestor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -23,10 +25,13 @@ public class mostrarMedicos extends javax.swing.JPanel {
 	 */
 	private Gestor gestor;
 	private TableRowSorter trsFiltro;
+	private DefaultTableModel tabla;
+	private String[] columnas;
 
 	public mostrarMedicos(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		actualizarDatos();
 	}
 
 	/**
@@ -145,6 +150,11 @@ public class mostrarMedicos extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+	 * Sirve para buscar en la tabla
+	 *
+	 * @param evt
+	 */
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBuscarKeyTyped
 		// TODO add your handling code here:
 		textFieldBuscar.addKeyListener(new KeyAdapter() {
@@ -160,57 +170,64 @@ public class mostrarMedicos extends javax.swing.JPanel {
     }//GEN-LAST:event_textFieldBuscarKeyTyped
 
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
-		try {
-			ResultSet rs = gestor.mostrarMedicos();
-			tablaInfo.setModel(buildTableModel(rs));
-		} catch (SQLException ex) {
-			Logger.getLogger(mostrarMedicos.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		actualizarDatos();
     }//GEN-LAST:event_mostrarActionPerformed
 
-	public void filtro() {
-		int columnaABuscar = 0;
-		if (desplegableColumnas.getSelectedItem().equals("n_colegiado")) {
-			columnaABuscar = 0;
+	/**
+	 * Carga un resulSet y lo muestra en la tabla
+	 */
+	private void actualizarDatos() {
+		try {
+			ResultSet rs = gestor.mostrarMedicos();
+			TableAdaptor aux = new TableAdaptor(rs);
+			setTabla(aux.getValue());
+			DefaultTableModel tabla = getTabla();
+			tablaInfo.setModel(tabla);
+			cargarDesplegables();
+		} catch (SQLException ex) {
+			Logger.getLogger(AñadirPaciente.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		if (desplegableColumnas.getSelectedItem().equals("Nombre")) {
-			columnaABuscar = 1;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Apellidos")) {
-			columnaABuscar = 2;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Horario")) {
-			columnaABuscar = 3;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Tiempo")) {
-			columnaABuscar = 4;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Especialidad")) {
-			columnaABuscar = 5;
-		}
-		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), columnaABuscar));
 	}
 
-	public DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
-		java.sql.ResultSetMetaData metaData = rs.getMetaData();
-
-		// names of columns
-		Vector<String> columnNames = new Vector<String>();
-		int columnCount = metaData.getColumnCount();
-		for (int column = 1; column <= columnCount; column++) {
-			columnNames.add(metaData.getColumnName(column));
+	/**
+	 * Carga el desplegable de paciente a partir de la tabla
+	 */
+	private void cargarDesplegables() {
+		int numColums = tablaInfo.getColumnCount();
+		this.columnas = new String[numColums];
+		for (int i = 0; i < numColums; i++) {
+			this.columnas[i] = tablaInfo.getColumnName(i);
 		}
+		desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
+	}
 
-		// data of the table
-		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
-		while (rs.next()) {
-			Vector<Object> vector = new Vector<Object>();
-			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
-				vector.add(rs.getObject(columnIndex));
-			}
-			data.add(vector);
+	/**
+	 * Filtro necesario para manejar la informacion
+	 */
+	public void filtro() {
+		int colum = 0;
+		while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
+			colum++;
 		}
-		return new DefaultTableModel(data, columnNames);
+		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
+	}
+
+	/**
+	 * Getter para la tabla
+	 *
+	 * @return
+	 */
+	public DefaultTableModel getTabla() {
+		return this.tabla;
+	}
+
+	/**
+	 * Setters para la tabla
+	 *
+	 * @param tabla
+	 */
+	public void setTabla(DefaultTableModel tabla) {
+		this.tabla = tabla;
 	}
 
 

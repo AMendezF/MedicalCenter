@@ -55,12 +55,12 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="labelApellidos" min="-2" pref="150" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="apellidos" min="-2" pref="150" max="-2" attributes="0"/>
+                                          <Component id="textApellidos" min="-2" pref="150" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="labelSeguro" min="-2" pref="150" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="compSeguro" min="-2" pref="150" max="-2" attributes="0"/>
+                                          <Component id="textSeguro" min="-2" pref="150" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -69,32 +69,32 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="labelDNI" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="dni" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="textDNI" min="-2" pref="100" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="DNIOK" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="labelNombre" min="-2" pref="150" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="nombre" min="-2" pref="150" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="nombreOK" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="labelTelefono" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="telefono" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="textTelefono" min="-2" pref="150" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                                   <Component id="buttonAñadirPaciente" min="-2" pref="150" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Component id="labelDireccion" min="-2" pref="150" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="direccion" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="textDireccion" min="-2" pref="150" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="labelNombre" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="textNombre" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="nombreOK" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="40" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -109,37 +109,37 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelDNI" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="dni" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="textDNI" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="DNIOK" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelNombre" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="nombre" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="textNombre" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="nombreOK" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="labelApellidos" min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="apellidos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="textApellidos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           <Component id="apellidoOK" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="labelSeguro" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="compSeguro" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="textSeguro" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelTelefono" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="telefono" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="textTelefono" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelDireccion" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="direccion" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="textDireccion" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="buttonAñadirPaciente" min="-2" pref="40" max="-2" attributes="0"/>
@@ -167,9 +167,9 @@
             <Property name="text" type="java.lang.String" value="DNI"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="dni">
+        <Component class="javax.swing.JTextField" name="textDNI">
           <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="dniKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textDNIKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelNombre">
@@ -180,9 +180,9 @@
             <Property name="text" type="java.lang.String" value="Nombre"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="nombre">
+        <Component class="javax.swing.JTextField" name="textNombre">
           <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="nombreKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textNombreKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelApellidos">
@@ -193,9 +193,9 @@
             <Property name="text" type="java.lang.String" value="Apellidos"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="apellidos">
+        <Component class="javax.swing.JTextField" name="textApellidos">
           <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="apellidosKeyReleased"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textApellidosKeyReleased"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelSeguro">
@@ -203,10 +203,10 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Compa&#xf1;ia de seguro"/>
+            <Property name="text" type="java.lang.String" value="Compa&#xf1;&#xed;a de seguro"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="compSeguro">
+        <Component class="javax.swing.JTextField" name="textSeguro">
         </Component>
         <Component class="javax.swing.JButton" name="buttonA&#xf1;adirPaciente">
           <Properties>
@@ -217,17 +217,26 @@
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="DNIOK">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="rellena dni"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="nombreOK">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="rellena nombre"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="apellidoOK">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="rellena apellidos"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelTelefono">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Telefono"/>
+            <Property name="text" type="java.lang.String" value="Tel&#xe9;fono"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelDireccion">
@@ -235,12 +244,12 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Direccion"/>
+            <Property name="text" type="java.lang.String" value="Direcci&#xf3;n"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="telefono">
+        <Component class="javax.swing.JTextField" name="textTelefono">
         </Component>
-        <Component class="javax.swing.JTextField" name="direccion">
+        <Component class="javax.swing.JTextField" name="textDireccion">
         </Component>
       </SubComponents>
     </Container>
@@ -261,7 +270,7 @@
                           <Component id="desplegableColumnas" min="-2" pref="150" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="textFieldBuscar" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace pref="141" max="32767" attributes="0"/>
+                          <EmptySpace pref="12" max="32767" attributes="0"/>
                           <Component id="actualizarDatos" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
                   </Group>

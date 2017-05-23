@@ -57,9 +57,9 @@ public class añadirMedico extends javax.swing.JPanel {
         desplegableTiempoMinimo = new javax.swing.JComboBox();
         NColegiadoOK = new javax.swing.JLabel();
         nombreOK = new javax.swing.JLabel();
-        apellidosOK = new javax.swing.JLabel();
+        apellidoOK = new javax.swing.JLabel();
         buttonAñadirMedico = new javax.swing.JButton();
-        todoCorrecto = new javax.swing.JLabel();
+        especialidadOK = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -67,16 +67,16 @@ public class añadirMedico extends javax.swing.JPanel {
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         labelNColegiado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelNColegiado.setText("Numero de colegiado");
+        labelNColegiado.setText("Numero de colegiado:");
 
         labelNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelNombre.setText("Nombre");
+        labelNombre.setText("Nombre:");
 
         labelApellidos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelApellidos.setText("Apellidos");
+        labelApellidos.setText("Apellidos:");
 
         labelEspecialidad.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelEspecialidad.setText("Especialidad");
+        labelEspecialidad.setText("Especialidad:");
 
         fieldNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -97,18 +97,24 @@ public class añadirMedico extends javax.swing.JPanel {
         });
 
         labelTiempo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelTiempo.setText("Tiempo minimo");
+        labelTiempo.setText("Tiempo mínimo:");
 
         labelHorario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelHorario.setText("Horario");
+        labelHorario.setText("Horario:");
+
+        desplegableEspecialidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                desplegableEspecialidadActionPerformed(evt);
+            }
+        });
 
         desplegableHorario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Mañana", "Tarde" }));
 
         NColegiadoOK.setText("OK");
 
-        nombreOK.setText("ok");
+        nombreOK.setText("OK");
 
-        apellidosOK.setText("ok");
+        apellidoOK.setText("OK");
 
         buttonAñadirMedico.setText("Añadir nuevo medico");
         buttonAñadirMedico.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +123,7 @@ public class añadirMedico extends javax.swing.JPanel {
             }
         });
 
-        todoCorrecto.setText("Comprobar cosas");
+        especialidadOK.setText("OK");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,45 +138,44 @@ public class añadirMedico extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(labelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(desplegableHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(nombreOK)))
-                                .addGap(0, 168, Short.MAX_VALUE)))
+                                .addGap(0, 215, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelNColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelNColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(fieldColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(NColegiadoOK))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(fieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(apellidosOK))
+                                .addComponent(apellidoOK))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(labelEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(desplegableEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(desplegableTiempoMinimo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(desplegableEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(todoCorrecto)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(especialidadOK))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(desplegableTiempoMinimo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 225, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,7 +185,8 @@ public class añadirMedico extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(desplegableEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(desplegableEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(especialidadOK))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,20 +201,17 @@ public class añadirMedico extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(apellidosOK))
+                    .addComponent(apellidoOK))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(desplegableHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(desplegableTiempoMinimo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(todoCorrecto))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(desplegableHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(desplegableTiempoMinimo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(83, Short.MAX_VALUE))
         );
 
@@ -231,37 +234,21 @@ public class añadirMedico extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 	/**
-	 * Comprueba los campos que no pueden quedarse vacios como el nombre del
-	 * medico y apellido
+	 * Comprueba el valor del nombre al escribir
 	 *
-	 * @return
+	 * @param evt
 	 */
-	private boolean campoEsCorrecto(String campo) {
-		boolean resul = false;
-		if (gestor.esTexto(campo) && !(campo.equals(""))) {
-			resul = true;
-		}
-		return resul;
-	}
-
     private void fieldNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldNombreKeyReleased
-		if (campoEsCorrecto(fieldNombre.getText())) {
-			nombreOK.setForeground(Color.black);
-			nombreOK.setText("Correcto");
-		} else {
-			nombreOK.setForeground(Color.red);
-			nombreOK.setText("Incorrecto");
-		}
+		comprobarNombre(fieldNombre.getText());
     }//GEN-LAST:event_fieldNombreKeyReleased
 
+	/**
+	 * Comprueba el valor del apellido al escribir
+	 *
+	 * @param evt
+	 */
     private void fieldApellidosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldApellidosKeyReleased
-		if (campoEsCorrecto(fieldApellidos.getText())) {
-			apellidosOK.setForeground(Color.black);
-			apellidosOK.setText("Correcto");
-		} else {
-			apellidosOK.setForeground(Color.red);
-			apellidosOK.setText("Incorrecto");
-		}
+		comprobarApellido(fieldApellidos.getText());
     }//GEN-LAST:event_fieldApellidosKeyReleased
 
 	/**
@@ -272,7 +259,7 @@ public class añadirMedico extends javax.swing.JPanel {
 	 */
 	private boolean colegiadoEsCorrecto(String num) throws SQLException {
 		boolean resul = false;
-		if (!gestor.existeMedico(num) && !(num.equals("")) /*&& gestor.esNumero(num)*/) {
+		if (!gestor.existeMedico(num) && !estaVacio(num) && gestor.esNumerico(num)) {
 			resul = true;
 		}
 		return resul;
@@ -291,6 +278,12 @@ public class añadirMedico extends javax.swing.JPanel {
 		}
 		return resultado;
 	}
+
+	/**
+	 * Comprueba el valor de colegiado al escribir
+	 *
+	 * @param evt
+	 */
     private void fieldColegiadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldColegiadoKeyReleased
 		try {
 			if (colegiadoEsCorrecto(fieldColegiado.getText())) {
@@ -312,14 +305,24 @@ public class añadirMedico extends javax.swing.JPanel {
 	 */
 	private boolean todoCorrecto(String[] medico) throws SQLException {
 		boolean resul = false;
-//		if (gestor.medicosPorEspecialidad((String) desplegableEspecialidad.getSelectedItem())) {
-//			if (colegiadoEsCorrecto(fieldColegiado.getText())) {
-//				if (campoEsCorrecto(fieldNombre.getText()) && campoEsCorrecto(fieldApellidos.getText())) {
-//					resul = true;
-//				}
-//			}
-//		}
-		resul = true;
+
+		if (!estaEspecialidadLlena(medico[5])) {
+			if (colegiadoEsCorrecto(medico[0])) {
+				if (comprobarNombre(medico[1])) {
+					if (comprobarApellido(medico[2])) {
+						resul = true;
+					} else {
+						JOptionPane.showMessageDialog(this, "Apellido incorrecto!!\nNo debe contener caracteres numericos ni estar vacio", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Nombre incorrecto!!\nNo debe contener caracteres numericos ni estar vacio", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Numero de colegiado no valido!!\nO no es numerico o ya esta en uso", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "Especialidad llena!!\nElija otra especialidad o borre un medico", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 		return resul;
 	}
 
@@ -340,20 +343,123 @@ public class añadirMedico extends javax.swing.JPanel {
 						JOptionPane.showMessageDialog(this, "No se ha podido añadir", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
-				
 			}
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(this, "No se ha podido añadir" + ex, "Error", JOptionPane.ERROR_MESSAGE);
 		}
     }//GEN-LAST:event_buttonAñadirMedicoActionPerformed
 
+	/**
+	 * Comprueba la especialidad al elegir
+	 *
+	 * @param evt
+	 */
+    private void desplegableEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableEspecialidadActionPerformed
+		mostrarErrorEspecialidad((String) desplegableEspecialidad.getSelectedItem());
+    }//GEN-LAST:event_desplegableEspecialidadActionPerformed
+
+	/**
+	 * Si la especialidad esta llena muestra error por pantalla
+	 *
+	 * @param especialidad
+	 */
+	private void mostrarErrorEspecialidad(String especialidad) {
+		if (estaEspecialidadLlena(especialidad)) {
+			especialidadOK.setForeground(Color.red);
+			especialidadOK.setText("Especialidad llena!!");
+		} else {
+			especialidadOK.setForeground(Color.green);
+			especialidadOK.setText("OK!!");
+		}
+	}
+
+	/**
+	 * Comprueba el numero maximo de medicos de la especialidad elegida Devuelve
+	 * true si esta llena De lo contrario false
+	 *
+	 * @param especialidad
+	 * @return
+	 */
+	private boolean estaEspecialidadLlena(String especialidad) {
+		boolean resul = false;
+		try {
+			if (gestor.isEspecialidadMaxMedicos(especialidad)) {
+				resul = true;
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(añadirMedico.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return resul;
+	}
+
+	/**
+	 * Comprueba si el valor apellido es correcto
+	 *
+	 * @param campo
+	 * @return
+	 */
+	private boolean comprobarApellido(String apellido) {
+		boolean resul = false;
+		if (estaVacio(apellido)) {
+			apellidoOK.setForeground(Color.red);
+			apellidoOK.setText("Vacio!!");
+		} else if (!gestor.esTexto(apellido)) {
+			apellidoOK.setForeground(Color.red);
+			apellidoOK.setText("Incorrecto!!");
+		} else {
+			apellidoOK.setForeground(Color.green);
+			apellidoOK.setText("OK!!");
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Comprueba si el valor apellido es correcto
+	 *
+	 * @param campo
+	 * @return
+	 */
+	private boolean comprobarNombre(String nombre) {
+		boolean resul = false;
+		if (estaVacio(nombre)) {
+			nombreOK.setForeground(Color.red);
+			nombreOK.setText("Vacio!!");
+		} else if (!gestor.esTexto(nombre)) {
+			nombreOK.setForeground(Color.red);
+			nombreOK.setText("Incorrecto!!");
+		} else {
+			nombreOK.setForeground(Color.green);
+			nombreOK.setText("OK!!");
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Devuelve true si un stirng esta vacio Funcion equals muy simple, pero
+	 * ayuda a que el codigo sea mas sencillo y se vea mejor
+	 *
+	 * @param texto
+	 * @return
+	 */
+	private boolean estaVacio(String texto) {
+		boolean resul = false;
+		if (texto.equals("")) {
+			resul = true;
+		}
+		return resul;
+	}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel NColegiadoOK;
-    private javax.swing.JLabel apellidosOK;
+    private javax.swing.JLabel apellidoOK;
     private javax.swing.JButton buttonAñadirMedico;
     private javax.swing.JComboBox desplegableEspecialidad;
     private javax.swing.JComboBox desplegableHorario;
     private javax.swing.JComboBox desplegableTiempoMinimo;
+    private javax.swing.JLabel especialidadOK;
     private javax.swing.JTextField fieldApellidos;
     private javax.swing.JTextField fieldColegiado;
     private javax.swing.JTextField fieldNombre;
@@ -366,7 +472,6 @@ public class añadirMedico extends javax.swing.JPanel {
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelTiempo;
     private javax.swing.JLabel nombreOK;
-    private javax.swing.JLabel todoCorrecto;
     // End of variables declaration//GEN-END:variables
 
 }
