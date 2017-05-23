@@ -310,14 +310,14 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
             if (confirmacion == 1) {
                 medico.escribirFichaPaciente(nDNI, cCita, comentarioTextArea.getText());
             }
+            comentarioTextArea.setText(null);
         } catch (SQLException ex) {
             if (ex.getErrorCode() == 1062) {
                 JOptionPane.showMessageDialog(this, "Ya hay un diagnostico guardado en esta cita");
+                comentarioTextArea.setText(null);
             } else {
                 Logger.getLogger(EscribirFichaPaciente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            initComponents();
-
         }
     }//GEN-LAST:event_buttonEscribirDiagnosticoActionPerformed
 

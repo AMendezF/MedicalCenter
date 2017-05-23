@@ -378,10 +378,11 @@ public class Medico {
     public ResultSet mostrarCitasMedico() throws SQLException {
         Connection reg = con.getCon();
         String sql;
-        sql = "SELECT citas.cod_cita, paciente.nombre, paciente.apellidos, "
-                + "citas.dia, citas.hora, citas.medico, citas.paciente "
+        sql = "SELECT citas.cod_cita, citas.dia, citas.hora,"
+                + "paciente.nombre, paciente.apellidos, citas.paciente "
                 + "FROM centromedico.citas, centromedico.paciente "
-                + "WHERE citas.medico = ? AND paciente.DNI = citas.paciente ";
+                + "WHERE citas.medico = ? AND paciente.DNI = citas.paciente "
+                + "ORDER BY citas.hora";
 
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.setInt(1, getN_colegiado());
