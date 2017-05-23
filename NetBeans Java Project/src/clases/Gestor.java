@@ -312,16 +312,16 @@ public class Gestor {
                 String sql;
                 String codMedico = medico[0];
 
-                sql = "INSERT"
+                sql = "INSERT "
                         + "INTO centromedico.medico "
                         + "(n_colegiado, nombre, apellidos, horario, tiempo_min, especialidad)"
                         + "VALUES"
                         + "("
-                        + "'" + codMedico + ", "
-                        + "'" + medico[1] + ", "
-                        + "'" + medico[2] + ", "
-                        + "'" + medico[3] + ", "
-                        + "'" + medico[4] + ", "
+                        + "'" + codMedico + "', "
+                        + "'" + medico[1] + "', "
+                        + "'" + medico[2] + "', "
+                        + "'" + medico[3] + "', "
+                        + "'" + medico[4] + "', "
                         + "(SELECT e.cod_especialidad "
                         + "FROM centromedico.especialidad e "
                         + "WHERE e.nombre='" + especialidad + "')"
@@ -611,12 +611,14 @@ public class Gestor {
 
         sql = "INSERT "
                 + "INTO centromedico.paciente "
-                + "(DNI, nombre, apellidos, CompSegur)"
+                + "(DNI, nombre, apellidos, CompSegur, Telefono, Direccion)"
                 + "VALUES "
                 + "('" + paciente[0] + "', "
                 + "'" + paciente[1] + "', "
                 + "'" + paciente[2] + "', "
-                + "'" + paciente[3] + "')";
+                + "'" + paciente[3] + "', "
+				+ "'" + paciente[4] + "', "
+                + "'" + paciente[5] + "')";
         try {
             conexion.makeUpdate(sql);
         } catch (SQLException e) {
@@ -644,8 +646,9 @@ public class Gestor {
         sql = "UPDATE centromedico.paciente "
                 + "SET ";
         for (String[] tuplas : paciente) {
-            sql += tuplas[0] + "='" + tuplas[1] + "' ";
+            sql += tuplas[0] + "='" + tuplas[1] + "', ";
         }
+		sql.substring(0, sql.length() - 2);
         sql += "WHERE DNI='" + DNI + "'";
         try {
             conexion.makeUpdate(sql);
@@ -879,7 +882,7 @@ public class Gestor {
     public boolean esTexto(String campoTexto) {
         boolean esTexto = false;
 
-        if (campoTexto.matches("[^\\d.,<>_´`+¿?!¡@#$%&=\\s]{1,}")) {
+        if (campoTexto.matches("[^\\d.,<>_´`+¿?!¡@#$%&=]{1,}")) {
             esTexto = true;
         }
 
