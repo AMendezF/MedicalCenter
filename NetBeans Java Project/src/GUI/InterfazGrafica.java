@@ -390,16 +390,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 	 * Si es un medico, inicia el menu de medico
 	 */
 	private void iniciarPrograma() {
-		try {
-			try {
-				con = new Conexion(textFieldUser.getText(), passwordFieldPassword.getPassword());
-			} catch (ClassNotFoundException ex) {
-				JOptionPane.showMessageDialog(this, "Ha ocurrido algun error, ", "Error", JOptionPane.ERROR_MESSAGE);
-				Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(this, "Error al conectarse\nPruebe cambiando de contraseña\n" + ex, "SQL EXCEPTION", JOptionPane.ERROR_MESSAGE);
-		}
+            con = new Conexion(textFieldUser.getText(), passwordFieldPassword.getPassword());
 
 		try {
 			if (con.existeMedico(con.getUser()) || con.existeUser(textFieldUser.getText())) {

@@ -541,4 +541,46 @@ public class Medico {
         preparedStmt.setString(3, comentario);
         preparedStmt.execute();
     }
+
+    /**
+     * Actualiza la ficha tanto en la clase como en la BD con los datos
+     * proporcionados. Si el string está vacío ' "" ' no se actualizará el
+     * comentario. Si el parámetro actualizarFecha es True se insertará en la BD
+     * la fecha actual, en caso contrario no se actualizará.
+     *
+     * @param comentarioNuevo
+     * @param actualizarFecha
+     * @throws SQLException
+     */
+    public void updateFicha(String comentarioViejo, String comentarioNuevo, String codCita) throws SQLException {
+        Connection reg = this.con.getCon();
+        comentarioViejo += "\n[" + getDia() + ", " + getHora() + ", "
+                + getN_colegiado() + "] " + comentarioNuevo;
+
+        String sql = "UPDATE centromedico.Ficha SET ficha.comentario=? "
+                + "WHERE ficha.Cod_cita=?;";
+        preparedStmt = reg.prepareStatement(sql);
+        preparedStmt.setString(1, comentarioViejo);
+        preparedStmt.setString(2, codCita);
+        preparedStmt.execute();
+    }
+
+    public ArrayList<String> cargarFicha(String codCita) throws SQLException {
+        ArrayList<String> resul = new ArrayList<>();
+        Connection reg = con.getCon();
+        String sql;
+        sql = "SELECT ficha.* FROM centromedico.ficha WHERE cod_Cita=? ";
+
+        preparedStmt = reg.prepareStatement(sql);
+        preparedStmt.setString(1, codCita);
+        ResultSet rs = preparedStmt.executeQuery();
+        if(rs.next()){
+            resul.add(rs.getString(2));
+            resul.add(rs.getString(3));
+            resul.add(rs.getDate(4).toString());
+            resul.add(rs.getTime(5).toString());
+        }
+                return resul;
+    }
+
 }
