@@ -3,6 +3,7 @@ package GUI.Medico;
 import GUI.Gestor.TableAdaptor;
 import clases.Historial;
 import clases.Medico;
+import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -34,6 +35,8 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     private DefaultTableModel tabla;
     private int codHistoria = 0;
     private String[] columnas;
+    private int controlTablas = 1;
+    private ModificarFichaSeleccionada modificador;
 
     public ModificarFichaPaciente(Medico medico) {
         initComponents();
@@ -57,6 +60,9 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         BotonMostrar = new javax.swing.JButton();
         BotonModificarHisto = new javax.swing.JButton();
+        mostrarDatos = new javax.swing.JPanel();
+        DNI1 = new javax.swing.JLabel();
+        campoNombre = new javax.swing.JLabel();
 
         addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
@@ -88,7 +94,7 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Modificar Ficha de Paciente");
 
-        BotonMostrar.setText("Mostrar");
+        BotonMostrar.setText("Mostrar Historial");
         BotonMostrar.setActionCommand("MostrarPacientesMedico");
         BotonMostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,27 +111,54 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
             }
         });
 
+        javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);
+        mostrarDatos.setLayout(mostrarDatosLayout);
+        mostrarDatosLayout.setHorizontalGroup(
+            mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        mostrarDatosLayout.setVerticalGroup(
+            mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        DNI1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        DNI1.setText("Paciente");
+
+        campoNombre.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        campoNombre.setForeground(new java.awt.Color(0, 51, 102));
+        campoNombre.setText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BotonMostrar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BotonModificarHisto, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(mostrarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(BotonMostrar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BotonModificarHisto, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                                .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(96, 96, 96)
+                                .addComponent(DNI1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(campoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,16 +166,24 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BotonMostrar)
-                    .addComponent(BotonModificarHisto))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BotonMostrar)
+                            .addComponent(BotonModificarHisto))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(DNI1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(mostrarDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -151,6 +192,8 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_desplegableColumnasActionPerformed
 
     private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
+        controlTablas = 1;
+        BotonModificarHisto.setEnabled(false);
         mostrarDatos();
     }//GEN-LAST:event_BotonMostrarActionPerformed
 
@@ -177,10 +220,10 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
             ResultSet rs = medico.mostrarFichas(this.codHistoria);
             TableAdaptor aux = new TableAdaptor(rs);
             tablaInfo.setModel(aux.getValue());
-            int numColums = tabla.getColumnCount();
+            int numColums = aux.getValue().getColumnCount();
             this.columnas = new String[numColums];
             for (int i = 0; i < numColums; i++) {
-                this.columnas[i] = tabla.getColumnName(i);
+                this.columnas[i] = aux.getValue().getColumnName(i);
             }
             desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
         } catch (SQLException ex) {
@@ -193,6 +236,7 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_formComponentAdded
 
     private void BotonModificarHistoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonModificarHistoActionPerformed
+        controlTablas = 2;
         mostrarDatosFichas();
 
     }//GEN-LAST:event_BotonModificarHistoActionPerformed
@@ -201,8 +245,21 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
         int row = tablaInfo.rowAtPoint(evt.getPoint());
         int col = tablaInfo.columnAtPoint(evt.getPoint());
         if (row >= 0 && col >= 0) {
-            codHistoria = (int) tablaInfo.getValueAt(row, 0);
-            BotonModificarHisto.setEnabled(true);
+            if (controlTablas == 1) {
+                campoNombre.setText((String) tablaInfo.getValueAt(row, 3) + ", "
+                        + (String) tablaInfo.getValueAt(row, 2));
+                codHistoria = (int) tablaInfo.getValueAt(row, 0);
+                BotonModificarHisto.setEnabled(true);
+            } else if (controlTablas == 2) {
+                String codFicha = (int) tablaInfo.getValueAt(row, 0) + "/" + 
+                        (String) tablaInfo.getValueAt(row, 1);
+                String hora =  tablaInfo.getValueAt(row, 3).toString();
+                String dia = (String) tablaInfo.getValueAt(row, 4).toString();
+                String comentario = (String) tablaInfo.getValueAt(row, 2);
+
+                createModificarFicha(codFicha, hora, dia, comentario);
+
+            }
         }
     }//GEN-LAST:event_tablaInfoMousePressed
 
@@ -238,12 +295,26 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
         this.tabla = tabla;
     }
 
+    private void createModificarFicha(String codFicha, String hora, String dia, String comentario) {
+        this.modificador = new ModificarFichaSeleccionada(codFicha, hora, dia, comentario);
+        this.modificador.setSize(800, 800);
+        this.modificador.setLocation(2, 5);
+
+        mostrarDatos.removeAll();
+        mostrarDatos.add(this.modificador, BorderLayout.CENTER);
+        mostrarDatos.revalidate();
+        mostrarDatos.repaint();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonModificarHisto;
     private javax.swing.JButton BotonMostrar;
+    private javax.swing.JLabel DNI1;
+    private javax.swing.JLabel campoNombre;
     private javax.swing.JComboBox desplegableColumnas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel mostrarDatos;
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
     // End of variables declaration//GEN-END:variables

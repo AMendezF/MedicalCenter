@@ -293,8 +293,8 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
         int row = tablaInfo.rowAtPoint(evt.getPoint());
         int col = tablaInfo.columnAtPoint(evt.getPoint());
         if (row >= 0 && col >= 0) {
-            campoNombre.setText((String) tablaInfo.getValueAt(row, 1) + ", "
-                    + (String) tablaInfo.getValueAt(row, 2));
+            campoNombre.setText((String) tablaInfo.getValueAt(row, 2) + ", "
+                    + (String) tablaInfo.getValueAt(row, 1));
             nDNI = (String) tablaInfo.getValueAt(row, 6);
             cCita = (String) tablaInfo.getValueAt(row, 0);
             campoDNI.setText(nDNI);
@@ -305,7 +305,6 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
 
     private void buttonEscribirDiagnosticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEscribirDiagnosticoActionPerformed
             try {
-                System.out.println(comentarioTextArea.getText());
                 medico.escribirFichaPaciente(nDNI, cCita, comentarioTextArea.getText());
             } catch (SQLException ex) {
                 Logger.getLogger(EscribirFichaPaciente.class.getName()).log(Level.SEVERE, null, ex);
