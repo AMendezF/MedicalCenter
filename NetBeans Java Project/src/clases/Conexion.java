@@ -490,18 +490,6 @@ public class Conexion {
 				+ "('00675833R', 'Jose Maria', 'Gimeno De Lucas', 'Sanitas', '612345674', 'NULL')";
 		makeUpdate(iPacientes);
 
-		String iHistorial = "INSERT INTO centromedico.historial (Paciente, Especialidad) VALUES \n"
-				+ "('57211499B', 1),\n"
-				+ "('15326776J', 2),\n"
-				+ "('57211499B', 2),\n"
-				+ "('15326776J', 3),\n"
-				+ "('57211499B', 3),\n"
-				+ "('15326776J', 4),\n"
-				+ "('34126666W', 1),\n"
-				+ "('34126666W', 3),\n"
-				+ "('19951996W', 4),\n"
-				+ "('34126666W', 4)";
-		makeUpdate(iHistorial);
 
 		String horarioLunes = "INSERT INTO centromedico.horario_lunes (Cod_especialidad, Horario) VALUES "
 				+ "(1, 'Mañana'), "
@@ -594,6 +582,28 @@ public class Conexion {
 				+ "(7, 'Mañana')";
 		makeUpdate(horarioDomingo);
 
+		String iCitasPasadas = "INSERT INTO centromedico.citas (Cod_cita, Dia, Hora, Medico, Especialidad, Paciente ) VALUES " +
+				"('1', '2017-05-20', '10:00', 123456, 1, '00675833R'), " +
+				"('2', '2017-05-21', '15:20', 123656, 2, '19951996W'), " +
+				"('3', '2017-05-21', '16:10', 126156, 4, '23456123X'), " +
+				"('4', '2017-05-21', '16:20', 126156, 4, '26352431C'), " +
+				"('5', '2017-05-21', '16:50', 126156, 4, '34126666W'), " +
+				"('6', '2017-05-21', '16:50', 126156, 4, '52323400X'), " +
+				"('7', '2017-05-21', '10:15', 129777, 5, '57211499B'), " +
+				"('8', '2017-05-21', '10:30', 129777, 5, '67511200J');";
+		makeUpdate(iCitasPasadas);
+		
+		String iHistorial = "INSERT INTO centromedico.historial (Especialidad, Paciente) VALUES "
+				+ "(1, '00675833R'), "
+				+ "(2, '19951996W'), "
+				+ "(4, '23456123X'), "
+				+ "(4, '26352431C'), "
+				+ "(4, '34126666W'), "
+				+ "(4, '52323400X'), "
+				+ "(5, '57211499B'), "
+				+ "(5, '67511200J')";
+		makeUpdate(iHistorial);
+		
 		System.out.println("Datos insertados correctamente");
 	}
 
