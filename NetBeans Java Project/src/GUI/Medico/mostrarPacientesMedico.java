@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -187,8 +188,12 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         try {
             PdfConversor conversor = new PdfConversor(tablaInfo, "Paciente de colegiado " + medico.getN_colegiado() +"  " + medico.getDia());
             conversor.getPdf();
+            JOptionPane.showMessageDialog(this, "¡Se ha generado tu hoja PDF!",
+                "RESULTADO", JOptionPane.INFORMATION_MESSAGE);
         } catch (DocumentException ex) {
             Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Se ha producido un error al generar un documento: " + ex,
+                "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_buttonPDFActionPerformed
 

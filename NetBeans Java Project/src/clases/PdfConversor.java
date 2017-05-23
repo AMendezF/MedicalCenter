@@ -90,7 +90,7 @@ public class PdfConversor {
         try {
             this.documento = new Document();
             PdfWriter.getInstance(this.documento, new FileOutputStream(file));
-            Image logo = Image.getInstance("./src/logo_redimensionado.jpg");
+            Image logo = Image.getInstance("./src/logo_redimensionado.png");
             
             documento.open();
             
@@ -99,7 +99,7 @@ public class PdfConversor {
             documento.addAuthor("CentroMedicoUPM");
             documento.addCreator("Pablo");
             documento.addCreationDate();
-            logo.scalePercent(21);
+            logo.scalePercent(15);
             logo.setAbsolutePosition(450f, 750f);
             documento.add(logo);
             documento.add(new Paragraph("\n"));
