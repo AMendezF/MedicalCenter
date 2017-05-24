@@ -4,6 +4,10 @@ import GUI.Gestor.Medicos.MenuDeMedico;
 import clases.Gestor;
 import java.awt.BorderLayout;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 
 /*
@@ -52,6 +56,7 @@ public class MenuGestor extends javax.swing.JPanel {
         buttonGestionarMedico = new javax.swing.JButton();
         buttonMostrarSalas = new javax.swing.JButton();
         buttonBorrarPaciente = new javax.swing.JButton();
+        buttonPedirCita = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -62,7 +67,7 @@ public class MenuGestor extends javax.swing.JPanel {
         mostrarDatos.setLayout(mostrarDatosLayout);
         mostrarDatosLayout.setHorizontalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1388, Short.MAX_VALUE)
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,6 +114,16 @@ public class MenuGestor extends javax.swing.JPanel {
             }
         });
 
+        buttonPedirCita.setText("Pedir cita");
+        buttonPedirCita.setMaximumSize(new java.awt.Dimension(100, 25));
+        buttonPedirCita.setMinimumSize(new java.awt.Dimension(100, 25));
+        buttonPedirCita.setPreferredSize(new java.awt.Dimension(100, 25));
+        buttonPedirCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPedirCitaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuOpcionesLayout = new javax.swing.GroupLayout(menuOpciones);
         menuOpciones.setLayout(menuOpcionesLayout);
         menuOpcionesLayout.setHorizontalGroup(
@@ -118,9 +133,11 @@ public class MenuGestor extends javax.swing.JPanel {
                 .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonBorrarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 414, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(buttonMostrarSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonGestionarPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonGestionarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -135,7 +152,8 @@ public class MenuGestor extends javax.swing.JPanel {
                     .addComponent(buttonGestionarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonMostrarSalas, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonBorrarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonBorrarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -181,6 +199,13 @@ public class MenuGestor extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void buttonAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirPacienteActionPerformed
+		añadirPacientePanel();
+    }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
+
+	/**
+	 * Muestra el panel de añadir paciente
+	 */
+	private void añadirPacientePanel() {
 		añadirPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		añadirPaciente.setLocation(0, 0);
 
@@ -188,7 +213,7 @@ public class MenuGestor extends javax.swing.JPanel {
 		mostrarDatos.add(añadirPaciente, BorderLayout.CENTER);
 		mostrarDatos.revalidate();
 		mostrarDatos.repaint();
-    }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
+	}
 
 	/**
 	 * Muestra el panel gestionar pacientes
@@ -236,12 +261,53 @@ public class MenuGestor extends javax.swing.JPanel {
 		mostrarDatos.repaint();
     }//GEN-LAST:event_buttonGestionarMedicoActionPerformed
 
+    private void buttonPedirCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPedirCitaActionPerformed
+		pedirDNI();
+    }//GEN-LAST:event_buttonPedirCitaActionPerformed
+
+	/**
+	 * Pide un DNI Si existe en la base de datos, muestra pedir citas Si no
+	 * existe, muestra añadir paciente
+	 *
+	 * @return
+	 */
+	private void pedirDNI() {
+		try {
+			String dni = JOptionPane.showInputDialog(this, "DNI del paciente", "Introduzca un dni", JOptionPane.QUESTION_MESSAGE);
+			System.out.println(dni);
+			if (!gestor.existePacienteBD(dni)) {
+				JOptionPane.showMessageDialog(this, "No existe el paciente, añada un nuevo", "Cuidado!", JOptionPane.WARNING_MESSAGE);
+				añadirPacientePanel();
+			} else {
+				añadirPedirCitaPanel(dni);
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(MenuGestor.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+	}
+
+	/**
+	 * Ingresa un paciente a su menu y Añade un panel de pedir cita
+	 */
+	private void añadirPedirCitaPanel(String dni) {
+		gestionarPacientes = new GestionarPacientes(gestor, dni);
+		gestionarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		gestionarPacientes.setLocation(0, 0);
+
+		mostrarDatos.removeAll();
+		mostrarDatos.add(gestionarPacientes, BorderLayout.WEST);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+	}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAñadirPaciente;
     private javax.swing.JButton buttonBorrarPaciente;
     private javax.swing.JButton buttonGestionarMedico;
     private javax.swing.JButton buttonGestionarPacientes;
     private javax.swing.JButton buttonMostrarSalas;
+    private javax.swing.JButton buttonPedirCita;
     private javax.swing.JPanel menuOpciones;
     private javax.swing.JPanel mostrarDatos;
     // End of variables declaration//GEN-END:variables

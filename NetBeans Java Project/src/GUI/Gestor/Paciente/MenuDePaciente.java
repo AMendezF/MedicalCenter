@@ -32,8 +32,8 @@ public class MenuDePaciente extends javax.swing.JPanel {
 		this.paciente = paciente;
 		this.mostrarCitas = new mostrarCitas(gestor, paciente);
 		this.pedirCita = new PedirCita(gestor, paciente);
-		//this.modificarPaciente = new modificarPaciente(gestor,paciente);
-		this.labelMenuDelPaciente.setText(paciente.getNombre() +":   " + paciente.getDNI());
+		this.labelMenuDelPaciente.setText(paciente.getNombre() + ":   " + paciente.getDNI());
+		pedirCitaPanel();
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class MenuDePaciente extends javax.swing.JPanel {
                             .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 27, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         menuOpcionesLayout.setVerticalGroup(
@@ -112,7 +112,7 @@ public class MenuDePaciente extends javax.swing.JPanel {
         mostrarDatos.setLayout(mostrarDatosLayout);
         mostrarDatosLayout.setHorizontalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 522, Short.MAX_VALUE)
+            .addGap(0, 549, Short.MAX_VALUE)
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,17 +157,24 @@ public class MenuDePaciente extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonMostrarCitasActionPerformed
 
     private void buttonPedirCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPedirCitaActionPerformed
-        pedirCita.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		pedirCitaPanel();
+    }//GEN-LAST:event_buttonPedirCitaActionPerformed
+
+	/**
+	 * Añade un panel para pedir Cita
+	 */
+	private void pedirCitaPanel() {
+		pedirCita.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		pedirCita.setLocation(0, 0);
 
 		mostrarDatos.removeAll();
 		mostrarDatos.add(pedirCita, BorderLayout.CENTER);
 		mostrarDatos.revalidate();
 		mostrarDatos.repaint();
-    }//GEN-LAST:event_buttonPedirCitaActionPerformed
+	}
 
     private void buttonModificarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonModificarPacienteActionPerformed
-        this.modificarPaciente = new modificarPaciente(gestor,paciente);
+		this.modificarPaciente = new modificarPaciente(gestor, paciente);
 		modificarPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		modificarPaciente.setLocation(0, 0);
 

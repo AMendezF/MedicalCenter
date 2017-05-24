@@ -170,13 +170,13 @@ public class mostrarCitas extends javax.swing.JPanel {
 	private void borrarCita(String codCita) {
 		Object[] options = {"Si", "No"};
 		int confirmar;
-
+		
 //		if (gestor.citaEsValida(paciente.getDNI(), codCita)) {
 //			confirmar = JOptionPane.showOptionDialog(this, "Se borrara la cita, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 //			// Confirmar devuelve un 0 si quiere confirmarlo
 //			// Devuelve un 1 si no lo confirma
 //			if (confirmar == 0) {
-//				if (paciente.removeCita(codCita)) {
+//				if (gestor.removeCita(codCita)) {
 //					JOptionPane.showMessageDialog(this, "Se ha borrado la cita del paciente " + paciente.getDNI());
 //					actualizarDatos();
 //				} else {

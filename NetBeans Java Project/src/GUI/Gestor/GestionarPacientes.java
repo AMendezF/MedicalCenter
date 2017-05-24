@@ -37,6 +37,12 @@ public class GestionarPacientes extends javax.swing.JPanel {
 		actualizarDatos();
 	}
 
+	public GestionarPacientes(Gestor gestor, String dni) {
+		initComponents();
+		this.gestor = gestor;
+		cogerPaciente(dni);
+	}
+
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -229,7 +235,6 @@ public class GestionarPacientes extends javax.swing.JPanel {
 	 */
     private void buttonCogerPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCogerPacienteActionPerformed
 		cogerPaciente(fieldDNI.getText());
-
     }//GEN-LAST:event_buttonCogerPacienteActionPerformed
 
 	/**
@@ -238,7 +243,7 @@ public class GestionarPacientes extends javax.swing.JPanel {
 	private void cogerPaciente(String dni) {
 		try {
 			if (comprobarDNI(dni)) {
-				this.paciente = gestor.getPaciente(fieldDNI.getText());
+				this.paciente = gestor.getPaciente(dni);
 				crearMenu();
 			} else {
 				JOptionPane.showMessageDialog(this, "El dni no es correcto", "Error", JOptionPane.ERROR_MESSAGE);

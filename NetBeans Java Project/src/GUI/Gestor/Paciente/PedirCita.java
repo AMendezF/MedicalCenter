@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,6 +27,12 @@ public class PedirCita extends javax.swing.JPanel {
 
 	private Gestor gestor;
 	private Paciente paciente;
+	private String[] nombreMedicos;
+	private String[] codigoMedicos;
+	private String codMed;
+	private String[] nomMed;
+	private String dia;
+	private String fecha;
 
 	public PedirCita(Gestor gestor, Paciente paciente) {
 		initComponents();
@@ -79,6 +86,11 @@ public class PedirCita extends javax.swing.JPanel {
         });
 
         desplegableMedico.setEnabled(false);
+        desplegableMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                desplegableMedicoActionPerformed(evt);
+            }
+        });
 
         labelDia.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelDia.setText("Dia");
@@ -90,6 +102,12 @@ public class PedirCita extends javax.swing.JPanel {
         buttonPedirCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonPedirCitaActionPerformed(evt);
+            }
+        });
+
+        desplegableHoras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                desplegableHorasActionPerformed(evt);
             }
         });
 
@@ -113,11 +131,6 @@ public class PedirCita extends javax.swing.JPanel {
         checkElegirMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkElegirMedicoActionPerformed(evt);
-            }
-        });
-        checkElegirMedico.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                checkElegirMedicoPropertyChange(evt);
             }
         });
 
@@ -211,7 +224,40 @@ public class PedirCita extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 	/**
-	 * Carga desplegable especialidad
+	 * Divido en dos arrays la informacion obtenida de medicos Guardo en los
+	 * atributos codMed y nomMed el primer medico en caso de que no se
+	 * seleccione un medico desde el desplegable
+	 *
+	 * @param medicosDisponibles
+	 */
+	private void actualizarValoresMedico(String[][] medicosDisponibles) {
+		String[] codigoMedico = new String[medicosDisponibles.length];
+		String[] nombreMedico = new String[medicosDisponibles.length];
+
+		for (int i = 0; i < medicosDisponibles.length; i++) {
+			codigoMedico[i] = medicosDisponibles[i][0];
+			nombreMedico[i] = medicosDisponibles[i][1];
+			System.out.println("Codigo:" + codigoMedico[i] + "    Nombre: " + nombreMedico[i]);
+		}
+
+		setCodigoMedico(codigoMedico);
+		setNombreMedico(nombreMedico);
+		codMed = codigoMedico[0];
+		nomMed = new String[nombreMedico.length];
+		nomMed[0] = nombreMedico[0];
+	}
+
+	private void setCodigoMedico(String[] codigoDeMedicos) {
+		this.codigoMedicos = codigoDeMedicos;
+	}
+
+	private void setNombreMedico(String[] nombreDeMedicos) {
+		this.nombreMedicos = nombreDeMedicos;
+	}
+
+	/**
+	 * Carga desplegable especialidad y actualiza el Calendario con valores por
+	 * defecto
 	 */
 	private void cargarDatos() {
 		try {
@@ -221,7 +267,7 @@ public class PedirCita extends javax.swing.JPanel {
 			Date fechaMaxima = new Date();
 			calendario.setMinSelectableDate(fechaMinima);
 
-			/*
+			/* Codigo que en principio no sirve, fueron pruebas. Hace falta poner una cita maxima
 			 calendario.setMaxSelectableDate();
 			
 			 Calendar date = Calendar.getInstance();
@@ -249,53 +295,61 @@ public class PedirCita extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void buttonPedirCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPedirCitaActionPerformed
-
+		pedirCita();
     }//GEN-LAST:event_buttonPedirCitaActionPerformed
 
 	/**
 	 * Comprueba los datos y pide una cita
 	 */
 	private void pedirCita() {
-//		List<String> datos = new ArrayList<String>();
-//		Object[] options = {"Si", "No"};
-//		int confirmar;
-//
-//		String especialidad = (String) desplegableEspecialidad.getSelectedItem();
-//		SimpleDateFormat formato = new SimpleDateFormat("yy-MM-dd");
-//		String fecha = formato.format(calendario.getDate());
-//		String turno = (String) desplegableTurno.getSelectedItem();
-//		String hora = (String) desplegableHoras.getSelectedItem();
-//		String medico = "";
-//
-//		if (desplegableMedico.isEnabled()) {
-//			medico = (String) desplegableMedico.getSelectedItem();
-//		}
-//
-//		datos.add(especialidad);
-//		datos.add(fecha);
-//		datos.add(turno);
-//		datos.add(hora);
-//		datos.add(medico);
-//
-//		if (comprobarCita()) {
-//			confirmar = JOptionPane.showOptionDialog(this, "Se creara una cita para el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-//			// Confirmar devuelve un 0 si quiere confirmarlo
-//			// Devuelve un 1 si no lo confirma
-//			if (confirmar == 0) {
-//				String[][] datosModificar = datos.toArray(new String[modificarPaciente.size()]);
-//				if (gestor.addCita(datos)) {
-//					JOptionPane.showMessageDialog(this, "Se ha generado una cita");
-//					cargarDatos();
-//				} else {
-//					JOptionPane.showMessageDialog(this, "No se ha generar la cita", "Error", JOptionPane.ERROR_MESSAGE);
-//				}
-//			}
-//		}
+		List<String> datos = new ArrayList<String>();
+		Object[] options = {"Si", "No"};
+		int confirmar;
+
+		SimpleDateFormat formato = new SimpleDateFormat("yy-MM-dd");
+		String fecha = formato.format(calendario.getDate());
+		String hora = (String) desplegableHoras.getSelectedItem();
+		String medico = "";
+
+		if (desplegableMedico.isEnabled()) {
+			medico = codigoMedicos[desplegableMedico.getSelectedIndex()];
+		} else {
+			medico = codMed;
+		}
+
+		String especialidad = (String) desplegableEspecialidad.getSelectedItem();
+		String dni = paciente.getDNI();
+
+		//String turno = (String) desplegableTurno.getSelectedItem();
+		datos.add(fecha);
+		datos.add(hora);
+		datos.add(medico);
+		datos.add(especialidad);
+		datos.add(dni);
+		//datos.add(turno);
+
+		if (comprobarCita()) {
+			confirmar = JOptionPane.showOptionDialog(this, "Se creara una cita para el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			// Confirmar devuelve un 0 si quiere confirmarlo
+			// Devuelve un 1 si no lo confirma
+			if (confirmar == 0) {
+				String[] cita = datos.toArray(new String[datos.size()]);
+				if (gestor.addCita(cita)) {
+					JOptionPane.showMessageDialog(this, "Se ha generado una cita");
+					cargarDatos();
+					mostrarTurno();
+				} else {
+					JOptionPane.showMessageDialog(this, "No se ha podido generar la cita", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "Algun error al comprobar la cita", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private boolean comprobarCita() {
 		boolean resul = false;
-
+		resul = true;
 		return resul;
 	}
 
@@ -342,6 +396,11 @@ public class PedirCita extends javax.swing.JPanel {
 			String especialidad = (String) desplegableEspecialidad.getSelectedItem();
 			SimpleDateFormat diaSemanas = new SimpleDateFormat("u");
 			String diaSemana = cogerDia(diaSemanas.format(calendario.getDate()));
+
+			// Carga el atributo fecha en este formato que luego se usara para pedir cita
+			SimpleDateFormat formato = new SimpleDateFormat("yy-MM-dd");
+			fecha = formato.format(calendario.getDate());
+
 			desplegableTurno.setModel(new DefaultComboBoxModel(gestor.getHorarioEspecialidadByDay(especialidad, diaSemana)));
 			desplegableMedico.setEnabled(false);
 			desplegableHoras.setEnabled(false);
@@ -359,29 +418,30 @@ public class PedirCita extends javax.swing.JPanel {
     private void desplegableEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableEspecialidadActionPerformed
 		mostrarTurno();
 
-		SimpleDateFormat formato = new SimpleDateFormat("yy-MM-dd");
-		SimpleDateFormat diaSemanas = new SimpleDateFormat("u");
+		/*
+		 SimpleDateFormat formato = new SimpleDateFormat("yy-MM-dd");
+		 SimpleDateFormat diaSemanas = new SimpleDateFormat("u");
 
-		System.out.println(diaSemanas.format(calendario.getDate()));
-		System.out.println(formato.format(calendario.getDate()));
+		 System.out.println(diaSemanas.format(calendario.getDate()));
+		 System.out.println(formato.format(calendario.getDate()));
 
-		String especialidad = (String) desplegableEspecialidad.getSelectedItem();
-		String fecha = formato.format(calendario.getDate());
-		String diaSemana = cogerDia(diaSemanas.format(calendario.getDate()));
-		System.out.println(calendario.getDate());
-		System.out.println(diaSemana);
-		try {
-			desplegableTurno.setModel(new DefaultComboBoxModel(gestor.getHorarioEspecialidadByDay(especialidad, diaSemana)));
-			String turno = (String) desplegableTurno.getSelectedItem();
-			//desplegableMedico.setModel(new DefaultComboBoxModel((String) gestor.mostrarMedicosByHorarioEspecialidad(especialidad, turno)));
-		} catch (SQLException ex) {
-			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
+		 String especialidad = (String) desplegableEspecialidad.getSelectedItem();
+		 String fecha = formato.format(calendario.getDate());
+		 String diaSemana = cogerDia(diaSemanas.format(calendario.getDate()));
+		 System.out.println(calendario.getDate());
+		 System.out.println(diaSemana);
+		 try {
+		 desplegableTurno.setModel(new DefaultComboBoxModel(gestor.getHorarioEspecialidadByDay(especialidad, diaSemana)));
+		 String turno = (String) desplegableTurno.getSelectedItem();
+		 //desplegableMedico.setModel(new DefaultComboBoxModel((String) gestor.mostrarMedicosByHorarioEspecialidad(especialidad, turno)));
+		 } catch (SQLException ex) {
+		 Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
+		 }
+		 */
     }//GEN-LAST:event_desplegableEspecialidadActionPerformed
 
 	/**
-	 * Detecta el cambio del calendario
+	 * Detecta el cambio del calendario y muestra turno
 	 *
 	 * @param evt
 	 */
@@ -390,51 +450,94 @@ public class PedirCita extends javax.swing.JPanel {
     }//GEN-LAST:event_calendarioPropertyChange
 
 	/**
-	 * Detecta el cambio de checkbox
-	 *
-	 * @param evt
-	 */
-    private void checkElegirMedicoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_checkElegirMedicoPropertyChange
-		//activarMedicos();
-    }//GEN-LAST:event_checkElegirMedicoPropertyChange
-
-	/**
 	 * Si el medico esta habilitado carga medico Si no lo esta carga hora
 	 *
 	 * @param evt
 	 */
     private void desplegableTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableTurnoActionPerformed
-		if (cambiarEstadoDesplegableMedicos()){
-			
+		buttonPedirCita.setEnabled(false);
+		if (enabledDesplegableMedicos()) {
+			eventoTurnoCargarMedico();
 		} else {
-			
-		}
-		if (checkElegirMedico.isEnabled()) {
-			desplegableMedico.setEnabled(true);
-			//desplegableMedico.setModel(new DefaultComboBoxModel((String) gestor.mostrarMedicosByHorarioEspecialidad(especialidad, turno)));
-		} else {
-			desplegableHoras.setEnabled(true);
-			//desplegableHoras.setModel(new DefaultComboBoxModel(gestor.getConsultasDisponiblesMedico()));
-		}
+			try {
+				actualizarValoresMedico(gestor.getMedicoEspecifico((String) desplegableTurno.getSelectedItem(), (String) desplegableEspecialidad.getSelectedItem()));
+				desplegableMedico.setModel(new DefaultComboBoxModel(nomMed));
+				desplegableHoras.setEnabled(true);
+				eventoTurnoCargarHoras();
+			} catch (SQLException ex) {
+				Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
+			}
 
+		}
     }//GEN-LAST:event_desplegableTurnoActionPerformed
 
 	/**
-	 * 
-	 * @return 
+	 * Al seleccionar un turno, carga medicos si esta habilitado
+	 *
+	 * @return
 	 */
-	private boolean desplegableTurnoEventoGenerado(){
+	private boolean eventoTurnoCargarMedico() {
 		boolean resul = false;
-		
+		try {
+			actualizarValoresMedico(gestor.getMedicoEspecifico((String) desplegableTurno.getSelectedItem(), (String) desplegableEspecialidad.getSelectedItem()));
+			desplegableMedico.setModel(new DefaultComboBoxModel(nombreMedicos));
+			resul = true;
+
+		} catch (SQLException ex) {
+			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		return resul;
 	}
-	
+
 	/**
-	 * Modifica el estado de desplegableMedicos
+	 * Al seleccionar un turno, si medicos esta habilitado coge el medico
+	 * elegido y carga horas Si esta deshabilitado elige un medico al azar y
+	 * muestra las horas
+	 *
+	 * @return
 	 */
-	private boolean cambiarEstadoDesplegableMedicos(){
+	private void eventoTurnoCargarHoras() {
+		try {
+			boolean resul = false;
+			String nColegiado = "";
+
+			if (checkElegirMedico.isSelected()) {
+				nColegiado = codigoMedicos[(desplegableMedico.getSelectedIndex())];
+			} else {
+				nColegiado = codMed;
+			}
+
+			desplegableHoras.setModel(new DefaultComboBoxModel(gestor.getConsultasDisponiblesMedico(fecha, (String) desplegableEspecialidad.getSelectedItem(),
+					(String) desplegableTurno.getSelectedItem(), nColegiado)));
+
+			//desplegableHoras.setModel(new DefaultComboBoxModel(gestor.getConsultasDisponiblesMedico()));
+		} catch (SQLException ex) {
+			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	/**
+	 * Al seleccionar un medico carga las horas
+	 *
+	 * @return
+	 */
+	private void eventoMedicoCargarHoras() {
+		try {
+			desplegableHoras.setEnabled(true);
+			codMed = codigoMedicos[(desplegableMedico.getSelectedIndex())];
+			desplegableHoras.setModel(new DefaultComboBoxModel(gestor.getConsultasDisponiblesMedico(fecha, (String) desplegableEspecialidad.getSelectedItem(),
+					(String) desplegableTurno.getSelectedItem(), codMed)));
+		} catch (SQLException ex) {
+			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	/**
+	 * Modifica el estado de desplegableMedicos segun el checkBox
+	 */
+	private boolean enabledDesplegableMedicos() {
 		boolean resul = false;
-		if (checkElegirMedico.isSelected()){
+		if (checkElegirMedico.isSelected()) {
 			desplegableMedico.setEnabled(true);
 			resul = true;
 		} else {
@@ -442,14 +545,34 @@ public class PedirCita extends javax.swing.JPanel {
 		}
 		return resul;
 	}
-	
+
 	/**
 	 * Lanza un metodo al cambiar el valor de la checkbox
-	 * @param evt 
+	 *
+	 * @param evt
 	 */
     private void checkElegirMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkElegirMedicoActionPerformed
-		cambiarEstadoDesplegableMedicos();
+		enabledDesplegableMedicos();
     }//GEN-LAST:event_checkElegirMedicoActionPerformed
+
+	/**
+	 * Lanza un mentodo al seleccionar un medico
+	 *
+	 * @param evt
+	 */
+    private void desplegableMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableMedicoActionPerformed
+		buttonPedirCita.setEnabled(false);
+		eventoMedicoCargarHoras();
+    }//GEN-LAST:event_desplegableMedicoActionPerformed
+
+	/**
+	 * Al elegir una hora habilita pedir cita
+	 *
+	 * @param evt
+	 */
+    private void desplegableHorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableHorasActionPerformed
+		buttonPedirCita.setEnabled(true);
+    }//GEN-LAST:event_desplegableHorasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Especialidad;
