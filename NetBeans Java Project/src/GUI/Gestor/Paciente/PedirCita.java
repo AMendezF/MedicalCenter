@@ -349,6 +349,8 @@ public class PedirCita extends javax.swing.JPanel {
 
 	private boolean comprobarCita() {
 		boolean resul = false;
+		
+		
 		resul = true;
 		return resul;
 	}

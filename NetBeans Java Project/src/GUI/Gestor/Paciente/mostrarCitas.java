@@ -6,6 +6,7 @@ import clases.Gestor;
 import clases.Paciente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -65,6 +66,11 @@ public class mostrarCitas extends javax.swing.JPanel {
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         buttonActualizarCitas.setText("Actualizar datos");
+        buttonActualizarCitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonActualizarCitasActionPerformed(evt);
+            }
+        });
 
         tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -167,36 +173,62 @@ public class mostrarCitas extends javax.swing.JPanel {
 		borrarCita(borrarCita.getText());
     }//GEN-LAST:event_buttonCancelarCitaActionPerformed
 
+    private void buttonActualizarCitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActualizarCitasActionPerformed
+		actualizarDatos();
+    }//GEN-LAST:event_buttonActualizarCitasActionPerformed
+
 	private void borrarCita(String codCita) {
 		Object[] options = {"Si", "No"};
 		int confirmar;
-		
-//		if (gestor.citaEsValida(paciente.getDNI(), codCita)) {
-//			confirmar = JOptionPane.showOptionDialog(this, "Se borrara la cita, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-//			// Confirmar devuelve un 0 si quiere confirmarlo
-//			// Devuelve un 1 si no lo confirma
-//			if (confirmar == 0) {
-//				if (gestor.removeCita(codCita)) {
-//					JOptionPane.showMessageDialog(this, "Se ha borrado la cita del paciente " + paciente.getDNI());
-//					actualizarDatos();
-//				} else {
-//					JOptionPane.showMessageDialog(this, "No se ha podido cancelar la cita", "Error", JOptionPane.ERROR_MESSAGE);
-//				}
-//			}
-//
-//		} else {
-//			JOptionPane.showMessageDialog(this, "La cita no es correcta", "Error", JOptionPane.ERROR_MESSAGE);
-//		}
+
+		if (gestor.citaEsValida(codCita)) {
+			confirmar = JOptionPane.showOptionDialog(this, "Se borrara la cita, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			// Confirmar devuelve un 0 si quiere confirmarlo
+			// Devuelve un 1 si no lo confirma
+			if (confirmar == 0) {
+				if (gestor.removeCita(codCita)) {
+					JOptionPane.showMessageDialog(this, "Se ha borrado la cita del paciente " + paciente.getDNI());
+					actualizarDatos();
+				} else {
+					JOptionPane.showMessageDialog(this, "No se ha podido cancelar la cita", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+
+		} else {
+			JOptionPane.showMessageDialog(this, "La cita no es correcta", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
+	private DefaultTableModel resultSetToTableModel(ResultSet rs) throws SQLException {
+		java.sql.ResultSetMetaData metaData = rs.getMetaData();
+
+		// names of columns
+		Vector<String> columnNames = new Vector<String>();
+		int columnCount = metaData.getColumnCount();
+		for (int column = 1; column <= columnCount - 1; column++) {
+			columnNames.add(metaData.getColumnName(column));
+		}
+		columnNames.add("Especialidad");
+
+		// data of the table
+		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+		while (rs.next()) {
+			Vector<Object> vector = new Vector<Object>();
+			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+				vector.add(rs.getObject(columnIndex));
+			}
+			data.add(vector);
+		}
+		return new DefaultTableModel(data, columnNames);
+	}
+	
 	/**
 	 * Carga un resulSet y lo muestra en la tabla
 	 */
 	private void actualizarDatos() {
 		try {
 			ResultSet rs = paciente.mostrarCitasPendientes();
-			TableAdaptor aux = new TableAdaptor(rs);
-			setTabla(aux.getValue());
+			setTabla(resultSetToTableModel(rs));
 			DefaultTableModel tabla = getTabla();
 			tablaInfo.setModel(tabla);
 			cargarDesplegables();
