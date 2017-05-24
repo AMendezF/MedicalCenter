@@ -39,11 +39,12 @@ public class AñadirPaciente extends javax.swing.JPanel {
 	private DefaultTableModel tabla;
 	private String[] columnas;
 
-	public AñadirPaciente(Gestor gestor) {
+	public AñadirPaciente(Gestor gestor, String dni) {
 		initComponents();
 		this.gestor = gestor;
 		actualizarDatos();
 		textDNI.setDocument(new JTextFieldLimit(15));
+		textDNI.setText(dni);
 		textNombre.setDocument(new JTextFieldLimit(50));
 		textApellidos.setDocument(new JTextFieldLimit(50));
 		textSeguro.setDocument(new JTextFieldLimit(50));
@@ -96,6 +97,7 @@ public class AñadirPaciente extends javax.swing.JPanel {
         labelDNI.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelDNI.setText("DNI");
 
+        textDNI.setText(null);
         textDNI.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 textDNIKeyReleased(evt);

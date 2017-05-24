@@ -1,7 +1,9 @@
 package GUI.Gestor;
 
 import GUI.Gestor.Medicos.MenuDeMedico;
+import GUI.Gestor.Paciente.PedirCita;
 import clases.Gestor;
+import clases.Paciente;
 import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -33,7 +35,7 @@ public class MenuGestor extends javax.swing.JPanel {
 	public MenuGestor(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
-		this.añadirPaciente = new AñadirPaciente(gestor);
+		
 		this.borrarPaciente = new BorrarPaciente(gestor);
 		this.menuDeMedico = new MenuDeMedico(gestor);
 		this.mostrarSalas = new MostrarAgenda(gestor);
@@ -195,13 +197,14 @@ public class MenuGestor extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void buttonAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirPacienteActionPerformed
-		añadirPacientePanel();
+		añadirPacientePanel(null);
     }//GEN-LAST:event_buttonAñadirPacienteActionPerformed
 
 	/**
 	 * Muestra el panel de añadir paciente
 	 */
-	private void añadirPacientePanel() {
+	private void añadirPacientePanel(String dni) {
+		this.añadirPaciente = new AñadirPaciente(gestor, dni);
 		añadirPaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		añadirPaciente.setLocation(0, 0);
 
@@ -274,7 +277,7 @@ public class MenuGestor extends javax.swing.JPanel {
 			if (dni != null) {
 				if (!gestor.existePacienteBD(dni)) {
 					JOptionPane.showMessageDialog(this, "No existe el paciente, añada un nuevo", "Cuidado!", JOptionPane.WARNING_MESSAGE);
-					añadirPacientePanel();
+					añadirPacientePanel(dni);
 				} else {
 					añadirPedirCitaPanel(dni);
 				}
@@ -288,8 +291,16 @@ public class MenuGestor extends javax.swing.JPanel {
 	/**
 	 * Ingresa un paciente a su menu y Añade un panel de pedir cita
 	 */
-	private void añadirPedirCitaPanel(String dni) {
+	private void añadirPedirCitaPanel(String dni) throws SQLException {
+		PedirCita pedirCita = new PedirCita(gestor, gestor.getPaciente(dni));
+		pedirCita.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
+		pedirCita.setLocation(250, 0);
+
 		mostrarDatos.removeAll();
+		mostrarDatos.add(pedirCita, BorderLayout.CENTER);
+		mostrarDatos.revalidate();
+		mostrarDatos.repaint();
+		/*mostrarDatos.removeAll();
 				
 		gestionarPacientes = new GestionarPacientes(gestor, dni);
 		gestionarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
@@ -297,7 +308,7 @@ public class MenuGestor extends javax.swing.JPanel {
 
 		mostrarDatos.add(gestionarPacientes, BorderLayout.WEST);
 		mostrarDatos.revalidate();
-		mostrarDatos.repaint();
+		mostrarDatos.repaint();*/
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
