@@ -20,9 +20,11 @@ public class Conexion {
 	private static String password = "";
 	private static final String url = "jdbc:mysql://localhost:3306/";
 	private static final String dbName = "centromedico";
+	private Connection con;
 	//private PreparedStatement preparedStmt;
 
 	public Conexion(String usuario, char[] cPassword) throws SQLException, ClassNotFoundException {
+		this.con = setConRoot();
 		this.connection = null;
 		this.user = usuario;
 		setPassword(cPassword);
@@ -46,6 +48,10 @@ public class Conexion {
 
 	public String getUser() {
 		return this.user;
+	}
+
+	private Connection setConRoot() throws SQLException {
+		return this.con = DriverManager.getConnection(url, "root", "");
 	}
 
 	/**
@@ -119,13 +125,15 @@ public class Conexion {
 	public boolean existeBD() throws SQLException {
 		boolean resul = false;
 		String nombre = "";
+		
 		ResultSet rs;
-		rs = connection.getMetaData().getCatalogs();
+		rs = con.getMetaData().getCatalogs();
 
 		while (rs.next()) {
 			nombre = rs.getString(1);
 			if (dbName.equals(nombre)) {
 				resul = true;
+				System.out.println(nombre);
 			}
 		}
 		return resul;
@@ -199,7 +207,7 @@ public class Conexion {
 		boolean resul = false;
 
 		String sql = "SELECT user from mysql.user where user = ?;";
-		preparedStmt = connection.prepareStatement(sql);
+		preparedStmt = con.prepareStatement(sql);
 		preparedStmt.setString(1, user);
 		ResultSet rs = preparedStmt.executeQuery();
 		while (rs.next()) {
@@ -220,13 +228,15 @@ public class Conexion {
 		PreparedStatement preparedStmt;
 		boolean resul = false;
 
+		System.out.println("existeMedico");
 		String sql = "SELECT n_colegiado from centromedico.medico where n_colegiado = ?;";
-		preparedStmt = connection.prepareStatement(sql);
+		preparedStmt = con.prepareStatement(sql);
 		preparedStmt.setString(1, nColegiado);
 		ResultSet rs = preparedStmt.executeQuery();
 		while (rs.next()) {
 			resul = true;
 		}
+		System.out.println("noexisteMedico");
 		return resul;
 	}
 
@@ -490,7 +500,6 @@ public class Conexion {
 				+ "('00675833R', 'Jose Maria', 'Gimeno De Lucas', 'Sanitas', '612345674', 'Calle de Abraham Mateo Nº21, Escalera izquierda, 4ºD, Madrid')";
 		makeUpdate(iPacientes);
 
-
 		String horarioLunes = "INSERT INTO centromedico.horario_lunes (Cod_especialidad, Horario) VALUES "
 				+ "(1, 'Mañana'), "
 				+ "(2, 'Mañana'), "
@@ -582,17 +591,17 @@ public class Conexion {
 				+ "(7, 'Mañana')";
 		makeUpdate(horarioDomingo);
 
-		String iCitasPasadas = "INSERT INTO centromedico.citas (Cod_cita, Dia, Hora, Medico, Especialidad, Paciente ) VALUES " +
-				"('1', '2017-05-20', '10:00', 123456, 1, '00675833R'), " +
-				"('2', '2017-05-21', '15:20', 123656, 2, '19951996W'), " +
-				"('3', '2017-05-21', '16:10', 126156, 4, '23456123X'), " +
-				"('4', '2017-05-21', '16:20', 126156, 4, '26352431C'), " +
-				"('5', '2017-05-21', '16:50', 126156, 4, '34126666W'), " +
-				"('6', '2017-05-21', '16:50', 126156, 4, '52323400X'), " +
-				"('7', '2017-05-21', '10:15', 129777, 5, '57211499B'), " +
-				"('8', '2017-05-21', '10:30', 129777, 5, '67511200J');";
+		String iCitasPasadas = "INSERT INTO centromedico.citas (Cod_cita, Dia, Hora, Medico, Especialidad, Paciente ) VALUES "
+				+ "('1', '2017-05-20', '10:00', 123456, 1, '00675833R'), "
+				+ "('2', '2017-05-21', '15:20', 123656, 2, '19951996W'), "
+				+ "('3', '2017-05-21', '16:10', 126156, 4, '23456123X'), "
+				+ "('4', '2017-05-21', '16:20', 126156, 4, '26352431C'), "
+				+ "('5', '2017-05-21', '16:50', 126156, 4, '34126666W'), "
+				+ "('6', '2017-05-21', '16:50', 126156, 4, '52323400X'), "
+				+ "('7', '2017-05-21', '10:15', 129777, 5, '57211499B'), "
+				+ "('8', '2017-05-21', '10:30', 129777, 5, '67511200J');";
 		makeUpdate(iCitasPasadas);
-		
+
 		String iHistorial = "INSERT INTO centromedico.historial (Especialidad, Paciente) VALUES "
 				+ "(1, '00675833R'), "
 				+ "(2, '19951996W'), "
@@ -603,22 +612,22 @@ public class Conexion {
 				+ "(5, '57211499B'), "
 				+ "(5, '67511200J')";
 		makeUpdate(iHistorial);
-		
-		String iFichas = "INSERT INTO centromedico.ficha (Cod_historial, Cod_cita, comentario, Dia, Hora) VALUES " +
-				"(1, 1, '[2017-05-20, 10:00:00, 123456] Tensión alta por consumo frecuente de MontainDews y Doritos. Se recomienda abstinencia de dicha dieta.', " +
-				" '2017-05-20', '10:00:00'), " +
-				"(2, 2, '[2017-05-21, 15:20:00, 123656] El alto consumo de cannabis está reduciendo su sinapsis causando episodios chungos de epilepsia.', " +
-				" '2017-05-21', '15:20:00'), " +
-				"(3, 3, '[2017-05-21, 16:10:00, 126156] Se ha confundido de consulta... No me pagan lo suficiente para esto.', " +
-				" '2017-05-21', '16:10:00'), " +
-				"(4, 4, '', '2017-05-21', '16:20:00'), " +
-				"(5, 5, '[2017-05-21, 16:50:00, 126156] Se encuentra mal.', '2017-05-21', '16:50:00'), " +
-				"(6, 6, '[2017-05-21, 16:50:00, 126156] Revisión por molestia dolorosa. Se recetan unas píldoras.\n[2017-05-25, 19:30:00, 126156] Se descubre un error en la receta.', '2017-05-21', '16:50:00'), " +
-				"(7, 7, '[2017-05-21, 10:15:00, 129777] Revisión rutinaria sin novedades.', '2017-05-21', '10:15:00'), " +
-				"(8, 8, '[2017-05-21, 10:30:00, 129777] Nada nuevo.', '2017-05-21', '10:30:00');";
-		
+
+		String iFichas = "INSERT INTO centromedico.ficha (Cod_historial, Cod_cita, comentario, Dia, Hora) VALUES "
+				+ "(1, 1, '[2017-05-20, 10:00:00, 123456] Tensión alta por consumo frecuente de MontainDews y Doritos. Se recomienda abstinencia de dicha dieta.', "
+				+ " '2017-05-20', '10:00:00'), "
+				+ "(2, 2, '[2017-05-21, 15:20:00, 123656] El alto consumo de cannabis está reduciendo su sinapsis causando episodios chungos de epilepsia.', "
+				+ " '2017-05-21', '15:20:00'), "
+				+ "(3, 3, '[2017-05-21, 16:10:00, 126156] Se ha confundido de consulta... No me pagan lo suficiente para esto.', "
+				+ " '2017-05-21', '16:10:00'), "
+				+ "(4, 4, '', '2017-05-21', '16:20:00'), "
+				+ "(5, 5, '[2017-05-21, 16:50:00, 126156] Se encuentra mal.', '2017-05-21', '16:50:00'), "
+				+ "(6, 6, '[2017-05-21, 16:50:00, 126156] Revisión por molestia dolorosa. Se recetan unas píldoras.\n[2017-05-25, 19:30:00, 126156] Se descubre un error en la receta.', '2017-05-21', '16:50:00'), "
+				+ "(7, 7, '[2017-05-21, 10:15:00, 129777] Revisión rutinaria sin novedades.', '2017-05-21', '10:15:00'), "
+				+ "(8, 8, '[2017-05-21, 10:30:00, 129777] Nada nuevo.', '2017-05-21', '10:30:00');";
+
 		makeUpdate(iFichas);
-		
+
 		System.out.println("Datos insertados correctamente");
 	}
 
