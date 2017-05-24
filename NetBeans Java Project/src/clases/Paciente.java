@@ -62,9 +62,12 @@ public class Paciente {
      */
     public ResultSet mostrarCitasPendientes() throws SQLException {
         Connection reg = this.con.getCon();
-        String sql = "SELECT * FROM centromedico.citas WHERE (Dia>"
-                + this.getDia() + " OR (Dia=" + this.getDia() + " AND Hora>"
-                + this.getHora() + ")) AND Paciente='" + this.dni + "';";
+        String sql = "SELECT c.Dia, c.Hora, c.Cod_cita, c.Medico, "
+				+ "e.Nombre FROM centromedico.citas c, " 
+				+ "centromedico.especialidad e WHERE (c.Dia>"
+                + this.getDia() + " OR (c.Dia=" + this.getDia() + " AND c.Hora>"
+                + this.getHora() + ")) AND c.Paciente='" + this.dni + "' "
+				+ "AND c.especialidad=e.cod_especialidad;";
         ResultSet rs = reg.prepareStatement(sql).executeQuery();
 
         return rs;

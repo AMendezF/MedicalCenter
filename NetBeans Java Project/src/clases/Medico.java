@@ -326,15 +326,15 @@ public class Medico {
             horariosOcupados.add(horaReserv.substring(0, horaReserv.length() - 3));
         }
 
-        int minutoLibre = 59, horaLibre = horaInicio - 1;
-        String[] horarioFinal = new String[240 / this.getTiempoMin()];
-        for (int i = 0; i < horarioFinal.length; i++) { // iteramos sobre 
-            if (minutoLibre >= 59) {                    // número de turnos
-                horaLibre++;
-                minutoLibre = minutoLibre - 59;
-            } else {
-                minutoLibre += this.getTiempoMin();
-            }
+        int minutoLibre = 60, horaLibre = horaInicio - 1;
+		String[] horarioFinal = new String[240 / this.getTiempoMin()];
+		for (int i = 0; i < horarioFinal.length; i++) { // iteramos sobre 
+			if (minutoLibre + this.getTiempoMin() >= 59) {   // número de turnos
+				horaLibre++;
+				minutoLibre = minutoLibre - 60 + this.getTiempoMin();
+			} else {
+				minutoLibre += this.getTiempoMin();
+			}
 
             // comprobamos si coincide con hora y minuto 
             if (!this.coincidenHorarios(horaLibre, minutoLibre, horariosOcupados)) {

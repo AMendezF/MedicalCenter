@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -811,6 +813,36 @@ public class Gestor {
 	}
 
 	/**
+	 * Devuelve el último valor a tomar en Código cita
+	 *
+	 * @return int codigo cita;
+	 */
+	private int autoincrementCodCita() {
+		String sql;
+		ResultSet rs;
+		sql = "SELECT Cod_cita FROM centromedico.citas;";
+
+		try {
+			rs = conexion.makeQuery(sql);
+
+			int aux = 0, mayor = 0;
+
+			while (rs.next()) {
+				aux = Integer.parseInt(rs.getString(1));
+				if (aux > mayor) {
+					mayor = aux;
+				}
+			}
+
+			return mayor + 1;
+		} catch (SQLException ex) {
+			Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		return 0;
+	}
+
+	/**
 	 * Añade una cita de un paciente en una fecha, para una hora con un médico
 	 * en concreto.
 	 *
@@ -819,29 +851,30 @@ public class Gestor {
 	 * @return true = se ha añadido, false = no se ha añadido
 	 */
 	public Boolean addCita(String[] cita) {
-		Boolean added;
+		Boolean added = true;
 		String sql;
 		String especialidad = cita[3];
 		String DNI = cita[4];
 
 		sql = "INSERT "
 				+ "INTO centromedico.citas "
-				+ "(dia, hora, medico, especialidad, paciente)"
+				+ "(cod_cita, dia, hora, medico, especialidad, paciente)"
 				+ "VALUES "
-				+ "("
+				+ "('" + autoincrementCodCita() + "', "
 				+ "'" + cita[0] + "', "
 				+ "'" + cita[1] + "', "
 				+ "'" + cita[2] + "', "
 				+ "(SELECT e.cod_especialidad "
-				+ "FROM centromedico.especialidad e "
-				+ "WHERE e.nombre='" + especialidad + "')"
-				+ "'" + DNI + "')";
+				+ "FROM centromedico.especialidad  e "
+				+ "WHERE e.nombre='" + especialidad + "'), "
+				+ "'" + DNI + "');";
 		try {
-			added = conexion.makeExecute(sql);
+			conexion.makeExecute(sql);
 			if (!existeHistorial(DNI, especialidad)) {
 				addHistorial(DNI, especialidad);
 			}
 		} catch (SQLException e) {
+			System.out.println(e);
 			added = false;
 		}
 
@@ -855,13 +888,13 @@ public class Gestor {
 	 * @return true = eliminado, false = fallo al eliminar
 	 */
 	public boolean removeCita(String codCita) {
-		boolean removed;
+		boolean removed = true;
 		String sql;
 
 		sql = "DELETE FROM centromedico.citas "
 				+ "WHERE cod_cita='" + codCita + "'";
 		try {
-			removed = conexion.makeExecute(sql);
+			conexion.makeExecute(sql);
 		} catch (SQLException e) {
 			removed = false;
 		}
@@ -938,5 +971,29 @@ public class Gestor {
 		}
 
 		return esNumerico;
+	}
+
+	/**
+	 * Comprueba que existe la cita
+	 *
+	 * @param dni
+	 * @param codCita
+	 * @return true si la cita existe
+	 */
+	public boolean citaEsValida(String codCita) {
+		String sql;
+		ResultSet rs;
+		Boolean resul;
+		sql = "SELECT Paciente FROM centromedico.citas WHERE Cod_cita="
+				+ codCita + ";";
+		try {
+			rs = conexion.makeQuery(sql);
+			resul = rs.next();
+		} catch (SQLException ex) {
+			Logger.getLogger(Gestor.class.getName()).log(Level.SEVERE, null, ex);
+			resul = false;
+		}
+
+		return resul;
 	}
 }
