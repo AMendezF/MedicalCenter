@@ -32,6 +32,7 @@ public class PdfConversor {
     private javax.swing.JTable tabla;
     private static final Font Title = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
     private static final Font subTitle = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+    private static final Font salas = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
     private static final Font coment = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.DARK_GRAY);
     private Document documento;
     private String title;
@@ -42,6 +43,7 @@ public class PdfConversor {
     private String horaCita;
     private String diaCita;
     private String comentarioFicha;
+    private String Agenda;
 
     public PdfConversor(JTable tabla, String titulo, int NColegiado, String directorio) {
         this.tabla = tabla;
@@ -75,8 +77,23 @@ public class PdfConversor {
 
     }
 
-    private void jTableToPdf() throws DocumentException {
+    public PdfConversor(String contenidoAgenda, String directorio) {
+        this.title = "Agenda del dia " + getDia();
+        this.Agenda = contenidoAgenda.replace("\t", "");
+        String fileTitle = "Agenda_" + getDia() + ".pdf";
+        if (directorio.contains(".pdf")) {
+            this.file = new File(directorio);
+        } else {
+            this.file = new File(directorio + "\\" + fileTitle);
+        }
+        initDocumento();
+    }
 
+    private void jTableToPdf() throws DocumentException {
+        Paragraph colegiado = new Paragraph("Colegiado Nº " + this.NColegiado, subTitle);
+        documento.add(colegiado);
+        Paragraph fecha = new Paragraph("Fecha: " + getDia(), subTitle);
+        documento.add(fecha);
         // Creamos la tabla
         PdfPTable table = new PdfPTable(tabla.getColumnCount());
 
@@ -106,12 +123,15 @@ public class PdfConversor {
     }
 
     private void fichaToPdf() throws DocumentException {
+        Paragraph colegiado = new Paragraph("Colegiado Nº " + this.NColegiado, subTitle);
+        documento.add(colegiado);
+        Paragraph fecha = new Paragraph("Fecha: " + getDia(), subTitle);
+        documento.add(fecha);
         Paragraph paciente = new Paragraph("\nPaciente: " + this.nombrePaciente, subTitle);
         documento.add(paciente);
         Paragraph codigo = new Paragraph("Cod. Ficha: " + this.codFicha, subTitle);
         documento.add(codigo);
-        Paragraph fecha = new Paragraph("Fecha del diagnóstico: " + this.diaCita, subTitle);
-        documento.add(fecha);
+        documento.add(new Paragraph("Fecha del diagnóstico: " + this.diaCita, subTitle));
         documento.add(new Paragraph("Comentarios:", subTitle));
         documento.add(new Paragraph("\n" + this.comentarioFicha, coment));
 
@@ -150,10 +170,6 @@ public class PdfConversor {
             anchor.setName(title);
             Paragraph titulo = new Paragraph(anchor);
             documento.add(titulo);
-            Paragraph colegiado = new Paragraph("Colegiado Nº " + this.NColegiado, subTitle);
-            documento.add(colegiado);
-            Paragraph fecha = new Paragraph("Fecha: " + getDia(), subTitle);
-            documento.add(fecha);
 
         } catch (FileNotFoundException | DocumentException ex) {
             Logger.getLogger(PdfConversor.class.getName()).log(Level.SEVERE, null, ex);
@@ -168,5 +184,37 @@ public class PdfConversor {
         return fechaActual.get(Calendar.YEAR) + "-"
                 + (fechaActual.get(Calendar.MONTH) + 1) + "-"
                 + fechaActual.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public void getPdfAgenda() {
+        agendaToPdf();
+    }
+
+    private void agendaToPdf() {
+        try {
+            Paragraph fecha = new Paragraph("Fecha: " + getDia(), subTitle);
+            documento.add(fecha);
+            documento.add(new Paragraph("\n"));
+            addComentAgenda();
+            documento.close();
+        } catch (DocumentException ex) {
+            Logger.getLogger(PdfConversor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    private void addComentAgenda() throws DocumentException {
+        String[] Agenda = this.Agenda.split("\n");
+        for (int i = 0; i < Agenda.length ; i++){
+            if (Agenda[i].contains("Sala")){
+                documento.add(new Phrase("\t" + Agenda[i]+ "\n", salas));
+            } else if (Agenda[i].contains("TARDE") || Agenda[i].contains("MAÑANA")){
+                documento.add(new Phrase("\n" + Agenda[i]+ "\n", subTitle));
+            }else if (Agenda[i].contains("_")){
+           
+            }else {
+                documento.add(new Phrase("\t" + Agenda[i] + "\n", coment));
+            }
+        }
     }
 }
