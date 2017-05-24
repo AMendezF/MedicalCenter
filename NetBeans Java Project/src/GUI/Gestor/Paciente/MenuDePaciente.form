@@ -29,7 +29,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="mostrarDatos" max="32767" attributes="0"/>
                   <Component id="menuOpciones" max="32767" attributes="0"/>
               </Group>
@@ -44,18 +44,20 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="buttonMostrarPacientes" alignment="0" pref="150" max="32767" attributes="0"/>
-                          <Component id="buttonMostrarCitas" alignment="0" pref="150" max="32767" attributes="0"/>
-                          <Component id="labelMenuMedico" max="32767" attributes="0"/>
+                      <Component id="labelMenuDelPaciente" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="buttonMostrarCitas" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="buttonPedirCita" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="buttonModificarPaciente" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="buttonModifFicha" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                      <Component id="buttonEscribirFicha" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="200" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -63,37 +65,19 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelMenuMedico" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelMenuDelPaciente" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="buttonMostrarPacientes" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="buttonMostrarCitas" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="buttonMostrarCitas" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="buttonPedirCita" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="buttonEscribirFicha" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="buttonModifFicha" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="buttonModificarPaciente" min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace pref="214" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="buttonMostrarPacientes">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Mostrar pacientes"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonMostrarPacientesActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="buttonModifFicha">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Modificar Ficha"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonModifFichaActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="buttonMostrarCitas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Mostrar citas"/>
@@ -102,39 +86,45 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonMostrarCitasActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="labelMenuMedico">
+        <Component class="javax.swing.JLabel" name="labelMenuDelPaciente">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="18" style="1"/>
+              <Font name="Cambria Math" size="18" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Menu medico"/>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Menu del paciente"/>
+            <Property name="verticalAlignment" type="int" value="1"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="buttonEscribirFicha">
+        <Component class="javax.swing.JButton" name="buttonPedirCita">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Escribir ficha"/>
+            <Property name="text" type="java.lang.String" value="Pedir cita"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEscribirFichaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonPedirCitaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="buttonModificarPaciente">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Modificar paciente"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonModificarPacienteActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="mostrarDatos">
-      <Events>
-        <EventHandler event="componentAdded" listener="java.awt.event.ContainerListener" parameters="java.awt.event.ContainerEvent" handler="mostrarDatosComponentAdded"/>
-        <EventHandler event="componentRemoved" listener="java.awt.event.ContainerListener" parameters="java.awt.event.ContainerEvent" handler="mostrarDatosComponentRemoved"/>
-      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="295" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="549" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="409" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>

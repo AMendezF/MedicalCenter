@@ -1,6 +1,19 @@
 package GUI.Gestor.Medicos;
 
+import GUI.Gestor.TableAdaptor;
 import clases.Gestor;
+import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -8,14 +21,19 @@ import clases.Gestor;
  */
 public class borrarMedico extends javax.swing.JPanel {
 
-	/**
-	 * Creates new form borrarMedico
-	 */
 	private Gestor gestor;
-	
+	private TableRowSorter trsFiltro;
+	private String[] columnas;
+	private DefaultTableModel tabla;
+	private final int tiempoMinimoCita = 10;
+	private final int tiempoMaximoCita = 25;
+	private int numColegiadoABorrar;
+
 	public borrarMedico(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		cargarDatos();
+
 	}
 
 	/**
@@ -28,11 +46,15 @@ public class borrarMedico extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        labelTitulo = new javax.swing.JLabel();
+        desplegableColumnas = new javax.swing.JComboBox();
+        textFieldBuscar = new javax.swing.JTextField();
+        buttonACtualizar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaInfo = new javax.swing.JTable();
+        medicoABorrar = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         labelNColegiado = new javax.swing.JLabel();
         labelNombre = new javax.swing.JLabel();
@@ -40,27 +62,57 @@ public class borrarMedico extends javax.swing.JPanel {
         labelEspecialidad = new javax.swing.JLabel();
         fieldNombre = new javax.swing.JTextField();
         fieldApellidos = new javax.swing.JTextField();
-        textNColegiado = new javax.swing.JTextField();
+        fieldColegiado = new javax.swing.JTextField();
         labelTiempo = new javax.swing.JLabel();
         labelHorario = new javax.swing.JLabel();
-        elegirEspecialidad = new javax.swing.JComboBox();
-        elegirHorario = new javax.swing.JComboBox();
-        elegirTiempo = new javax.swing.JComboBox();
         NColegiadoOK = new javax.swing.JLabel();
         nombreOK = new javax.swing.JLabel();
         apellidosOK = new javax.swing.JLabel();
         buttonAñadirMedico = new javax.swing.JButton();
         todoCorrecto = new javax.swing.JLabel();
+        labelHorarioAñadir = new javax.swing.JLabel();
+        labelTiempoAñadir = new javax.swing.JLabel();
+        especialidadAñadir = new javax.swing.JLabel();
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Borrar medico");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        labelTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelTitulo.setText("Borrar medico");
+        labelTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Numero de Colegiado");
+        textFieldBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textFieldBuscarKeyTyped(evt);
+            }
+        });
 
-        jButton1.setText("Borrar y añadir");
+        buttonACtualizar.setText("Actualizar datos");
+        buttonACtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonACtualizarActionPerformed(evt);
+            }
+        });
+
+        tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tablaInfo.setColumnSelectionAllowed(true);
+        tablaInfo.getTableHeader().setReorderingAllowed(false);
+        tablaInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaInfoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaInfo);
+        tablaInfo.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        medicoABorrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        medicoABorrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        medicoABorrar.setText("Datos");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -69,35 +121,40 @@ public class borrarMedico extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(buttonACtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                        .addComponent(medicoABorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(113, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonACtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(medicoABorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(139, 139, 139)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Añadir nuevo medico");
+        jLabel1.setText("Sustituir medico borrado");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         labelNColegiado.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -112,17 +169,29 @@ public class borrarMedico extends javax.swing.JPanel {
         labelEspecialidad.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelEspecialidad.setText("Especialidad");
 
+        fieldNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldNombreKeyReleased(evt);
+            }
+        });
+
+        fieldApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldApellidosKeyReleased(evt);
+            }
+        });
+
+        fieldColegiado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldColegiadoKeyReleased(evt);
+            }
+        });
+
         labelTiempo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelTiempo.setText("Tiempo minimo");
 
         labelHorario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelHorario.setText("Horario");
-
-        elegirEspecialidad.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        elegirHorario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        elegirTiempo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         NColegiadoOK.setText("OK");
 
@@ -130,9 +199,114 @@ public class borrarMedico extends javax.swing.JPanel {
 
         apellidosOK.setText("ok");
 
-        buttonAñadirMedico.setText("Añadir nuevo medico");
+        buttonAñadirMedico.setText("Sustituir");
+        buttonAñadirMedico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAñadirMedicoActionPerformed(evt);
+            }
+        });
 
         todoCorrecto.setText("Comprobar cosas");
+
+        labelHorarioAñadir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelHorarioAñadir.setText("Horario");
+
+        labelTiempoAñadir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelTiempoAñadir.setText("Tiempo");
+
+        especialidadAñadir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        especialidadAñadir.setText("Especialidad");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(labelNColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(fieldColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(NColegiadoOK))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(fieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(apellidosOK))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(labelEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(especialidadAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 147, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(labelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(labelHorarioAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(nombreOK))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(todoCorrecto))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(labelTiempoAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(especialidadAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NColegiadoOK))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreOK))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(apellidosOK))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelHorarioAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTiempoAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(todoCorrecto))
+                .addGap(175, 175, 175))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -140,89 +314,15 @@ public class borrarMedico extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(labelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(elegirHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(nombreOK)))
-                                .addGap(0, 204, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(labelNColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(textNColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(NColegiadoOK))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(fieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(apellidosOK))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(labelEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(elegirEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(todoCorrecto)
-                                    .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(elegirTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textNColegiado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NColegiadoOK))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nombreOK))
-                .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(apellidosOK))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(elegirHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(elegirEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(elegirTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(todoCorrecto))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -238,7 +338,7 @@ public class borrarMedico extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -247,31 +347,300 @@ public class borrarMedico extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+	 * Sirve para filtrar en el jTABLE DE
+	 *
+	 * @param evt
+	 */
+    private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBuscarKeyTyped
+		// TODO add your handling code here:
+		textFieldBuscar.addKeyListener(new KeyAdapter() {
+			public void keyReleased(final KeyEvent e) {
+				String cadena = (textFieldBuscar.getText());
+				textFieldBuscar.setText(cadena);
+				repaint();
+				filtro();
+			}
+		});
+		trsFiltro = new TableRowSorter(tablaInfo.getModel());
+		tablaInfo.setRowSorter(trsFiltro);
+    }//GEN-LAST:event_textFieldBuscarKeyTyped
+
+	public void filtro() {
+		int colum = 0;
+		System.out.println(desplegableColumnas.getSelectedItem());
+		while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
+			System.out.println(colum);
+			colum++;
+		}
+		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
+	}
+
+	/**
+	 * Prepara el jTable con el ResultSet cambiando el último campo a
+	 * especialidad.
+	 *
+	 * @param rs
+	 * @return TableModel
+	 * @throws SQLException
+	 */
+	private DefaultTableModel resultSetToTableModel(ResultSet rs) throws SQLException {
+		java.sql.ResultSetMetaData metaData = rs.getMetaData();
+
+		// names of columns
+		Vector<String> columnNames = new Vector<String>();
+		int columnCount = metaData.getColumnCount();
+		for (int column = 1; column <= columnCount - 2; column++) {
+			columnNames.add(metaData.getColumnName(column));
+		}
+		columnNames.add("Tiempo mínimo");
+		columnNames.add("Especialidad");
+
+		// data of the table
+		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+		while (rs.next()) {
+			Vector<Object> vector = new Vector<Object>();
+			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+				vector.add(rs.getObject(columnIndex));
+			}
+			data.add(vector);
+		}
+		return new DefaultTableModel(data, columnNames);
+	}
+
+	private void cargarDatos() {
+		try {
+			ResultSet rs = gestor.mostrarMedicos();;
+			setTabla(resultSetToTableModel(rs));
+			DefaultTableModel tabla = getTabla();
+			tablaInfo.setModel(tabla);
+			cargarDesplegables();
+		} catch (SQLException ex) {
+			Logger.getLogger(mostrarMedicos.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+
+    private void buttonACtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonACtualizarActionPerformed
+		cargarDatos();
+    }//GEN-LAST:event_buttonACtualizarActionPerformed
+
+    private void tablaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaInfoMouseClicked
+		int row = tablaInfo.rowAtPoint(evt.getPoint());
+		int col = tablaInfo.columnAtPoint(evt.getPoint());
+		if (row >= 0 && col >= 0) {
+			medicoABorrar.setText((String) tablaInfo.getValueAt(row, 1) + ": " + Integer.toString((int) tablaInfo.getValueAt(row, 0)));
+			numColegiadoABorrar = (int) tablaInfo.getValueAt(row, 0);
+			labelHorarioAñadir.setText((String) tablaInfo.getValueAt(row, 3));
+			labelTiempoAñadir.setText(String.valueOf(tablaInfo.getValueAt(row, 4)));
+			especialidadAñadir.setText(String.valueOf(tablaInfo.getValueAt(row, 5)));
+		}
+    }//GEN-LAST:event_tablaInfoMouseClicked
+
+    private void fieldNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldNombreKeyReleased
+		comprobarNombre(fieldNombre.getText());
+    }//GEN-LAST:event_fieldNombreKeyReleased
+
+	/**
+	 * Comprueba el campo colegiado
+	 *
+	 * @param text
+	 * @return
+	 */
+	private boolean colegiadoEsCorrecto(String num) throws SQLException {
+		boolean resul = false;
+		if (!gestor.existeMedico(num) && !(num.equals("")) /*&& gestor.esNumero(num)*/) {
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Comprueba el añadir medico
+	 *
+	 * @return
+	 */
+	private boolean todoCorrecto(String[] medico) throws SQLException {
+		boolean resul = false;
+//		if (gestor.medicosPorEspecialidad((String) desplegableEspecialidad.getSelectedItem())) {
+//			if (colegiadoEsCorrecto(fieldColegiado.getText())) {
+//				if (campoEsCorrecto(fieldNombre.getText()) && campoEsCorrecto(fieldApellidos.getText())) {
+//					resul = true;
+//				}
+//			}
+//		}
+		resul = true;
+		return resul;
+	}
+
+	/**
+	 * Comprueba los campos que no pueden quedarse vacios como el nombre del
+	 * medico y apellido
+	 *
+	 * @return
+	 */
+	private boolean campoEsCorrecto(String campo) {
+		boolean resul = false;
+		if (gestor.esTexto(campo) && !(campo.equals(""))) {
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Devuelve true si un stirng esta vacio Funcion equals muy simple, pero
+	 * ayuda a que el codigo sea mas sencillo y se vea mejor
+	 *
+	 * @param texto
+	 * @return
+	 */
+	private boolean estaVacio(String texto) {
+		boolean resul = false;
+		if (texto.equals("")) {
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Comprueba si el valor apellido es correcto
+	 *
+	 * @param campo
+	 * @return
+	 */
+	private boolean comprobarNombre(String nombre) {
+		boolean resul = false;
+		if (estaVacio(nombre)) {
+			nombreOK.setForeground(Color.red);
+			nombreOK.setText("Vacio!!");
+		} else if (!gestor.esTexto(nombre)) {
+			nombreOK.setForeground(Color.red);
+			nombreOK.setText("Incorrecto!!");
+		} else {
+			nombreOK.setForeground(Color.green);
+			nombreOK.setText("OK!!");
+			resul = true;
+		}
+		return resul;
+	}
+
+	/**
+	 * Comprueba si el valor apellido es correcto
+	 *
+	 * @param campo
+	 * @return
+	 */
+	private boolean comprobarApellido(String apellido) {
+		boolean resul = false;
+		if (estaVacio(apellido)) {
+			apellidosOK.setForeground(Color.red);
+			apellidosOK.setText("Vacio!!");
+		} else if (!gestor.esTexto(apellido)) {
+			apellidosOK.setForeground(Color.red);
+			apellidosOK.setText("Incorrecto!!");
+		} else {
+			apellidosOK.setForeground(Color.green);
+			apellidosOK.setText("OK!!");
+			resul = true;
+		}
+		return resul;
+	}
+
+    private void fieldApellidosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldApellidosKeyReleased
+		comprobarApellido(fieldApellidos.getText());
+    }//GEN-LAST:event_fieldApellidosKeyReleased
+
+    private void fieldColegiadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldColegiadoKeyReleased
+		try {
+			if (colegiadoEsCorrecto(fieldColegiado.getText())) {
+				NColegiadoOK.setForeground(Color.black);
+				NColegiadoOK.setText("Correcto");
+			} else {
+				NColegiadoOK.setForeground(Color.red);
+				NColegiadoOK.setText("Incorrecto");
+			}
+		} catch (SQLException ex) {
+			Logger.getLogger(añadirMedico.class.getName()).log(Level.SEVERE, null, ex);
+		}
+    }//GEN-LAST:event_fieldColegiadoKeyReleased
+
+    private void buttonAñadirMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAñadirMedicoActionPerformed
+		Object[] options = {"Si", "No"};
+		int confirmar;
+
+		String[] medico = {fieldColegiado.getText(), fieldNombre.getText(), fieldApellidos.getText(),
+			labelHorarioAñadir.getText(), labelTiempoAñadir.getText(),
+			especialidadAñadir.getText()};
+		try {
+			if (todoCorrecto(medico)) {
+				confirmar = JOptionPane.showOptionDialog(this, "Se va ha crear el medico ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+				if (confirmar == 0) {
+					if (gestor.removeMedico(String.valueOf(String.valueOf(numColegiadoABorrar)))) {
+						if (gestor.addMedico(medico)) {
+							JOptionPane.showMessageDialog(this, "Se ha añadido el medico con codigo " + fieldColegiado.getText());
+						} else {
+							JOptionPane.showMessageDialog(this, "No se ha podido añadir", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+					} else {
+						JOptionPane.showMessageDialog(this, "No se ha podido borrar el médico seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+
+			}
+		} catch (SQLException ex) {
+			JOptionPane.showMessageDialog(this, "No se ha podido añadir" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+		}
+    }//GEN-LAST:event_buttonAñadirMedicoActionPerformed
+
+	public DefaultTableModel getTabla() {
+		return this.tabla;
+	}
+
+	public void setTabla(DefaultTableModel tabla) {
+		this.tabla = tabla;
+	}
+
+	/**
+	 * Carga el desplegable de medico a partir de la tabla
+	 */
+	private void cargarDesplegables() {
+		int numColums = tablaInfo.getColumnCount();
+		this.columnas = new String[numColums];
+		for (int i = 0; i < numColums; i++) {
+			this.columnas[i] = tablaInfo.getColumnName(i);
+		}
+		desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
+	}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel NColegiadoOK;
     private javax.swing.JLabel apellidosOK;
+    private javax.swing.JButton buttonACtualizar;
     private javax.swing.JButton buttonAñadirMedico;
-    private javax.swing.JComboBox elegirEspecialidad;
-    private javax.swing.JComboBox elegirHorario;
-    private javax.swing.JComboBox elegirTiempo;
+    private javax.swing.JComboBox desplegableColumnas;
+    private javax.swing.JLabel especialidadAñadir;
     private javax.swing.JTextField fieldApellidos;
+    private javax.swing.JTextField fieldColegiado;
     private javax.swing.JTextField fieldNombre;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelApellidos;
     private javax.swing.JLabel labelEspecialidad;
     private javax.swing.JLabel labelHorario;
+    private javax.swing.JLabel labelHorarioAñadir;
     private javax.swing.JLabel labelNColegiado;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelTiempo;
+    private javax.swing.JLabel labelTiempoAñadir;
+    private javax.swing.JLabel labelTitulo;
+    private javax.swing.JLabel medicoABorrar;
     private javax.swing.JLabel nombreOK;
-    private javax.swing.JTextField textNColegiado;
+    private javax.swing.JTable tablaInfo;
+    private javax.swing.JTextField textFieldBuscar;
     private javax.swing.JLabel todoCorrecto;
     // End of variables declaration//GEN-END:variables
 }

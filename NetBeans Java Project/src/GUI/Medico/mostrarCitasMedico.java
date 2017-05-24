@@ -7,6 +7,7 @@ import clases.PdfConversor;
 import com.itextpdf.text.DocumentException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -27,7 +29,7 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Pablo
  */
-public class mostrarPacientesMedico extends javax.swing.JPanel {
+public class mostrarCitasMedico extends javax.swing.JPanel {
 
     /**
      * Creates new form mostrarPacientesMedico
@@ -37,11 +39,10 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     private DefaultTableModel tabla;
     private String[] columnas;
 
-    public mostrarPacientesMedico(Medico medico) {
+    public mostrarCitasMedico(Medico medico) {
         initComponents();
         this.medico = medico;
         mostrarDatos();
-
     }
 
     /**
@@ -58,18 +59,18 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaInfo = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        mostrar = new javax.swing.JButton();
-        buttonPDF = new javax.swing.JButton();
+        BotonMostrar = new javax.swing.JButton();
+        DescargarPdf = new javax.swing.JButton();
+
+        addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                formComponentAdded(evt);
+            }
+        });
 
         desplegableColumnas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 desplegableColumnasActionPerformed(evt);
-            }
-        });
-
-        textFieldBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                textFieldBuscarKeyTyped(evt);
             }
         });
 
@@ -81,25 +82,24 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
 
             }
         ));
-        tablaInfo.setColumnSelectionAllowed(true);
         jScrollPane2.setViewportView(tablaInfo);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Mostrar pacientes");
+        jLabel1.setText("Citas Pendientes");
 
-        mostrar.setText("Mostrar");
-        mostrar.setActionCommand("MostrarPacientesMedico");
-        mostrar.addActionListener(new java.awt.event.ActionListener() {
+        BotonMostrar.setText("Mostrar");
+        BotonMostrar.setActionCommand("MostrarPacientesMedico");
+        BotonMostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mostrarActionPerformed(evt);
+                BotonMostrarActionPerformed(evt);
             }
         });
 
-        buttonPDF.setText("Guardar en PDF");
-        buttonPDF.setActionCommand("MostrarPacientesMedico");
-        buttonPDF.addActionListener(new java.awt.event.ActionListener() {
+        DescargarPdf.setText("Guardar en PDF");
+        DescargarPdf.setActionCommand("MostrarPacientesMedico");
+        DescargarPdf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonPDFActionPerformed(evt);
+                DescargarPdfActionPerformed(evt);
             }
         });
 
@@ -108,23 +108,20 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonPDF))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(175, 175, 175)
-                        .addComponent(mostrar)))
+                        .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BotonMostrar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(DescargarPdf)
+                .addGap(0, 5, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,10 +135,10 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonPDF))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mostrar)
-                .addContainerGap(52, Short.MAX_VALUE))
+                    .addComponent(DescargarPdf))
+                .addGap(18, 18, 18)
+                .addComponent(BotonMostrar)
+                .addGap(36, 36, 36))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -149,9 +146,13 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
 
     }//GEN-LAST:event_desplegableColumnasActionPerformed
 
+    private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
+        mostrarDatos();
+    }//GEN-LAST:event_BotonMostrarActionPerformed
+
     private void mostrarDatos() {
         try {
-            ResultSet rs = medico.mostrarPacientesAsociados();
+            ResultSet rs = medico.mostrarCitasHoyMedico();
             TableAdaptor aux = new TableAdaptor(rs);
             setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
@@ -163,19 +164,25 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
             }
             desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
         } catch (SQLException ex) {
-            Logger.getLogger(mostrarPacientesMedico.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
-        mostrarDatos();
-    }//GEN-LAST:event_mostrarActionPerformed
 
-    private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBuscarKeyTyped
+    private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formComponentAdded
+
+    private void DescargarPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescargarPdfActionPerformed
+        seleccionHubicacion();
+    }//GEN-LAST:event_DescargarPdfActionPerformed
+
+    private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
         textFieldBuscar.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(final KeyEvent e) {
                 String cadena = (textFieldBuscar.getText());
+                System.out.println(cadena);
                 textFieldBuscar.setText(cadena);
                 repaint();
                 filtro();
@@ -183,11 +190,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         });
         trsFiltro = new TableRowSorter(tablaInfo.getModel());
         tablaInfo.setRowSorter(trsFiltro);
-    }//GEN-LAST:event_textFieldBuscarKeyTyped
-
-    private void buttonPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPDFActionPerformed
-        seleccionHubicacion();
-    }//GEN-LAST:event_buttonPDFActionPerformed
+    }
 
     public void filtro() {
         int colum = 0;
@@ -236,11 +239,11 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonPDF;
+    private javax.swing.JButton BotonMostrar;
+    private javax.swing.JButton DescargarPdf;
     private javax.swing.JComboBox desplegableColumnas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JButton mostrar;
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
     // End of variables declaration//GEN-END:variables

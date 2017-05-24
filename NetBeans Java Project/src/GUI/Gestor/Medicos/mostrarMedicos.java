@@ -1,5 +1,7 @@
 package GUI.Gestor.Medicos;
 
+import GUI.Gestor.AñadirPaciente;
+import GUI.Gestor.TableAdaptor;
 import clases.Gestor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -23,10 +25,13 @@ public class mostrarMedicos extends javax.swing.JPanel {
 	 */
 	private Gestor gestor;
 	private TableRowSorter trsFiltro;
+	private DefaultTableModel tabla;
+	private String[] columnas;
 
 	public mostrarMedicos(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		actualizarDatos();
 	}
 
 	/**
@@ -39,17 +44,17 @@ public class mostrarMedicos extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        labelTitulo = new javax.swing.JLabel();
         desplegableColumnas = new javax.swing.JComboBox();
         textFieldBuscar = new javax.swing.JTextField();
         mostrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaInfo = new javax.swing.JTable();
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Medicos actuales");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        labelTitulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelTitulo.setText("Medicos actuales");
+        labelTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Numero de colegiado", "Nombre", "Apellidos", "Horario", "Tiempo", "Especialidad" }));
 
@@ -77,8 +82,17 @@ public class mostrarMedicos extends javax.swing.JPanel {
             new String [] {
                 "Numero de colegiado", "Nombre", "Apellidos", "Tiempo", "Especialidad", "Horario"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaInfo.setColumnSelectionAllowed(true);
+        tablaInfo.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaInfo);
         tablaInfo.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
@@ -89,21 +103,21 @@ public class mostrarMedicos extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE)
+                    .addComponent(labelTitulo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 288, Short.MAX_VALUE)
-                        .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -136,6 +150,11 @@ public class mostrarMedicos extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+	 * Sirve para buscar en la tabla
+	 *
+	 * @param evt
+	 */
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBuscarKeyTyped
 		// TODO add your handling code here:
 		textFieldBuscar.addKeyListener(new KeyAdapter() {
@@ -151,46 +170,19 @@ public class mostrarMedicos extends javax.swing.JPanel {
     }//GEN-LAST:event_textFieldBuscarKeyTyped
 
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
-		try {
-			ResultSet rs = gestor.mostrarMedicos();
-			tablaInfo.setModel(buildTableModel(rs));
-		} catch (SQLException ex) {
-			Logger.getLogger(mostrarMedicos.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		actualizarDatos();
     }//GEN-LAST:event_mostrarActionPerformed
 
-	public void filtro() {
-		int columnaABuscar = 0;
-		if (desplegableColumnas.getSelectedItem().equals("n_colegiado")) {
-			columnaABuscar = 0;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Nombre")) {
-			columnaABuscar = 1;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Apellidos")) {
-			columnaABuscar = 2;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Horario")) {
-			columnaABuscar = 3;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Tiempo")) {
-			columnaABuscar = 4;
-		}
-		if (desplegableColumnas.getSelectedItem().equals("Especialidad")) {
-			columnaABuscar = 5;
-		}
-		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), columnaABuscar));
-	}
-
-	public DefaultTableModel buildTableModel(ResultSet rs) throws SQLException {
+	private DefaultTableModel resultSetToTableModel(ResultSet rs) throws SQLException {
 		java.sql.ResultSetMetaData metaData = rs.getMetaData();
 
 		// names of columns
 		Vector<String> columnNames = new Vector<String>();
 		int columnCount = metaData.getColumnCount();
-		for (int column = 1; column <= columnCount; column++) {
+		for (int column = 1; column <= columnCount - 1; column++) {
 			columnNames.add(metaData.getColumnName(column));
 		}
+		columnNames.add("Especialidad");
 
 		// data of the table
 		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
@@ -204,12 +196,68 @@ public class mostrarMedicos extends javax.swing.JPanel {
 		return new DefaultTableModel(data, columnNames);
 	}
 
+	/**
+	 * Carga un resulSet y lo muestra en la tabla
+	 */
+	private void actualizarDatos() {
+		try {
+			ResultSet rs = gestor.mostrarMedicos();
+			setTabla(resultSetToTableModel(rs));
+			DefaultTableModel tabla = getTabla();
+			tablaInfo.setModel(tabla);
+			cargarDesplegables();
+		} catch (SQLException ex) {
+			Logger.getLogger(AñadirPaciente.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
+	/**
+	 * Carga el desplegable de paciente a partir de la tabla
+	 */
+	private void cargarDesplegables() {
+		int numColums = tablaInfo.getColumnCount();
+		this.columnas = new String[numColums];
+		for (int i = 0; i < numColums; i++) {
+			this.columnas[i] = tablaInfo.getColumnName(i);
+		}
+		desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
+	}
+
+	/**
+	 * Filtro necesario para manejar la informacion
+	 */
+	public void filtro() {
+		int colum = 0;
+		while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
+			colum++;
+		}
+		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
+	}
+
+	/**
+	 * Getter para la tabla
+	 *
+	 * @return
+	 */
+	public DefaultTableModel getTabla() {
+		return this.tabla;
+	}
+
+	/**
+	 * Setters para la tabla
+	 *
+	 * @param tabla
+	 */
+	public void setTabla(DefaultTableModel tabla) {
+		this.tabla = tabla;
+	}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox desplegableColumnas;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelTitulo;
     private javax.swing.JButton mostrar;
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;

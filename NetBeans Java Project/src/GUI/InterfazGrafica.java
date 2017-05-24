@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -27,9 +28,15 @@ public class InterfazGrafica extends javax.swing.JFrame {
 	private Medico medico;
 	private MenuGestor menuGestor;
 	private MenuMedico menuMedico;
+	private MenuAdmin menuAdmin;
 
 	public InterfazGrafica() {
 		initComponents();
+		icono.setVisible(false);
+		this.getContentPane().setBackground(new java.awt.Color(150, 190, 230));
+		panelPrincipal.setBackground(this.getContentPane().getBackground());
+		iniciarSesion.setBackground(this.getContentPane().getBackground());
+		panelLogin.setBackground(this.getContentPane().getBackground());
 	}
 
 	/**
@@ -46,22 +53,32 @@ public class InterfazGrafica extends javax.swing.JFrame {
         panelPrincipal = new javax.swing.JPanel();
         labelUsuario = new javax.swing.JLabel();
         iniciarSesion = new javax.swing.JPanel();
-        passwordFieldPassword = new javax.swing.JPasswordField();
-        labelUser = new javax.swing.JLabel();
-        labelPassword = new javax.swing.JLabel();
+        panelLogin = new javax.swing.JPanel();
         bottonConectar = new javax.swing.JButton();
-        labelLogin = new javax.swing.JLabel();
+        passwordFieldPassword = new javax.swing.JPasswordField();
+        labelPassword = new javax.swing.JLabel();
+        labelUser = new javax.swing.JLabel();
         textFieldUser = new javax.swing.JTextField();
+        labelLogin = new javax.swing.JLabel();
+        imagen = new javax.swing.JLabel();
+        icono = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(221, 215, 255));
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(new java.awt.Color(0, 0, 0));
 
-        labelTitulo.setFont(new java.awt.Font("Calibri", 3, 36)); // NOI18N
+        labelTitulo.setFont(new java.awt.Font("Cambria", 3, 54)); // NOI18N
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("Clinica Universitaria UPM");
         labelTitulo.setToolTipText("");
         labelTitulo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         labelTitulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        labelTitulo.setMaximumSize(new java.awt.Dimension(556, 100));
+        labelTitulo.setMinimumSize(new java.awt.Dimension(556, 60));
         labelTitulo.setName(""); // NOI18N
+        labelTitulo.setPreferredSize(new java.awt.Dimension(556, 70));
 
         bottonDesconectar.setText("Desconectar");
         bottonDesconectar.setEnabled(false);
@@ -75,7 +92,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 777, Short.MAX_VALUE)
+            .addGap(0, 88, Short.MAX_VALUE)
         );
         panelPrincipalLayout.setVerticalGroup(
             panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,20 +100,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
         );
 
         labelUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelUsuario.setText("Sin usuario");
-        labelUsuario.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        passwordFieldPassword.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                passwordFieldPasswordKeyPressed(evt);
-            }
-        });
-
-        labelUser.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelUser.setText("Usuario");
-
-        labelPassword.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        labelPassword.setText("Contraseña");
+        iniciarSesion.setForeground(new java.awt.Color(242, 236, 190));
 
         bottonConectar.setText("Conectar");
         bottonConectar.addActionListener(new java.awt.event.ActionListener() {
@@ -110,8 +117,17 @@ public class InterfazGrafica extends javax.swing.JFrame {
             }
         });
 
-        labelLogin.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        labelLogin.setText("Iniciar Sesion");
+        passwordFieldPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldPasswordKeyPressed(evt);
+            }
+        });
+
+        labelPassword.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelPassword.setText("Contraseña");
+
+        labelUser.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelUser.setText("Usuario");
 
         textFieldUser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -119,44 +135,81 @@ public class InterfazGrafica extends javax.swing.JFrame {
             }
         });
 
+        labelLogin.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        labelLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelLogin.setText("Iniciar Sesión");
+        labelLogin.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+
+        javax.swing.GroupLayout panelLoginLayout = new javax.swing.GroupLayout(panelLogin);
+        panelLogin.setLayout(panelLoginLayout);
+        panelLoginLayout.setHorizontalGroup(
+            panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLoginLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelLoginLayout.createSequentialGroup()
+                    .addGap(23, 23, 23)
+                    .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelLoginLayout.createSequentialGroup()
+                            .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(labelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(44, 44, 44)
+                            .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(passwordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(textFieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelLoginLayout.createSequentialGroup()
+                            .addGap(67, 67, 67)
+                            .addComponent(bottonConectar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(79, Short.MAX_VALUE)))
+        );
+        panelLoginLayout.setVerticalGroup(
+            panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLoginLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelLoginLayout.createSequentialGroup()
+                    .addGap(125, 125, 125)
+                    .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelUser, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                        .addComponent(textFieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(38, 38, 38)
+                    .addGroup(panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passwordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addComponent(bottonConectar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(40, 40, 40)))
+        );
+
+        imagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_redimensionado.png"))); // NOI18N
+
         javax.swing.GroupLayout iniciarSesionLayout = new javax.swing.GroupLayout(iniciarSesion);
         iniciarSesion.setLayout(iniciarSesionLayout);
         iniciarSesionLayout.setHorizontalGroup(
             iniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(iniciarSesionLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(iniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(iniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bottonConectar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(iniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(textFieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(passwordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(34, 34, 34))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, iniciarSesionLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                .addContainerGap()
+                .addComponent(imagen)
+                .addGap(18, 18, 18)
+                .addComponent(panelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(388, Short.MAX_VALUE))
         );
         iniciarSesionLayout.setVerticalGroup(
             iniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(iniciarSesionLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(labelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
-                .addGroup(iniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(textFieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addGroup(iniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordFieldPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addComponent(bottonConectar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addContainerGap()
+                .addGroup(iniciarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(imagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        icono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_pequeño.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,11 +219,14 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(icono)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(bottonDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(bottonDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
@@ -179,13 +235,19 @@ public class InterfazGrafica extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bottonDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(icono)
+                            .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bottonDesconectar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(iniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -201,7 +263,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 	private void crearMenuGestor() {
 		this.gestor = new Gestor(con);
 		this.menuGestor = new MenuGestor(gestor);
-		
+
 		panelPrincipal.setSize(panelPrincipal.getWidth() + iniciarSesion.getWidth(), panelPrincipal.getHeight());
 		menuGestor.setSize(panelPrincipal.getWidth(), panelPrincipal.getHeight());
 		menuGestor.setLocation(0, 0);
@@ -220,7 +282,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 	private void crearMenuMedico() throws SQLException {
 		this.medico = new Medico(Integer.parseInt(con.getUser()), con);
 		this.menuMedico = new MenuMedico(medico);
-		
+
 		panelPrincipal.setSize(panelPrincipal.getWidth() + iniciarSesion.getWidth(), panelPrincipal.getHeight());
 		menuMedico.setSize(panelPrincipal.getWidth(), panelPrincipal.getHeight());
 		menuMedico.setLocation(0, 0);
@@ -228,6 +290,23 @@ public class InterfazGrafica extends javax.swing.JFrame {
 		panelPrincipal.removeAll();
 		iniciarSesion.setVisible(false);
 		panelPrincipal.add(menuMedico, BorderLayout.WEST);
+		panelPrincipal.revalidate();
+		panelPrincipal.repaint();
+		bottonDesconectar.setEnabled(true);
+	}
+
+	/**
+	 * Añade al panel principal un objeto menuAdmin
+	 */
+	private void crearMenuAdmin() {
+		this.menuAdmin = new MenuAdmin(con);
+		panelPrincipal.setSize(panelPrincipal.getWidth() + iniciarSesion.getWidth(), panelPrincipal.getHeight());
+		menuAdmin.setSize(panelPrincipal.getWidth(), panelPrincipal.getHeight());
+		menuAdmin.setLocation(0, 0);
+
+		panelPrincipal.removeAll();
+		iniciarSesion.setVisible(false);
+		panelPrincipal.add(menuAdmin, BorderLayout.WEST);
 		panelPrincipal.revalidate();
 		panelPrincipal.repaint();
 		bottonDesconectar.setEnabled(true);
@@ -253,8 +332,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private void bottonDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottonDesconectarActionPerformed
 		try {
 			con.desconectar();
+			JOptionPane.showMessageDialog(this, "Desconexión correcta", "Estado desconexion", JOptionPane.CLOSED_OPTION);
 		} catch (SQLException ex) {
-			Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(this, "No se ha podido desconectar correctamente", "SQL EXCEPTION", JOptionPane.ERROR_MESSAGE);
 		}
 
 		panelPrincipal.removeAll();
@@ -267,6 +347,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 		textFieldUser.setText(null);
 		passwordFieldPassword.setText("");
 		passwordFieldPassword.resetKeyboardActions();
+		icono.setVisible(false);
 		bottonDesconectar.setEnabled(false);
     }//GEN-LAST:event_bottonDesconectarActionPerformed
 
@@ -305,24 +386,63 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
 	/**
 	 * Inicia el programa. Crea la conexion con los parametros recogidos del
-	 * formulario. Si el usuario es root, crea la base de datos con los
-	 * parametros y valores por defecto Si es gestor, inicia el menu de gestor
-	 * Si es un medico, inicia el menu de medico
+	 * formulario. Si el usuario es root y no hay base de datos, crea la base de
+	 * datos con los parametros y valores por defecto y entra al programa como
+	 * root. Si la base de datos ya existe, se conecta al menu de root. Si es
+	 * gestor, inicia el menu de gestor Si es un medico, inicia el menu de
+	 * medico
 	 */
 	private void iniciarPrograma() {
 		try {
-			con = new Conexion(textFieldUser.getText(), passwordFieldPassword.getPassword());
+			try {
+				con = new Conexion(textFieldUser.getText(), passwordFieldPassword.getPassword());
 
-			if (con.esValida() && con.getUser().equals("Gestor")) {
-				crearMenuGestor();
-				labelUsuario.setText(con.getUser());
-			} else if (con.esValida() && con.existeMedico(con.getUser())) {
-				crearMenuMedico();
-				labelUsuario.setText(medico.getNombre() + ", " + medico.getN_colegiado());
+				try {
+					// Los SOUT habra que borrarlos
+					System.out.println("Supuestamente no ha habido errores de conexion");
+					if (con.getUser().equals("root") || con.existeUser(textFieldUser.getText())) {
+						System.out.println("Supuestamente existe el usuario");
+						if (con.esValida()) {
+							System.out.println("Supuestamente me he conectado bien");
+							if (con.getUser().equals("root")) {
+								if (con.existeBD()) {
+									crearMenuAdmin();
+									labelUsuario.setText("Administrador");
+									icono.setVisible(true);
+								} else {
+									con.crearBD();
+									crearMenuGestor();
+									icono.setVisible(true);
+									labelUsuario.setText(con.getUser());
+								}
+							} else if (con.existeBD()) {
+								if (con.esValida() && con.getUser().equals("Gestor")) {
+									crearMenuGestor();
+									icono.setVisible(true);
+									labelUsuario.setText(con.getUser());
+								} else if (con.esValida() && con.existeMedico(con.getUser())) {
+									crearMenuMedico();
+									icono.setVisible(true);
+									labelUsuario.setText(medico.getNombre() + ", " + medico.getN_colegiado());
+								}
+							} else {
+								JOptionPane.showMessageDialog(this, "No existe la base de datos centromedico \n\nInicie sesion como administrador (root) y crea una nueva", "Error", JOptionPane.ERROR_MESSAGE);
+							}
+						} else {
+							JOptionPane.showMessageDialog(this, "Contraseña incorrecta\nVuelva a intentarlo", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+					} else {
+						JOptionPane.showMessageDialog(this, "Usuario incorrecto\nVuelva a intentarlo", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (SQLException ex) {
+					System.out.println("Excepcion despues de con" + ex);
+				}
+			} catch (ClassNotFoundException ex) {
+				JOptionPane.showMessageDialog(this, "Ha ocurrido algun error\n" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+				Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
 			}
-
-		} catch (SQLException ex) {
-			Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (SQLException exSQL) {
+			JOptionPane.showMessageDialog(this, "Error al conectarse\nUsuario o contraseña incorrectos\n" + exSQL, "ACCESO DENEGADO", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -364,12 +484,15 @@ public class InterfazGrafica extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bottonConectar;
     private javax.swing.JButton bottonDesconectar;
+    private javax.swing.JLabel icono;
+    private javax.swing.JLabel imagen;
     private javax.swing.JPanel iniciarSesion;
     private javax.swing.JLabel labelLogin;
     private javax.swing.JLabel labelPassword;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel labelUser;
     private javax.swing.JLabel labelUsuario;
+    private javax.swing.JPanel panelLogin;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPasswordField passwordFieldPassword;
     private javax.swing.JTextField textFieldUser;
