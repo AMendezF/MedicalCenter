@@ -138,6 +138,12 @@ public class modificarPaciente extends javax.swing.JPanel {
             }
         });
 
+        fieldDireccion.setText(null);
+        fieldDireccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldDireccionActionPerformed(evt);
+            }
+        });
         fieldDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 fieldDireccionKeyReleased(evt);
@@ -474,6 +480,10 @@ public class modificarPaciente extends javax.swing.JPanel {
 			}
 		}
     }//GEN-LAST:event_fieldDireccionKeyReleased
+
+    private void fieldDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldDireccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldDireccionActionPerformed
 
 	/**
 	 * Habitila o desabilita el boton en funcion de los valores cambiados
