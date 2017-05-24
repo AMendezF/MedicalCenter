@@ -683,11 +683,13 @@ public class Gestor {
 		for (String[] tuplas : paciente) {
 			sql += tuplas[0] + "='" + tuplas[1] + "', ";
 		}
-		sql.substring(0, sql.length() - 2);
-		sql += "WHERE DNI='" + DNI + "'";
+		sql = sql.substring(0, sql.length() - 2);
+		sql += "WHERE DNI='" + DNI + "';";
+		System.out.println(sql);
 		try {
 			conexion.makeUpdate(sql);
 		} catch (SQLException e) {
+			System.out.println(e);
 			updated = false;
 		}
 
