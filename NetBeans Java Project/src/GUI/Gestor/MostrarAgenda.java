@@ -67,6 +67,11 @@ public class MostrarAgenda extends javax.swing.JPanel {
         labelTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         buttonExportar.setText("Exportar a PDF");
+        buttonExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonExportarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,6 +137,10 @@ public class MostrarAgenda extends javax.swing.JPanel {
 			Logger.getLogger(MostrarAgenda.class.getName()).log(Level.SEVERE, null, ex);
 		}
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void buttonExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExportarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonExportarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaDatos;

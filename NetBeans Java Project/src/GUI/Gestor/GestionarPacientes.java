@@ -320,7 +320,7 @@ public class GestionarPacientes extends javax.swing.JPanel {
 	private void crearMenu() {
 		mostrarDatos.setSize(mostrarDatos.getWidth() + menuOpciones.getWidth(), mostrarDatos.getHeight());
 
-		menuDePaciente = new MenuDePaciente(gestor, paciente, "citapedida");
+		menuDePaciente = new MenuDePaciente(gestor, paciente);
 		menuDePaciente.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		menuDePaciente.setLocation(0, 0);
 		
