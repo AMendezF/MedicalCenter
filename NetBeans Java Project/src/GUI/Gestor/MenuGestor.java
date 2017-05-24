@@ -35,7 +35,6 @@ public class MenuGestor extends javax.swing.JPanel {
 		this.gestor = gestor;
 		this.añadirPaciente = new AñadirPaciente(gestor);
 		this.borrarPaciente = new BorrarPaciente(gestor);
-
 		this.menuDeMedico = new MenuDeMedico(gestor);
 		this.mostrarSalas = new MostrarAgenda(gestor);
 	}
@@ -60,21 +59,18 @@ public class MenuGestor extends javax.swing.JPanel {
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        mostrarDatos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 255), 1, true));
         mostrarDatos.setForeground(new java.awt.Color(204, 204, 255));
 
         javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);
         mostrarDatos.setLayout(mostrarDatosLayout);
         mostrarDatosLayout.setHorizontalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1388, Short.MAX_VALUE)
+            .addGap(0, 1390, Short.MAX_VALUE)
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+            .addGap(0, 424, Short.MAX_VALUE)
         );
-
-        menuOpciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
 
         buttonAñadirPaciente.setText("Añadir nuevo paciente");
         buttonAñadirPaciente.addActionListener(new java.awt.event.ActionListener() {
@@ -275,11 +271,13 @@ public class MenuGestor extends javax.swing.JPanel {
 		try {
 			String dni = JOptionPane.showInputDialog(this, "DNI del paciente", "Introduzca un dni", JOptionPane.QUESTION_MESSAGE);
 			System.out.println(dni);
-			if (!gestor.existePacienteBD(dni)) {
-				JOptionPane.showMessageDialog(this, "No existe el paciente, añada un nuevo", "Cuidado!", JOptionPane.WARNING_MESSAGE);
-				añadirPacientePanel();
-			} else {
-				añadirPedirCitaPanel(dni);
+			if (dni != null) {
+				if (!gestor.existePacienteBD(dni)) {
+					JOptionPane.showMessageDialog(this, "No existe el paciente, añada un nuevo", "Cuidado!", JOptionPane.WARNING_MESSAGE);
+					añadirPacientePanel();
+				} else {
+					añadirPedirCitaPanel(dni);
+				}
 			}
 		} catch (SQLException ex) {
 			Logger.getLogger(MenuGestor.class.getName()).log(Level.SEVERE, null, ex);
@@ -291,11 +289,12 @@ public class MenuGestor extends javax.swing.JPanel {
 	 * Ingresa un paciente a su menu y Añade un panel de pedir cita
 	 */
 	private void añadirPedirCitaPanel(String dni) {
+		mostrarDatos.removeAll();
+				
 		gestionarPacientes = new GestionarPacientes(gestor, dni);
 		gestionarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
 		gestionarPacientes.setLocation(0, 0);
 
-		mostrarDatos.removeAll();
 		mostrarDatos.add(gestionarPacientes, BorderLayout.WEST);
 		mostrarDatos.revalidate();
 		mostrarDatos.repaint();
