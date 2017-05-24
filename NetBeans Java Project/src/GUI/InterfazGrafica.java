@@ -33,7 +33,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 	public InterfazGrafica() {
 		initComponents();
 		icono.setVisible(false);
-		this.getContentPane().setBackground(new java.awt.Color(225, 215, 255));
+		this.getContentPane().setBackground(new java.awt.Color(153, 189, 233));
 		panelPrincipal.setBackground(this.getContentPane().getBackground());
 		iniciarSesion.setBackground(this.getContentPane().getBackground());
 		panelLogin.setBackground(this.getContentPane().getBackground());
@@ -332,8 +332,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private void bottonDesconectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bottonDesconectarActionPerformed
 		try {
 			con.desconectar();
+			JOptionPane.showMessageDialog(this, "Desconexión correcta", "Estado desconexion", JOptionPane.CLOSED_OPTION);
 		} catch (SQLException ex) {
-			Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
+			JOptionPane.showMessageDialog(this, "No se ha podido desconectar correctamente", "SQL EXCEPTION", JOptionPane.ERROR_MESSAGE);
 		}
 
 		panelPrincipal.removeAll();
@@ -385,48 +386,64 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
 	/**
 	 * Inicia el programa. Crea la conexion con los parametros recogidos del
-	 * formulario. Si el usuario es root, crea la base de datos con los
-	 * parametros y valores por defecto Si es gestor, inicia el menu de gestor
-	 * Si es un medico, inicia el menu de medico
+	 * formulario. Si el usuario es root y no hay base de datos, crea la base de
+	 * datos con los parametros y valores por defecto y entra al programa como
+	 * root. Si la base de datos ya existe, se conecta al menu de root. Si es
+	 * gestor, inicia el menu de gestor Si es un medico, inicia el menu de
+	 * medico
 	 */
 	private void iniciarPrograma() {
 		try {
 			try {
 				con = new Conexion(textFieldUser.getText(), passwordFieldPassword.getPassword());
+
+				try {
+					// Los SOUT habra que borrarlos
+					System.out.println("Supuestamente no ha habido errores de conexion");
+					if (con.getUser().equals("root") || con.existeUser(textFieldUser.getText())) {
+						System.out.println("Supuestamente existe el usuario");
+						if (con.esValida()) {
+							System.out.println("Supuestamente me he conectado bien");
+							if (con.getUser().equals("root")) {
+								if (con.existeBD()) {
+									crearMenuAdmin();
+									labelUsuario.setText("Administrador");
+									icono.setVisible(true);
+								} else {
+									con.crearBD();
+									crearMenuGestor();
+									icono.setVisible(true);
+									labelUsuario.setText(con.getUser());
+								}
+							} else if (con.existeBD()) {
+								if (con.esValida() && con.getUser().equals("Gestor")) {
+									crearMenuGestor();
+									icono.setVisible(true);
+									labelUsuario.setText(con.getUser());
+								} else if (con.esValida() && con.existeMedico(con.getUser())) {
+									crearMenuMedico();
+									icono.setVisible(true);
+									labelUsuario.setText(medico.getNombre() + ", " + medico.getN_colegiado());
+								}
+							} else {
+								JOptionPane.showMessageDialog(this, "No existe la base de datos centromedico \n\nInicie sesion como administrador (root) y crea una nueva", "Error", JOptionPane.ERROR_MESSAGE);
+							}
+						} else {
+							JOptionPane.showMessageDialog(this, "Contraseña incorrecta\nVuelva a intentarlo", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+					} else {
+						JOptionPane.showMessageDialog(this, "Usuario incorrecto\nVuelva a intentarlo", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (SQLException ex) {
+					System.out.println("Excepcion despues de con" + ex);
+				}
 			} catch (ClassNotFoundException ex) {
-				JOptionPane.showMessageDialog(this, "Ha ocurrido algun error, " + ex, "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Ha ocurrido algun error\n" + ex, "Error", JOptionPane.ERROR_MESSAGE);
 				Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		} catch (SQLException exSQL) {
-			JOptionPane.showMessageDialog(this, "Error al conectarse\nPruebe cambiando de contraseña\n" + exSQL, "SQL EXCEPTION", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error al conectarse\nUsuario o contraseña incorrectos\n" + exSQL, "ACCESO DENEGADO", JOptionPane.ERROR_MESSAGE);
 		}
-
-		try {
-			if (con.getUser().equals("root") || con.existeMedico(con.getUser()) || con.existeUser(textFieldUser.getText())) {
-				if (con.esValida() && con.getUser().equals("root")) {
-					crearMenuAdmin();
-					labelUsuario.setText("Administrador");
-					icono.setVisible(true);
-				} else if (con.existeBD()) {
-					if (con.esValida() && con.getUser().equals("Gestor")) {
-						crearMenuGestor();
-						icono.setVisible(true);
-						labelUsuario.setText(con.getUser());
-					} else if (con.esValida() && con.existeMedico(con.getUser())) {
-						crearMenuMedico();
-						icono.setVisible(true);
-						labelUsuario.setText(medico.getNombre() + ", " + medico.getN_colegiado());
-					}
-				} else {
-					JOptionPane.showMessageDialog(this, "No existe la base de datos centromedico \nInicie sesion como root y crea una nueva", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			} else {
-				JOptionPane.showMessageDialog(this, "Usuario incorrecto\nVuelva a intentarlo", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-		} catch (SQLException ex) {
-			JOptionPane.showMessageDialog(this, "Usuario incorrecto\nVuelva a intentarlo\n" + ex, "Error", JOptionPane.ERROR_MESSAGE);
-		}
-
 	}
 
 	/**
