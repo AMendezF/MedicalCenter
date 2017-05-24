@@ -37,6 +37,7 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     private String[] columnas;
     private int controlTablas = 1;
     private ModificarFichaSeleccionada modificador;
+    private String nombrePaciente;
 
     public ModificarFichaPaciente(Medico medico) {
         initComponents();
@@ -245,14 +246,15 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
         int col = tablaInfo.columnAtPoint(evt.getPoint());
         if (row >= 0 && col >= 0) {
             if (controlTablas == 1) {
-                campoNombre.setText((String) tablaInfo.getValueAt(row, 3) + ", "
-                        + (String) tablaInfo.getValueAt(row, 2));
+                this.nombrePaciente = (String) tablaInfo.getValueAt(row, 3) + ", "
+                        + (String) tablaInfo.getValueAt(row, 2);
+                campoNombre.setText(nombrePaciente);
                 codHistoria = (int) tablaInfo.getValueAt(row, 0);
                 BotonModificarHisto.setEnabled(true);
             } else if (controlTablas == 2) {
                 String codFicha = (String) tablaInfo.getValueAt(row, 1);
-                String hora = tablaInfo.getValueAt(row, 3).toString();
-                String dia = (String) tablaInfo.getValueAt(row, 4).toString();
+                String hora = tablaInfo.getValueAt(row, 4).toString();
+                String dia = (String) tablaInfo.getValueAt(row, 3).toString();
                 String comentario = (String) tablaInfo.getValueAt(row, 2);
 
                 createModificarFicha(codFicha, hora, dia, comentario);
@@ -294,7 +296,7 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
     }
 
     private void createModificarFicha(String codFicha, String hora, String dia, String comentario) {
-        this.modificador = new ModificarFichaSeleccionada(this.medico, codFicha, hora, dia, comentario);
+        this.modificador = new ModificarFichaSeleccionada(this.medico, this.nombrePaciente, codFicha, hora, dia, comentario);
         this.modificador.setSize(800, 800);
         this.modificador.setLocation(2, 5);
 

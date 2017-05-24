@@ -30,12 +30,16 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="DiaHora" min="-2" pref="61" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="campoDiaHora" pref="148" max="32767" attributes="0"/>
+                      <Component id="campoDiaHora" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="241" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" min="-2" pref="339" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jScrollPane2" min="-2" pref="339" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="fichaPDF" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labelComentario" min="-2" pref="86" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -74,7 +78,10 @@
                   <Component id="jLabel1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-              <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
+                  <Component id="fichaPDF" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -182,13 +189,20 @@
     <Component class="javax.swing.JButton" name="Guardar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar"/>
-        <Property name="actionCommand" type="java.lang.String" value="Guardar"/>
         <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="false" type="code"/>
         </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GuardarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="fichaPDF">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Guardar Ficha en PDF"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fichaPDFActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -1,5 +1,6 @@
 package GUI.Medico;
 
+import clases.Selector;
 import GUI.Gestor.TableAdaptor;
 import clases.Medico;
 import clases.PdfConversor;
@@ -12,8 +13,10 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -92,7 +95,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
             }
         });
 
-        DescargarPdf.setText("PDF");
+        DescargarPdf.setText("Guardar en PDF");
         DescargarPdf.setActionCommand("MostrarPacientesMedico");
         DescargarPdf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,7 +121,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(DescargarPdf)
-                .addGap(0, 63, Short.MAX_VALUE))
+                .addGap(0, 5, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,15 +173,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
     }//GEN-LAST:event_formComponentAdded
 
     private void DescargarPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescargarPdfActionPerformed
-        try {
-            PdfConversor conversor = new PdfConversor(tablaInfo, "Citas de " + medico.getDia());
-            conversor.getPdf();JOptionPane.showMessageDialog(this, "¡Se ha generado tu hoja PDF!",
-                "RESULTADO", JOptionPane.INFORMATION_MESSAGE);
-        } catch (DocumentException ex) {
-            Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Se ha producido un error al generar un documento: " + ex,
-                "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        seleccionHubicacion();
     }//GEN-LAST:event_DescargarPdfActionPerformed
 
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {
@@ -211,6 +206,36 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
 
     public void setTabla(DefaultTableModel tabla) {
         this.tabla = tabla;
+    }
+
+    private void seleccionHubicacion() {
+        Selector explorador = new Selector();
+        int seleccion = explorador.opcionMarcada();
+
+        switch (seleccion) {
+            case JFileChooser.APPROVE_OPTION:
+                guardarPdf(explorador.retornarDirectorioElegido());
+                break;
+
+            case JFileChooser.CANCEL_OPTION:
+                break;
+
+            case JFileChooser.ERROR_OPTION:
+                break;
+        }
+    }
+
+    private void guardarPdf(String directorio) {
+        try {
+            PdfConversor conversor = new PdfConversor(tablaInfo, "Listado Pacientes ", medico.getN_colegiado(), directorio);
+            conversor.getPdfTablas();
+            JOptionPane.showMessageDialog(this, "¡Se ha generado tu hoja PDF!",
+                    "RESULTADO", JOptionPane.INFORMATION_MESSAGE);
+        } catch (DocumentException ex) {
+            Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Se ha producido un error al generar un documento: " + ex,
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

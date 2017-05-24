@@ -1,5 +1,6 @@
 package GUI.Medico;
 
+import clases.Selector;
 import GUI.Gestor.TableAdaptor;
 import clases.Medico;
 import clases.PdfConversor;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -39,8 +41,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
         initComponents();
         this.medico = medico;
         mostrarDatos();
-        
-        
+
     }
 
     /**
@@ -94,7 +95,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
             }
         });
 
-        buttonPDF.setText("PDF");
+        buttonPDF.setText("Guardar en PDF");
         buttonPDF.setActionCommand("MostrarPacientesMedico");
         buttonPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,7 +124,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(175, 175, 175)
                         .addComponent(mostrar)))
-                .addContainerGap(291, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,7 +141,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
                     .addComponent(buttonPDF))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mostrar)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -148,7 +149,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
 
     }//GEN-LAST:event_desplegableColumnasActionPerformed
 
-    private void mostrarDatos(){
+    private void mostrarDatos() {
         try {
             ResultSet rs = medico.mostrarPacientesAsociados();
             TableAdaptor aux = new TableAdaptor(rs);
@@ -157,7 +158,7 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
             tablaInfo.setModel(tabla);
             int numColums = tabla.getColumnCount();
             this.columnas = new String[numColums];
-            for (int i = 0 ; i < numColums ; i++){
+            for (int i = 0; i < numColums; i++) {
                 this.columnas[i] = tabla.getColumnName(i);
             }
             desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(this.columnas));
@@ -185,32 +186,53 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     }//GEN-LAST:event_textFieldBuscarKeyTyped
 
     private void buttonPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPDFActionPerformed
-        try {
-            PdfConversor conversor = new PdfConversor(tablaInfo, "Paciente de colegiado " + medico.getN_colegiado() +"  " + medico.getDia());
-            conversor.getPdf();
-            JOptionPane.showMessageDialog(this, "¡Se ha generado tu hoja PDF!",
-                "RESULTADO", JOptionPane.INFORMATION_MESSAGE);
-        } catch (DocumentException ex) {
-            Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Se ha producido un error al generar un documento: " + ex,
-                "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        seleccionHubicacion();
     }//GEN-LAST:event_buttonPDFActionPerformed
 
     public void filtro() {
         int colum = 0;
-        while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])){
-            colum++;       
+        while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
+            colum++;
         }
         trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));
     }
-    
+
     public DefaultTableModel getTabla() {
         return this.tabla;
     }
 
     public void setTabla(DefaultTableModel tabla) {
         this.tabla = tabla;
+    }
+
+    private void seleccionHubicacion() {
+        Selector explorador = new Selector();
+        int seleccion = explorador.opcionMarcada();
+
+        switch (seleccion) {
+            case JFileChooser.APPROVE_OPTION:
+                guardarPdf(explorador.retornarDirectorioElegido());
+                break;
+
+            case JFileChooser.CANCEL_OPTION:
+                break;
+
+            case JFileChooser.ERROR_OPTION:
+                break;
+        }
+    }
+
+    private void guardarPdf(String directorio) {
+        try {
+            PdfConversor conversor = new PdfConversor(tablaInfo, "Listado Pacientes ", medico.getN_colegiado(), directorio);
+            conversor.getPdfTablas();
+            JOptionPane.showMessageDialog(this, "¡Se ha generado tu hoja PDF!",
+                    "RESULTADO", JOptionPane.INFORMATION_MESSAGE);
+        } catch (DocumentException ex) {
+            Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Se ha producido un error al generar un documento: " + ex,
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -222,4 +244,5 @@ public class mostrarPacientesMedico extends javax.swing.JPanel {
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
     // End of variables declaration//GEN-END:variables
+
 }

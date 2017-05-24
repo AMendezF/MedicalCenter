@@ -131,7 +131,7 @@ public class MenuMedico extends javax.swing.JPanel {
         mostrarDatos.setLayout(mostrarDatosLayout);
         mostrarDatosLayout.setHorizontalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 329, Short.MAX_VALUE)
+            .addGap(0, 557, Short.MAX_VALUE)
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

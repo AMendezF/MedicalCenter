@@ -2,6 +2,9 @@ package GUI.Medico;
 
 import GUI.Gestor.TableAdaptor;
 import clases.Medico;
+import clases.PdfConversor;
+import clases.Selector;
+import com.itextpdf.text.DocumentException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -10,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -34,13 +38,15 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
     private String hora;
     private String dia;
     private String comentario;
+    private String nombre = null;
 
-    public ModificarFichaSeleccionada(Medico medico, String codFicha, String hora, String dia, String comentario) {
+    public ModificarFichaSeleccionada(Medico medico, String nombre, String codFicha, String hora, String dia, String comentario) {
         this.medico = medico;
         this.codFicha = codFicha;
         this.hora = hora;
         this.dia = dia;
         this.comentario = comentario;
+        this.nombre = nombre;
 
         initComponents();
         initVentana();
@@ -66,6 +72,7 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
         jTextAreaComentario1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         Guardar = new javax.swing.JButton();
+        fichaPDF = new javax.swing.JButton();
 
         addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
@@ -108,11 +115,17 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
         jLabel1.setText("(?)");
 
         Guardar.setText("Guardar");
-        Guardar.setActionCommand("Guardar");
         Guardar.setEnabled(false);
         Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GuardarActionPerformed(evt);
+            }
+        });
+
+        fichaPDF.setText("Guardar Ficha en PDF");
+        fichaPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fichaPDFActionPerformed(evt);
             }
         });
 
@@ -130,11 +143,14 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(DiaHora, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(campoDiaHora, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                        .addComponent(campoDiaHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(241, 241, 241))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fichaPDF))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(labelComentario, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -162,7 +178,9 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
                     .addComponent(labelComentario, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(11, 11, 11)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fichaPDF))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -196,6 +214,10 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
     private void jTextAreaComentarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaComentarioKeyTyped
         Guardar.setEnabled(true);
     }//GEN-LAST:event_jTextAreaComentarioKeyTyped
+
+    private void fichaPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fichaPDFActionPerformed
+        seleccionHubicacion();
+    }//GEN-LAST:event_fichaPDFActionPerformed
     private void initVentana() {
         campoDiaHora.setText(dia + "  " + hora);
         campoCodFicha.setText(codFicha);
@@ -219,12 +241,42 @@ public class ModificarFichaSeleccionada extends javax.swing.JPanel {
         return JOptionPane.showOptionDialog(this, "Se van a guardar los cambios, ¿Desea confirmar la operación?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
     }
 
+    private void seleccionHubicacion() {
+        Selector explorador = new Selector();
+        int seleccion = explorador.opcionMarcada();
+
+        switch (seleccion) {
+            case JFileChooser.APPROVE_OPTION:
+                guardarPdf(explorador.retornarDirectorioElegido());
+                break;
+
+            case JFileChooser.CANCEL_OPTION:
+                break;
+
+            case JFileChooser.ERROR_OPTION:
+                break;
+        }
+    }
+
+    private void guardarPdf(String directorio) {
+        try {
+            PdfConversor conversor = new PdfConversor(codFicha, nombre, hora, dia, comentario, medico.getN_colegiado(), directorio);
+            conversor.getPdfFicha();
+            JOptionPane.showMessageDialog(this, "¡Se ha generado tu hoja PDF!",
+                    "RESULTADO", JOptionPane.INFORMATION_MESSAGE);
+        } catch (DocumentException ex) {
+            Logger.getLogger(mostrarCitasMedico.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Se ha producido un error al generar un documento: " + ex,
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DiaHora;
     private javax.swing.JButton Guardar;
     private javax.swing.JLabel campoCodFicha;
     private javax.swing.JLabel campoDiaHora;
+    private javax.swing.JButton fichaPDF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
