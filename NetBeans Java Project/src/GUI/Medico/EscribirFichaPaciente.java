@@ -33,6 +33,9 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
     public EscribirFichaPaciente(Medico medico) {
         initComponents();
         this.medico = medico;
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		formulario.setBackground(this.getBackground());
+		mostrarDatos.setBackground(this.getBackground());
         mostrarDatos();
     }
 

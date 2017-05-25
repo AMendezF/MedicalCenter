@@ -39,7 +39,7 @@ public class PedirCita extends javax.swing.JPanel {
 	public PedirCita(Gestor gestor, Paciente paciente) {
 		initComponents();
 		this.setBackground(new java.awt.Color(150, 190, 230));
-		mostrarDatos.setBackground(new java.awt.Color(150, 190, 230));
+		mostrarDatos.setBackground(this.getBackground());
 		labelTitulo.setText(labelTitulo.getText() + ":  " + paciente.getNombre() + " " + paciente.getApellidos());
 		this.gestor = gestor;
 		this.paciente = paciente;

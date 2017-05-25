@@ -25,6 +25,9 @@ public class MenuDeMedico extends javax.swing.JPanel {
 	public MenuDeMedico(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		menuOpciones.setBackground(this.getBackground());
+		mostrarDatos.setBackground(this.getBackground());
 		this.mostrarMedicos = new mostrarMedicos(gestor);
 		this.añadirMedico = new añadirMedico(gestor);
 		this.borrarMedico = new borrarMedico(gestor);
@@ -46,7 +49,7 @@ public class MenuDeMedico extends javax.swing.JPanel {
         buttonBorrarMedico = new javax.swing.JButton();
         mostrarDatos = new javax.swing.JPanel();
 
-        labelMenuDelMedico.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        labelMenuDelMedico.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         labelMenuDelMedico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelMenuDelMedico.setText("Menu del medico");
 
@@ -81,9 +84,9 @@ public class MenuDeMedico extends javax.swing.JPanel {
                     .addComponent(labelMenuDelMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(menuOpcionesLayout.createSequentialGroup()
                         .addGroup(menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(buttonMostrarMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(buttonBorrarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(buttonMostrarMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonBorrarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -91,14 +94,14 @@ public class MenuDeMedico extends javax.swing.JPanel {
             menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuOpcionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelMenuDelMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelMenuDelMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonMostrarMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonBorrarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);

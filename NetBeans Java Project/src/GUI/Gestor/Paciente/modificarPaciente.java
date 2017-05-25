@@ -31,6 +31,8 @@ public class modificarPaciente extends javax.swing.JPanel {
 		initComponents();
 		this.gestor = gestor;
 		this.paciente = paciente;
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		mostrarDatos.setBackground(this.getBackground());
 		fieldNombre.setDocument(new JTextFieldLimit(50));
 		fieldApellidos.setDocument(new JTextFieldLimit(50));
 		fieldSeguro.setDocument(new JTextFieldLimit(50));
@@ -261,14 +263,14 @@ public class modificarPaciente extends javax.swing.JPanel {
 	private void mostrarValores() {
 		labelDNI.setText(paciente.getDNI());
 		/*
-		labelNombre.setText(paciente.getNombre());
-		labelApellidos.setText(paciente.getApellidos());
-		labelSeguro.setText(paciente.getSeguro());
-		labelTelefono.setText(paciente.getTelefono());
-		labelDireccion.setText(paciente.getDireccion());
+		 labelNombre.setText(paciente.getNombre());
+		 labelApellidos.setText(paciente.getApellidos());
+		 labelSeguro.setText(paciente.getSeguro());
+		 labelTelefono.setText(paciente.getTelefono());
+		 labelDireccion.setText(paciente.getDireccion());
 
-		*/
-		
+		 */
+
 		fieldNombre.setText(paciente.getNombre());
 		fieldApellidos.setText(paciente.getApellidos());
 		fieldSeguro.setText(paciente.getSeguro());
@@ -564,7 +566,6 @@ public class modificarPaciente extends javax.swing.JPanel {
     private javax.swing.JLabel telefonoOK;
     // End of variables declaration//GEN-END:variables
 }
-
 
 class JTextFieldLimit extends PlainDocument {
 

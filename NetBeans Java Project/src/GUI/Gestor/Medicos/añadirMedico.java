@@ -24,6 +24,8 @@ public class añadirMedico extends javax.swing.JPanel {
 	public añadirMedico(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		jPanel1.setBackground(this.getBackground());
 		try {
 			desplegableEspecialidad.setModel(new DefaultComboBoxModel(gestor.getEspecialidades()));
 			desplegableTiempoMinimo.setModel(new DefaultComboBoxModel(tiempoMinimo()));

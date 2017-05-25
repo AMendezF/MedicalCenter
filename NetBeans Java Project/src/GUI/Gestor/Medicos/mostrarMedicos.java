@@ -31,6 +31,8 @@ public class mostrarMedicos extends javax.swing.JPanel {
 	public mostrarMedicos(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		jPanel2.setBackground(this.getBackground());
 		actualizarDatos();
 	}
 

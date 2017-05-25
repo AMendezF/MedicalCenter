@@ -23,6 +23,8 @@ public class MenuAdmin extends javax.swing.JPanel {
 	public MenuAdmin(Conexion con) {
 		initComponents();
 		this.con = con;
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		opcionesAdmin.setBackground(this.getBackground());
 	}
 
 	/**
@@ -97,7 +99,7 @@ public class MenuAdmin extends javax.swing.JPanel {
 
     private void construirDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_construirDatabaseActionPerformed
 		try {
-			if (con.existeBD()){
+			if (con.existeBD()) {
 				JOptionPane.showMessageDialog(this, "Ya existe la base de datos centromedico", "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
 				con.crearBD();
@@ -110,8 +112,8 @@ public class MenuAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_construirDatabaseActionPerformed
 
     private void destruirDatabaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_destruirDatabaseActionPerformed
-        try {
-			if (!con.existeBD()){
+		try {
+			if (!con.existeBD()) {
 				JOptionPane.showMessageDialog(this, "No existe la base de datos centromedico", "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
 				con.destruirBD();

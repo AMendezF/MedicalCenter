@@ -34,6 +34,9 @@ public class GestionarPacientes extends javax.swing.JPanel {
 	public GestionarPacientes(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		menuOpciones.setBackground(this.getBackground());
+		mostrarDatos.setBackground(this.getBackground());
 		actualizarDatos();
 	}
 

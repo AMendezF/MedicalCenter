@@ -33,6 +33,10 @@ public class BorrarPaciente extends javax.swing.JPanel {
 	public BorrarPaciente(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		panelPacienteActivo.setBackground(this.getBackground());
+		panelPacienteInactivo.setBackground(this.getBackground());
+
 		actualizarDatosPacientesActivos();
 		actualizarDatosPacientesInactivos();
 	}

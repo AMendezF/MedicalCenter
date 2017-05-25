@@ -35,7 +35,9 @@ public class MenuGestor extends javax.swing.JPanel {
 	public MenuGestor(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
-		setBackground(new java.awt.Color(153, 189, 233));
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		menuOpciones.setBackground(this.getBackground());
+		mostrarDatos.setBackground(this.getBackground());
 		this.borrarPaciente = new BorrarPaciente(gestor);
 		this.menuDeMedico = new MenuDeMedico(gestor);
 		this.mostrarSalas = new MostrarAgenda(gestor);

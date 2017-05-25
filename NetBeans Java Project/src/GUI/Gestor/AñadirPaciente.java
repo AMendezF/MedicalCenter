@@ -43,8 +43,12 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		initComponents();
 		this.gestor = gestor;
 		actualizarDatos();
+
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		añadirPaciente.setBackground(this.getBackground());
+		mostrarPacientesExistentes.setBackground(this.getBackground());
+
 		textDNI.setDocument(new JTextFieldLimit(15));
-		setBackground(new java.awt.Color(153, 189, 233));
 		textDNI.setText(dni);
 		textNombre.setDocument(new JTextFieldLimit(50));
 		textApellidos.setDocument(new JTextFieldLimit(50));

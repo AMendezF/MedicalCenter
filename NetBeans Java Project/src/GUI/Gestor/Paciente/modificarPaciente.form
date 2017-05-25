@@ -53,30 +53,25 @@
                                       <Component id="campoDireccion" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                                       <Component id="campoSeguro" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace min="272" pref="272" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <Component id="fieldTelefono" min="-2" pref="200" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="telefonoOK" min="-2" pref="200" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" attributes="0">
-                                                  <Component id="fieldSeguro" min="-2" pref="200" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="seguroOK" min="-2" pref="200" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" attributes="0">
-                                                  <Component id="fieldDireccion" min="-2" pref="200" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="direccionOK" min="-2" pref="200" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Component id="buttonActualizarDatos" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="fieldTelefono" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="telefonoOK" min="-2" pref="200" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
+                                          <Component id="fieldSeguro" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="seguroOK" min="-2" pref="200" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Component id="fieldDireccion" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="direccionOK" min="-2" pref="200" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="buttonActualizarDatos" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="1" attributes="0">
                                               <Component id="fieldApellidos" min="-2" pref="200" max="-2" attributes="0"/>
                                               <Component id="fieldNombre" min="-2" pref="200" max="-2" attributes="0"/>

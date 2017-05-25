@@ -30,6 +30,9 @@ public class MenuDePaciente extends javax.swing.JPanel {
 		initComponents();
 		this.gestor = gestor;
 		this.paciente = paciente;
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		menuOpciones.setBackground(this.getBackground());
+		mostrarDatos.setBackground(this.getBackground());
 		this.mostrarCitas = new mostrarCitas(gestor, paciente);
 		this.pedirCita = new PedirCita(gestor, paciente);
 		this.labelMenuDelPaciente.setText(paciente.getNombre() + ":   " + paciente.getDNI());
@@ -62,7 +65,6 @@ public class MenuDePaciente extends javax.swing.JPanel {
         labelMenuDelPaciente.setFont(new java.awt.Font("Cambria Math", 1, 18)); // NOI18N
         labelMenuDelPaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelMenuDelPaciente.setText("Menu del paciente");
-        labelMenuDelPaciente.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         buttonPedirCita.setText("Pedir cita");
         buttonPedirCita.addActionListener(new java.awt.event.ActionListener() {
@@ -98,14 +100,14 @@ public class MenuDePaciente extends javax.swing.JPanel {
             menuOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuOpcionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelMenuDelPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelMenuDelPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonMostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(214, Short.MAX_VALUE))
+                .addContainerGap(204, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);

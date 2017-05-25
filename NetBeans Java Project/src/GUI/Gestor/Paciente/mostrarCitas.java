@@ -38,6 +38,8 @@ public class mostrarCitas extends javax.swing.JPanel {
 		initComponents();
 		this.gestor = gestor;
 		this.paciente = paciente;
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		jPanel1.setBackground(this.getBackground());
 		actualizarDatos();
 	}
 
@@ -224,14 +226,14 @@ public class mostrarCitas extends javax.swing.JPanel {
 		}
 		return new DefaultTableModel(data, columnNames);
 	}
-	
+
 	/**
 	 * Carga un resulSet y lo muestra en la tabla
 	 */
 	private void actualizarDatos() {
 		try {
 			ResultSet rs = paciente.mostrarCitasPendientes();
-			setTabla(resultSetToTableModel(rs));	
+			setTabla(resultSetToTableModel(rs));
 			DefaultTableModel tabla = getTabla();
 			tablaInfo.setModel(tabla);
 			cargarDesplegables();
