@@ -67,7 +67,8 @@ public class Paciente {
 				+ "centromedico.especialidad e WHERE (c.Dia>"
                 + this.getDia() + " OR (c.Dia=" + this.getDia() + " AND c.Hora>"
                 + this.getHora() + ")) AND c.Paciente='" + this.dni + "' "
-				+ "AND c.especialidad=e.cod_especialidad;";
+				+ "AND c.especialidad=e.cod_especialidad "
+				+ "ORDER BY DATE(c.Dia)";
         ResultSet rs = reg.prepareStatement(sql).executeQuery();
 
         return rs;
@@ -96,9 +97,12 @@ public class Paciente {
      */
     private String getDia() {
         Calendar fecha = new GregorianCalendar();
-        return "'" + fecha.get(Calendar.YEAR) + "-"
+		String date;
+		date = "'" + fecha.get(Calendar.YEAR) + "-"
                 + (fecha.get(Calendar.MONTH) + 1) + "-"
                 + fecha.get(Calendar.DAY_OF_MONTH) + "'";
+				System.out.println(date);
+        return date;
     }
 
     /**
@@ -108,8 +112,11 @@ public class Paciente {
      */
     private String getHora() {
         Calendar fecha = new GregorianCalendar();
-        return "'" + fecha.get(Calendar.HOUR) + ":"
+		String hora;
+		hora = "'" + fecha.get(Calendar.HOUR_OF_DAY) + ":"
                 + fecha.get(Calendar.MINUTE) + "'";
+		System.out.println(hora);
+        return hora;
     }
 
     private String tieneSeguro() {
