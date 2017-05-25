@@ -125,7 +125,7 @@ public class Conexion {
 	public boolean existeBD() throws SQLException {
 		boolean resul = false;
 		String nombre = "";
-		
+
 		ResultSet rs;
 		rs = con.getMetaData().getCatalogs();
 
@@ -488,7 +488,7 @@ public class Conexion {
 		makeUpdate(iMedicos);
 
 		String iPacientes = "REPLACE INTO centromedico.paciente (DNI, Nombre, Apellidos, CompSegur, Telefono, Direccion) VALUES\n"
-				+ "('57211499B', 'Juan Antonio', 'Huesa Aranda', 'Seguros Ocaso', '6292743542', 'Calle Augusto N 20, Guadalajara'),\n"
+				+ "('57211499B', 'Juan Antonio', 'Huesa Aranda', 'Seguros Ocaso', '629274354', 'Calle Augusto N 20, Guadalajara'),\n"
 				+ "('15326776J', 'Felipe', 'Solano Carrillo', 'NULL', '657575757', 'Bulevar de Amancio N 4, 3ºB, Madrid'),\n"
 				+ "('26352431C', 'Mariano', 'Jimenez Poleo', 'Mafre', '987523547', 'Calle del generalisimo Nº80, Bloque 3, 2ºD, Berrueco, Madrid'),\n"
 				+ "('52323400X', 'Lucia', 'Aranda Huesa', 'NULL', '635894125', 'Calle Alcala N 228, 9ºB, Madrid'),\n"
@@ -711,6 +711,31 @@ public class Conexion {
 		System.out.println("Usuarios añadidos correctamente\n");
 	}
 
+	//Queeeee wapo
+	public void crearUserBD(String cod) throws SQLException {
+		PreparedStatement preparedStmt;
+		String sql = "create user ?@localhost identified by '" + cod + "';";
+		preparedStmt = con.prepareStatement(sql);
+		preparedStmt.setString(1, cod);
+		preparedStmt.execute();
+	}
+
+	public void setPermisosBD(String cod) throws SQLException {
+		PreparedStatement preparedStmt;
+
+		String sql = "grant all on centromedico.* to ?@localhost;";
+		preparedStmt = con.prepareStatement(sql);
+		preparedStmt.setString(1, cod);
+		preparedStmt.execute();
+	}
+
+	public void borrarUsuarioMedicoBD(String cod) throws SQLException {
+		PreparedStatement preparedStmt;
+
+		String sql = "drop user '" + cod + "'@localhost;";
+		preparedStmt = con.prepareStatement(sql);
+		preparedStmt.execute();
+	}
 }
 
 /*

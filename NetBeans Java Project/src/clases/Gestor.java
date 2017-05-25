@@ -321,11 +321,11 @@ public class Gestor {
 						+ ")";
 				conexion.makeUpdate(sql);
 
-				// TODO
-//                if (!conexion.existeUser(codMedico)) {
-//                    conexion.crearUserBD(codMedico);
-//                    conexion.setPermisosBD(codMedico);
-//                }
+
+                if (!conexion.existeUser(codMedico)) {
+                    conexion.crearUserBD(codMedico);
+                    conexion.setPermisosBD(codMedico);
+                }
 			} else {
 				added = false;
 			}
@@ -482,6 +482,7 @@ public class Gestor {
 
 		try {
 			conexion.makeUpdate(sql);
+			conexion.borrarUsuarioMedicoBD(numColegiado);
 		} catch (SQLException e) {
 			System.out.println(e);
 			removed = false;
