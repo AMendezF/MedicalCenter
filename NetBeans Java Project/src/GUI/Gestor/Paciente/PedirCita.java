@@ -38,6 +38,7 @@ public class PedirCita extends javax.swing.JPanel {
 		initComponents();
 		this.setBackground(new java.awt.Color(150, 190, 230));
 		mostrarDatos.setBackground(new java.awt.Color(150, 190, 230));
+		labelTitulo.setText(labelTitulo.getText() + ":  " + paciente.getNombre() + " " + paciente.getApellidos());
 		this.gestor = gestor;
 		this.paciente = paciente;
 		Date fechaMinima = calendario.getDate();
@@ -124,8 +125,7 @@ public class PedirCita extends javax.swing.JPanel {
         Turno.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         Turno.setText("Turno");
 
-        calendario.setMaxSelectableDate(new java.util.Date(1497236400000L));
-        calendario.setMinSelectableDate(new java.util.Date(1495242000000L));
+        calendario.setMinSelectableDate(new java.util.Date(-62135769512000L));
         calendario.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 calendarioPropertyChange(evt);
@@ -147,16 +147,14 @@ public class PedirCita extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mostrarDatosLayout.createSequentialGroup()
-                        .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(mostrarDatosLayout.createSequentialGroup()
                         .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelDia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(mostrarDatosLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
                                 .addComponent(Especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(52, 52, 52)
-                                .addComponent(desplegableEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(labelDia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(desplegableEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(15, 15, 15)
                         .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -175,7 +173,10 @@ public class PedirCita extends javax.swing.JPanel {
                             .addComponent(buttonPedirCita, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(33, 33, 33)
                         .addComponent(checkElegirMedico)
-                        .addGap(0, 68, Short.MAX_VALUE))))
+                        .addGap(0, 68, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mostrarDatosLayout.createSequentialGroup()
+                        .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,7 +208,7 @@ public class PedirCita extends javax.swing.JPanel {
                         .addComponent(labelDia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -266,29 +267,6 @@ public class PedirCita extends javax.swing.JPanel {
 	private void cargarDatos() {
 		try {
 			desplegableEspecialidad.setModel(new DefaultComboBoxModel(gestor.getEspecialidades()));
-
-			/*
-			 Date fechaMinima = calendario.getDate();
-			 calendario.setMinSelectableDate(fechaMinima);
-
-			 Date fechaMaxima = new Date();
-			 /* Codigo que en principio no sirve, fueron pruebas. Hace falta poner una cita maxima
-			 calendario.setMaxSelectableDate();
-			
-			 Calendar date = Calendar.getInstance();
-			 date.add(Calendar.MONTH, 1);
-			
-			
-			 calendario.setMaxSelectableDate((date) date);
-						
-			 int prevDayOfWeekInMonth = date.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-			 int prevDayOfWeek = date.get(Calendar.DAY_OF_WEEK);
-
-
-			 date.set(Calendar.DAY_OF_WEEK, prevDayOfWeek);
-			 date.set(Calendar.DAY_OF_WEEK_IN_MONTH, prevDayOfWeekInMonth);
-			
-			 */
 		} catch (SQLException ex) {
 			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -325,13 +303,11 @@ public class PedirCita extends javax.swing.JPanel {
 		String especialidad = (String) desplegableEspecialidad.getSelectedItem();
 		String dni = paciente.getDNI();
 
-		//String turno = (String) desplegableTurno.getSelectedItem();
 		datos.add(fecha);
 		datos.add(hora);
 		datos.add(medico);
 		datos.add(especialidad);
 		datos.add(dni);
-		//datos.add(turno);
 
 		confirmar = JOptionPane.showOptionDialog(this, "Se creara una cita para el paciente, ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		// Confirmar devuelve un 0 si quiere confirmarlo
@@ -398,10 +374,6 @@ public class PedirCita extends javax.swing.JPanel {
 			fecha = formato.format(calendario.getDate());
 
 			desplegableTurno.setModel(new DefaultComboBoxModel(gestor.getHorarioEspecialidadByDay(especialidad, diaSemana)));
-
-//            desplegableMedico.setEnabled(false);
-//            desplegableHoras.setEnabled(false);
-//            buttonPedirCita.setEnabled(false);
 		} catch (SQLException ex) {
 			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -435,61 +407,15 @@ public class PedirCita extends javax.swing.JPanel {
     }//GEN-LAST:event_desplegableTurnoActionPerformed
 
 	/**
-	 * Al seleccionar un turno, carga medicos si esta habilitado
-	 *
-	 * @return
-	 */
-	private boolean eventoTurnoCargarMedico() {
-		boolean resul = false;
-		try {
-			actualizarValoresMedico(gestor.getMedicoEspecifico((String) desplegableTurno.getSelectedItem(), (String) desplegableEspecialidad.getSelectedItem()));
-			desplegableMedico.setModel(new DefaultComboBoxModel(nombreMedicos));
-			resul = true;
-
-		} catch (SQLException ex) {
-			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		return resul;
-	}
-
-	/**
-	 * Al seleccionar un turno, si medicos esta habilitado coge el medico
-	 * elegido y carga horas Si esta deshabilitado elige un medico al azar y
-	 * muestra las horas
-	 *
-	 * @return
-	 */
-	private void eventoTurnoCargarHoras() {
-		try {
-			boolean resul = false;
-			String nColegiado = "";
-
-			if (checkElegirMedico.isSelected()) {
-				nColegiado = codigoMedicos[(desplegableMedico.getSelectedIndex())];
-			} else {
-				nColegiado = codMed;
-			}
-
-			desplegableHoras.setModel(new DefaultComboBoxModel(gestor.getConsultasDisponiblesMedico(fecha, (String) desplegableEspecialidad.getSelectedItem(),
-					(String) desplegableTurno.getSelectedItem(), nColegiado)));
-
-			//desplegableHoras.setModel(new DefaultComboBoxModel(gestor.getConsultasDisponiblesMedico()));
-		} catch (SQLException ex) {
-			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
-
-	/**
 	 * Al seleccionar un medico carga las horas
 	 *
 	 * @return
 	 */
 	private void eventoMedicoCargarHoras() {
 		try {
-			desplegableHoras.setEnabled(true);
-			codMed = codigoMedicos[(desplegableMedico.getSelectedIndex())];
 			desplegableHoras.setModel(new DefaultComboBoxModel(gestor.getConsultasDisponiblesMedico(fecha, (String) desplegableEspecialidad.getSelectedItem(),
 					(String) desplegableTurno.getSelectedItem(), codMed)));
+
 		} catch (SQLException ex) {
 			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -524,7 +450,7 @@ public class PedirCita extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void desplegableMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableMedicoActionPerformed
-		eventoMedicoCargarHorass();
+		eventoMedicoCargarHoras();
     }//GEN-LAST:event_desplegableMedicoActionPerformed
 
 	/**
@@ -536,6 +462,9 @@ public class PedirCita extends javax.swing.JPanel {
 		buttonPedirCita.setEnabled(true);
     }//GEN-LAST:event_desplegableHorasActionPerformed
 
+	/**
+	 * Actualiza todos los desplegables con la informacion recogida
+	 */
 	private void cargarTodosLosDesplegables() {
 		try {
 			String especialidad = (String) desplegableEspecialidad.getSelectedItem();
@@ -558,6 +487,9 @@ public class PedirCita extends javax.swing.JPanel {
 
 	}
 
+	/**
+	 * Actualiza la informacion de los valores dependientes del turno
+	 */
 	private void eventoTurnoCargarDesplegables() {
 		try {
 			actualizarValoresMedico(gestor.getMedicoEspecifico((String) desplegableTurno.getSelectedItem(), (String) desplegableEspecialidad.getSelectedItem()));
@@ -565,16 +497,6 @@ public class PedirCita extends javax.swing.JPanel {
 			codMed = codigoMedicos[(desplegableMedico.getSelectedIndex())];
 			desplegableHoras.setModel(new DefaultComboBoxModel(gestor.getConsultasDisponiblesMedico(fecha, (String) desplegableEspecialidad.getSelectedItem(),
 					(String) desplegableTurno.getSelectedItem(), codMed)));
-		} catch (SQLException ex) {
-			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	}
-
-	private void eventoMedicoCargarHorass() {
-		try {
-			desplegableHoras.setModel(new DefaultComboBoxModel(gestor.getConsultasDisponiblesMedico(fecha, (String) desplegableEspecialidad.getSelectedItem(),
-					(String) desplegableTurno.getSelectedItem(), codMed)));
-
 		} catch (SQLException ex) {
 			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
 		}

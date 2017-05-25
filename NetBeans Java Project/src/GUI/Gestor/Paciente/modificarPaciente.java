@@ -50,9 +50,6 @@ public class modificarPaciente extends javax.swing.JPanel {
 
         mostrarDatos = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        labelSeguro = new javax.swing.JLabel();
-        labelNombre = new javax.swing.JLabel();
-        labelApellidos = new javax.swing.JLabel();
         labelDNI = new javax.swing.JLabel();
         fieldNombre = new javax.swing.JTextField();
         fieldSeguro = new javax.swing.JTextField();
@@ -61,8 +58,6 @@ public class modificarPaciente extends javax.swing.JPanel {
         nombreOK = new javax.swing.JLabel();
         apellidosOK = new javax.swing.JLabel();
         seguroOK = new javax.swing.JLabel();
-        labelTelefono = new javax.swing.JLabel();
-        labelDireccion = new javax.swing.JLabel();
         fieldTelefono = new javax.swing.JTextField();
         fieldDireccion = new javax.swing.JTextField();
         telefonoOK = new javax.swing.JLabel();
@@ -78,15 +73,6 @@ public class modificarPaciente extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Modificar Paciente");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        labelSeguro.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        labelSeguro.setText("Seguro");
-
-        labelNombre.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        labelNombre.setText("Nombre");
-
-        labelApellidos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        labelApellidos.setText("Apellidos");
 
         labelDNI.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelDNI.setText("DNI");
@@ -125,12 +111,6 @@ public class modificarPaciente extends javax.swing.JPanel {
 
         seguroOK.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         seguroOK.setText("Modifica el seguro");
-
-        labelTelefono.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        labelTelefono.setText("Teléfono");
-
-        labelDireccion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        labelDireccion.setText("Dirección");
 
         fieldTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -185,14 +165,9 @@ public class modificarPaciente extends javax.swing.JPanel {
                                     .addComponent(campoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(campoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(campoSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
                                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                        .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(labelSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(labelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(4, 4, 4)
+                                        .addGap(272, 272, 272)
                                         .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(mostrarDatosLayout.createSequentialGroup()
                                                 .addComponent(fieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,15 +183,10 @@ public class modificarPaciente extends javax.swing.JPanel {
                                                 .addComponent(direccionOK, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(buttonActualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                        .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                                .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(fieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                                .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(272, 272, 272)
+                                        .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(fieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
                                         .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(nombreOK, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,36 +210,31 @@ public class modificarPaciente extends javax.swing.JPanel {
                 .addGap(41, 41, 41)
                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nombreOK, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(apellidosOK, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(seguroOK, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(telefonoOK, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(direccionOK, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(buttonActualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -295,12 +260,15 @@ public class modificarPaciente extends javax.swing.JPanel {
 	 */
 	private void mostrarValores() {
 		labelDNI.setText(paciente.getDNI());
+		/*
 		labelNombre.setText(paciente.getNombre());
 		labelApellidos.setText(paciente.getApellidos());
 		labelSeguro.setText(paciente.getSeguro());
 		labelTelefono.setText(paciente.getTelefono());
 		labelDireccion.setText(paciente.getDireccion());
 
+		*/
+		
 		fieldNombre.setText(paciente.getNombre());
 		fieldApellidos.setText(paciente.getApellidos());
 		fieldSeguro.setText(paciente.getSeguro());
@@ -589,12 +557,7 @@ public class modificarPaciente extends javax.swing.JPanel {
     private javax.swing.JTextField fieldSeguro;
     private javax.swing.JTextField fieldTelefono;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel labelApellidos;
     private javax.swing.JLabel labelDNI;
-    private javax.swing.JLabel labelDireccion;
-    private javax.swing.JLabel labelNombre;
-    private javax.swing.JLabel labelSeguro;
-    private javax.swing.JLabel labelTelefono;
     private javax.swing.JPanel mostrarDatos;
     private javax.swing.JLabel nombreOK;
     private javax.swing.JLabel seguroOK;

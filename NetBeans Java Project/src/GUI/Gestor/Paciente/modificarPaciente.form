@@ -53,15 +53,9 @@
                                       <Component id="campoDireccion" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                                       <Component id="campoSeguro" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="labelSeguro" min="-2" pref="250" max="-2" attributes="0"/>
-                                              <Component id="labelTelefono" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
-                                              <Component id="labelDireccion" min="-2" pref="250" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
                                                   <Component id="fieldTelefono" min="-2" pref="200" max="-2" attributes="0"/>
@@ -82,17 +76,10 @@
                                           </Group>
                                       </Group>
                                       <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <Component id="labelApellidos" min="-2" pref="250" max="-2" attributes="0"/>
-                                                  <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="fieldApellidos" min="-2" pref="200" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" attributes="0">
-                                                  <Component id="labelNombre" min="-2" pref="250" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                                  <Component id="fieldNombre" min="-2" pref="200" max="-2" attributes="0"/>
-                                              </Group>
+                                          <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="1" attributes="0">
+                                              <Component id="fieldApellidos" min="-2" pref="200" max="-2" attributes="0"/>
+                                              <Component id="fieldNombre" min="-2" pref="200" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -128,41 +115,36 @@
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="campoNombre" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="labelNombre" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="fieldNombre" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="nombreOK" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="campoApellidos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="labelApellidos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="fieldApellidos" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="apellidosOK" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="campoSeguro" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="labelSeguro" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="fieldSeguro" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="seguroOK" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="campoTelefono" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="labelTelefono" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="fieldTelefono" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="telefonoOK" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="campoDireccion" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="labelDireccion" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="fieldDireccion" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="direccionOK" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="buttonActualizarDatos" min="-2" pref="40" max="-2" attributes="0"/>
-                  <EmptySpace pref="74" max="32767" attributes="0"/>
+                  <EmptySpace pref="75" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -176,30 +158,6 @@
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Modificar Paciente"/>
             <Property name="verticalAlignment" type="int" value="1"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelSeguro">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="18" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Seguro"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelNombre">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="18" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Nombre"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelApellidos">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="18" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Apellidos"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelDNI">
@@ -256,22 +214,6 @@
               <Font name="Tahoma" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Modifica el seguro"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelTelefono">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="18" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Tel&#xe9;fono"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelDireccion">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="12" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Direcci&#xf3;n"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="fieldTelefono">
