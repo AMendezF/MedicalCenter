@@ -269,7 +269,6 @@ public class ModificarFichaPaciente extends javax.swing.JPanel {
             @Override
             public void keyReleased(final KeyEvent e) {
                 String cadena = (textFieldBuscar.getText());
-                System.out.println(cadena);
                 textFieldBuscar.setText(cadena);
                 repaint();
                 filtro();

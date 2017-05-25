@@ -34,12 +34,7 @@ public class Conexion {
 
 		if (getCon().isValid(0)) {
 			System.out.println("Conexion establecida");
-
-//			if (getUser().equals("root") && !existeBD()) {
-//				crearBD();
-//			}
 		}
-
 	}
 
 	public Connection getCon() {

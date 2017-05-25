@@ -129,7 +129,7 @@ public class modificarPaciente extends javax.swing.JPanel {
         labelTelefono.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelTelefono.setText("Teléfono");
 
-        labelDireccion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelDireccion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         labelDireccion.setText("Dirección");
 
         fieldTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -138,12 +138,6 @@ public class modificarPaciente extends javax.swing.JPanel {
             }
         });
 
-        fieldDireccion.setText(null);
-        fieldDireccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldDireccionActionPerformed(evt);
-            }
-        });
         fieldDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 fieldDireccionKeyReleased(evt);
@@ -275,7 +269,7 @@ public class modificarPaciente extends javax.swing.JPanel {
                     .addComponent(direccionOK, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(buttonActualizarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -312,17 +306,6 @@ public class modificarPaciente extends javax.swing.JPanel {
 		fieldSeguro.setText(paciente.getSeguro());
 		fieldTelefono.setText(paciente.getTelefono());
 		fieldDireccion.setText(paciente.getDireccion());
-
-//		nombreOK.setText(" ");
-//		nombreOK.setForeground(Color.black);
-//		apellidosOK.setText(" ");
-//		apellidosOK.setForeground(Color.black);
-//		seguroOK.setText(" ");
-//		seguroOK.setForeground(Color.black);
-//		telefonoOK.setText(" ");
-//		telefonoOK.setForeground(Color.black);
-//		direccionOK.setText(" ");
-//		direccionOK.setForeground(Color.black);
 	}
 
 	/**
@@ -480,10 +463,6 @@ public class modificarPaciente extends javax.swing.JPanel {
 			}
 		}
     }//GEN-LAST:event_fieldDireccionKeyReleased
-
-    private void fieldDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldDireccionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldDireccionActionPerformed
 
 	/**
 	 * Habitila o desabilita el boton en funcion de los valores cambiados

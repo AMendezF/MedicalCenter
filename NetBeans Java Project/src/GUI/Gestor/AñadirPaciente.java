@@ -49,7 +49,7 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		textApellidos.setDocument(new JTextFieldLimit(50));
 		textSeguro.setDocument(new JTextFieldLimit(50));
 		textTelefono.setDocument(new JTextFieldLimit(15));
-		textDireccion.setDocument(new JTextFieldLimit(50));
+		textDireccion.setDocument(new JTextFieldLimit(100));
 	}
 
 	/**

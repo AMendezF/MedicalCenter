@@ -399,12 +399,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
 				con = new Conexion(textFieldUser.getText(), passwordFieldPassword.getPassword());
 
 				try {
-					// Los SOUT habra que borrarlos
-					System.out.println("Supuestamente no ha habido errores de conexion");
 					if (con.getUser().equals("root") || con.existeUser(textFieldUser.getText())) {
-						System.out.println("Supuestamente existe el usuario");
 						if (con.esValida()) {
-							System.out.println("Supuestamente me he conectado bien");
 							if (con.getUser().equals("root")) {
 								if (con.existeBD()) {
 									crearMenuAdmin();
@@ -439,7 +435,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 					System.out.println("Excepcion despues de con" + ex);
 				}
 			} catch (ClassNotFoundException ex) {
-				JOptionPane.showMessageDialog(this, "Ha ocurrido algun error\n" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error\n" + ex, "Error", JOptionPane.ERROR_MESSAGE);
 				Logger.getLogger(InterfazGrafica.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		} catch (SQLException exSQL) {

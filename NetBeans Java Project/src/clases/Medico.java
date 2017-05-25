@@ -66,64 +66,7 @@ public class Medico {
         preparedStmt.setInt(1, n_colegiado);
         preparedStmt.setDate(2, java.sql.Date.valueOf(fecha1));
         ResultSet rs = preparedStmt.executeQuery();
-
-        /*List<String> horas;
-        horas = new ArrayList<>();
-        while (rs.next()) {
-            horas.add(rs.getTime("hora").toString());
-        }
-        for (int i = 0; i < dia1.length; i++) {
-            dia1[i] = false;
-        }
-        for (int i = 0; i < horas.size(); i++) {
-            String hora[] = horas.get(i).split(":");
-            int horadiv = Integer.parseInt(hora[0]);
-            int minutos = Integer.parseInt(hora[1]);
-            int index = ((horadiv - horaI) * 60 + minutos) / this.getTiempoMin();
-			System.out.println(horaI + "	" + index + "   " + horadiv + "   " + minutos);
-            dia1[index] = true;
-        }
-        horas.clear();
-
-        preparedStmt = reg.prepareStatement(sql);
-        preparedStmt.setInt(1, n_colegiado);
-        preparedStmt.setDate(2, java.sql.Date.valueOf(fecha2));
-        rs = preparedStmt.executeQuery();
-
-        while (rs.next()) {
-            horas.add(rs.getTime("hora").toString());
-        }
-        for (int i = 0; i < dia2.length; i++) {
-            dia2[i] = false;
-        }
-        for (int i = 0; i < horas.size(); i++) {
-            String hora[] = horas.get(i).split(":");
-            int horadiv = Integer.parseInt(hora[0]);
-            int minutos = Integer.parseInt(hora[1]);
-            int index = ((horadiv - horaI) * 60 + minutos) / this.getTiempoMin();
-            dia2[index] = true;
-        }
-        horas.clear();
-
-        preparedStmt = reg.prepareStatement(sql);
-        preparedStmt.setInt(1, n_colegiado);
-        preparedStmt.setDate(2, java.sql.Date.valueOf(fecha3));
-        rs = preparedStmt.executeQuery();
-
-        while (rs.next()) {
-            horas.add(rs.getTime("hora").toString());
-        }
-        for (int i = 0; i < dia3.length; i++) {
-            dia3[i] = false;
-        }
-        for (int i = 0; i < horas.size(); i++) {
-            String hora[] = horas.get(i).split(":");
-            int horadiv = Integer.parseInt(hora[0]);
-            int minutos = Integer.parseInt(hora[1]);
-            int index = ((horadiv - horaI) * 60 + minutos) / this.getTiempoMin();
-            dia3[index] = true;
-        }
-        horas.clear();*/
+		
         setNumEspecialidad();
     }
 
@@ -191,48 +134,6 @@ public class Medico {
         }
         this.n_especialidad = result;
     }
-
-    /**
-     * Retorna los turnos disponibles para atender en ese día concreto.
-     *
-     * @param dia
-     * @return
-     * @throws SQLException
-     */
-    /*public boolean[] getConsultas(String dia) throws SQLException {
-        String fechas[] = dia.split("-");
-        Date fechacita = new Date(Integer.parseInt(fechas[0]),
-                Integer.parseInt(fechas[1]) - 1, Integer.parseInt(fechas[2]));
-        String fechas1[] = fecha1.split("-");
-        Date dia01 = new Date(Integer.parseInt(fechas1[0]),
-                Integer.parseInt(fechas1[1]) - 1, Integer.parseInt(fechas1[2]));
-        String fechas3[] = fecha3.split("-");
-        Date dia03 = new Date(Integer.parseInt(fechas3[0]),
-                Integer.parseInt(fechas3[1]) - 1, Integer.parseInt(fechas3[2]));
-        if (fechacita.compareTo(dia01) < 0) {
-            return diaVacio;
-        } else if (dia.equals(fecha1)) {
-            return dia1;
-        } else if (dia.equals(fecha2)) {
-            return dia2;
-        } else if (dia.equals(fecha3)) {
-            return dia3;
-        } else if (fechacita.compareTo(dia03) > 0) {
-            return diaVacio;
-        }
-        return null;
-    }
-
-    public int getNumCitasLibres(String dia) throws SQLException {
-        int result = 0;
-        boolean consultaFecha[] = getConsultas(dia);
-        for (int i = 0; i < consultaFecha.length; i++) {
-            if (consultaFecha[i] == true) {
-                result++;
-            }
-        }
-        return result;
-    }*/
 
     public int getNumCitas() throws SQLException {
         int resul = 0;

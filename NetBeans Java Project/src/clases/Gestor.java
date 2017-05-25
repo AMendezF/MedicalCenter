@@ -475,8 +475,6 @@ public class Gestor {
 	public Boolean removeMedico(String numColegiado) {
 		Boolean removed = true;
 		String sql;
-
-		System.out.println(numColegiado);
 		sql = "DELETE FROM centromedico.medico "
 				+ "WHERE N_colegiado='" + numColegiado + "'";
 
@@ -686,7 +684,6 @@ public class Gestor {
 		}
 		sql = sql.substring(0, sql.length() - 2);
 		sql += "WHERE DNI='" + DNI + "';";
-		System.out.println(sql);
 		try {
 			conexion.makeUpdate(sql);
 		} catch (SQLException e) {

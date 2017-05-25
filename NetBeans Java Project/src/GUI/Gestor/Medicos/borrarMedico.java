@@ -368,9 +368,7 @@ public class borrarMedico extends javax.swing.JPanel {
 
 	public void filtro() {
 		int colum = 0;
-		System.out.println(desplegableColumnas.getSelectedItem());
 		while (!(desplegableColumnas.getSelectedItem() == this.columnas[colum])) {
-			System.out.println(colum);
 			colum++;
 		}
 		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), colum));

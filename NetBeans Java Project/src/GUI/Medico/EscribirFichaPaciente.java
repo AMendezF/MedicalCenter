@@ -282,7 +282,6 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
             @Override
             public void keyReleased(final KeyEvent e) {
                 String cadena = (buscarCampo.getText());
-                System.out.println(cadena);
                 buscarCampo.setText(cadena);
                 repaint();
                 filtro();

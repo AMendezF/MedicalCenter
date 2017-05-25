@@ -179,31 +179,6 @@ public class mostrarPacientes extends javax.swing.JPanel {
 		trsFiltro.setRowFilter(RowFilter.regexFilter(textFieldBuscar.getText(), columnaABuscar));
 	}
 
-	 /**
-	 * La tabla se puede ordenar
-	 * @return 
-	 */
-/*
-	private JTable getJTable() {
-		if (table == null) {
-			table = new JTable();
-			// Creamos el modelo, la parte que contenrá los datos de la tabla
-			DefaultTableModel model = new DefaultTableModel();
-			// Creamos un ordenador de filas para el modelo
-			TableRowSorter sorter = new TableRowSorter(
-					model);
-			// Añadimos al modelo los datos que queremos que contenga la tabla
-			model.setDataVector(data, columnNames);
-			// Le decimos a la tabla que use el modelo de datos que hemos creado
-			table.setModel(model);
-		// Le decimos a la tabla que use la ordenación de filas que hemos
-			// creado
-			table.setRowSorter(sorter);
-		}
-		return table;
-	}
-	
-
 	/**
 	 * Crea el modelo para el jTable
 	 *

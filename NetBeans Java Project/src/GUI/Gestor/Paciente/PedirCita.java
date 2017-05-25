@@ -242,7 +242,6 @@ public class PedirCita extends javax.swing.JPanel {
 		for (int i = 0; i < medicosDisponibles.length; i++) {
 			codigoMedico[i] = medicosDisponibles[i][0];
 			nombreMedico[i] = medicosDisponibles[i][1];
-			System.out.println("Codigo:" + codigoMedico[i] + "    Nombre: " + nombreMedico[i]);
 		}
 
 		setCodigoMedico(codigoMedico);
@@ -414,28 +413,7 @@ public class PedirCita extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void desplegableEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableEspecialidadActionPerformed
-		//mostrarTurno();
 		cargarTodosLosDesplegables();
-		/*
-		 SimpleDateFormat formato = new SimpleDateFormat("yy-MM-dd");
-		 SimpleDateFormat diaSemanas = new SimpleDateFormat("u");
-
-		 System.out.println(diaSemanas.format(calendario.getDate()));
-		 System.out.println(formato.format(calendario.getDate()));
-
-		 String especialidad = (String) desplegableEspecialidad.getSelectedItem();
-		 String fecha = formato.format(calendario.getDate());
-		 String diaSemana = cogerDia(diaSemanas.format(calendario.getDate()));
-		 System.out.println(calendario.getDate());
-		 System.out.println(diaSemana);
-		 try {
-		 desplegableTurno.setModel(new DefaultComboBoxModel(gestor.getHorarioEspecialidadByDay(especialidad, diaSemana)));
-		 String turno = (String) desplegableTurno.getSelectedItem();
-		 //desplegableMedico.setModel(new DefaultComboBoxModel((String) gestor.mostrarMedicosByHorarioEspecialidad(especialidad, turno)));
-		 } catch (SQLException ex) {
-		 Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
-		 }
-		 */
     }//GEN-LAST:event_desplegableEspecialidadActionPerformed
 
 	/**
@@ -444,7 +422,6 @@ public class PedirCita extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void calendarioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_calendarioPropertyChange
-		//mostrarTurno();
 		cargarTodosLosDesplegables();
     }//GEN-LAST:event_calendarioPropertyChange
 
@@ -454,22 +431,7 @@ public class PedirCita extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void desplegableTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableTurnoActionPerformed
-		//cargarTodosLosDesplegables();
 		eventoTurnoCargarDesplegables();
-//        buttonPedirCita.setEnabled(false);
-//        if (enabledDesplegableMedicos()) {
-//            eventoTurnoCargarMedico();
-//        } else {
-//            try {
-//                actualizarValoresMedico(gestor.getMedicoEspecifico((String) desplegableTurno.getSelectedItem(), (String) desplegableEspecialidad.getSelectedItem()));
-//                desplegableMedico.setModel(new DefaultComboBoxModel(nomMed));
-//                desplegableHoras.setEnabled(true);
-//                eventoTurnoCargarHoras();
-//            } catch (SQLException ex) {
-//                Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        }
     }//GEN-LAST:event_desplegableTurnoActionPerformed
 
 	/**
@@ -562,9 +524,6 @@ public class PedirCita extends javax.swing.JPanel {
 	 * @param evt
 	 */
     private void desplegableMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableMedicoActionPerformed
-		//buttonPedirCita.setEnabled(false);
-		//eventoMedicoCargarHoras();
-		//cargarTodosLosDesplegables();
 		eventoMedicoCargarHorass();
     }//GEN-LAST:event_desplegableMedicoActionPerformed
 

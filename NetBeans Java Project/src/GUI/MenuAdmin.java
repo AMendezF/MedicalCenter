@@ -37,9 +37,8 @@ public class MenuAdmin extends javax.swing.JPanel {
         opcionesAdmin = new javax.swing.JPanel();
         construirDatabase = new javax.swing.JButton();
         destruirDatabase = new javax.swing.JButton();
-        crearBackup = new javax.swing.JButton();
-        cargarBackup = new javax.swing.JButton();
 
+        construirDatabase.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         construirDatabase.setText("Construir centromedico");
         construirDatabase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -47,6 +46,7 @@ public class MenuAdmin extends javax.swing.JPanel {
             }
         });
 
+        destruirDatabase.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         destruirDatabase.setText("Destruir centromedico");
         destruirDatabase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,40 +54,25 @@ public class MenuAdmin extends javax.swing.JPanel {
             }
         });
 
-        crearBackup.setText("Hacer backup");
-        crearBackup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                crearBackupActionPerformed(evt);
-            }
-        });
-
-        cargarBackup.setText("Cargar backup");
-
         javax.swing.GroupLayout opcionesAdminLayout = new javax.swing.GroupLayout(opcionesAdmin);
         opcionesAdmin.setLayout(opcionesAdminLayout);
         opcionesAdminLayout.setHorizontalGroup(
             opcionesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(opcionesAdminLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(construirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(destruirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(crearBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cargarBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addComponent(construirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77)
+                .addComponent(destruirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(510, Short.MAX_VALUE))
         );
         opcionesAdminLayout.setVerticalGroup(
             opcionesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(opcionesAdminLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(opcionesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(construirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(destruirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(crearBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cargarBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(368, Short.MAX_VALUE))
+                .addGroup(opcionesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(construirDatabase, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(destruirDatabase, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+                .addContainerGap(225, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -136,21 +121,8 @@ public class MenuAdmin extends javax.swing.JPanel {
 		}
     }//GEN-LAST:event_destruirDatabaseActionPerformed
 
-    private void crearBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearBackupActionPerformed
-		try {
-			con.crearBackup("centromedico");
-		} catch (SQLException ex) {
-			Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IOException ex) {
-			Logger.getLogger(MenuAdmin.class.getName()).log(Level.SEVERE, null, ex);
-		}
-    }//GEN-LAST:event_crearBackupActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cargarBackup;
     private javax.swing.JButton construirDatabase;
-    private javax.swing.JButton crearBackup;
     private javax.swing.JButton destruirDatabase;
     private javax.swing.JPanel opcionesAdmin;
     // End of variables declaration//GEN-END:variables

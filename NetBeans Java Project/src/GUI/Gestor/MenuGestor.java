@@ -273,7 +273,6 @@ public class MenuGestor extends javax.swing.JPanel {
 	private void pedirDNI() {
 		try {
 			String dni = JOptionPane.showInputDialog(this, "DNI del paciente", "Introduzca un dni", JOptionPane.QUESTION_MESSAGE);
-			System.out.println(dni);
 			if (dni != null) {
 				if (!gestor.existePacienteBD(dni)) {
 					JOptionPane.showMessageDialog(this, "No existe el paciente, añada un nuevo", "Cuidado!", JOptionPane.WARNING_MESSAGE);
@@ -300,15 +299,6 @@ public class MenuGestor extends javax.swing.JPanel {
 		mostrarDatos.add(pedirCita, BorderLayout.CENTER);
 		mostrarDatos.revalidate();
 		mostrarDatos.repaint();
-		/*mostrarDatos.removeAll();
-				
-		gestionarPacientes = new GestionarPacientes(gestor, dni);
-		gestionarPacientes.setSize(mostrarDatos.getWidth(), mostrarDatos.getHeight());
-		gestionarPacientes.setLocation(0, 0);
-
-		mostrarDatos.add(gestionarPacientes, BorderLayout.WEST);
-		mostrarDatos.revalidate();
-		mostrarDatos.repaint();*/
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
