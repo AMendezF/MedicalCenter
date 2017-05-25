@@ -35,7 +35,7 @@ public class MenuGestor extends javax.swing.JPanel {
 	public MenuGestor(Gestor gestor) {
 		initComponents();
 		this.gestor = gestor;
-		
+		setBackground(new java.awt.Color(153, 189, 233));
 		this.borrarPaciente = new BorrarPaciente(gestor);
 		this.menuDeMedico = new MenuDeMedico(gestor);
 		this.mostrarSalas = new MostrarAgenda(gestor);
@@ -59,20 +59,21 @@ public class MenuGestor extends javax.swing.JPanel {
         buttonBorrarPaciente = new javax.swing.JButton();
         buttonPedirCita = new javax.swing.JButton();
 
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        mostrarDatos.setForeground(new java.awt.Color(204, 204, 255));
+        mostrarDatos.setBackground(new java.awt.Color(153, 189, 233));
+        mostrarDatos.setForeground(new java.awt.Color(153, 189, 233));
 
         javax.swing.GroupLayout mostrarDatosLayout = new javax.swing.GroupLayout(mostrarDatos);
         mostrarDatos.setLayout(mostrarDatosLayout);
         mostrarDatosLayout.setHorizontalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1390, Short.MAX_VALUE)
+            .addGap(0, 1392, Short.MAX_VALUE)
         );
         mostrarDatosLayout.setVerticalGroup(
             mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 424, Short.MAX_VALUE)
+            .addGap(0, 426, Short.MAX_VALUE)
         );
+
+        menuOpciones.setBackground(new java.awt.Color(153, 189, 233));
 
         buttonAñadirPaciente.setText("Añadir nuevo paciente");
         buttonAñadirPaciente.addActionListener(new java.awt.event.ActionListener() {

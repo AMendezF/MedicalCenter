@@ -44,6 +44,7 @@ public class AñadirPaciente extends javax.swing.JPanel {
 		this.gestor = gestor;
 		actualizarDatos();
 		textDNI.setDocument(new JTextFieldLimit(15));
+		setBackground(new java.awt.Color(153, 189, 233));
 		textDNI.setText(dni);
 		textNombre.setDocument(new JTextFieldLimit(50));
 		textApellidos.setDocument(new JTextFieldLimit(50));
@@ -89,6 +90,8 @@ public class AñadirPaciente extends javax.swing.JPanel {
         labelPacientesExistentes = new javax.swing.JLabel();
         actualizarDatos = new javax.swing.JButton();
 
+        añadirPaciente.setBackground(new java.awt.Color(153, 189, 233));
+
         tituloPaciente.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         tituloPaciente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tituloPaciente.setText("Añadir nuevo paciente");
@@ -97,7 +100,6 @@ public class AñadirPaciente extends javax.swing.JPanel {
         labelDNI.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelDNI.setText("DNI");
 
-        textDNI.setText(null);
         textDNI.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 textDNIKeyReleased(evt);
@@ -251,6 +253,8 @@ public class AñadirPaciente extends javax.swing.JPanel {
                 .addComponent(buttonAñadirPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(132, Short.MAX_VALUE))
         );
+
+        mostrarPacientesExistentes.setBackground(new java.awt.Color(153, 189, 233));
 
         tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
