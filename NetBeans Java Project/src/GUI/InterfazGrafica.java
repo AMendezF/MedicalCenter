@@ -35,6 +35,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 		this.setExtendedState(MAXIMIZED_BOTH);
 		icono.setVisible(false);
 		this.getContentPane().setBackground(new java.awt.Color(153, 189, 233));
+		
 		panelPrincipal.setBackground(this.getContentPane().getBackground());
 		iniciarSesion.setBackground(this.getContentPane().getBackground());
 		panelLogin.setBackground(this.getContentPane().getBackground());
