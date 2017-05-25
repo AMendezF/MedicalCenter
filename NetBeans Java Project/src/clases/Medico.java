@@ -67,7 +67,7 @@ public class Medico {
         preparedStmt.setDate(2, java.sql.Date.valueOf(fecha1));
         ResultSet rs = preparedStmt.executeQuery();
 
-        List<String> horas;
+        /*List<String> horas;
         horas = new ArrayList<>();
         while (rs.next()) {
             horas.add(rs.getTime("hora").toString());
@@ -80,6 +80,7 @@ public class Medico {
             int horadiv = Integer.parseInt(hora[0]);
             int minutos = Integer.parseInt(hora[1]);
             int index = ((horadiv - horaI) * 60 + minutos) / this.getTiempoMin();
+			System.out.println(horaI + "	" + index + "   " + horadiv + "   " + minutos);
             dia1[index] = true;
         }
         horas.clear();
@@ -123,7 +124,7 @@ public class Medico {
             dia3[index] = true;
         }
         horas.clear();
-        setNumEspecialidad();
+        setNumEspecialidad();*/
     }
 
     public int getTiempoMin() throws SQLException {
@@ -198,7 +199,7 @@ public class Medico {
      * @return
      * @throws SQLException
      */
-    public boolean[] getConsultas(String dia) throws SQLException {
+    /*public boolean[] getConsultas(String dia) throws SQLException {
         String fechas[] = dia.split("-");
         Date fechacita = new Date(Integer.parseInt(fechas[0]),
                 Integer.parseInt(fechas[1]) - 1, Integer.parseInt(fechas[2]));
@@ -231,7 +232,7 @@ public class Medico {
             }
         }
         return result;
-    }
+    }*/
 
     public int getNumCitas() throws SQLException {
         int resul = 0;
@@ -365,12 +366,14 @@ public class Medico {
         String horaOcupada, minutoOcupado;
 
         while (!match && i < horariosOcupados.size()) {
-            horaOcupada = horariosOcupados.get(i).substring(0, 3);
+            horaOcupada = horariosOcupados.get(i).substring(0, 2);
             minutoOcupado = horariosOcupados.get(i).substring(3);
+			System.out.println(horaLibre + "   " + horaOcupada);
             if (horaLibre == Integer.parseInt(horaOcupada)
                     && minutoLibre == Integer.parseInt(minutoOcupado)) {
                 match = true;
             }
+			i++;
         }
         return match;
     }
