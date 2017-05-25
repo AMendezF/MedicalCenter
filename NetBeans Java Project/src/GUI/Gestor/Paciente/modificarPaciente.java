@@ -35,7 +35,7 @@ public class modificarPaciente extends javax.swing.JPanel {
 		fieldApellidos.setDocument(new JTextFieldLimit(50));
 		fieldSeguro.setDocument(new JTextFieldLimit(50));
 		fieldTelefono.setDocument(new JTextFieldLimit(15));
-		fieldDireccion.setDocument(new JTextFieldLimit(50));
+		fieldDireccion.setDocument(new JTextFieldLimit(100));
 		mostrarValores();
 	}
 

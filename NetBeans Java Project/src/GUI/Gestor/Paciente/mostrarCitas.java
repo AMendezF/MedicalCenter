@@ -66,11 +66,6 @@ public class mostrarCitas extends javax.swing.JPanel {
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         buttonActualizarCitas.setText("Actualizar datos");
-        buttonActualizarCitas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonActualizarCitasActionPerformed(evt);
-            }
-        });
 
         tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,9 +128,9 @@ public class mostrarCitas extends javax.swing.JPanel {
                     .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(borrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -165,7 +160,7 @@ public class mostrarCitas extends javax.swing.JPanel {
 		int row = tablaInfo.rowAtPoint(evt.getPoint());
 		int col = tablaInfo.columnAtPoint(evt.getPoint());
 		if (row >= 0 && col >= 0) {
-			borrarCita.setText((String) tablaInfo.getValueAt(row, 0));
+			borrarCita.setText((String) tablaInfo.getValueAt(row, 2));
 		}
     }//GEN-LAST:event_tablaInfoMouseClicked
 
