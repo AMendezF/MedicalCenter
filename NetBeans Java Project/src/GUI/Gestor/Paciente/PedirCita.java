@@ -3,10 +3,12 @@ package GUI.Gestor.Paciente;
 import clases.Gestor;
 import clases.Paciente;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,8 +43,29 @@ public class PedirCita extends javax.swing.JPanel {
 		labelTitulo.setText(labelTitulo.getText() + ":  " + paciente.getNombre() + " " + paciente.getApellidos());
 		this.gestor = gestor;
 		this.paciente = paciente;
+
+		//Selecciona la fecha minima elegible
 		Date fechaMinima = calendario.getDate();
 		calendario.setMinSelectableDate(fechaMinima);
+
+		//Selecciona la fecha maxima elegible
+		Date fechaMaxima;
+		SimpleDateFormat formato = new SimpleDateFormat("yy-MM-dd");
+
+		//Construye la fecha maxima
+		Calendar date = new GregorianCalendar();
+		String construirFechaMaxima = date.get(Calendar.YEAR) + "-"
+				+ ((date.get(Calendar.MONTH) + 2)) + "-" // +1 porque enero =0 y +1 para añadir un mes seleccionable
+				+ date.get(Calendar.DAY_OF_MONTH) + "'";
+
+		try {
+			fechaMaxima = formato.parse(construirFechaMaxima);
+			calendario.setMaxSelectableDate(fechaMaxima);
+			System.out.println(fechaMaxima);
+		} catch (ParseException ex) {
+			Logger.getLogger(PedirCita.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
 		cargarDatos();
 	}
 
