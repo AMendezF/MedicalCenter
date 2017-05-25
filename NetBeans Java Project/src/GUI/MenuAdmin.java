@@ -61,11 +61,11 @@ public class MenuAdmin extends javax.swing.JPanel {
         opcionesAdminLayout.setHorizontalGroup(
             opcionesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(opcionesAdminLayout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addContainerGap(64, Short.MAX_VALUE)
                 .addComponent(construirDatabase)
-                .addGap(395, 395, 395)
+                .addGap(368, 368, 368)
                 .addComponent(destruirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         opcionesAdminLayout.setVerticalGroup(
             opcionesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

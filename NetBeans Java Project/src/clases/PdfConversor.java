@@ -51,8 +51,11 @@ public class PdfConversor {
 		this.diaCita = diaCita;
 		this.NColegiado = NColegiado;
 		String fileTitle = titulo.replace(" ", "_") + "_" + NColegiado + "_" + this.diaCita + ".pdf";
-
-		this.file = new File(directorio);
+		if (directorio.contains(".pdf")) {
+			this.file = new File(directorio);
+		} else {
+			this.file = new File(directorio + ".pdf");
+		}
 		initDocumento();
 	}
 

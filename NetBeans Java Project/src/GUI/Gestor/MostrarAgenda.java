@@ -72,6 +72,7 @@ public class MostrarAgenda extends javax.swing.JPanel {
         labelTitulo.setText("Agenda del día");
         labelTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        buttonExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pdf_icon.png"))); // NOI18N
         buttonExportar.setText("Exportar a PDF");
         buttonExportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +106,7 @@ public class MostrarAgenda extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonExportar)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
                 .addContainerGap())

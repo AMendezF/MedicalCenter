@@ -100,6 +100,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
             }
         });
 
+        DescargarPdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pdf_icon.png"))); // NOI18N
         DescargarPdf.setText("Guardar en PDF");
         DescargarPdf.setActionCommand("MostrarPacientesMedico");
         DescargarPdf.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +122,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(490, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
