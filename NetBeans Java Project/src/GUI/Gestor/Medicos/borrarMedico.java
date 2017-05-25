@@ -33,6 +33,10 @@ public class borrarMedico extends javax.swing.JPanel {
 		initComponents();
 		this.gestor = gestor;
 		cargarDatos();
+		this.setBackground(new java.awt.Color(150, 190, 230));
+		jPanel1.setBackground(this.getBackground());
+		jPanel2.setBackground(this.getBackground());
+		jPanel3.setBackground(this.getBackground());
 
 	}
 
@@ -593,7 +597,7 @@ public class borrarMedico extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonAñadirMedicoActionPerformed
 
     private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
-        cargarDatos();
+		cargarDatos();
     }//GEN-LAST:event_mostrarActionPerformed
 
 	public DefaultTableModel getTabla() {
