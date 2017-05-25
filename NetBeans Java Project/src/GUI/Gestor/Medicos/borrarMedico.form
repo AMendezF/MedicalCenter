@@ -220,7 +220,7 @@
                                       <Component id="especialidadAñadir" min="-2" pref="150" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="147" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="161" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -240,10 +240,7 @@
                                               <Component id="nombreOK" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="labelTiempo" min="-2" pref="150" max="-2" attributes="0"/>
-                                                  <Component id="todoCorrecto" min="-2" max="-2" attributes="0"/>
-                                              </Group>
+                                              <Component id="labelTiempo" min="-2" pref="150" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="buttonAñadirMedico" min="-2" pref="150" max="-2" attributes="0"/>
@@ -299,10 +296,7 @@
                           <Component id="labelTiempoAñadir" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="buttonAñadirMedico" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="todoCorrecto" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="buttonAñadirMedico" min="-2" pref="40" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="175" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -383,19 +377,10 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="NColegiadoOK">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="OK"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="nombreOK">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="ok"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="apellidosOK">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="ok"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="buttonA&#xf1;adirMedico">
               <Properties>
@@ -404,11 +389,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonA&#xf1;adirMedicoActionPerformed"/>
               </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="todoCorrecto">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Comprobar cosas"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelHorarioA&#xf1;adir">
               <Properties>

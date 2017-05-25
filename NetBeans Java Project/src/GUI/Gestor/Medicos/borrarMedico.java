@@ -49,7 +49,7 @@ public class borrarMedico extends javax.swing.JPanel {
         labelTitulo = new javax.swing.JLabel();
         desplegableColumnas = new javax.swing.JComboBox();
         textFieldBuscar = new javax.swing.JTextField();
-        buttonACtualizar = new javax.swing.JButton();
+        mostrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaInfo = new javax.swing.JTable();
         medicoABorrar = new javax.swing.JLabel();
@@ -69,7 +69,6 @@ public class borrarMedico extends javax.swing.JPanel {
         nombreOK = new javax.swing.JLabel();
         apellidosOK = new javax.swing.JLabel();
         buttonAñadirMedico = new javax.swing.JButton();
-        todoCorrecto = new javax.swing.JLabel();
         labelHorarioAñadir = new javax.swing.JLabel();
         labelTiempoAñadir = new javax.swing.JLabel();
         especialidadAñadir = new javax.swing.JLabel();
@@ -79,27 +78,41 @@ public class borrarMedico extends javax.swing.JPanel {
         labelTitulo.setText("Borrar medico");
         labelTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        desplegableColumnas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Numero de colegiado", "Nombre", "Apellidos", "Horario", "Tiempo", "Especialidad" }));
+
         textFieldBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 textFieldBuscarKeyTyped(evt);
             }
         });
 
-        buttonACtualizar.setText("Actualizar datos");
-        buttonACtualizar.addActionListener(new java.awt.event.ActionListener() {
+        mostrar.setText("Mostrar datos");
+        mostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonACtualizarActionPerformed(evt);
+                mostrarActionPerformed(evt);
             }
         });
 
         tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-
+                "Numero de colegiado", "Nombre", "Apellidos", "Tiempo", "Especialidad", "Horario"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tablaInfo.setColumnSelectionAllowed(true);
         tablaInfo.getTableHeader().setReorderingAllowed(false);
         tablaInfo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -108,7 +121,6 @@ public class borrarMedico extends javax.swing.JPanel {
             }
         });
         jScrollPane1.setViewportView(tablaInfo);
-        tablaInfo.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         medicoABorrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         medicoABorrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -122,7 +134,7 @@ public class borrarMedico extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(buttonACtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -139,7 +151,7 @@ public class borrarMedico extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonACtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,20 +205,12 @@ public class borrarMedico extends javax.swing.JPanel {
         labelHorario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelHorario.setText("Horario");
 
-        NColegiadoOK.setText("OK");
-
-        nombreOK.setText("ok");
-
-        apellidosOK.setText("ok");
-
         buttonAñadirMedico.setText("Sustituir");
         buttonAñadirMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonAñadirMedicoActionPerformed(evt);
             }
         });
-
-        todoCorrecto.setText("Comprobar cosas");
 
         labelHorarioAñadir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelHorarioAñadir.setText("Horario");
@@ -242,7 +246,7 @@ public class borrarMedico extends javax.swing.JPanel {
                                 .addComponent(labelEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(especialidadAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 147, Short.MAX_VALUE))
+                        .addGap(0, 161, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -259,9 +263,7 @@ public class borrarMedico extends javax.swing.JPanel {
                                         .addGap(18, 18, 18)
                                         .addComponent(nombreOK))
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(todoCorrecto))
+                                        .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,9 +304,7 @@ public class borrarMedico extends javax.swing.JPanel {
                     .addComponent(labelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelTiempoAñadir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(todoCorrecto))
+                .addComponent(buttonAñadirMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(175, 175, 175))
         );
 
@@ -447,7 +447,7 @@ public class borrarMedico extends javax.swing.JPanel {
 	 */
 	private boolean colegiadoEsCorrecto(String num) throws SQLException {
 		boolean resul = false;
-		if (!gestor.existeMedico(num) && !(num.equals("")) /*&& gestor.esNumero(num)*/) {
+		if (!gestor.existeMedico(num) && !num.equals("") && gestor.esNumerico(num)) {
 			resul = true;
 		}
 		return resul;
@@ -460,14 +460,11 @@ public class borrarMedico extends javax.swing.JPanel {
 	 */
 	private boolean todoCorrecto(String[] medico) throws SQLException {
 		boolean resul = false;
-//		if (gestor.medicosPorEspecialidad((String) desplegableEspecialidad.getSelectedItem())) {
-//			if (colegiadoEsCorrecto(fieldColegiado.getText())) {
-//				if (campoEsCorrecto(fieldNombre.getText()) && campoEsCorrecto(fieldApellidos.getText())) {
-//					resul = true;
-//				}
-//			}
-//		}
-		resul = true;
+		if (colegiadoEsCorrecto(medico[0])) {
+			if (campoEsCorrecto(medico[1]) && campoEsCorrecto(medico[2])) {
+				resul = true;
+			}
+		}
 		return resul;
 	}
 
@@ -551,7 +548,7 @@ public class borrarMedico extends javax.swing.JPanel {
     private void fieldColegiadoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldColegiadoKeyReleased
 		try {
 			if (colegiadoEsCorrecto(fieldColegiado.getText())) {
-				NColegiadoOK.setForeground(Color.black);
+				NColegiadoOK.setForeground(Color.green);
 				NColegiadoOK.setText("Correcto");
 			} else {
 				NColegiadoOK.setForeground(Color.red);
@@ -570,25 +567,34 @@ public class borrarMedico extends javax.swing.JPanel {
 			labelHorarioAñadir.getText(), labelTiempoAñadir.getText(),
 			especialidadAñadir.getText()};
 		try {
-			if (todoCorrecto(medico)) {
-				confirmar = JOptionPane.showOptionDialog(this, "Se va ha crear el medico ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-				if (confirmar == 0) {
-					if (gestor.removeMedico(String.valueOf(String.valueOf(numColegiadoABorrar)))) {
-						if (gestor.addMedico(medico)) {
-							JOptionPane.showMessageDialog(this, "Se ha añadido el medico con codigo " + fieldColegiado.getText());
+			if (gestor.existeMedico(Integer.toString(numColegiadoABorrar))) {
+				if (todoCorrecto(medico)) {
+					confirmar = JOptionPane.showOptionDialog(this, "Se va ha crear el medico ¿desea confirmar la operacion?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+					if (confirmar == 0) {
+						if (gestor.removeMedico(String.valueOf(String.valueOf(numColegiadoABorrar)))) {
+							if (gestor.addMedico(medico)) {
+								JOptionPane.showMessageDialog(this, "Se ha añadido el medico con codigo " + fieldColegiado.getText());
+							} else {
+								JOptionPane.showMessageDialog(this, "No se ha podido añadir", "Error", JOptionPane.ERROR_MESSAGE);
+							}
 						} else {
-							JOptionPane.showMessageDialog(this, "No se ha podido añadir", "Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(this, "No se ha podido borrar el médico seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
 						}
-					} else {
-						JOptionPane.showMessageDialog(this, "No se ha podido borrar el médico seleccionado", "Error", JOptionPane.ERROR_MESSAGE);
 					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Compruebe que los datos sean correctos", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-
+			} else {
+				JOptionPane.showMessageDialog(this, "Seleccione un médico para borrar", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (SQLException ex) {
 			JOptionPane.showMessageDialog(this, "No se ha podido añadir" + ex, "Error", JOptionPane.ERROR_MESSAGE);
 		}
     }//GEN-LAST:event_buttonAñadirMedicoActionPerformed
+
+    private void mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mostrarActionPerformed
+        cargarDatos();
+    }//GEN-LAST:event_mostrarActionPerformed
 
 	public DefaultTableModel getTabla() {
 		return this.tabla;
@@ -614,7 +620,6 @@ public class borrarMedico extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel NColegiadoOK;
     private javax.swing.JLabel apellidosOK;
-    private javax.swing.JButton buttonACtualizar;
     private javax.swing.JButton buttonAñadirMedico;
     private javax.swing.JComboBox desplegableColumnas;
     private javax.swing.JLabel especialidadAñadir;
@@ -636,9 +641,9 @@ public class borrarMedico extends javax.swing.JPanel {
     private javax.swing.JLabel labelTiempoAñadir;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel medicoABorrar;
+    private javax.swing.JButton mostrar;
     private javax.swing.JLabel nombreOK;
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
-    private javax.swing.JLabel todoCorrecto;
     // End of variables declaration//GEN-END:variables
 }
