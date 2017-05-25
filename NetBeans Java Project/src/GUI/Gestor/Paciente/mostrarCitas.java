@@ -66,13 +66,21 @@ public class mostrarCitas extends javax.swing.JPanel {
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         buttonActualizarCitas.setText("Actualizar datos");
+        buttonActualizarCitas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonActualizarCitasActionPerformed(evt);
+            }
+        });
 
         tablaInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
         tablaInfo.getTableHeader().setReorderingAllowed(false);
@@ -128,9 +136,9 @@ public class mostrarCitas extends javax.swing.JPanel {
                     .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(borrarCita, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-                .addGap(23, 23, 23))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -193,6 +201,29 @@ public class mostrarCitas extends javax.swing.JPanel {
 			JOptionPane.showMessageDialog(this, "La cita no es correcta", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+
+	private DefaultTableModel resultSetToTableModel(ResultSet rs) throws SQLException {
+		java.sql.ResultSetMetaData metaData = rs.getMetaData();
+
+		// names of columns
+		Vector<String> columnNames = new Vector<String>();
+		int columnCount = metaData.getColumnCount();
+		for (int column = 1; column <= columnCount - 1; column++) {
+			columnNames.add(metaData.getColumnName(column));
+		}
+		columnNames.add("Especialidad");
+
+		// data of the table
+		Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+		while (rs.next()) {
+			Vector<Object> vector = new Vector<Object>();
+			for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+				vector.add(rs.getObject(columnIndex));
+			}
+			data.add(vector);
+		}
+		return new DefaultTableModel(data, columnNames);
+	}
 	
 	/**
 	 * Carga un resulSet y lo muestra en la tabla
@@ -200,8 +231,7 @@ public class mostrarCitas extends javax.swing.JPanel {
 	private void actualizarDatos() {
 		try {
 			ResultSet rs = paciente.mostrarCitasPendientes();
-			TableAdaptor ta = new TableAdaptor(rs);
-			setTabla(ta.getValue());
+			setTabla(resultSetToTableModel(rs));	
 			DefaultTableModel tabla = getTabla();
 			tablaInfo.setModel(tabla);
 			cargarDesplegables();
