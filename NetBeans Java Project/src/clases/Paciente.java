@@ -101,7 +101,6 @@ public class Paciente {
 		date = "'" + fecha.get(Calendar.YEAR) + "-"
                 + (fecha.get(Calendar.MONTH) + 1) + "-"
                 + fecha.get(Calendar.DAY_OF_MONTH) + "'";
-				System.out.println(date);
         return date;
     }
 
@@ -115,7 +114,6 @@ public class Paciente {
 		String hora;
 		hora = "'" + fecha.get(Calendar.HOUR_OF_DAY) + ":"
                 + fecha.get(Calendar.MINUTE) + "'";
-		System.out.println(hora);
         return hora;
     }
 
