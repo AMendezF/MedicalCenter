@@ -2,6 +2,7 @@ package clases;
 
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -9,6 +10,7 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Section;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -22,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import sun.swing.SwingUtilities2;
 
 /**
  *
@@ -71,7 +74,7 @@ public class PdfConversor {
 		if (directorio.contains(".pdf")) {
 			this.file = new File(directorio);
 		} else {
-			this.file = new File(directorio + "\\" + fileTitle);
+			this.file = new File(directorio + ".pdf");
 		}
 		initDocumento();
 
@@ -84,7 +87,7 @@ public class PdfConversor {
 		if (directorio.contains(".pdf")) {
 			this.file = new File(directorio);
 		} else {
-			this.file = new File(directorio + "\\" + fileTitle);
+			this.file = new File(directorio + ".pdf");
 		}
 		initDocumento();
 	}
@@ -160,6 +163,7 @@ public class PdfConversor {
 			documento.addAuthor("CentroMedicoUPM");
 			documento.addCreator("Pablo");
 			documento.addCreationDate();
+
 			logo.scalePercent(15);
 			logo.setAbsolutePosition(450f, 750f);
 			documento.add(logo);
