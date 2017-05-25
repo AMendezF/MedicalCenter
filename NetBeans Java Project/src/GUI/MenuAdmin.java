@@ -39,6 +39,7 @@ public class MenuAdmin extends javax.swing.JPanel {
         destruirDatabase = new javax.swing.JButton();
 
         construirDatabase.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        construirDatabase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_pequeño.png"))); // NOI18N
         construirDatabase.setText("Construir centromedico");
         construirDatabase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -47,6 +48,7 @@ public class MenuAdmin extends javax.swing.JPanel {
         });
 
         destruirDatabase.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        destruirDatabase.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_pequeño.png"))); // NOI18N
         destruirDatabase.setText("Destruir centromedico");
         destruirDatabase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,20 +61,20 @@ public class MenuAdmin extends javax.swing.JPanel {
         opcionesAdminLayout.setHorizontalGroup(
             opcionesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(opcionesAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(construirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77)
-                .addComponent(destruirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(510, Short.MAX_VALUE))
+                .addGap(49, 49, 49)
+                .addComponent(construirDatabase)
+                .addGap(395, 395, 395)
+                .addComponent(destruirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53))
         );
         opcionesAdminLayout.setVerticalGroup(
             opcionesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(opcionesAdminLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(opcionesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(construirDatabase, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(destruirDatabase, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addGap(105, 105, 105)
+                .addGroup(opcionesAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(destruirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(construirDatabase, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

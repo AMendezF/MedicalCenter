@@ -304,7 +304,10 @@ public class Medico {
      * @return
      * @throws SQLException
      */
-    public ResultSet mostrarCitasHoyMedico() throws SQLException {
+    public ResultSet mostrarCitasDiaMedico(String dia) throws SQLException {
+		if (dia == null){
+			dia = getDia();
+		}
         Connection reg = con.getCon();
         String sql;
          sql = "SELECT citas.cod_cita, citas.dia, citas.hora,"
@@ -316,7 +319,7 @@ public class Medico {
 
         preparedStmt = reg.prepareStatement(sql);
         preparedStmt.setInt(1, getN_colegiado());
-        preparedStmt.setDate(2, java.sql.Date.valueOf(getDia()));
+        preparedStmt.setDate(2, java.sql.Date.valueOf(dia));
         ResultSet rs = preparedStmt.executeQuery();
 
         return rs;

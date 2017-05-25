@@ -86,6 +86,12 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
             }
         });
 
+        buscarCampo.setText("Buscar por...");
+        buscarCampo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buscarCampoMouseClicked(evt);
+            }
+        });
         buscarCampo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 buscarCampoKeyTyped(evt);
@@ -99,15 +105,15 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
             .addGroup(mostrarDatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
                     .addGroup(mostrarDatosLayout.createSequentialGroup()
-                        .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(mostrarDatosLayout.createSequentialGroup()
-                                .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buscarCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(mostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mostrarDatosLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buscarCampo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         mostrarDatosLayout.setVerticalGroup(
@@ -115,12 +121,12 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mostrarDatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(mostrarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mostrarDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buscarCampo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -183,9 +189,7 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
                         .addComponent(DNI1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(formularioLayout.createSequentialGroup()
-                                .addComponent(campoDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0))
+                            .addComponent(campoDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(campoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -261,7 +265,7 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
      */
     private void mostrarDatos() {
         try {
-            ResultSet rs = medico.mostrarCitasHoyMedico();
+            ResultSet rs = medico.mostrarCitasDiaMedico(null);
             TableAdaptor aux = new TableAdaptor(rs);
             setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
@@ -322,6 +326,10 @@ public class EscribirFichaPaciente extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_buttonEscribirDiagnosticoActionPerformed
+
+    private void buscarCampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscarCampoMouseClicked
+        buscarCampo.setText(null);
+    }//GEN-LAST:event_buscarCampoMouseClicked
 
     public void filtro() {
         int colum = 0;

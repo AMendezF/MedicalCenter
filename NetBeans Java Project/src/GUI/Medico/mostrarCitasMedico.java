@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,7 +43,8 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
     public mostrarCitasMedico(Medico medico) {
         initComponents();
         this.medico = medico;
-        mostrarDatos();
+		jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(ArrayDias()));
+        mostrarDatos((String) jComboBox1.getSelectedItem());
     }
 
     /**
@@ -61,6 +63,8 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         BotonMostrar = new javax.swing.JButton();
         DescargarPdf = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
 
         addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
@@ -68,9 +72,10 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
             }
         });
 
-        desplegableColumnas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                desplegableColumnasActionPerformed(evt);
+        textFieldBuscar.setText("Buscar por...");
+        textFieldBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textFieldBuscarMouseClicked(evt);
             }
         });
 
@@ -87,7 +92,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Citas Pendientes");
 
-        BotonMostrar.setText("Mostrar");
+        BotonMostrar.setText("Actualizar");
         BotonMostrar.setActionCommand("MostrarPacientesMedico");
         BotonMostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,6 +108,10 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
             }
         });
 
+        jLabel2.setText("Dia:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,48 +120,54 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BotonMostrar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(DescargarPdf)
-                .addGap(0, 5, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(490, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BotonMostrar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2))
+                        .addGap(18, 18, 18)
+                        .addComponent(DescargarPdf)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(desplegableColumnas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(textFieldBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BotonMostrar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DescargarPdf))
-                .addGap(18, 18, 18)
-                .addComponent(BotonMostrar)
-                .addGap(36, 36, 36))
+                .addGap(77, 77, 77))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void desplegableColumnasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desplegableColumnasActionPerformed
-
-    }//GEN-LAST:event_desplegableColumnasActionPerformed
-
     private void BotonMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMostrarActionPerformed
-        mostrarDatos();
+        mostrarDatos((String) jComboBox1.getSelectedItem());
     }//GEN-LAST:event_BotonMostrarActionPerformed
 
-    private void mostrarDatos() {
+    private void mostrarDatos(String dia) {
         try {
-            ResultSet rs = medico.mostrarCitasHoyMedico();
+            ResultSet rs = medico.mostrarCitasDiaMedico(dia);
             TableAdaptor aux = new TableAdaptor(rs);
             setTabla(aux.getValue());
             DefaultTableModel tabla = getTabla();
@@ -175,6 +190,10 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
     private void DescargarPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DescargarPdfActionPerformed
         seleccionHubicacion();
     }//GEN-LAST:event_DescargarPdfActionPerformed
+
+    private void textFieldBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textFieldBuscarMouseClicked
+        textFieldBuscar.setText(null);
+    }//GEN-LAST:event_textFieldBuscarMouseClicked
 
     private void textFieldBuscarKeyTyped(java.awt.event.KeyEvent evt) {
         // TODO add your handling code here:
@@ -241,10 +260,30 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
     private javax.swing.JButton BotonMostrar;
     private javax.swing.JButton DescargarPdf;
     private javax.swing.JComboBox desplegableColumnas;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaInfo;
     private javax.swing.JTextField textFieldBuscar;
     // End of variables declaration//GEN-END:variables
+
+	private Object[] ArrayDias() {
+		String[] dias = new String[3];
+		Calendar fecha = Calendar.getInstance();
+		dias[0] = fecha.get(Calendar.YEAR) + "-"
+                + (fecha.get(Calendar.MONTH) + 1) + "-"
+                + (fecha.get(Calendar.DAY_OF_MONTH));
+		
+		dias[1] = fecha.get(Calendar.YEAR) + "-"
+                + (fecha.get(Calendar.MONTH) + 1) + "-"
+                + (fecha.get(Calendar.DAY_OF_MONTH) + 1);
+		
+		dias[2] = fecha.get(Calendar.YEAR) + "-"
+                + (fecha.get(Calendar.MONTH) + 1) + "-"
+                + (fecha.get(Calendar.DAY_OF_MONTH) + 2);
+		
+		return dias;
+	}
 
 }
