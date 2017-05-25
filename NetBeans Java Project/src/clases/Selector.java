@@ -19,7 +19,7 @@ public class Selector {
     public Selector() {
         this.explorador = new JFileChooser();
         this.explorador.setCurrentDirectory(new java.io.File(System.getProperty("user.home") + "\\Desktop"));
-        this.explorador.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        this.explorador.setFileSelectionMode(JFileChooser.FILES_ONLY);
         this.explorador.setDialogTitle("Guardar documento...");
         this.explorador.setFileFilter(new FileNameExtensionFilter("PDF - Adobe Portable Document Format", "pdf"));
     }

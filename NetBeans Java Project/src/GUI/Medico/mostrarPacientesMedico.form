@@ -29,7 +29,6 @@
                               <EmptySpace pref="280" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="textFieldBuscar" min="-2" pref="186" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="desplegableColumnas" min="-2" pref="110" max="-2" attributes="0"/>

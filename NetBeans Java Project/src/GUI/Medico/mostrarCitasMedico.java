@@ -245,7 +245,7 @@ public class mostrarCitasMedico extends javax.swing.JPanel {
 
     private void guardarPdf(String directorio) {
         try {
-            PdfConversor conversor = new PdfConversor(tablaInfo, "Listado Pacientes ", medico.getN_colegiado(), directorio);
+            PdfConversor conversor = new PdfConversor(tablaInfo, "Citas del dia", (String) jComboBox1.getSelectedItem(), medico.getN_colegiado(), directorio);
             conversor.getPdfTablas();
             JOptionPane.showMessageDialog(this, "¡Se ha generado tu hoja PDF!",
                     "RESULTADO", JOptionPane.INFORMATION_MESSAGE);
