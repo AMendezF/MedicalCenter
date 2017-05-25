@@ -123,8 +123,8 @@ public class Medico {
             int index = ((horadiv - horaI) * 60 + minutos) / this.getTiempoMin();
             dia3[index] = true;
         }
-        horas.clear();
-        setNumEspecialidad();*/
+        horas.clear();*/
+        setNumEspecialidad();
     }
 
     public int getTiempoMin() throws SQLException {
@@ -328,7 +328,8 @@ public class Medico {
         }
 
         int minutoLibre = 60, horaLibre = horaInicio - 1;
-		String[] horarioFinal = new String[240 / this.getTiempoMin()];
+		String[] horarioFinal = new String[240 / this.getTiempoMin() - 
+				horariosOcupados.size()];
 		for (int i = 0; i < horarioFinal.length; i++) { // iteramos sobre 
 			if (minutoLibre + this.getTiempoMin() >= 59) {   // número de turnos
 				horaLibre++;
@@ -344,7 +345,9 @@ public class Medico {
                 } else {
                     horarioFinal[i] = horaLibre + ":" + minutoLibre;
                 }
-            }
+            }else{
+				i--;
+			}
         }
 
         return horarioFinal;
@@ -368,7 +371,6 @@ public class Medico {
         while (!match && i < horariosOcupados.size()) {
             horaOcupada = horariosOcupados.get(i).substring(0, 2);
             minutoOcupado = horariosOcupados.get(i).substring(3);
-			System.out.println(horaLibre + "   " + horaOcupada);
             if (horaLibre == Integer.parseInt(horaOcupada)
                     && minutoLibre == Integer.parseInt(minutoOcupado)) {
                 match = true;
